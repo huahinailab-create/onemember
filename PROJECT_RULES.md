@@ -118,9 +118,26 @@ Update:
 
 - CHANGELOG.md
 - 05-Roadmap.md
+- 08-Product-Decisions.md
 - PROJECT_RULES.md
 
 Documentation is part of the deliverable.
+
+---
+
+## Decision Log
+
+Before making any architectural or business decision, check whether it already exists in the project documentation.
+
+If no documented decision exists:
+
+STOP.
+
+Ask for approval.
+
+Never make assumptions.
+
+Every approved architectural or business decision must be recorded in `docs/08-Product-Decisions.md` before implementation continues.
 
 ---
 
