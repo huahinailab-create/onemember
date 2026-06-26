@@ -5,21 +5,30 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
 
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
-
+        // Admin user — owner of all demo merchants
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name'     => 'Admin',
+            'email'    => 'admin@onemember.test',
+            'password' => Hash::make('password'),
+        ]);
+
+        $this->call([
+            MerchantSeeder::class,
+            LoyaltyProgramSeeder::class,
+            RewardSeeder::class,
+            BirthdayRewardSeeder::class,
+            MemberSeeder::class,
+            // TransactionSeeder and RedemptionSeeder are intentionally omitted from
+            // the base seed — transactions require coordinated balance tracking.
+            // Generate them in tests using factories directly.
         ]);
     }
 }
