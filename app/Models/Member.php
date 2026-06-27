@@ -18,6 +18,7 @@ class Member extends Model
         'merchant_id',
         'name',
         'nickname',
+        'notes',
         'email',
         'phone',
         'member_code',

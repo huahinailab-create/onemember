@@ -8,9 +8,9 @@
             <h1>Members</h1>
             <p>Manage your loyalty programme members.</p>
         </div>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMemberModal">
+        <a href="{{ route('members.create') }}" class="btn btn-primary">
             <i class="bi bi-person-plus me-1"></i> Add Member
-        </button>
+        </a>
     </div>
 
     {{-- Search Bar --}}
@@ -171,28 +171,5 @@
         </div>
     </div>
 
-    {{-- Add Member Modal (Coming Soon) --}}
-    <div class="modal fade" id="addMemberModal" tabindex="-1" aria-labelledby="addMemberModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title" id="addMemberModalLabel">Add Member</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center py-4">
-                    <div class="coming-soon-icon bg-primary bg-opacity-10 mx-auto">
-                        <i class="bi bi-person-plus text-primary"></i>
-                    </div>
-                    <h6 class="fw-semibold mb-2">Coming in Task 2.4</h6>
-                    <p class="text-muted mb-0" style="max-width:300px;margin:0 auto;">
-                        Member creation will be available in the next task.
-                    </p>
-                </div>
-                <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </x-app-layout>

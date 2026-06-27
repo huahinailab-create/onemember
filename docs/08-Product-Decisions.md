@@ -134,4 +134,14 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-012] Add Member Form — Dedicated Page + Notes Column (Sprint 2 Task 2.4)
+- **Date:** 2026-06-27
+- **Requested by:** Product Owner (Sprint 2 Task 2.4 spec)
+- **Status:** Approved
+- **Decision:** The Add Member feature uses a dedicated `/members/create` page (not a modal). A nullable `notes` text column is added to the `members` table to support the optional Notes field. Phone uniqueness is validated per merchant (scoped to `merchant_id`). After a successful save the user is redirected to `/members` with a Bootstrap success flash.
+- **Reason:** Six fields plus validation error display fits a full page better than a modal. Notes is a new field required by the task spec not present in the original migration.
+- **Impact:** New migration `2026_06_27_200002_add_notes_to_members_table`, `app/Models/Member.php` fillable, new `StoreMemberRequest`, new `create`/`store` controller actions, new view `resources/views/members/create.blade.php`, updated `members/index.blade.php` Add Member button, new routes.
+
+---
+
 *New decisions must be appended above this line in the format shown.*
