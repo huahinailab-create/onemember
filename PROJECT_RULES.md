@@ -155,4 +155,24 @@ Never invent requirements.
 
 ---
 
+---
+
+## Product Documentation Rule
+
+Before starting every sprint, Claude MUST review the following documents:
+
+- `docs/09-Loyalty-Business-Rules.md`
+- `docs/10-Brand-Guidelines.md`
+- `docs/11-Pricing-Strategy.md`
+- `docs/12-Merchant-User-Journey.md`
+- `docs/13-Industry-Strategy.md`
+
+These documents are the source of truth for all future product decisions.
+
+Claude must not contradict these documents.
+
+If implementation conflicts with any document, Claude must STOP and ask the Product Owner instead of making assumptions.
+
+---
+
 *This document becomes mandatory for every future Claude Code session.*
