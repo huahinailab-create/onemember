@@ -126,22 +126,36 @@ Capture the essential business information that personalises the platform for th
 ## Step 5 — Choose Business Type
 
 **Purpose:**
-Help the merchant select the industry that best describes their business. This allows OneMember to suggest relevant default campaigns, rewards, and settings.
+Require the merchant to select the industry that best describes their business before they can create their first loyalty campaign. Business type enables better onboarding, relevant campaign templates, and more meaningful future analytics.
+
+**Approved rules (Q-06, Q-07):**
+
+- **Business Type is required** before a merchant can create their first campaign. They cannot proceed to Step 6 without completing this step.
+- **Business Type does NOT restrict functionality.** All plan features remain available regardless of which industry the merchant selects.
+- After selecting a business type, the merchant is offered **optional starter templates** relevant to their industry (campaign types and example rewards drawn from `docs/13-Industry-Strategy.md`).
+- The merchant may:
+  - Use a suggested template as-is.
+  - Modify a suggested template before saving.
+  - Skip templates entirely and create their campaign manually.
+- Templates are always **optional**. No merchant is forced to use one.
 
 **Expected user action:**
-- The merchant selects their industry from a list of supported business types.
-- They confirm their selection.
+- The merchant selects their industry from the list of ten supported business types.
+- They are shown optional starter templates for their industry.
+- They choose to use a template, modify it, or skip.
+- They confirm and proceed to creating their first campaign.
 
 **Expected outcome:**
-- The merchant's business type is recorded.
-- The platform may suggest pre-built templates relevant to their industry (future feature).
+- The merchant's business type is recorded on their profile.
+- The merchant is unblocked to create their first loyalty program (Step 6).
+- If a template was selected or modified, the relevant program/reward details are pre-populated in the creation flow.
 
-**Current status:** Business type selection is not yet implemented. This step is planned for a future sprint.
+**Current status:** Business type selection is not yet implemented. This step is planned for a future sprint, to be prioritised before Loyalty Program creation (Step 6) is built.
 
 **Potential future improvements:**
-- Pre-built campaign and reward templates per industry.
-- Industry-specific onboarding tips and examples.
-- Ability to change business type later.
+- Ability to change business type after initial setup (with a confirmation prompt).
+- Industry-specific onboarding tips shown contextually throughout the product.
+- Analytics segmentation by industry type across the merchant base.
 
 ---
 

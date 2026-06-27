@@ -144,4 +144,104 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-013] Plan Limits Deferred Until After Beta Testing
+- **Date:** 2026-06-27
+- **Requested by:** Product Owner
+- **Status:** Approved
+- **Decision:** Plan limits (member caps, transaction limits, feature gates per tier) are intentionally deferred. They will be determined before commercial launch, after beta testing and feedback from real merchants.
+- **Reason:** Defining limits before real usage data is available risks restricting legitimate use or under-monetising the product.
+- **Impact:** No plan enforcement logic may be built until limits are approved and recorded here. `docs/11-Pricing-Strategy.md` updated.
+
+---
+
+### [DECISION-014] Pricing — Thailand First, Amounts TBD Before Launch
+- **Date:** 2026-06-27
+- **Requested by:** Product Owner
+- **Status:** Approved
+- **Decision:** Thailand is the initial market for OneMember. All pricing will be validated against the Thai market first. Specific pricing amounts (in THB) will be finalised before commercial launch after market validation. No pricing amounts are defined at this time.
+- **Reason:** Market validation before price commitment reduces commercial risk.
+- **Impact:** `docs/11-Pricing-Strategy.md` updated. No billing code should reference specific amounts.
+
+---
+
+### [DECISION-015] Billing — Monthly Only at Version 1.0
+- **Date:** 2026-06-27
+- **Requested by:** Product Owner
+- **Status:** Approved
+- **Decision:** Version 1.0 supports monthly billing only. Annual billing will be introduced in a later release.
+- **Reason:** Simplifies billing infrastructure for MVP. Annual billing adds complexity (proration, refunds) that is not required at launch.
+- **Impact:** `docs/11-Pricing-Strategy.md` updated. Billing implementation must not include annual cycle logic at V1.0.
+
+---
+
+### [DECISION-016] Payment Gateway — Selection Deferred to Billing Implementation Phase
+- **Date:** 2026-06-27
+- **Requested by:** Product Owner
+- **Status:** Approved
+- **Decision:** The payment gateway provider has not been selected. Selection will occur during the subscription billing implementation phase. No provider is recommended or committed to at this time.
+- **Reason:** Provider selection requires evaluation of fees, regional coverage, and integration complexity closer to the billing sprint.
+- **Impact:** `docs/11-Pricing-Strategy.md` updated. No payment gateway packages or SDKs may be installed until a provider is chosen.
+
+---
+
+### [DECISION-017] Plan Limit Enforcement Principle
+- **Date:** 2026-06-27
+- **Requested by:** Product Owner
+- **Status:** Approved
+- **Decision:** The guiding principle for plan limit enforcement is: "The merchant experience should never be interrupted unexpectedly while serving customers." The exact enforcement behaviour (soft warning, grace period, auto-upgrade prompt, or other) will be decided before billing implementation. No enforcement behaviour may be implemented without explicit approval.
+- **Reason:** Interrupting a merchant mid-transaction damages trust and the brand promise of simplicity.
+- **Impact:** `docs/11-Pricing-Strategy.md` updated. Enforcement design is deferred.
+
+---
+
+### [DECISION-018] Business Type — Required Before First Campaign, Does Not Restrict Functionality
+- **Date:** 2026-06-27
+- **Requested by:** Product Owner
+- **Status:** Approved
+- **Decision:** Business Type selection is required before a merchant can create their first loyalty campaign. It does not restrict any platform functionality. Its purpose is better onboarding, relevant campaign templates, and future analytics segmentation.
+- **Reason:** Gating campaign creation on business type selection ensures merchants receive relevant templates and improves onboarding quality.
+- **Impact:** `docs/12-Merchant-User-Journey.md` Step 5 updated. Business type UI must be built before Loyalty Program creation (Sprint 3). Onboarding flow must enforce this gate.
+
+---
+
+### [DECISION-019] Industry Templates — Optional Starter Templates After Business Type Selection
+- **Date:** 2026-06-27
+- **Requested by:** Product Owner
+- **Status:** Approved
+- **Decision:** After selecting a business type, the merchant is offered optional starter templates (campaign types and example rewards) drawn from `docs/13-Industry-Strategy.md`. The merchant may use a template as-is, modify it, or skip templates entirely and create manually. Templates are never mandatory.
+- **Reason:** Templates reduce time-to-first-program for new merchants without removing flexibility for experienced users.
+- **Impact:** `docs/12-Merchant-User-Journey.md` Step 5 updated. Template content should be sourced from `docs/13-Industry-Strategy.md`. Template implementation is planned alongside business type selection.
+
+---
+
+### [DECISION-020] Pet-Specific Fields — Not Part of Version 1.0
+- **Date:** 2026-06-27
+- **Requested by:** Product Owner
+- **Status:** Approved
+- **Decision:** Members represent people only in Version 1.0. Pet-specific data fields (pet name, pet birthday, pet type) are not part of Version 1.0 and will not be added to the members table or any related schema. Pet-specific functionality may be evaluated in a future version.
+- **Reason:** Keeps the member schema simple and focused. Pet features add complexity that is not validated by the core loyalty use case.
+- **Impact:** `docs/13-Industry-Strategy.md` updated to remove the pet birthday field suggestion. No schema changes required.
+
+---
+
+### [DECISION-021] Hardware — No Proprietary Hardware Required
+- **Date:** 2026-06-27
+- **Requested by:** Product Owner
+- **Status:** Approved
+- **Decision:** OneMember must not require any proprietary hardware. The MVP must be fully functional on desktop computers, laptops, tablets, and mobile browsers. No dedicated terminal, scanner, or device is required to use any core feature.
+- **Reason:** Proprietary hardware increases cost, friction, and support complexity. It conflicts with the brand promise of simplicity and the target market of small businesses.
+- **Impact:** All features must be designed for standard browser-based access. Any feature that would require dedicated hardware must be flagged for Product Owner review before design begins.
+
+---
+
+### [DECISION-022] Connectivity — Internet Required, No Offline Mode in MVP
+- **Date:** 2026-06-27
+- **Requested by:** Product Owner
+- **Status:** Approved
+- **Decision:** An internet connection is required to use OneMember. Offline mode is not part of the MVP.
+- **Reason:** Offline support adds significant architectural complexity (local data storage, sync, conflict resolution) that is out of scope for MVP. The target market (physical retail in Thailand) has reliable mobile internet access.
+- **Impact:** No offline caching, service workers, or sync logic should be implemented. All operations require a live server connection.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

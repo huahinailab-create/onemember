@@ -228,21 +228,21 @@ This document is used to:
 ### Recommended Campaign Examples
 - **Points per baht spent** — on all purchases including food and accessories.
 - **Grooming stamp card** — e.g. 6 grooming sessions = 1 free.
-- **Birthday reward** — a birthday reward for the pet's birthday (tracks pet birthday rather than owner's).
+- **Birthday reward** — bonus points or a discount for the pet owner during their own birthday month.
 
 ### Recommended Reward Examples
 - Free bag of pet food after accumulating sufficient points.
 - Complimentary grooming session after stamp card completion.
 - 20% discount on a specific pet food brand.
-- Free pet birthday treat with any purchase during the pet's birthday month.
+- Free treat pack with any purchase during the member's birthday month.
 
 ### Typical Customer Behaviour
 - Extremely high loyalty once a pet owner trusts a shop.
 - Consumable repurchases (food, litter, treats) drive high visit frequency.
-- Emotional attachment to the pet extends to the brand that serves them — birthday acknowledgements for pets have strong emotional resonance.
+- Emotional attachment to the pet extends to the brand that serves them — personalised acknowledgements have strong emotional resonance.
 - Grooming services create a reliable recurring appointment pattern.
 
-> **Note:** Pet birthday tracking would require an additional data field not currently in the members table. This is a future consideration only.
+> **Version 1.0 note:** Members represent people only. Pet-specific fields (e.g. pet name, pet birthday) are not part of Version 1.0 and will be evaluated in a future version. Birthday rewards apply to the member (owner), not the pet.
 
 ---
 

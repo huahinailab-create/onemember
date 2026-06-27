@@ -2,7 +2,7 @@
 
 This document defines the commercial model for OneMember.
 
-Pricing amounts are **not** documented here. All pricing amounts will be determined by the Product Owner before commercial launch.
+Pricing amounts and plan limits are **not** defined here. They will be determined by the Product Owner before commercial launch, after beta testing and feedback from real merchants.
 
 ---
 
@@ -41,11 +41,19 @@ A merchant who downgrades from Professional to Free retains all member records, 
 | Principle | Detail |
 |---|---|
 | No setup fee | Merchants pay nothing to register and configure their account |
-| Monthly billing | Default billing cycle at launch |
-| Annual billing | To be introduced in a future release |
+| Monthly billing | Version 1.0 supports monthly billing only |
+| Annual billing | Will be introduced in a future release after Version 1.0 |
 | Cancel any time | No minimum contract period for monthly plans |
 | No hidden charges | All limits and features are clearly disclosed on the pricing page |
 | Merchant data ownership | All data belongs to the merchant; OneMember does not sell or share it |
+
+---
+
+## Market
+
+**Thailand is the initial market for OneMember.**
+
+Pricing will be validated against the Thai market first. Expansion to other Southeast Asian markets will be considered after market validation in Thailand. All pricing decisions will be finalised before commercial launch.
 
 ---
 
@@ -60,13 +68,21 @@ A merchant who downgrades from Professional to Free retains all member records, 
 | **Professional** | Established businesses that need the full feature set, automation, and reporting |
 | **Enterprise** | Businesses with multiple locations, large member bases, or custom integration needs |
 
-> **Note:** Feature limits, member caps, transaction limits, and pricing amounts for each plan will be determined by the Product Owner before commercial launch. Do not implement any plan enforcement logic until limits are formally approved and documented in `docs/08-Product-Decisions.md`.
+---
+
+## Plan Limits
+
+**Plan limits are intentionally deferred and will be determined before commercial launch.**
+
+Limits will be set after beta testing and feedback from real merchants. Defining limits before real usage data is available risks either restricting legitimate use or under-monetising the product.
+
+Do not implement any plan limit enforcement logic until limits are formally approved and documented in `docs/08-Product-Decisions.md`.
 
 ---
 
 ## Plan Feature Matrix (Placeholder)
 
-The table below identifies feature categories by plan. Specific limits are to be confirmed.
+The table below identifies feature categories by plan. All limits are to be confirmed after beta testing.
 
 | Feature | Free | Starter | Professional | Enterprise |
 |---|---|---|---|---|
@@ -83,7 +99,17 @@ The table below identifies feature categories by plan. Specific limits are to be
 | Custom branding | — | — | TBD | TBD |
 | Multi-location | — | — | — | TBD |
 
-**Pricing will be determined before commercial launch.**
+**Pricing will be determined before commercial launch after market validation in Thailand.**
+
+---
+
+## Plan Limit Enforcement Principle
+
+When plan limits are eventually implemented, the following product principle must guide the enforcement behaviour:
+
+> **The merchant experience should never be interrupted unexpectedly while serving customers.**
+
+The exact enforcement behaviour — whether a soft warning, a grace period, an auto-upgrade prompt, or another approach — will be decided by the Product Owner before billing implementation begins. No enforcement behaviour may be implemented without explicit approval.
 
 ---
 
@@ -91,11 +117,12 @@ The table below identifies feature categories by plan. Specific limits are to be
 
 The following are planning notes only. No billing infrastructure exists in MVP.
 
-- Billing will be handled by a third-party payment provider (to be selected).
+- The payment gateway provider has not been selected. Selection will occur during the subscription billing implementation phase. Do not recommend or commit to any provider until a formal decision is made.
+- Billing will be monthly only at Version 1.0 launch.
 - Invoices will be issued by email.
 - Plan changes take effect at the start of the next billing cycle.
 - Downgrade behaviour (feature restriction, not data deletion) must be explicitly designed before implementation.
 
 ---
 
-*All pricing amounts, plan limits, and billing implementation must be approved by the Product Owner and recorded in `docs/08-Product-Decisions.md` before any enforcement logic is built.*
+*All pricing amounts, plan limits, enforcement behaviour, and billing implementation must be approved by the Product Owner and recorded in `docs/08-Product-Decisions.md` before any related code is written.*
