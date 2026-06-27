@@ -13,12 +13,25 @@
         </a>
     </div>
 
+    {{-- Filter Tabs --}}
+    <div class="mb-3">
+        <div class="btn-group btn-group-sm" role="group" aria-label="Member filter">
+            @foreach (['active' => 'Active', 'archived' => 'Archived', 'all' => 'All'] as $value => $label)
+                <a href="{{ route('members', array_merge(request()->except(['filter', 'page']), ['filter' => $value])) }}"
+                   class="btn {{ $filter === $value ? 'btn-primary' : 'btn-outline-secondary' }}">
+                    {{ $label }}
+                </a>
+            @endforeach
+        </div>
+    </div>
+
     {{-- Search Bar --}}
     <div class="card mb-3">
         <div class="card-body py-3">
             <form method="GET" action="{{ route('members') }}" class="row g-2 align-items-end">
                 <input type="hidden" name="sort" value="{{ $sort }}">
                 <input type="hidden" name="direction" value="{{ $direction }}">
+                <input type="hidden" name="filter" value="{{ $filter }}">
                 <div class="col-12 col-md-5">
                     <label for="search_name" class="form-label form-label-sm mb-1">Full Name</label>
                     <input type="text"
@@ -42,7 +55,7 @@
                         <i class="bi bi-search me-1"></i> Search
                     </button>
                     @if(request('search_name') || request('search_phone'))
-                        <a href="{{ route('members') }}" class="btn btn-sm btn-outline-secondary w-100">Clear</a>
+                        <a href="{{ route('members', ['filter' => $filter]) }}" class="btn btn-sm btn-outline-secondary w-100">Clear</a>
                     @endif
                 </div>
             </form>
@@ -61,7 +74,12 @@
                         <h5 class="fw-semibold mb-2">No members found</h5>
                         <p class="text-muted mb-0" style="max-width:380px;margin:0 auto;">
                             No members matched your search. Try different keywords or
-                            <a href="{{ route('members') }}">clear the search</a>.
+                            <a href="{{ route('members', ['filter' => $filter]) }}">clear the search</a>.
+                        </p>
+                    @elseif($filter === 'archived')
+                        <h5 class="fw-semibold mb-2">No archived members</h5>
+                        <p class="text-muted mb-0" style="max-width:380px;margin:0 auto;">
+                            Archived members will appear here once a member is archived.
                         </p>
                     @else
                         <h5 class="fw-semibold mb-2">No members yet</h5>
@@ -77,9 +95,7 @@
                             <tr>
                                 <th class="ps-4" style="width:80px;">QR Code</th>
                                 <th>
-                                    @php
-                                        $nameDir = ($sort === 'name' && $direction === 'asc') ? 'desc' : 'asc';
-                                    @endphp
+                                    @php $nameDir = ($sort === 'name' && $direction === 'asc') ? 'desc' : 'asc'; @endphp
                                     <a href="{{ route('members', array_merge(request()->query(), ['sort' => 'name', 'direction' => $nameDir])) }}"
                                        class="text-decoration-none text-dark d-inline-flex align-items-center gap-1">
                                         Full Name
@@ -94,9 +110,7 @@
                                 <th>Mobile Number</th>
                                 <th>Email</th>
                                 <th>
-                                    @php
-                                        $bdDir = ($sort === 'birthday' && $direction === 'asc') ? 'desc' : 'asc';
-                                    @endphp
+                                    @php $bdDir = ($sort === 'birthday' && $direction === 'asc') ? 'desc' : 'asc'; @endphp
                                     <a href="{{ route('members', array_merge(request()->query(), ['sort' => 'birthday', 'direction' => $bdDir])) }}"
                                        class="text-decoration-none text-dark d-inline-flex align-items-center gap-1">
                                         Birthday
@@ -114,18 +128,18 @@
                         </thead>
                         <tbody>
                             @foreach ($members as $member)
-                                <tr>
+                                <tr class="{{ $member->trashed() ? 'text-muted' : '' }}">
                                     <td class="ps-4">
                                         <span class="badge bg-light text-secondary border font-monospace" style="font-size:.7rem;">
                                             {{ $member->member_code }}
                                         </span>
                                     </td>
                                     <td class="fw-medium">
-                                        <a href="{{ route('members.show', $member) }}" class="text-decoration-none">
+                                        <a href="{{ route('members.show', $member) }}" class="text-decoration-none {{ $member->trashed() ? 'text-muted' : '' }}">
                                             {{ $member->name }}
                                         </a>
                                     </td>
-                                    <td class="text-muted">{{ $member->nickname ?? '—' }}</td>
+                                    <td>{{ $member->nickname ?? '—' }}</td>
                                     <td>{{ $member->phone ?? '—' }}</td>
                                     <td>{{ $member->email ?? '—' }}</td>
                                     <td>
@@ -139,9 +153,13 @@
                                         {{ number_format($member->total_points) }}
                                     </td>
                                     <td>
-                                        <span class="{{ $member->status->badgeClass() }}">
-                                            {{ $member->status->label() }}
-                                        </span>
+                                        @if ($member->trashed())
+                                            <span class="badge bg-danger">Archived</span>
+                                        @else
+                                            <span class="{{ $member->status->badgeClass() }}">
+                                                {{ $member->status->label() }}
+                                            </span>
+                                        @endif
                                     </td>
                                     <td class="text-end pe-4">
                                         <button type="button"
@@ -174,6 +192,5 @@
             @endif
         </div>
     </div>
-
 
 </x-app-layout>

@@ -2,6 +2,8 @@
     <x-slot name="title">{{ $member->name }} – {{ config('app.name') }}</x-slot>
     <x-slot name="pageTitle">Members</x-slot>
 
+    @php $isArchived = $member->trashed(); @endphp
+
     {{-- Page Header --}}
     <div class="page-header d-flex align-items-start justify-content-between gap-3">
         <div>
@@ -12,12 +14,29 @@
             </div>
             <h1 class="d-flex align-items-center gap-2 flex-wrap">
                 {{ $member->name }}
-                <span class="{{ $member->status->badgeClass() }} fs-6 fw-normal">
-                    {{ $member->status->label() }}
-                </span>
+                @if ($isArchived)
+                    <span class="badge bg-danger fs-6 fw-normal">Archived</span>
+                @else
+                    <span class="{{ $member->status->badgeClass() }} fs-6 fw-normal">
+                        {{ $member->status->label() }}
+                    </span>
+                @endif
             </h1>
         </div>
         <div class="d-flex gap-2 flex-shrink-0">
+            @if ($isArchived)
+                <button type="button" class="btn btn-outline-success disabled" title="Coming in a future sprint">
+                    <i class="bi bi-arrow-counterclockwise me-1"></i>Restore Member
+                    <span class="badge bg-secondary ms-1" style="font-size:.65rem;">Coming Soon</span>
+                </button>
+            @else
+                <button type="button"
+                        class="btn btn-outline-danger"
+                        data-bs-toggle="modal"
+                        data-bs-target="#archiveModal">
+                    <i class="bi bi-archive me-1"></i>Archive Member
+                </button>
+            @endif
             <a href="{{ route('members') }}" class="btn btn-outline-secondary">
                 <i class="bi bi-arrow-left me-1"></i>Back
             </a>
@@ -26,12 +45,15 @@
 
     <div class="row g-3 mb-4">
 
-        {{-- Profile / Edit Form Card --}}
+        {{-- Profile Card --}}
         <div class="col-12 col-lg-5">
             <div class="card h-100">
                 <div class="card-header d-flex align-items-center gap-2">
                     <i class="bi bi-person text-primary"></i>
                     <span class="fw-semibold">Profile</span>
+                    @if ($isArchived)
+                        <span class="badge bg-danger ms-auto" style="font-size:.65rem;">Read-only</span>
+                    @endif
                 </div>
 
                 <form method="POST" action="{{ route('members.update', $member) }}" novalidate>
@@ -51,7 +73,8 @@
                                    class="form-control form-control-sm @error('name') is-invalid @enderror"
                                    value="{{ old('name', $member->name) }}"
                                    maxlength="150"
-                                   required>
+                                   required
+                                   {{ $isArchived ? 'disabled' : '' }}>
                             @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -65,7 +88,8 @@
                                    name="nickname"
                                    class="form-control form-control-sm @error('nickname') is-invalid @enderror"
                                    value="{{ old('nickname', $member->nickname) }}"
-                                   maxlength="50">
+                                   maxlength="50"
+                                   {{ $isArchived ? 'disabled' : '' }}>
                             @error('nickname')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -82,7 +106,8 @@
                                    class="form-control form-control-sm @error('phone') is-invalid @enderror"
                                    value="{{ old('phone', $member->phone) }}"
                                    maxlength="30"
-                                   required>
+                                   required
+                                   {{ $isArchived ? 'disabled' : '' }}>
                             @error('phone')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -96,7 +121,8 @@
                                    name="email"
                                    class="form-control form-control-sm @error('email') is-invalid @enderror"
                                    value="{{ old('email', $member->email) }}"
-                                   maxlength="255">
+                                   maxlength="255"
+                                   {{ $isArchived ? 'disabled' : '' }}>
                             @error('email')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -112,7 +138,8 @@
                                    name="birthday"
                                    class="form-control form-control-sm @error('birthday') is-invalid @enderror"
                                    value="{{ old('birthday', $member->birthday?->format('Y-m-d')) }}"
-                                   required>
+                                   required
+                                   {{ $isArchived ? 'disabled' : '' }}>
                             @error('birthday')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -125,7 +152,8 @@
                                       name="notes"
                                       class="form-control form-control-sm @error('notes') is-invalid @enderror"
                                       rows="3"
-                                      maxlength="500">{{ old('notes', $member->notes) }}</textarea>
+                                      maxlength="500"
+                                      {{ $isArchived ? 'disabled' : '' }}>{{ old('notes', $member->notes) }}</textarea>
                             @error('notes')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -140,7 +168,11 @@
 
                             <dt class="col-5 text-muted fw-normal">Status</dt>
                             <dd class="col-7 mb-0">
-                                <span class="{{ $member->status->badgeClass() }}">{{ $member->status->label() }}</span>
+                                @if ($isArchived)
+                                    <span class="badge bg-danger">Archived</span>
+                                @else
+                                    <span class="{{ $member->status->badgeClass() }}">{{ $member->status->label() }}</span>
+                                @endif
                             </dd>
 
                             <dt class="col-5 text-muted fw-normal">Member Code</dt>
@@ -149,14 +181,16 @@
 
                     </div>
 
-                    <div class="card-footer bg-transparent d-flex gap-2">
-                        <button type="submit" class="btn btn-primary btn-sm">
-                            <i class="bi bi-check-lg me-1"></i>Save Changes
-                        </button>
-                        <a href="{{ route('members.show', $member) }}" class="btn btn-outline-secondary btn-sm">
-                            Discard
-                        </a>
-                    </div>
+                    @unless ($isArchived)
+                        <div class="card-footer bg-transparent d-flex gap-2">
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                <i class="bi bi-check-lg me-1"></i>Save Changes
+                            </button>
+                            <a href="{{ route('members.show', $member) }}" class="btn btn-outline-secondary btn-sm">
+                                Discard
+                            </a>
+                        </div>
+                    @endunless
 
                 </form>
             </div>
@@ -277,7 +311,11 @@
 
                     <dt class="col-sm-3 text-muted fw-normal">Status</dt>
                     <dd class="col-sm-9 mb-0">
-                        <span class="{{ $member->status->badgeClass() }}">{{ $member->status->label() }}</span>
+                        @if ($isArchived)
+                            <span class="badge bg-danger">Archived</span>
+                        @else
+                            <span class="{{ $member->status->badgeClass() }}">{{ $member->status->label() }}</span>
+                        @endif
                     </dd>
 
                     <dt class="col-sm-3 text-muted fw-normal">Member Code</dt>
@@ -312,5 +350,37 @@
 
         </div>
     </div>
+
+    {{-- Archive Confirmation Modal --}}
+    @unless ($isArchived)
+        <div class="modal fade" id="archiveModal" tabindex="-1" aria-labelledby="archiveModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-0 pb-0">
+                        <h5 class="modal-title text-danger" id="archiveModalLabel">
+                            <i class="bi bi-archive me-2"></i>Archive Member
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="mb-1">Are you sure you want to archive <strong>{{ $member->name }}</strong>?</p>
+                        <p class="text-muted small mb-0">
+                            This member will be removed from your active list. Archiving does not delete any data.
+                        </p>
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <form method="POST" action="{{ route('members.archive', $member) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-archive me-1"></i>Archive Member
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endunless
 
 </x-app-layout>

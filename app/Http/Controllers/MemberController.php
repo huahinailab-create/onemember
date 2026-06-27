@@ -11,9 +11,7 @@ class MemberController extends Controller
 {
     public function show(Request $request, Member $member)
     {
-        $merchantId = $request->user()->merchant?->id;
-
-        abort_unless($member->merchant_id === $merchantId, 403);
+        abort_unless($member->merchant_id === $request->user()->merchant?->id, 403);
 
         return view('members.show', compact('member'));
     }
@@ -21,11 +19,22 @@ class MemberController extends Controller
     public function update(UpdateMemberRequest $request, Member $member)
     {
         abort_unless($member->merchant_id === $request->user()->merchant?->id, 403);
+        abort_if($member->trashed(), 403);
 
         $member->update($request->validated());
 
         return redirect()->route('members.show', $member)
                          ->with('success', 'Member updated successfully.');
+    }
+
+    public function archive(Request $request, Member $member)
+    {
+        abort_unless($member->merchant_id === $request->user()->merchant?->id, 403);
+        abort_if($member->trashed(), 409);
+
+        $member->delete();
+
+        return redirect()->route('members')->with('success', 'Member archived successfully.');
     }
 
     public function create()
@@ -45,10 +54,21 @@ class MemberController extends Controller
     public function index(Request $request)
     {
         $merchant = $request->user()->merchant;
+        $filter   = $request->input('filter', 'active');
 
-        $query = $merchant
-            ? Member::where('merchant_id', $merchant->id)
-            : Member::whereNull('id'); // no merchant yet → empty result
+        if (!in_array($filter, ['active', 'archived', 'all'])) {
+            $filter = 'active';
+        }
+
+        if (!$merchant) {
+            $query = Member::whereNull('id');
+        } elseif ($filter === 'archived') {
+            $query = Member::onlyTrashed()->where('merchant_id', $merchant->id);
+        } elseif ($filter === 'all') {
+            $query = Member::withTrashed()->where('merchant_id', $merchant->id);
+        } else {
+            $query = Member::where('merchant_id', $merchant->id);
+        }
 
         if ($search = $request->input('search_name')) {
             $query->where('name', 'like', '%' . $search . '%');
@@ -58,7 +78,7 @@ class MemberController extends Controller
             $query->where('phone', 'like', '%' . $search . '%');
         }
 
-        $sort = $request->input('sort', 'name');
+        $sort      = $request->input('sort', 'name');
         $direction = $request->input('direction', 'asc');
 
         if (!in_array($sort, ['name', 'birthday'])) {
@@ -70,6 +90,6 @@ class MemberController extends Controller
 
         $members = $query->orderBy($sort, $direction)->paginate(10)->withQueryString();
 
-        return view('members.index', compact('members', 'sort', 'direction'));
+        return view('members.index', compact('members', 'sort', 'direction', 'filter'));
     }
 }

@@ -39,6 +39,13 @@ class Member extends Model
         'lifetime_points'  => 'integer',
     ];
 
+    public function resolveRouteBinding($value, $field = null): ?static
+    {
+        return $this->withTrashed()
+                    ->where($field ?? $this->getRouteKeyName(), $value)
+                    ->firstOrFail();
+    }
+
     protected static function booted(): void
     {
         static::creating(function (Member $member) {
