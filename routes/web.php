@@ -19,6 +19,32 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/merchant/profile', [MerchantProfileController::class, 'edit'])->name('merchant.profile.edit');
     Route::put('/merchant/profile', [MerchantProfileController::class, 'update'])->name('merchant.profile.update');
+
+    // Placeholder routes — to be implemented in future sprints
+    Route::get('/members', fn () => view('coming-soon', [
+        'pageTitle' => 'Members',
+        'icon'      => 'bi-people',
+    ]))->name('members');
+
+    Route::get('/loyalty-programs', fn () => view('coming-soon', [
+        'pageTitle' => 'Loyalty Programs',
+        'icon'      => 'bi-star',
+    ]))->name('loyalty-programs');
+
+    Route::get('/rewards', fn () => view('coming-soon', [
+        'pageTitle' => 'Rewards',
+        'icon'      => 'bi-gift',
+    ]))->name('rewards');
+
+    Route::get('/transactions', fn () => view('coming-soon', [
+        'pageTitle' => 'Transactions',
+        'icon'      => 'bi-arrow-left-right',
+    ]))->name('transactions');
+
+    Route::get('/reports', fn () => view('coming-soon', [
+        'pageTitle' => 'Reports',
+        'icon'      => 'bi-bar-chart-line',
+    ]))->name('reports');
 });
 
 require __DIR__.'/auth.php';

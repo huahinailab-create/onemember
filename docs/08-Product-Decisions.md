@@ -104,4 +104,24 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-009] OneMember Brand Color Palette (Admin Shell)
+- **Date:** 2026-06-27
+- **Requested by:** Product Owner (Sprint 2 Task 2.2)
+- **Status:** Approved
+- **Decision:** The admin shell uses the color palette already established in Task 2.1: sidebar background `#1e293b` (dark slate), sidebar hover `#334155`, nav text `#94a3b8`, Bootstrap default primary blue (`#0d6efd`) for accents. Body background `#f8f9fa`. No new brand palette is introduced until the Product Owner specifies one.
+- **Reason:** Consistency with already-approved and committed layout. Avoids inventing brand colors without instruction.
+- **Impact:** `resources/css/app.css`, all Blade layouts.
+
+---
+
+### [DECISION-010] Collapsible Sidebar Implementation
+- **Date:** 2026-06-27
+- **Requested by:** Product Owner (Sprint 2 Task 2.2)
+- **Status:** Approved
+- **Decision:** The sidebar collapses to `width: 0` (hidden) on toggle using Alpine.js `x-data`/`:class` with a CSS `transition`. A hamburger button (`bi-list` icon) in the topbar triggers the toggle. No icon-only collapsed state — full hide/show only.
+- **Reason:** KISS. Full icon-only sidebar requires additional complexity not requested in the sprint.
+- **Impact:** `resources/views/layouts/app.blade.php`, `resources/css/app.css`.
+
+---
+
 *New decisions must be appended above this line in the format shown.*
