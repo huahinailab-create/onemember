@@ -120,7 +120,11 @@
                                             {{ $member->member_code }}
                                         </span>
                                     </td>
-                                    <td class="fw-medium">{{ $member->name }}</td>
+                                    <td class="fw-medium">
+                                        <a href="{{ route('members.show', $member) }}" class="text-decoration-none">
+                                            {{ $member->name }}
+                                        </a>
+                                    </td>
                                     <td class="text-muted">{{ $member->nickname ?? '—' }}</td>
                                     <td>{{ $member->phone ?? '—' }}</td>
                                     <td>{{ $member->email ?? '—' }}</td>

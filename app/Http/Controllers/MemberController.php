@@ -8,6 +8,15 @@ use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
+    public function show(Request $request, Member $member)
+    {
+        $merchantId = $request->user()->merchant?->id;
+
+        abort_unless($member->merchant_id === $merchantId, 403);
+
+        return view('members.show', compact('member'));
+    }
+
     public function create()
     {
         return view('members.create');
