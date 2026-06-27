@@ -124,4 +124,14 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-011] Members Table — Nickname Column (Sprint 2 Task 2.3)
+- **Date:** 2026-06-27
+- **Requested by:** Product Owner (Sprint 2 Task 2.3 spec)
+- **Status:** Approved
+- **Decision:** Add a nullable `nickname` column (varchar 100) to the `members` table. Display it in the Members List page between Full Name and Mobile Number.
+- **Reason:** Required column in the Members List page specification. Not present in the original migration.
+- **Impact:** New migration `2026_06_27_200001_add_nickname_to_members_table`, `app/Models/Member.php` fillable array.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

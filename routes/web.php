@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MerchantProfileController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -20,11 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/merchant/profile', [MerchantProfileController::class, 'edit'])->name('merchant.profile.edit');
     Route::put('/merchant/profile', [MerchantProfileController::class, 'update'])->name('merchant.profile.update');
 
-    // Placeholder routes — to be implemented in future sprints
-    Route::get('/members', fn () => view('coming-soon', [
-        'pageTitle' => 'Members',
-        'icon'      => 'bi-people',
-    ]))->name('members');
+    Route::get('/members', [MemberController::class, 'index'])->name('members');
 
     Route::get('/loyalty-programs', fn () => view('coming-soon', [
         'pageTitle' => 'Loyalty Programs',
