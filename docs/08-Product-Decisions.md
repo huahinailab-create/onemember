@@ -84,4 +84,24 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-007] Laravel Breeze (Blade + Alpine.js) as Authentication System
+- **Date:** 2026-06-27
+- **Requested by:** Product Owner
+- **Status:** Approved
+- **Decision:** Install `laravel/breeze` using the Blade + Alpine.js stack as the permanent authentication system. No React, Vue, Livewire, or Inertia.
+- **Reason:** Standard Laravel auth scaffolding. Blade keeps the stack consistent with the rest of the application. Alpine.js provides lightweight interactivity without a full JS framework.
+- **Impact:** Adds auth routes (login, register, password reset, email verification), auth views in `resources/views/auth/`, and a `dashboard` route. Publishes to `routes/auth.php`.
+
+---
+
+### [DECISION-008] Merchant Profile Fields (Sprint 2)
+- **Date:** 2026-06-27
+- **Requested by:** Product Owner
+- **Status:** Approved
+- **Decision:** The merchant profile page captures: Business Name, Contact Person, Business Email, Mobile Number, Business Address, Business Logo (placeholder only), Currency (default THB), Time Zone (default Asia/Bangkok).
+- **Reason:** Core merchant identity data required before any loyalty program setup.
+- **Impact:** New migration to add `contact_person` and `timezone` columns to `merchants` table (other fields already exist). New controller, form request, and view.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

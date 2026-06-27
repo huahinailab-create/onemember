@@ -17,6 +17,7 @@ class Merchant extends Model
     protected $fillable = [
         'user_id',
         'name',
+        'contact_person',
         'slug',
         'email',
         'phone',
@@ -24,6 +25,7 @@ class Merchant extends Model
         'logo_path',
         'status',
         'currency',
+        'timezone',
         'settings',
     ];
 

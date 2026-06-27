@@ -6,7 +6,7 @@
 
 /* ── Custom application styles ─────────────────────────── */
 :root {
-    --bs-font-sans-serif: 'Inter', system-ui, -apple-system, sans-serif;
+    --bs-font-sans-serif: 'Figtree', system-ui, -apple-system, sans-serif;
 }
 
 body {

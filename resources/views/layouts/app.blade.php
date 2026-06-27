@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', config('app.name')) – {{ config('app.name') }}</title>
+    <title>{{ $title ?? config('app.name') }}</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    @stack('styles')
 </head>
 <body>
 
@@ -29,11 +27,36 @@
 
         {{-- Navigation --}}
         <ul class="nav flex-column gap-1">
-            @yield('sidebar-nav')
+            <li class="nav-item">
+                <a href="{{ route('dashboard') }}"
+                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                    <i class="bi bi-speedometer2"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('merchant.profile.edit') }}"
+                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('merchant.profile.*') ? 'active' : '' }}">
+                    <i class="bi bi-shop"></i>
+                    <span>Merchant Profile</span>
+                </a>
+            </li>
         </ul>
 
-        <div class="mt-auto">
-            @yield('sidebar-footer')
+        {{-- User / Logout --}}
+        <div class="mt-auto border-top border-secondary pt-3">
+            <div class="d-flex align-items-center gap-2 px-2 mb-2">
+                <i class="bi bi-person-circle fs-5 text-secondary"></i>
+                <span class="small text-truncate" style="color:#94a3b8;">{{ Auth::user()->name }}</span>
+            </div>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit"
+                        class="nav-link d-flex align-items-center gap-2 px-3 py-2 w-100 border-0 bg-transparent text-start">
+                    <i class="bi bi-box-arrow-left"></i>
+                    <span>Log Out</span>
+                </button>
+            </form>
         </div>
     </nav>
 
@@ -41,13 +64,8 @@
     <div class="main-content d-flex flex-column">
 
         {{-- Topbar --}}
-        <header class="topbar d-flex align-items-center justify-content-between px-4" style="position: sticky; top: 0; z-index: 100;">
-            <div class="d-flex align-items-center gap-2">
-                @yield('page-breadcrumb')
-            </div>
-            <div class="d-flex align-items-center gap-3">
-                @yield('topbar-actions')
-            </div>
+        <header class="topbar d-flex align-items-center px-4" style="position: sticky; top: 0; z-index: 100;">
+            <div class="fw-semibold text-dark">{{ $pageTitle ?? '' }}</div>
         </header>
 
         {{-- Page content --}}
@@ -67,10 +85,9 @@
                 </div>
             @endif
 
-            @yield('content')
+            {{ $slot }}
         </main>
 
-        {{-- Footer --}}
         <footer class="px-4 py-3 border-top text-muted small">
             &copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
         </footer>
@@ -78,6 +95,5 @@
     </div>
 </div>
 
-@stack('scripts')
 </body>
 </html>
