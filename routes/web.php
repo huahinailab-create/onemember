@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/members/create', [MemberController::class, 'create'])->name('members.create');
     Route::post('/members', [MemberController::class, 'store'])->name('members.store');
     Route::get('/members/{member}', [MemberController::class, 'show'])->name('members.show');
+    Route::put('/members/{member}', [MemberController::class, 'update'])->name('members.update');
 
     Route::get('/loyalty-programs', fn () => view('coming-soon', [
         'pageTitle' => 'Loyalty Programs',

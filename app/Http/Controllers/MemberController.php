@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMemberRequest;
+use App\Http\Requests\UpdateMemberRequest;
 use App\Models\Member;
 use Illuminate\Http\Request;
 
@@ -15,6 +16,16 @@ class MemberController extends Controller
         abort_unless($member->merchant_id === $merchantId, 403);
 
         return view('members.show', compact('member'));
+    }
+
+    public function update(UpdateMemberRequest $request, Member $member)
+    {
+        abort_unless($member->merchant_id === $request->user()->merchant?->id, 403);
+
+        $member->update($request->validated());
+
+        return redirect()->route('members.show', $member)
+                         ->with('success', 'Member updated successfully.');
     }
 
     public function create()

@@ -18,9 +18,6 @@
             </h1>
         </div>
         <div class="d-flex gap-2 flex-shrink-0">
-            <button type="button" class="btn btn-outline-primary disabled" title="Coming in a future task">
-                <i class="bi bi-pencil me-1"></i>Edit
-            </button>
             <a href="{{ route('members') }}" class="btn btn-outline-secondary">
                 <i class="bi bi-arrow-left me-1"></i>Back
             </a>
@@ -29,52 +26,139 @@
 
     <div class="row g-3 mb-4">
 
-        {{-- Profile Card --}}
+        {{-- Profile / Edit Form Card --}}
         <div class="col-12 col-lg-5">
             <div class="card h-100">
                 <div class="card-header d-flex align-items-center gap-2">
                     <i class="bi bi-person text-primary"></i>
                     <span class="fw-semibold">Profile</span>
                 </div>
-                <div class="card-body">
-                    <dl class="row mb-0" style="row-gap:.75rem;">
-                        <dt class="col-5 text-muted fw-normal small">Full Name</dt>
-                        <dd class="col-7 mb-0 fw-medium">{{ $member->name }}</dd>
 
-                        <dt class="col-5 text-muted fw-normal small">Nickname</dt>
-                        <dd class="col-7 mb-0">{{ $member->nickname ?? '—' }}</dd>
+                <form method="POST" action="{{ route('members.update', $member) }}" novalidate>
+                    @csrf
+                    @method('PUT')
 
-                        <dt class="col-5 text-muted fw-normal small">Mobile Number</dt>
-                        <dd class="col-7 mb-0">{{ $member->phone ?? '—' }}</dd>
+                    <div class="card-body">
 
-                        <dt class="col-5 text-muted fw-normal small">Email</dt>
-                        <dd class="col-7 mb-0">
-                            @if ($member->email)
-                                <a href="mailto:{{ $member->email }}" class="text-decoration-none">{{ $member->email }}</a>
-                            @else
-                                —
-                            @endif
-                        </dd>
+                        {{-- Full Name --}}
+                        <div class="mb-3">
+                            <label for="name" class="form-label form-label-sm">
+                                Full Name <span class="text-danger">*</span>
+                            </label>
+                            <input type="text"
+                                   id="name"
+                                   name="name"
+                                   class="form-control form-control-sm @error('name') is-invalid @enderror"
+                                   value="{{ old('name', $member->name) }}"
+                                   maxlength="150"
+                                   required>
+                            @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-                        <dt class="col-5 text-muted fw-normal small">Birthday</dt>
-                        <dd class="col-7 mb-0">
-                            {{ $member->birthday ? $member->birthday->format('d M Y') : '—' }}
-                        </dd>
+                        {{-- Nickname --}}
+                        <div class="mb-3">
+                            <label for="nickname" class="form-label form-label-sm">Nickname</label>
+                            <input type="text"
+                                   id="nickname"
+                                   name="nickname"
+                                   class="form-control form-control-sm @error('nickname') is-invalid @enderror"
+                                   value="{{ old('nickname', $member->nickname) }}"
+                                   maxlength="50">
+                            @error('nickname')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-                        <dt class="col-5 text-muted fw-normal small">Member Since</dt>
-                        <dd class="col-7 mb-0">{{ $member->joined_at->format('d M Y') }}</dd>
+                        {{-- Mobile Number --}}
+                        <div class="mb-3">
+                            <label for="phone" class="form-label form-label-sm">
+                                Mobile Number <span class="text-danger">*</span>
+                            </label>
+                            <input type="text"
+                                   id="phone"
+                                   name="phone"
+                                   class="form-control form-control-sm @error('phone') is-invalid @enderror"
+                                   value="{{ old('phone', $member->phone) }}"
+                                   maxlength="30"
+                                   required>
+                            @error('phone')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-                        <dt class="col-5 text-muted fw-normal small">Status</dt>
-                        <dd class="col-7 mb-0">
-                            <span class="{{ $member->status->badgeClass() }}">{{ $member->status->label() }}</span>
-                        </dd>
+                        {{-- Email --}}
+                        <div class="mb-3">
+                            <label for="email" class="form-label form-label-sm">Email</label>
+                            <input type="email"
+                                   id="email"
+                                   name="email"
+                                   class="form-control form-control-sm @error('email') is-invalid @enderror"
+                                   value="{{ old('email', $member->email) }}"
+                                   maxlength="255">
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-                        @if ($member->notes)
-                            <dt class="col-5 text-muted fw-normal small">Notes</dt>
-                            <dd class="col-7 mb-0" style="white-space:pre-line;">{{ $member->notes }}</dd>
-                        @endif
-                    </dl>
-                </div>
+                        {{-- Birthday --}}
+                        <div class="mb-3">
+                            <label for="birthday" class="form-label form-label-sm">
+                                Date of Birth <span class="text-danger">*</span>
+                            </label>
+                            <input type="date"
+                                   id="birthday"
+                                   name="birthday"
+                                   class="form-control form-control-sm @error('birthday') is-invalid @enderror"
+                                   value="{{ old('birthday', $member->birthday?->format('Y-m-d')) }}"
+                                   required>
+                            @error('birthday')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- Notes --}}
+                        <div class="mb-3">
+                            <label for="notes" class="form-label form-label-sm">Notes</label>
+                            <textarea id="notes"
+                                      name="notes"
+                                      class="form-control form-control-sm @error('notes') is-invalid @enderror"
+                                      rows="3"
+                                      maxlength="500">{{ old('notes', $member->notes) }}</textarea>
+                            @error('notes')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <hr class="my-3">
+
+                        {{-- Read-only fields --}}
+                        <dl class="row mb-0 small" style="row-gap:.5rem;">
+                            <dt class="col-5 text-muted fw-normal">Member Since</dt>
+                            <dd class="col-7 mb-0">{{ $member->joined_at->format('d M Y') }}</dd>
+
+                            <dt class="col-5 text-muted fw-normal">Status</dt>
+                            <dd class="col-7 mb-0">
+                                <span class="{{ $member->status->badgeClass() }}">{{ $member->status->label() }}</span>
+                            </dd>
+
+                            <dt class="col-5 text-muted fw-normal">Member Code</dt>
+                            <dd class="col-7 mb-0 font-monospace">{{ $member->member_code }}</dd>
+                        </dl>
+
+                    </div>
+
+                    <div class="card-footer bg-transparent d-flex gap-2">
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            <i class="bi bi-check-lg me-1"></i>Save Changes
+                        </button>
+                        <a href="{{ route('members.show', $member) }}" class="btn btn-outline-secondary btn-sm">
+                            Discard
+                        </a>
+                    </div>
+
+                </form>
             </div>
         </div>
 
@@ -162,7 +246,7 @@
         </div>
         <div class="tab-content" id="memberTabsContent">
 
-            {{-- Profile Tab --}}
+            {{-- Profile Tab — read-only summary --}}
             <div class="tab-pane fade show active p-4" id="pane-profile" role="tabpanel">
                 <dl class="row mb-0" style="row-gap:.75rem;">
                     <dt class="col-sm-3 text-muted fw-normal">Full Name</dt>
@@ -212,10 +296,10 @@
 
             {{-- Coming Soon Tabs --}}
             @foreach ([
-                'pane-points'       => ['icon' => 'bi-clock-history', 'label' => 'Points History'],
-                'pane-rewards'      => ['icon' => 'bi-gift',          'label' => 'Rewards'],
+                'pane-points'       => ['icon' => 'bi-clock-history',    'label' => 'Points History'],
+                'pane-rewards'      => ['icon' => 'bi-gift',             'label' => 'Rewards'],
                 'pane-transactions' => ['icon' => 'bi-arrow-left-right', 'label' => 'Transactions'],
-                'pane-notes'        => ['icon' => 'bi-journal-text',  'label' => 'Notes'],
+                'pane-notes'        => ['icon' => 'bi-journal-text',     'label' => 'Notes'],
             ] as $paneId => $meta)
                 <div class="tab-pane fade text-center py-5" id="{{ $paneId }}" role="tabpanel">
                     <div class="coming-soon-icon bg-primary bg-opacity-10 mx-auto">
