@@ -39,6 +39,16 @@ class User extends Authenticatable implements MustVerifyEmail
                 $user->password_changed_at = now();
             }
         });
+
+        static::updated(function (User $user) {
+            if ($user->wasChanged('password')) {
+                app(\App\Services\SecurityLogger::class)->passwordChanged(
+                    $user->id,
+                    $user->email,
+                    $user->merchant?->id
+                );
+            }
+        });
     }
 
     public function merchant(): HasOne

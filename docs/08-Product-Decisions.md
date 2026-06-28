@@ -596,4 +596,23 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-047] Security Logging Architecture — Sprint 5.4.4
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 5.4.4 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **`SecurityLogger` service** (`app/Services/SecurityLogger.php`) — the single entry point for all security event logging. Each event type is a typed public method (e.g., `loginSucceeded()`, `passwordChanged()`). All writes go through a private `write()` method that assembles the structured payload and calls `Log::channel('security')`. Controllers and observers call the service by resolving it from the container.
+  2. **`SecurityEventSubscriber`** (`app/Listeners/SecurityEventSubscriber.php`) — a Laravel event subscriber that maps built-in Laravel auth events to `SecurityLogger` methods. Auto-discovered by Laravel 11's event discovery (no manual registration required). Covers: `Login`, `Failed`, `Logout`, `PasswordResetLinkSent`, `PasswordReset`, `Verified`, `Registered`.
+  3. **Dedicated `security` log channel** (`config/logging.php`) — `daily` driver writing to `storage/logs/security.log`, retained for 90 days, level `info`. Separate from the application log so security events can be forwarded independently to a SIEM in future.
+  4. **Log structure** — every entry includes `event`, `user_id`, `merchant_id`, `email`, `ip_address`, `user_agent`. The `timestamp` is added by Monolog. Context-only events (trial expiration) include `context` with business-relevant data instead of user fields. Fields are omitted rather than null-filled when not available for the event type.
+  5. **Sensitive data exclusions** — passwords, tokens, session IDs, cookies, API keys, and reset tokens are never passed to `SecurityLogger`. The service only receives IDs, emails, and status strings. This is enforced by the service API design (no method accepts a password or token parameter).
+  6. **Password changed hook** — added to `User::booted()` observer (`static::updated`) alongside the existing `password_changed_at` tracking. Fires after the model is saved, not before, so it logs only when the DB write succeeds.
+  7. **Merchant onboarding completed** — logged from `OnboardingController::storeQuickStart()` after `onboarding_completed_at` is persisted, before redirect. Single line, keeps controller thin.
+  8. **Trial expiration** — `ProcessExpiredTrials` command now calls `trialExpired()`, `subscriptionStatusChanged()`, and `subscriptionPlanChanged()` per merchant. The generic `Log::info('ProcessExpiredTrials completed.')` call is removed; the per-merchant security log entries replace it.
+  9. **How to add future events** — (a) add a typed public method to `SecurityLogger`; (b) if it maps to a built-in Laravel event, add a handler method and `$events->listen()` call to `SecurityEventSubscriber`; (c) if it's a custom trigger, call `app(SecurityLogger::class)->myEvent(...)` at the call site.
+- **Reason:** Centralised, structured security logging is a prerequisite for production observability. All events go through one service, making it easy to change the log destination (e.g., add a SIEM or alerting channel) without modifying business code.
+- **Impact:** New: `app/Services/SecurityLogger.php`, `app/Listeners/SecurityEventSubscriber.php`, `tests/Feature/SecurityLoggingTest.php`. Modified: `config/logging.php` (security channel), `app/Models/User.php` (password changed hook), `app/Http/Controllers/OnboardingController.php` (onboarding log), `app/Console/Commands/ProcessExpiredTrials.php` (trial expiration log).
+
+---
+
 *New decisions must be appended above this line in the format shown.*

@@ -197,6 +197,12 @@ class OnboardingController extends Controller
             'settings'                => $settings,
         ]);
 
+        app(\App\Services\SecurityLogger::class)->merchantOnboardingCompleted(
+            $request->user()->id,
+            $request->user()->email,
+            $merchant->id
+        );
+
         return redirect()->route('onboarding.finish');
     }
 

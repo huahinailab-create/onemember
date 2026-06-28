@@ -5,15 +5,15 @@ namespace App\Console\Commands;
 use App\Enums\SubscriptionPlan;
 use App\Enums\SubscriptionStatus;
 use App\Models\Merchant;
+use App\Services\SecurityLogger;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 
 class ProcessExpiredTrials extends Command
 {
     protected $signature   = 'subscriptions:process-expired-trials';
     protected $description = 'Downgrade merchants whose Professional trial has expired to the Free plan.';
 
-    public function handle(): int
+    public function handle(SecurityLogger $logger): int
     {
         $expired = Merchant::where('subscription_status', SubscriptionStatus::Trial)
             ->where('trial_ends_at', '<=', now())
@@ -31,17 +31,17 @@ class ProcessExpiredTrials extends Command
                 'subscription_status' => SubscriptionStatus::Expired,
                 'subscription_plan'   => SubscriptionPlan::Free,
             ]);
+
+            $logger->trialExpired($merchant->id, $merchant->name, 'professional');
+            $logger->subscriptionStatusChanged($merchant->id, 'trial', 'expired');
+            $logger->subscriptionPlanChanged($merchant->id, 'professional', 'free');
+
             $count++;
 
             $this->line("  Downgraded: {$merchant->name} (ID {$merchant->id})");
         }
 
         $this->info("Processed {$count} expired trial(s). All merchants moved to Free plan.");
-
-        Log::info('ProcessExpiredTrials completed.', [
-            'merchants_processed' => $count,
-            'run_at'              => now()->toIso8601String(),
-        ]);
 
         return Command::SUCCESS;
     }
