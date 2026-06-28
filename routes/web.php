@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MerchantProfileController;
 use App\Http\Controllers\ProfileController;
@@ -28,10 +29,13 @@ Route::middleware('auth')->group(function () {
     Route::put('/members/{member}', [MemberController::class, 'update'])->name('members.update');
     Route::delete('/members/{member}', [MemberController::class, 'archive'])->name('members.archive');
 
-    Route::get('/loyalty-programs', fn () => view('coming-soon', [
-        'pageTitle' => 'Loyalty Programs',
-        'icon'      => 'bi-star',
-    ]))->name('loyalty-programs');
+    Route::get('/campaigns', [CampaignController::class, 'index'])->name('campaigns.index');
+    Route::get('/campaigns/create', [CampaignController::class, 'create'])->name('campaigns.create');
+    Route::post('/campaigns', [CampaignController::class, 'store'])->name('campaigns.store');
+    Route::get('/campaigns/{campaign}', [CampaignController::class, 'show'])->name('campaigns.show');
+    Route::put('/campaigns/{campaign}', [CampaignController::class, 'update'])->name('campaigns.update');
+    Route::patch('/campaigns/{campaign}/pause', [CampaignController::class, 'pause'])->name('campaigns.pause');
+    Route::delete('/campaigns/{campaign}', [CampaignController::class, 'archive'])->name('campaigns.archive');
 
     Route::get('/rewards', fn () => view('coming-soon', [
         'pageTitle' => 'Rewards',

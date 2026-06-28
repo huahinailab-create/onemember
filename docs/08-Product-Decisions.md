@@ -244,4 +244,34 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-023] Campaign Status Column — Four-State Model on loyalty_programs (Sprint 3.1)
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 3.1 spec)
+- **Status:** Approved
+- **Decision:** Add a `status` varchar column (not null, default `draft`) to the `loyalty_programs` table via a new migration. Valid values: `draft`, `active`, `paused`. Archived campaigns are represented by a soft-deleted row (`deleted_at` not null) and are not stored as a separate status value. A new `App\Enums\CampaignStatus` enum (cases: Draft, Active, Paused) is added. The existing `is_active` boolean column is retained in the schema but is no longer the primary source of truth for campaign state; `status` is the authority from Sprint 3.1 onward.
+- **Reason:** The existing `is_active` boolean is insufficient for the four states (Draft, Active, Paused, Archived) required by the Campaign Management UI. A dedicated status column provides explicit, readable state without over-engineering a separate status table.
+- **Impact:** New migration `2026_06_28_000001_add_status_to_loyalty_programs_table.php`. New enum `app/Enums/CampaignStatus.php`. `app/Models/LoyaltyProgram.php` fillable and casts updated.
+
+---
+
+### [DECISION-024] Campaign UI Terminology — "Campaigns" Replaces "Loyalty Programs" in Navigation (Sprint 3.1)
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 3.1 spec)
+- **Status:** Approved
+- **Decision:** The sidebar navigation item and all UI labels use the term "Campaigns". The underlying database table remains `loyalty_programs` and the Eloquent model remains `LoyaltyProgram`. The `/loyalty-programs` coming-soon route is removed and replaced with `/campaigns` routes. The sidebar link is updated to point to `campaigns.index`.
+- **Reason:** The Product Owner's Sprint 3.1 spec consistently uses the term "Campaign" for this module. "Loyalty Programs" is retained only at the database and model layer for continuity with the existing schema.
+- **Impact:** `routes/web.php` (remove loyalty-programs closure, add CampaignController routes), `resources/views/layouts/app.blade.php` (sidebar link update).
+
+---
+
+### [DECISION-025] Business Type Gate Deferred Past Sprint 3.1 (Sprint 3.1)
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 3.1 spec)
+- **Status:** Approved
+- **Decision:** DECISION-018 states that business type selection must be implemented before campaign creation. The Product Owner has explicitly approved Sprint 3.1 (Campaign Management) without requiring the business type gate to be in place first. The business type gate will be enforced in a future sprint. Sprint 3.1 allows any authenticated merchant to create campaigns regardless of whether a business type has been set.
+- **Reason:** The Product Owner prioritised Campaign Management for Sprint 3.1 with full awareness of DECISION-018. The gate is deferred, not cancelled.
+- **Impact:** No business-type enforcement logic in Sprint 3.1. `docs/12-Merchant-User-Journey.md` Step 5 status remains "not yet implemented".
+
+---
+
 *New decisions must be appended above this line in the format shown.*

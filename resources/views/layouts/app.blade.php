@@ -44,10 +44,10 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('loyalty-programs') }}"
-                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('loyalty-programs') ? 'active' : '' }}">
+                <a href="{{ route('campaigns.index') }}"
+                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('campaigns.*') ? 'active' : '' }}">
                     <i class="bi bi-star"></i>
-                    <span>Loyalty Programs</span>
+                    <span>Campaigns</span>
                 </a>
             </li>
             <li class="nav-item">

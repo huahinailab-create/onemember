@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CampaignStatus;
 use App\Enums\LoyaltyProgramType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,6 +21,7 @@ class LoyaltyProgram extends Model
         'description',
         'points_per_unit',
         'is_active',
+        'status',
         'starts_at',
         'ends_at',
         'settings',
@@ -27,12 +29,20 @@ class LoyaltyProgram extends Model
 
     protected $casts = [
         'type'            => LoyaltyProgramType::class,
+        'status'          => CampaignStatus::class,
         'points_per_unit' => 'decimal:2',
         'is_active'       => 'boolean',
         'starts_at'       => 'datetime',
         'ends_at'         => 'datetime',
         'settings'        => 'array',
     ];
+
+    public function resolveRouteBinding($value, $field = null): ?static
+    {
+        return $this->withTrashed()
+                    ->where($field ?? $this->getRouteKeyName(), $value)
+                    ->firstOrFail();
+    }
 
     public function merchant(): BelongsTo
     {
