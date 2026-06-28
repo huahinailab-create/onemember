@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->prefix('onboarding')->name('onboarding.')->group(function () {
+Route::middleware(['auth', 'verified'])->prefix('onboarding')->name('onboarding.')->group(function () {
     Route::get('/',                [OnboardingController::class, 'index'])->name('index');
     Route::get('/welcome',         [OnboardingController::class, 'welcome'])->name('welcome');
     Route::get('/skip',            [OnboardingController::class, 'skip'])->name('skip');
@@ -34,10 +34,12 @@ Route::middleware('auth')->prefix('onboarding')->name('onboarding.')->group(func
     Route::get('/finish',  [OnboardingController::class, 'finish'])->name('finish');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->middleware('password.confirm')
+        ->name('profile.destroy');
 
     // Subscription Centre
     Route::get('/subscription', [SubscriptionController::class, 'index'])->name('subscription.index');

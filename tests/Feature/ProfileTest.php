@@ -67,6 +67,7 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
+            ->withSession(['auth.password_confirmed_at' => time()])
             ->delete('/profile', [
                 'password' => 'password',
             ]);
@@ -85,6 +86,7 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
+            ->withSession(['auth.password_confirmed_at' => time()])
             ->from('/profile')
             ->delete('/profile', [
                 'password' => 'wrong-password',

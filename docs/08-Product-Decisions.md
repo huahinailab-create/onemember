@@ -536,4 +536,21 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-044] Authentication Hardening — Sprint 5.4.1
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 5.4.1 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **Password policy** — `Password::defaults()` configured globally in `AppServiceProvider::boot()` to require: minimum 12 characters, mixed case (upper + lower), at least one number, at least one symbol. This single configuration propagates to all three password validation points: registration (`RegisteredUserController`), password reset (`NewPasswordController`), and password change (`Auth\PasswordController`).
+  2. **Email verification enforced** — `User` model implements `MustVerifyEmail`. The `verified` middleware is added to all authenticated route groups (main group and onboarding group). After registration, the user is redirected to `/dashboard`, which re-directs to the email verification notice page until verified.
+  3. **Password confirmation for sensitive actions** — the account deletion route (`DELETE /profile`) is protected by the built-in `password.confirm` middleware. Laravel's `ConfirmablePasswordController` handles the confirmation flow. Confirmation stays valid for 3 hours (Laravel default).
+  4. **`password_changed_at` tracking** — implemented via `User::booted()` model observer (Sprint 5.4.1 refactor commit). Fires on any `updating` event where the `password` attribute is dirty. Applies to all three password change paths (change, reset, admin).
+  5. **Session regeneration** — already implemented in `AuthenticatedSessionController::store()` via `$request->session()->regenerate()` (Breeze default).
+  6. **Login throttling** — already implemented in `LoginRequest::ensureIsNotRateLimited()` (Breeze default): 5 attempts per unique email+IP combination, then locked with countdown.
+  7. **Remember Me** — already implemented: checkbox in `auth.login` view, `$this->boolean('remember')` passed to `Auth::attempt()` in `LoginRequest::authenticate()` (Breeze default).
+- **Reason:** Hardens authentication for V1.0 production readiness. All seven controls use Laravel's built-in mechanisms with zero custom auth code.
+- **Impact:** `app/Providers/AppServiceProvider.php` (password policy), `app/Models/User.php` (MustVerifyEmail), `routes/web.php` (verified middleware + password.confirm), `docs/08-Product-Decisions.md`.
+
+---
+
 *New decisions must be appended above this line in the format shown.*
