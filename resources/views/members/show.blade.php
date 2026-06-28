@@ -242,6 +242,126 @@
         </div>
     </div>
 
+    {{-- Purchase Success Alert --}}
+    @if (session('purchase_success'))
+        @php $ps = session('purchase_success'); @endphp
+        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+            <div class="fw-semibold mb-2">
+                <i class="bi bi-check-circle-fill me-2"></i>Purchase Recorded Successfully
+            </div>
+            <div class="row g-1 small">
+                <div class="col-sm-6">
+                    <span class="fw-medium">Purchase:</span>
+                    {{ number_format($ps['amount'], 2) }} {{ $ps['currency'] }}
+                </div>
+                <div class="col-sm-6">
+                    <span class="fw-medium">Campaign:</span>
+                    {{ $ps['campaign_name'] }}
+                </div>
+                <div class="col-sm-6">
+                    <span class="fw-medium">Earned:</span>
+                    {{ $ps['earned'] }} {{ $ps['type'] === 'points'
+                        ? ($ps['earned'] === 1 ? 'Point' : 'Points')
+                        : ($ps['earned'] === 1 ? 'Stamp' : 'Stamps') }}
+                </div>
+                <div class="col-sm-6">
+                    <span class="fw-medium">Current Balance:</span>
+                    {{ number_format($ps['balance']) }} {{ $ps['type'] === 'points' ? 'Points' : 'Stamps' }}
+                </div>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    {{-- Purchase Error Alert --}}
+    @if ($errors->has('purchase'))
+        <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ $errors->first('purchase') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    {{-- Record Purchase Card --}}
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center gap-2">
+            <i class="bi bi-bag-plus text-primary"></i>
+            <span class="fw-semibold">Record Purchase</span>
+        </div>
+
+        @if ($isArchived)
+            <div class="card-body py-3">
+                <p class="text-muted mb-0 small">
+                    <i class="bi bi-lock me-1"></i>This member is archived. No purchases can be recorded.
+                </p>
+            </div>
+        @elseif ($member->status !== \App\Enums\MemberStatus::Active)
+            <div class="card-body py-3">
+                <p class="text-muted mb-0 small">
+                    <i class="bi bi-exclamation-circle me-1"></i>This member is not active. Only active members can receive purchases.
+                </p>
+            </div>
+        @else
+            <form method="POST" action="{{ route('members.purchases.store', $member) }}" novalidate>
+                @csrf
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-12 col-sm-4">
+                            <label for="purchase_amount" class="form-label form-label-sm">
+                                Purchase Amount <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group input-group-sm">
+                                <input type="number"
+                                       id="purchase_amount"
+                                       name="purchase_amount"
+                                       class="form-control @error('purchase_amount') is-invalid @enderror"
+                                       step="0.01"
+                                       min="0.01"
+                                       value="{{ old('purchase_amount') }}"
+                                       placeholder="e.g. 550"
+                                       required>
+                                <span class="input-group-text">{{ $member->merchant->currency ?? 'THB' }}</span>
+                                @error('purchase_amount')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <label for="invoice_number" class="form-label form-label-sm">Invoice Number</label>
+                            <input type="text"
+                                   id="invoice_number"
+                                   name="invoice_number"
+                                   class="form-control form-control-sm @error('invoice_number') is-invalid @enderror"
+                                   value="{{ old('invoice_number') }}"
+                                   maxlength="100"
+                                   placeholder="Optional">
+                            @error('invoice_number')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <label for="purchase_note" class="form-label form-label-sm">Notes</label>
+                            <input type="text"
+                                   id="purchase_note"
+                                   name="note"
+                                   class="form-control form-control-sm @error('note') is-invalid @enderror"
+                                   value="{{ old('note') }}"
+                                   maxlength="500"
+                                   placeholder="Optional">
+                            @error('note')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="bi bi-bag-plus me-1"></i>Record Purchase
+                    </button>
+                </div>
+            </form>
+        @endif
+    </div>
+
     {{-- Tabs --}}
     <div class="card">
         <div class="card-header p-0 border-bottom-0">

@@ -365,4 +365,22 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-033] Record Purchase Workflow (Sprint 3.3.1)
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 3.3.1 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **One active campaign** — The system uses the merchant's single active campaign (`status = 'active'`, not soft-deleted). If multiple active campaigns exist the first one (by ID) is used. If none exists, the purchase is rejected with a user-visible error.
+  2. **Points calculation** — `floor(purchase_amount / settings['spend_amount']) × settings['points_awarded']`. Integer result. Example: 550 THB ÷ 100 = 5.5 → floor = 5 → 5 × 1 = 5 pts.
+  3. **Stamp calculation** — Always 1 stamp per qualifying purchase regardless of amount.
+  4. **Member balance** — `total_points` is incremented for both campaign types. `lifetime_points` is incremented for Points campaigns only.
+  5. **Transaction record** — Created in the existing `transactions` table with `type = 'earn'`. Two new columns are added: `purchase_amount` (decimal 10,2 nullable) and `invoice_number` (varchar 100 nullable).
+  6. **Immutability** — Transactions have no `updated_at` column (existing design). No edit or delete routes are added.
+  7. **UI placement** — "Record Purchase" card appears on the Member Workspace below the Profile/Loyalty row and above the tab card. Disabled with a message for archived or inactive members.
+  8. **Validation rejections** — purchase_amount ≤ 0, no active campaign, archived member, inactive member, cross-merchant access.
+- **Reason:** First earn-side feature. Sprint scope is purchase recording only — no redemption, no reporting, no notifications.
+- **Impact:** New migration, new `PurchaseController`, new `RecordPurchaseRequest`, updated `Transaction` model, updated `MemberController::show`, updated `members/show.blade.php`, one new route.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

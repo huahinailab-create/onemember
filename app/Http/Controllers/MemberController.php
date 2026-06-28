@@ -12,6 +12,7 @@ class MemberController extends Controller
     public function show(Request $request, Member $member)
     {
         abort_unless($member->merchant_id === $request->user()->merchant?->id, 403);
+        $member->loadMissing('merchant');
 
         return view('members.show', compact('member'));
     }

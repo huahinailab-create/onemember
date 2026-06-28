@@ -20,6 +20,8 @@ class Transaction extends Model
         'points',
         'balance_before',
         'balance_after',
+        'purchase_amount',
+        'invoice_number',
         'reference_type',
         'reference_id',
         'note',
@@ -27,11 +29,12 @@ class Transaction extends Model
     ];
 
     protected $casts = [
-        'type'           => TransactionType::class,
-        'points'         => 'integer',
-        'balance_before' => 'integer',
-        'balance_after'  => 'integer',
-        'created_at'     => 'datetime',
+        'type'            => TransactionType::class,
+        'points'          => 'integer',
+        'balance_before'  => 'integer',
+        'balance_after'   => 'integer',
+        'purchase_amount' => 'decimal:2',
+        'created_at'      => 'datetime',
     ];
 
     public function merchant(): BelongsTo
