@@ -568,4 +568,32 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-046] Security Headers & Browser Protection — Sprint 5.4.3
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 5.4.3 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **Centralised middleware** — `App\Http\Middleware\SecurityHeaders` applies all security response headers. Registered globally on the `web` middleware stack in `bootstrap/app.php`.
+  2. **Headers applied:**
+     - `X-Frame-Options: SAMEORIGIN` — prevents clickjacking
+     - `X-Content-Type-Options: nosniff` — prevents MIME-type sniffing
+     - `Referrer-Policy: strict-origin-when-cross-origin` — limits referrer leakage across origins
+     - `Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()` — disables dangerous browser APIs not used by the application
+     - `Content-Security-Policy` — see below
+     - `Strict-Transport-Security: max-age=31536000; includeSubDomains` — applied only when `$request->isSecure()` is true (HTTPS), so local dev is unaffected
+  3. **CSP policy rationale:**
+     - `script-src 'self' 'unsafe-inline'` — `'unsafe-inline'` required: application has inline `<script>` blocks in `settings/index`, `members/show`, `campaigns/show`, `onboarding/quick-start`, `onboarding/loyalty-preference`, and `onclick` event handlers in navigation. Removing these would require view redesign, which is out of scope.
+     - `style-src 'self' 'unsafe-inline' https://fonts.bunny.net` — `'unsafe-inline'` required: 117 `style=""` attributes across templates. `fonts.bunny.net` required for Figtree font.
+     - `font-src 'self' https://fonts.bunny.net` — Figtree font served from Bunny CDN.
+     - `img-src 'self' data:` — allows `data:` URIs for inline images.
+     - `connect-src 'self'` — restricts XHR/fetch to same origin only.
+     - `frame-src 'none'`, `object-src 'none'` — no frames or plugins used.
+     - `base-uri 'self'`, `form-action 'self'` — hardens against base tag injection and form hijacking.
+  4. **Session cookies reviewed** — existing `config/session.php` already has: `http_only=true`, `same_site='lax'`. The `secure` flag reads from `SESSION_SECURE_COOKIE` env var (default false for local dev). Production must set `SESSION_SECURE_COOKIE=true`. `.env.example` updated to document these three variables explicitly.
+  5. **No nonce-based CSP** — implementing nonces would require modifying every Blade layout and inline script, which violates the "no view redesign" constraint. Accepted trade-off: `'unsafe-inline'` is weaker than nonces but still meaningfully restricts script/style origins.
+- **Reason:** Adds defence-in-depth browser protection without changing any application logic or views. All headers applied with a single middleware class.
+- **Impact:** New `app/Http/Middleware/SecurityHeaders.php`, updated `bootstrap/app.php`, updated `.env.example`, new `tests/Feature/SecurityHeadersTest.php`.
+
+---
+
 *New decisions must be appended above this line in the format shown.*
