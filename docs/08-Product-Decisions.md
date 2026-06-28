@@ -313,4 +313,22 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-029] UI Consistency Standard (Standing Rule)
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner
+- **Status:** Approved
+- **Decision:** Every new page and UI component must follow the existing OneMember design system. Unless explicitly instructed otherwise:
+  - Use the existing `x-app-layout` admin layout.
+  - Reuse existing cards, buttons, badges, and form components as established in the Members and Campaign modules.
+  - Do not introduce new colours beyond those already defined in `resources/css/app.css` and Bootstrap 5 defaults.
+  - Do not introduce new spacing values beyond Bootstrap 5 utility classes and existing CSS custom properties.
+  - Do not introduce new icons beyond Bootstrap Icons already in use.
+  - Do not redesign existing pages.
+  - Extend existing patterns instead of creating new UI patterns.
+  - If a new UI pattern is genuinely required, STOP and ask the Product Owner before implementing it.
+- **Reason:** Consistent UI reduces cognitive load for merchants, reduces maintenance cost, and ensures the product feels like a single coherent application rather than a collection of independent screens.
+- **Impact:** All future Blade views. Claude must reference existing views (e.g. `members/index.blade.php`, `members/show.blade.php`, `campaigns/show.blade.php`) as the design baseline before writing any new view.
+
+---
+
 *New decisions must be appended above this line in the format shown.*
