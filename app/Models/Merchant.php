@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Enums\MerchantStatus;
+use App\Enums\SubscriptionPlan;
+use App\Enums\SubscriptionStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -37,12 +39,18 @@ class Merchant extends Model
         'timezone',
         'settings',
         'onboarding_completed_at',
+        'subscription_plan',
+        'subscription_status',
+        'trial_ends_at',
     ];
 
     protected $casts = [
         'status'                  => MerchantStatus::class,
         'settings'                => 'array',
         'onboarding_completed_at' => 'datetime',
+        'subscription_plan'       => SubscriptionPlan::class,
+        'subscription_status'     => SubscriptionStatus::class,
+        'trial_ends_at'           => 'datetime',
     ];
 
     protected static function booted(): void
@@ -51,6 +59,13 @@ class Merchant extends Model
             if (empty($merchant->slug)) {
                 $merchant->slug = Str::slug($merchant->name);
             }
+
+            $trialDays  = config('subscriptions.trial.days', 30);
+            $trialPlan  = config('subscriptions.trial.plan', 'professional');
+
+            $merchant->subscription_plan   ??= SubscriptionPlan::from($trialPlan);
+            $merchant->subscription_status ??= SubscriptionStatus::Trial;
+            $merchant->trial_ends_at       ??= now()->addDays($trialDays);
         });
     }
 
@@ -97,5 +112,48 @@ class Merchant extends Model
     public function isActive(): bool
     {
         return $this->status === MerchantStatus::Active;
+    }
+
+    // ── Subscription helpers ──────────────────────────────────────────────
+
+    public function isOnTrial(): bool
+    {
+        return $this->subscription_status === SubscriptionStatus::Trial
+            && $this->trial_ends_at !== null
+            && $this->trial_ends_at->isFuture();
+    }
+
+    public function trialDaysRemaining(): int
+    {
+        if (! $this->isOnTrial()) {
+            return 0;
+        }
+
+        return max(0, (int) now()->diffInDays($this->trial_ends_at, false));
+    }
+
+    public function currentPlan(): SubscriptionPlan
+    {
+        return $this->subscription_plan ?? SubscriptionPlan::Free;
+    }
+
+    public function subscriptionStatus(): SubscriptionStatus
+    {
+        return $this->subscription_status ?? SubscriptionStatus::Trial;
+    }
+
+    public function canUseFeature(string $feature): bool
+    {
+        // During an active trial the merchant has Professional-tier access.
+        $planKey = $this->isOnTrial()
+            ? config('subscriptions.trial.plan', 'professional')
+            : ($this->subscription_plan?->value ?? 'free');
+
+        return (bool) config("subscriptions.plans.{$planKey}.features.{$feature}", false);
+    }
+
+    public function isEnterprise(): bool
+    {
+        return $this->subscription_plan === SubscriptionPlan::Enterprise;
     }
 }

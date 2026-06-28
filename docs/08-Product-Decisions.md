@@ -466,4 +466,22 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-040] Subscription Architecture — Enums, Config, and Merchant Fields (Sprint 5.2.1)
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 5.2.1 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **`SubscriptionPlan` enum** (PHP 8.1 backed string enum) — cases: `Free`, `Starter`, `Professional`, `Enterprise`. Values match `config/subscriptions.php` plan keys.
+  2. **`SubscriptionStatus` enum** (PHP 8.1 backed string enum) — cases: `Trial`, `Active`, `Expired`, `Cancelled`.
+  3. **`config/subscriptions.php`** — single source of truth for all plan names, descriptions, and feature flags. No prices stored (DECISION-014). No limit values set (DECISION-013 — limits deferred to after beta). All feature flags default to `false`; explicitly enabled per plan.
+  4. **Three new columns on `merchants`:** `subscription_plan` (varchar 50, default `professional`), `subscription_status` (varchar 50, default `trial`), `trial_ends_at` (timestamp nullable). Cast to their respective enums and `datetime` in the Merchant model.
+  5. **Merchant creating hook** — when a new `Merchant` record is created, the `booted()` hook automatically sets `subscription_plan = Professional`, `subscription_status = Trial`, `trial_ends_at = now() + 30 days` unless already set. Configuration values come from `config/subscriptions.php`.
+  6. **Merchant helper methods** — `isOnTrial()`, `trialDaysRemaining()`, `currentPlan()`, `subscriptionStatus()`, `canUseFeature(string $feature)`, `isEnterprise()`. `canUseFeature()` uses Professional-plan feature flags during an active trial.
+  7. **No payment integration** — this sprint is architecture only. No Stripe, no checkout, no webhooks, no payment tables.
+  8. **`SettingsController` updated** — Account tab now reads `trial_ends_at` and `trialDaysRemaining()` from the `Merchant` model when available, instead of computing from `$user->created_at`.
+- **Reason:** Establishes the subscription foundation without payment complexity. All plan behaviour is driven by config, not hardcoded logic. Future billing sprints add Stripe integration on top of this layer.
+- **Impact:** New `app/Enums/SubscriptionPlan.php`, new `app/Enums/SubscriptionStatus.php`, new `config/subscriptions.php`, new migration `2026_06_28_300001_add_subscription_fields_to_merchants_table.php`, updated `app/Models/Merchant.php`, updated `app/Http/Controllers/SettingsController.php`.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

@@ -22,8 +22,8 @@ class SettingsController extends Controller
             $activeTab = 'profile';
         }
 
-        $trialEndsAt        = $user->created_at->addDays(30);
-        $trialDaysRemaining = (int) now()->diffInDays($trialEndsAt, false);
+        $trialEndsAt        = $merchant?->trial_ends_at ?? $user->created_at->addDays(30);
+        $trialDaysRemaining = $merchant ? $merchant->trialDaysRemaining() : max(0, (int) now()->diffInDays($trialEndsAt, false));
 
         return view('settings.index', compact('user', 'merchant', 'activeTab', 'trialEndsAt', 'trialDaysRemaining'));
     }
