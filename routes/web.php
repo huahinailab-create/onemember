@@ -3,6 +3,7 @@
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\RedemptionController;
 use App\Http\Controllers\RewardController;
 use App\Http\Controllers\MerchantProfileController;
 use App\Http\Controllers\ProfileController;
@@ -31,6 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/members/{member}', [MemberController::class, 'update'])->name('members.update');
     Route::delete('/members/{member}', [MemberController::class, 'archive'])->name('members.archive');
     Route::post('/members/{member}/purchases', [PurchaseController::class, 'store'])->name('members.purchases.store');
+    Route::post('/members/{member}/redemptions', [RedemptionController::class, 'store'])->name('members.redemptions.store');
 
     Route::get('/campaigns', [CampaignController::class, 'index'])->name('campaigns.index');
     Route::get('/campaigns/create', [CampaignController::class, 'create'])->name('campaigns.create');

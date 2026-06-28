@@ -393,4 +393,21 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-035] Reward Redemption Workflow (Sprint 3.3.3)
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 3.3.3 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **UI entry point** — A "Redeem Reward" card is added to the Member Workspace (below Record Purchase, above tabs). A single button opens a Bootstrap modal listing only eligible rewards.
+  2. **Eligible rewards** — Rewards must: belong to the member's active campaign, have `status = 'active'`, not be soft-deleted, and have remaining quantity (or be unlimited). For Points campaigns, the member must have `total_points >= reward.points_required`. For Stamp campaigns, the member must have `total_points >= settings['stamps_required']`.
+  3. **Points deduction** — Points campaigns: deduct `reward.points_required`. Stamp campaigns: deduct `settings['stamps_required']` (full card). Partial stamp redemption is not allowed.
+  4. **Redemption record** — Created in the existing `redemptions` table with `status = 'used'` and `redeemed_at = now()`. Status is set to `Used` immediately (no pending state) since the merchant fulfils the reward on the spot.
+  5. **Transaction record** — Created in `transactions` with `type = 'redeem'` and `points = -(points_deducted)` (negative debit). This is the Activity entry shown in the Activity tab.
+  6. **Quantity tracking** — `rewards.quantity_redeemed` is incremented by 1 after each successful redemption for limited-quantity rewards. Unlimited rewards (`quantity_available = NULL`) are not tracked.
+  7. **Validation** — All eligibility checks re-run on submission (server-side guard). Rejections redirect back with an error message.
+- **Reason:** Completes the MVP earn→redeem loyalty cycle. Immediate fulfilment model is simplest for small merchants.
+- **Impact:** New `RedemptionController`, new `RedeemRewardRequest`, new route `POST /members/{member}/redemptions`, updated `MemberController::show()`, updated `members/show.blade.php`.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

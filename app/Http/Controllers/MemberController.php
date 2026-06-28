@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\MemberStatus;
 use App\Http\Requests\StoreMemberRequest;
 use App\Http\Requests\UpdateMemberRequest;
+use App\Models\LoyaltyProgram;
 use App\Models\Member;
+use App\Models\Reward;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
@@ -40,7 +43,39 @@ class MemberController extends Controller
 
         $transactions = $txQuery->paginate(50)->withQueryString();
 
-        return view('members.show', compact('member', 'transactions', 'activityFilter'));
+        // Eligible rewards for the Redeem Reward card
+        $activeCampaign  = null;
+        $eligibleRewards = collect();
+
+        if (! $member->trashed() && $member->status === MemberStatus::Active) {
+            $activeCampaign = LoyaltyProgram::where('merchant_id', $member->merchant_id)
+                                            ->where('status', 'active')
+                                            ->whereNull('deleted_at')
+                                            ->oldest('id')
+                                            ->first();
+
+            if ($activeCampaign) {
+                $rewardsQuery = Reward::where('loyalty_program_id', $activeCampaign->id)
+                                      ->where('status', 'active')
+                                      ->where(function ($q) {
+                                          $q->whereNull('quantity_available')
+                                            ->orWhereRaw('quantity_available > quantity_redeemed');
+                                      });
+
+                if ($activeCampaign->type->value === 'points') {
+                    $rewardsQuery->where('points_required', '<=', $member->total_points);
+                } else {
+                    $stampsRequired = (int) ($activeCampaign->settings['stamps_required'] ?? PHP_INT_MAX);
+                    if ($member->total_points < $stampsRequired) {
+                        $rewardsQuery->whereRaw('0 = 1');
+                    }
+                }
+
+                $eligibleRewards = $rewardsQuery->orderBy('points_required')->get();
+            }
+        }
+
+        return view('members.show', compact('member', 'transactions', 'activityFilter', 'activeCampaign', 'eligibleRewards'));
     }
 
     public function update(UpdateMemberRequest $request, Member $member)

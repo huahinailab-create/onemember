@@ -242,6 +242,31 @@
         </div>
     </div>
 
+    {{-- Redemption Success Alert --}}
+    @if (session('redemption_success'))
+        @php $rs = session('redemption_success'); @endphp
+        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+            <div class="fw-semibold mb-2">
+                <i class="bi bi-check-circle-fill me-2"></i>Reward Redeemed Successfully
+            </div>
+            <div class="row g-1 small">
+                <div class="col-sm-6">
+                    <span class="fw-medium">Reward:</span>
+                    {{ $rs['reward_name'] }}
+                </div>
+                <div class="col-sm-6">
+                    <span class="fw-medium">{{ $rs['type'] === 'stamps' ? 'Stamps Used:' : 'Points Used:' }}</span>
+                    {{ number_format($rs['points_used']) }}
+                </div>
+                <div class="col-sm-6">
+                    <span class="fw-medium">Current Balance:</span>
+                    {{ number_format($rs['balance']) }} {{ $rs['type'] === 'stamps' ? 'Stamps' : 'Points' }}
+                </div>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     {{-- Purchase Success Alert --}}
     @if (session('purchase_success'))
         @php $ps = session('purchase_success'); @endphp
@@ -269,6 +294,14 @@
                     {{ number_format($ps['balance']) }} {{ $ps['type'] === 'points' ? 'Points' : 'Stamps' }}
                 </div>
             </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    {{-- Redemption Error Alert --}}
+    @if ($errors->has('redemption'))
+        <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ $errors->first('redemption') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
@@ -359,6 +392,60 @@
                     </button>
                 </div>
             </form>
+        @endif
+    </div>
+
+    {{-- Redeem Reward Card --}}
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center gap-2">
+            <i class="bi bi-ticket-perforated text-primary"></i>
+            <span class="fw-semibold">Redeem Reward</span>
+        </div>
+
+        @if ($isArchived)
+            <div class="card-body py-3">
+                <p class="text-muted mb-0 small">
+                    <i class="bi bi-lock me-1"></i>This member is archived. Rewards cannot be redeemed.
+                </p>
+            </div>
+        @elseif ($member->status !== \App\Enums\MemberStatus::Active)
+            <div class="card-body py-3">
+                <p class="text-muted mb-0 small">
+                    <i class="bi bi-exclamation-circle me-1"></i>This member is not active. Rewards cannot be redeemed.
+                </p>
+            </div>
+        @elseif (! $activeCampaign)
+            <div class="card-body py-3">
+                <p class="text-muted mb-0 small">
+                    <i class="bi bi-exclamation-circle me-1"></i>No active campaign found. Activate a campaign to enable reward redemption.
+                </p>
+            </div>
+        @else
+            <div class="card-body py-3 d-flex align-items-center justify-content-between gap-3 flex-wrap">
+                <p class="text-muted mb-0 small">
+                    @if ($eligibleRewards->isEmpty())
+                        No rewards are currently available for this member.
+                        @if ($activeCampaign->type->value === 'points')
+                            The member may need more points to unlock a reward.
+                        @else
+                            The member may need to complete the stamp card first.
+                        @endif
+                    @else
+                        <span class="text-success fw-medium">
+                            {{ $eligibleRewards->count() }} reward{{ $eligibleRewards->count() === 1 ? '' : 's' }} available
+                        </span>
+                        for this member.
+                    @endif
+                </p>
+                @unless ($eligibleRewards->isEmpty())
+                    <button type="button"
+                            class="btn btn-primary btn-sm flex-shrink-0"
+                            data-bs-toggle="modal"
+                            data-bs-target="#redeemModal">
+                        <i class="bi bi-ticket-perforated me-1"></i>Redeem Reward
+                    </button>
+                @endunless
+            </div>
         @endif
     </div>
 
@@ -635,6 +722,74 @@
             </div>
         </div>
     @endunless
+
+    {{-- Redeem Reward Modal --}}
+    @if (! $isArchived && $member->status === \App\Enums\MemberStatus::Active && $activeCampaign && $eligibleRewards->isNotEmpty())
+        <div class="modal fade" id="redeemModal" tabindex="-1" aria-labelledby="redeemModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="redeemModalLabel">
+                            <i class="bi bi-ticket-perforated me-2 text-primary"></i>Redeem Reward
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <div class="px-3 py-2 bg-light border-bottom small text-muted">
+                            {{ $member->name }} &mdash;
+                            @if ($activeCampaign->type->value === 'points')
+                                {{ number_format($member->total_points) }} points available
+                            @else
+                                {{ number_format($member->total_points) }} stamps collected
+                            @endif
+                        </div>
+                        @foreach ($eligibleRewards as $reward)
+                            <div class="d-flex align-items-start gap-3 p-3 {{ ! $loop->last ? 'border-bottom' : '' }}">
+                                <div class="flex-grow-1">
+                                    <div class="fw-semibold mb-1">{{ $reward->name }}</div>
+                                    <div class="badge bg-secondary fw-normal mb-2" style="font-size:.7rem;">
+                                        {{ $reward->type->label() }}
+                                    </div>
+                                    @if ($reward->description)
+                                        <p class="text-muted small mb-2">{{ $reward->description }}</p>
+                                    @endif
+                                    <div class="d-flex flex-wrap gap-3 small">
+                                        @if ($activeCampaign->type->value === 'points')
+                                            <span>
+                                                <span class="text-muted">Points Required:</span>
+                                                {{ number_format($reward->points_required) }} pts
+                                            </span>
+                                        @else
+                                            <span>
+                                                <span class="text-muted">Stamps Required:</span>
+                                                {{ $activeCampaign->settings['stamps_required'] ?? '?' }} stamps
+                                            </span>
+                                        @endif
+                                        @if ($reward->quantity_available !== null)
+                                            <span>
+                                                <span class="text-muted">Remaining:</span>
+                                                {{ max(0, $reward->quantity_available - $reward->quantity_redeemed) }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="flex-shrink-0">
+                                    <form method="POST"
+                                          action="{{ route('members.redemptions.store', $member) }}">
+                                        @csrf
+                                        <input type="hidden" name="reward_id" value="{{ $reward->id }}">
+                                        <button type="submit" class="btn btn-primary btn-sm">
+                                            <i class="bi bi-check-lg me-1"></i>Redeem
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
