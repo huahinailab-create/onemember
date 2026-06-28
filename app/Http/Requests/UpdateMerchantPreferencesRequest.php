@@ -33,6 +33,7 @@ class UpdateMerchantPreferencesRequest extends FormRequest
                 Rule::requiredIf(fn () => in_array($this->input('default_expiration_type'), ['months', 'years'])),
             ],
             'default_birthday_enabled'    => ['required', 'boolean'],
+            'locale'                      => ['required', 'string', Rule::in(['en', 'th'])],
         ];
     }
 

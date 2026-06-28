@@ -1,10 +1,10 @@
 @extends('layouts.wizard')
 
-@section('title', 'Loyalty Preference – ' . config('app.name'))
+@section('title', __('onboarding.loyalty_title') . ' – ' . config('app.name'))
 
 @section('header-action')
     <a href="{{ route('onboarding.skip') }}" class="btn btn-sm btn-outline-secondary">
-        Skip for Now
+        {{ __('onboarding.skip_for_now') }}
     </a>
 @endsection
 
@@ -14,7 +14,7 @@
     {{-- Progress --}}
     <div class="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
         <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="text-muted small fw-medium">Step 4 of 6</span>
+            <span class="text-muted small fw-medium">{{ __('onboarding.step_4_of_6') }}</span>
             <span class="text-muted small">67%</span>
         </div>
         <div class="progress mb-1" style="height:6px;">
@@ -23,8 +23,8 @@
     </div>
 
     <div class="card-body p-4">
-        <h2 class="fw-bold fs-4 mb-1">What type of loyalty program would you like to start with?</h2>
-        <p class="text-muted mb-4">You can always add more campaign types later.</p>
+        <h2 class="fw-bold fs-4 mb-1">{{ __('onboarding.loyalty_heading') }}</h2>
+        <p class="text-muted mb-4">{{ __('onboarding.loyalty_sub') }}</p>
 
         @if ($errors->any())
             <div class="alert alert-danger mb-4">
@@ -58,8 +58,8 @@
                         <i class="bi bi-lightning text-primary fs-4"></i>
                     </div>
                     <div>
-                        <div class="fw-semibold fs-5">Points</div>
-                        <div class="text-muted small">Customers earn points based on purchases.</div>
+                        <div class="fw-semibold fs-5">{{ __('onboarding.loyalty_points') }}</div>
+                        <div class="text-muted small">{{ __('onboarding.loyalty_points_sub') }}</div>
                     </div>
                 </div>
             </label>
@@ -81,15 +81,15 @@
                         <i class="bi bi-grid-3x3 text-success fs-4"></i>
                     </div>
                     <div>
-                        <div class="fw-semibold fs-5">Stamps</div>
-                        <div class="text-muted small">Customers collect stamps and redeem rewards.</div>
+                        <div class="fw-semibold fs-5">{{ __('onboarding.loyalty_stamps') }}</div>
+                        <div class="text-muted small">{{ __('onboarding.loyalty_stamps_sub') }}</div>
                     </div>
                 </div>
             </label>
 
             <div class="d-grid">
                 <button type="submit" class="btn btn-primary btn-lg">
-                    Save and Continue <i class="bi bi-arrow-right ms-1"></i>
+                    {{ __('onboarding.save_and_continue') }} <i class="bi bi-arrow-right ms-1"></i>
                 </button>
             </div>
         </form>

@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'sign_in_heading'        => 'เข้าสู่ระบบบัญชีของคุณ',
+    'create_account_heading' => 'สร้างบัญชีใหม่',
+    'email'                  => 'อีเมล',
+    'password'               => 'รหัสผ่าน',
+    'confirm_password'       => 'ยืนยันรหัสผ่าน',
+    'new_password'           => 'รหัสผ่านใหม่',
+    'current_password'       => 'รหัสผ่านปัจจุบัน',
+    'forgot_password'        => 'ลืมรหัสผ่าน?',
+    'forgot_password_heading'=> 'ลืมรหัสผ่าน',
+    'reset_password'         => 'รีเซ็ตรหัสผ่าน',
+    'remember_me'            => 'จดจำฉัน',
+    'no_account'             => 'ยังไม่มีบัญชี?',
+    'have_account'           => 'มีบัญชีอยู่แล้ว?',
+    'sign_in_link'           => 'เข้าสู่ระบบ',
+    'register_link'          => 'ลงทะเบียน',
+    'name'                   => 'ชื่อ',
+    'forgot_description'     => 'กรอกอีเมลของคุณ แล้วเราจะส่งลิงก์สำหรับรีเซ็ตรหัสผ่านให้',
+    'email_reset_link'       => 'ส่งลิงก์รีเซ็ตรหัสผ่าน',
+    'verify_email_heading'   => 'ยืนยันอีเมลของคุณ',
+    'verify_email_body'      => 'ก่อนดำเนินการต่อ กรุณายืนยันอีเมลของคุณโดยคลิกลิงก์ที่เราส่งให้ทางอีเมล หากคุณไม่ได้รับอีเมล เรายินดีส่งให้อีกครั้ง',
+    'resend_verification'    => 'ส่งอีเมลยืนยันอีกครั้ง',
+    'log_out'                => 'ออกจากระบบ',
+    'confirm_password_heading' => 'ยืนยันรหัสผ่าน',
+    'confirm_password_body'  => 'บริเวณนี้เป็นส่วนที่ต้องการความปลอดภัย กรุณายืนยันรหัสผ่านก่อนดำเนินการต่อ',
+];

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="title">{{ $reward->name }} – {{ config('app.name') }}</x-slot>
-    <x-slot name="pageTitle">Campaigns</x-slot>
+    <x-slot name="pageTitle">{{ __('campaigns.title') }}</x-slot>
 
     @php $isArchived = $reward->trashed(); @endphp
 
@@ -10,13 +10,13 @@
             <div class="mb-1">
                 <a href="{{ route('campaigns.show', $campaign) . '?active_tab=rewards' }}"
                    class="text-decoration-none text-muted small">
-                    <i class="bi bi-arrow-left me-1"></i>Back to {{ $campaign->name }}
+                    <i class="bi bi-arrow-left me-1"></i>{{ __('rewards.back_to_campaign', ['name' => $campaign->name]) }}
                 </a>
             </div>
             <h1 class="d-flex align-items-center gap-2 flex-wrap">
                 {{ $reward->name }}
                 @if ($isArchived)
-                    <span class="badge bg-danger fs-6 fw-normal">Archived</span>
+                    <span class="badge bg-danger fs-6 fw-normal">{{ __('rewards.status_archived') }}</span>
                 @else
                     <span class="{{ $reward->status->badgeClass() }} fs-6 fw-normal">
                         {{ $reward->status->label() }}
@@ -27,19 +27,19 @@
         <div class="d-flex gap-2 flex-shrink-0">
             @if ($isArchived)
                 <span class="btn btn-outline-secondary disabled">
-                    <i class="bi bi-lock me-1"></i>Archived
+                    <i class="bi bi-lock me-1"></i>{{ __('rewards.status_archived') }}
                 </span>
             @else
                 <button type="button"
                         class="btn btn-outline-danger"
                         data-bs-toggle="modal"
                         data-bs-target="#archiveModal">
-                    <i class="bi bi-archive me-1"></i>Archive Reward
+                    <i class="bi bi-archive me-1"></i>{{ __('rewards.archive_reward') }}
                 </button>
             @endif
             <a href="{{ route('campaigns.show', $campaign) . '?active_tab=rewards' }}"
                class="btn btn-outline-secondary">
-                <i class="bi bi-arrow-left me-1"></i>Back
+                <i class="bi bi-arrow-left me-1"></i>{{ __('buttons.back') }}
             </a>
         </div>
     </div>
@@ -51,9 +51,9 @@
             <div class="card h-100">
                 <div class="card-header d-flex align-items-center gap-2">
                     <i class="bi bi-gift text-primary"></i>
-                    <span class="fw-semibold">Reward Details</span>
+                    <span class="fw-semibold">{{ __('rewards.reward_details') }}</span>
                     @if ($isArchived)
-                        <span class="badge bg-danger ms-auto" style="font-size:.65rem;">Read-only</span>
+                        <span class="badge bg-danger ms-auto" style="font-size:.65rem;">{{ __('rewards.read_only') }}</span>
                     @endif
                 </div>
 
@@ -69,7 +69,7 @@
                         {{-- Reward Name --}}
                         <div class="mb-3">
                             <label for="name" class="form-label form-label-sm">
-                                Reward Name <span class="text-danger">*</span>
+                                {{ __('rewards.reward_name') }} <span class="text-danger">*</span>
                             </label>
                             <input type="text"
                                    id="name"
@@ -87,7 +87,7 @@
                         {{-- Reward Type --}}
                         <div class="mb-3">
                             <label for="type" class="form-label form-label-sm">
-                                Reward Type <span class="text-danger">*</span>
+                                {{ __('rewards.reward_type') }} <span class="text-danger">*</span>
                             </label>
                             <select id="type"
                                     name="type"
@@ -107,7 +107,7 @@
 
                         {{-- Description --}}
                         <div class="mb-3">
-                            <label for="description" class="form-label form-label-sm">Description</label>
+                            <label for="description" class="form-label form-label-sm">{{ __('rewards.description') }}</label>
                             <textarea id="description"
                                       name="description"
                                       class="form-control form-control-sm @error('description') is-invalid @enderror"
@@ -125,7 +125,7 @@
                         @if ($campaign->type->value === 'points')
                             <div class="mb-3">
                                 <label for="points_required" class="form-label form-label-sm">
-                                    Points Required <span class="text-danger">*</span>
+                                    {{ __('rewards.points_required') }} <span class="text-danger">*</span>
                                 </label>
                                 <div class="input-group input-group-sm" style="max-width:220px;">
                                     <input type="number"
@@ -145,11 +145,11 @@
                         @else
                             @php $stampsRequired = $campaign->settings['stamps_required'] ?? '—'; @endphp
                             <div class="mb-3">
-                                <label class="form-label form-label-sm">Stamp Requirement</label>
+                                <label class="form-label form-label-sm">{{ __('rewards.stamp_requirement') }}</label>
                                 <div class="form-control form-control-sm bg-light" style="cursor:default;">
-                                    {{ $stampsRequired }} stamps (campaign completion)
+                                    {{ trans_choice('rewards.stamps_completion', $stampsRequired, ['count' => $stampsRequired]) }}
                                 </div>
-                                <div class="form-text">Awarded automatically when the stamp card is complete.</div>
+                                <div class="form-text">{{ __('rewards.stamp_card_hint') }}</div>
                             </div>
                         @endif
 
@@ -165,13 +165,13 @@
                                        {{ $reward->quantity_available === null ? 'checked' : '' }}
                                        {{ $isArchived ? 'disabled' : '' }}>
                                 <label class="form-check-label form-label-sm" for="unlimited">
-                                    Unlimited Quantity
+                                    {{ __('rewards.unlimited_quantity') }}
                                 </label>
                             </div>
 
                             <div x-show="!unlimited" x-cloak>
                                 <label for="quantity_available" class="form-label form-label-sm">
-                                    Quantity <span class="text-danger">*</span>
+                                    {{ __('rewards.quantity') }} <span class="text-danger">*</span>
                                 </label>
                                 <input type="number"
                                        id="quantity_available"
@@ -190,17 +190,17 @@
                         {{-- Status --}}
                         <div class="mb-3">
                             <label for="status" class="form-label form-label-sm">
-                                Status <span class="text-danger">*</span>
+                                {{ __('rewards.status') }} <span class="text-danger">*</span>
                             </label>
                             <select id="status"
                                     name="status"
                                     class="form-select form-select-sm @error('status') is-invalid @enderror"
                                     {{ $isArchived ? 'disabled' : '' }}>
                                 <option value="draft" {{ old('status', $reward->status?->value) === 'draft' ? 'selected' : '' }}>
-                                    Draft — not yet visible to customers
+                                    {{ __('rewards.status_draft_full') }}
                                 </option>
                                 <option value="active" {{ old('status', $reward->status?->value) === 'active' ? 'selected' : '' }}>
-                                    Active — available for redemption
+                                    {{ __('rewards.status_active_full') }}
                                 </option>
                             </select>
                             @error('status')
@@ -212,7 +212,7 @@
 
                         {{-- Internal Notes --}}
                         <div class="mb-3">
-                            <label for="internal_notes" class="form-label form-label-sm">Internal Notes</label>
+                            <label for="internal_notes" class="form-label form-label-sm">{{ __('rewards.internal_notes') }}</label>
                             <textarea id="internal_notes"
                                       name="internal_notes"
                                       class="form-control form-control-sm @error('internal_notes') is-invalid @enderror"
@@ -222,7 +222,7 @@
                             @error('internal_notes')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
-                            <div class="form-text">Visible to you only.</div>
+                            <div class="form-text">{{ __('rewards.internal_notes_hint') }}</div>
                         </div>
 
                     </div>
@@ -230,10 +230,10 @@
                     @unless ($isArchived)
                         <div class="card-footer bg-transparent d-flex gap-2">
                             <button type="submit" class="btn btn-primary btn-sm">
-                                <i class="bi bi-check-lg me-1"></i>Save Changes
+                                <i class="bi bi-check-lg me-1"></i>{{ __('buttons.save_changes') }}
                             </button>
                             <a href="{{ route('campaigns.rewards.show', [$campaign, $reward]) }}"
-                               class="btn btn-outline-secondary btn-sm">Discard</a>
+                               class="btn btn-outline-secondary btn-sm">{{ __('buttons.discard') }}</a>
                         </div>
                     @endunless
 
@@ -246,23 +246,23 @@
             <div class="card">
                 <div class="card-header d-flex align-items-center gap-2">
                     <i class="bi bi-info-circle text-primary"></i>
-                    <span class="fw-semibold">Details</span>
+                    <span class="fw-semibold">{{ __('rewards.details') }}</span>
                 </div>
                 <div class="card-body">
                     <dl class="row mb-0 small" style="row-gap:.75rem;">
-                        <dt class="col-5 text-muted fw-normal">Campaign</dt>
+                        <dt class="col-5 text-muted fw-normal">{{ __('rewards.meta_campaign') }}</dt>
                         <dd class="col-7 mb-0">
                             <a href="{{ route('campaigns.show', $campaign) }}"
                                class="text-decoration-none">{{ $campaign->name }}</a>
                         </dd>
 
-                        <dt class="col-5 text-muted fw-normal">Campaign Type</dt>
+                        <dt class="col-5 text-muted fw-normal">{{ __('rewards.meta_campaign_type') }}</dt>
                         <dd class="col-7 mb-0">{{ $campaign->type->label() }}</dd>
 
-                        <dt class="col-5 text-muted fw-normal">Created</dt>
+                        <dt class="col-5 text-muted fw-normal">{{ __('rewards.meta_created') }}</dt>
                         <dd class="col-7 mb-0">{{ $reward->created_at->format('d M Y') }}</dd>
 
-                        <dt class="col-5 text-muted fw-normal">Last Updated</dt>
+                        <dt class="col-5 text-muted fw-normal">{{ __('rewards.meta_updated') }}</dt>
                         <dd class="col-7 mb-0">{{ $reward->updated_at->format('d M Y, H:i') }}</dd>
                     </dl>
                 </div>
@@ -278,23 +278,23 @@
                 <div class="modal-content">
                     <div class="modal-header border-0 pb-0">
                         <h5 class="modal-title text-danger" id="archiveModalLabel">
-                            <i class="bi bi-archive me-2"></i>Archive Reward
+                            <i class="bi bi-archive me-2"></i>{{ __('rewards.archive_reward') }}
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p class="mb-1">Are you sure you want to archive <strong>{{ $reward->name }}</strong>?</p>
+                        <p class="mb-1">{!! __('rewards.archive_confirm', ['name' => '<strong>' . e($reward->name) . '</strong>']) !!}</p>
                         <p class="text-muted small mb-0">
-                            This reward will be removed from your active list. Archiving does not delete any data.
+                            {{ __('rewards.archive_note') }}
                         </p>
                     </div>
                     <div class="modal-footer border-0 pt-0">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{{ __('buttons.cancel') }}</button>
                         <form method="POST" action="{{ route('campaigns.rewards.archive', [$campaign, $reward]) }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">
-                                <i class="bi bi-archive me-1"></i>Archive Reward
+                                <i class="bi bi-archive me-1"></i>{{ __('rewards.archive_reward') }}
                             </button>
                         </form>
                     </div>

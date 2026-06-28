@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="title">{{ $member->name }} – {{ config('app.name') }}</x-slot>
-    <x-slot name="pageTitle">Members</x-slot>
+    <x-slot name="pageTitle">{{ __('members.title') }}</x-slot>
 
     @php $isArchived = $member->trashed(); @endphp
 
@@ -9,13 +9,13 @@
         <div>
             <div class="mb-1">
                 <a href="{{ route('members') }}" class="text-decoration-none text-muted small">
-                    <i class="bi bi-arrow-left me-1"></i>Back to Members
+                    <i class="bi bi-arrow-left me-1"></i>{{ __('members.back_to_members') }}
                 </a>
             </div>
             <h1 class="d-flex align-items-center gap-2 flex-wrap">
                 {{ $member->name }}
                 @if ($isArchived)
-                    <span class="badge bg-danger fs-6 fw-normal">Archived</span>
+                    <span class="badge bg-danger fs-6 fw-normal">{{ __('members.status_archived') }}</span>
                 @else
                     <span class="{{ $member->status->badgeClass() }} fs-6 fw-normal">
                         {{ $member->status->label() }}
@@ -26,19 +26,19 @@
         <div class="d-flex gap-2 flex-shrink-0">
             @if ($isArchived)
                 <button type="button" class="btn btn-outline-success disabled" title="Coming in a future sprint">
-                    <i class="bi bi-arrow-counterclockwise me-1"></i>Restore Member
-                    <span class="badge bg-secondary ms-1" style="font-size:.65rem;">Coming Soon</span>
+                    <i class="bi bi-arrow-counterclockwise me-1"></i>{{ __('members.restore_member') }}
+                    <span class="badge bg-secondary ms-1" style="font-size:.65rem;">{{ __('buttons.coming_soon') }}</span>
                 </button>
             @else
                 <button type="button"
                         class="btn btn-outline-danger"
                         data-bs-toggle="modal"
                         data-bs-target="#archiveModal">
-                    <i class="bi bi-archive me-1"></i>Archive Member
+                    <i class="bi bi-archive me-1"></i>{{ __('members.archive_member') }}
                 </button>
             @endif
             <a href="{{ route('members') }}" class="btn btn-outline-secondary">
-                <i class="bi bi-arrow-left me-1"></i>Back
+                <i class="bi bi-arrow-left me-1"></i>{{ __('buttons.back') }}
             </a>
         </div>
     </div>
@@ -50,9 +50,9 @@
             <div class="card h-100">
                 <div class="card-header d-flex align-items-center gap-2">
                     <i class="bi bi-person text-primary"></i>
-                    <span class="fw-semibold">Profile</span>
+                    <span class="fw-semibold">{{ __('members.profile_tab') }}</span>
                     @if ($isArchived)
-                        <span class="badge bg-danger ms-auto" style="font-size:.65rem;">Read-only</span>
+                        <span class="badge bg-danger ms-auto" style="font-size:.65rem;">{{ __('members.read_only') }}</span>
                     @endif
                 </div>
 
@@ -65,7 +65,7 @@
                         {{-- Full Name --}}
                         <div class="mb-3">
                             <label for="name" class="form-label form-label-sm">
-                                Full Name <span class="text-danger">*</span>
+                                {{ __('members.full_name') }} <span class="text-danger">*</span>
                             </label>
                             <input type="text"
                                    id="name"
@@ -82,7 +82,7 @@
 
                         {{-- Nickname --}}
                         <div class="mb-3">
-                            <label for="nickname" class="form-label form-label-sm">Nickname</label>
+                            <label for="nickname" class="form-label form-label-sm">{{ __('members.nickname') }}</label>
                             <input type="text"
                                    id="nickname"
                                    name="nickname"
@@ -98,7 +98,7 @@
                         {{-- Mobile Number --}}
                         <div class="mb-3">
                             <label for="phone" class="form-label form-label-sm">
-                                Mobile Number <span class="text-danger">*</span>
+                                {{ __('members.mobile_number') }} <span class="text-danger">*</span>
                             </label>
                             <input type="text"
                                    id="phone"
@@ -115,7 +115,7 @@
 
                         {{-- Email --}}
                         <div class="mb-3">
-                            <label for="email" class="form-label form-label-sm">Email</label>
+                            <label for="email" class="form-label form-label-sm">{{ __('members.email') }}</label>
                             <input type="email"
                                    id="email"
                                    name="email"
@@ -131,7 +131,7 @@
                         {{-- Birthday --}}
                         <div class="mb-3">
                             <label for="birthday" class="form-label form-label-sm">
-                                Date of Birth <span class="text-danger">*</span>
+                                {{ __('members.date_of_birth') }} <span class="text-danger">*</span>
                             </label>
                             <input type="date"
                                    id="birthday"
@@ -147,7 +147,7 @@
 
                         {{-- Notes --}}
                         <div class="mb-3">
-                            <label for="notes" class="form-label form-label-sm">Notes</label>
+                            <label for="notes" class="form-label form-label-sm">{{ __('members.notes') }}</label>
                             <textarea id="notes"
                                       name="notes"
                                       class="form-control form-control-sm @error('notes') is-invalid @enderror"
@@ -163,19 +163,19 @@
 
                         {{-- Read-only fields --}}
                         <dl class="row mb-0 small" style="row-gap:.5rem;">
-                            <dt class="col-5 text-muted fw-normal">Member Since</dt>
+                            <dt class="col-5 text-muted fw-normal">{{ __('members.member_since') }}</dt>
                             <dd class="col-7 mb-0">{{ $member->joined_at->format('d M Y') }}</dd>
 
-                            <dt class="col-5 text-muted fw-normal">Status</dt>
+                            <dt class="col-5 text-muted fw-normal">{{ __('members.col_status') }}</dt>
                             <dd class="col-7 mb-0">
                                 @if ($isArchived)
-                                    <span class="badge bg-danger">Archived</span>
+                                    <span class="badge bg-danger">{{ __('members.status_archived') }}</span>
                                 @else
                                     <span class="{{ $member->status->badgeClass() }}">{{ $member->status->label() }}</span>
                                 @endif
                             </dd>
 
-                            <dt class="col-5 text-muted fw-normal">Member Code</dt>
+                            <dt class="col-5 text-muted fw-normal">{{ __('members.member_code') }}</dt>
                             <dd class="col-7 mb-0 font-monospace">{{ $member->member_code }}</dd>
                         </dl>
 
@@ -184,10 +184,10 @@
                     @unless ($isArchived)
                         <div class="card-footer bg-transparent d-flex gap-2">
                             <button type="submit" class="btn btn-primary btn-sm">
-                                <i class="bi bi-check-lg me-1"></i>Save Changes
+                                <i class="bi bi-check-lg me-1"></i>{{ __('buttons.save_changes') }}
                             </button>
                             <a href="{{ route('members.show', $member) }}" class="btn btn-outline-secondary btn-sm">
-                                Discard
+                                {{ __('buttons.discard') }}
                             </a>
                         </div>
                     @endunless
@@ -202,15 +202,15 @@
             <div class="card">
                 <div class="card-header d-flex align-items-center gap-2">
                     <i class="bi bi-qr-code text-primary"></i>
-                    <span class="fw-semibold">QR Code</span>
+                    <span class="fw-semibold">{{ __('members.col_code') }}</span>
                 </div>
                 <div class="card-body text-center py-4">
                     <div class="coming-soon-icon bg-secondary bg-opacity-10 mx-auto">
                         <i class="bi bi-qr-code text-secondary"></i>
                     </div>
-                    <p class="text-muted mb-1 fw-medium">QR Code — Coming Soon</p>
+                    <p class="text-muted mb-1 fw-medium">{{ __('members.qr_coming_soon') }}</p>
                     <p class="text-muted mb-0 small">
-                        Member code: <span class="font-monospace fw-semibold">{{ $member->member_code }}</span>
+                        {{ __('members.member_code_label') }}: <span class="font-monospace fw-semibold">{{ $member->member_code }}</span>
                     </p>
                 </div>
             </div>
@@ -219,20 +219,20 @@
             <div class="card">
                 <div class="card-header d-flex align-items-center gap-2">
                     <i class="bi bi-star text-primary"></i>
-                    <span class="fw-semibold">Loyalty</span>
+                    <span class="fw-semibold">{{ __('members.loyalty_tab') }}</span>
                 </div>
                 <div class="card-body">
                     <div class="row g-3 text-center">
                         <div class="col-6">
                             <div class="p-3 rounded bg-primary bg-opacity-10">
                                 <div class="fs-3 fw-bold text-primary">{{ number_format($member->total_points) }}</div>
-                                <div class="text-muted small mt-1">Current Points</div>
+                                <div class="text-muted small mt-1">{{ __('members.total_points') }}</div>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="p-3 rounded bg-secondary bg-opacity-10">
                                 <div class="fs-3 fw-bold text-secondary">{{ number_format($member->lifetime_points) }}</div>
-                                <div class="text-muted small mt-1">Lifetime Points</div>
+                                <div class="text-muted small mt-1">{{ __('members.lifetime_points') }}</div>
                             </div>
                         </div>
                     </div>
@@ -318,19 +318,19 @@
     <div id="record-purchase-card" class="card mb-4">
         <div class="card-header d-flex align-items-center gap-2">
             <i class="bi bi-bag-plus text-primary"></i>
-            <span class="fw-semibold">Record Purchase</span>
+            <span class="fw-semibold">{{ __('members.record_purchase') }}</span>
         </div>
 
         @if ($isArchived)
             <div class="card-body py-3">
                 <p class="text-muted mb-0 small">
-                    <i class="bi bi-lock me-1"></i>This member is archived. No purchases can be recorded.
+                    <i class="bi bi-lock me-1"></i>{{ __('members.archived_no_purchase') }}
                 </p>
             </div>
         @elseif ($member->status !== \App\Enums\MemberStatus::Active)
             <div class="card-body py-3">
                 <p class="text-muted mb-0 small">
-                    <i class="bi bi-exclamation-circle me-1"></i>This member is not active. Only active members can receive purchases.
+                    <i class="bi bi-exclamation-circle me-1"></i>{{ __('members.inactive_no_purchase') }}
                 </p>
             </div>
         @else
@@ -340,7 +340,7 @@
                     <div class="row g-3">
                         <div class="col-12 col-sm-4">
                             <label for="purchase_amount" class="form-label form-label-sm">
-                                Purchase Amount <span class="text-danger">*</span>
+                                {{ __('members.purchase_amount') }} <span class="text-danger">*</span>
                             </label>
                             <div class="input-group input-group-sm">
                                 <input type="number"
@@ -359,7 +359,7 @@
                             </div>
                         </div>
                         <div class="col-12 col-sm-4">
-                            <label for="invoice_number" class="form-label form-label-sm">Invoice Number</label>
+                            <label for="invoice_number" class="form-label form-label-sm">{{ __('members.invoice_number') }}</label>
                             <input type="text"
                                    id="invoice_number"
                                    name="invoice_number"
@@ -372,7 +372,7 @@
                             @enderror
                         </div>
                         <div class="col-12 col-sm-4">
-                            <label for="purchase_note" class="form-label form-label-sm">Notes</label>
+                            <label for="purchase_note" class="form-label form-label-sm">{{ __('members.notes') }}</label>
                             <input type="text"
                                    id="purchase_note"
                                    name="note"
@@ -388,7 +388,7 @@
                 </div>
                 <div class="card-footer bg-transparent">
                     <button type="submit" class="btn btn-primary btn-sm">
-                        <i class="bi bi-bag-plus me-1"></i>Record Purchase
+                        <i class="bi bi-bag-plus me-1"></i>{{ __('members.record_purchase') }}
                     </button>
                 </div>
             </form>
@@ -399,25 +399,25 @@
     <div class="card mb-4">
         <div class="card-header d-flex align-items-center gap-2">
             <i class="bi bi-ticket-perforated text-primary"></i>
-            <span class="fw-semibold">Redeem Reward</span>
+            <span class="fw-semibold">{{ __('members.redeem_reward') }}</span>
         </div>
 
         @if ($isArchived)
             <div class="card-body py-3">
                 <p class="text-muted mb-0 small">
-                    <i class="bi bi-lock me-1"></i>This member is archived. Rewards cannot be redeemed.
+                    <i class="bi bi-lock me-1"></i>{{ __('members.archived_no_redeem') }}
                 </p>
             </div>
         @elseif ($member->status !== \App\Enums\MemberStatus::Active)
             <div class="card-body py-3">
                 <p class="text-muted mb-0 small">
-                    <i class="bi bi-exclamation-circle me-1"></i>This member is not active. Rewards cannot be redeemed.
+                    <i class="bi bi-exclamation-circle me-1"></i>{{ __('members.inactive_no_redeem') }}
                 </p>
             </div>
         @elseif (! $activeCampaign)
             <div class="card-body py-3">
                 <p class="text-muted mb-0 small">
-                    <i class="bi bi-exclamation-circle me-1"></i>No active campaign found. Activate a campaign to enable reward redemption.
+                    <i class="bi bi-exclamation-circle me-1"></i>{{ __('members.no_active_campaign') }}
                 </p>
             </div>
         @else
@@ -442,7 +442,7 @@
                             class="btn btn-primary btn-sm flex-shrink-0"
                             data-bs-toggle="modal"
                             data-bs-target="#redeemModal">
-                        <i class="bi bi-ticket-perforated me-1"></i>Redeem Reward
+                        <i class="bi bi-ticket-perforated me-1"></i>{{ __('members.redeem_reward') }}
                     </button>
                 @endunless
             </div>
@@ -456,31 +456,31 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="tab-profile" data-bs-toggle="tab"
                             data-bs-target="#pane-profile" type="button" role="tab">
-                        <i class="bi bi-person me-1"></i>Profile
+                        <i class="bi bi-person me-1"></i>{{ __('members.profile_tab') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="tab-points" data-bs-toggle="tab"
                             data-bs-target="#pane-points" type="button" role="tab">
-                        <i class="bi bi-clock-history me-1"></i>Points History
+                        <i class="bi bi-clock-history me-1"></i>{{ __('members.points_history_tab') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="tab-rewards" data-bs-toggle="tab"
                             data-bs-target="#pane-rewards" type="button" role="tab">
-                        <i class="bi bi-gift me-1"></i>Rewards
+                        <i class="bi bi-gift me-1"></i>{{ __('members.rewards_tab') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="tab-activity" data-bs-toggle="tab"
                             data-bs-target="#pane-activity" type="button" role="tab">
-                        <i class="bi bi-lightning-charge me-1"></i>Activity
+                        <i class="bi bi-lightning-charge me-1"></i>{{ __('members.activity_tab') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="tab-notes" data-bs-toggle="tab"
                             data-bs-target="#pane-notes" type="button" role="tab">
-                        <i class="bi bi-journal-text me-1"></i>Notes
+                        <i class="bi bi-journal-text me-1"></i>{{ __('members.notes_tab') }}
                     </button>
                 </li>
             </ul>
@@ -490,16 +490,16 @@
             {{-- Profile Tab — read-only summary --}}
             <div class="tab-pane fade show active p-4" id="pane-profile" role="tabpanel">
                 <dl class="row mb-0" style="row-gap:.75rem;">
-                    <dt class="col-sm-3 text-muted fw-normal">Full Name</dt>
+                    <dt class="col-sm-3 text-muted fw-normal">{{ __('members.full_name') }}</dt>
                     <dd class="col-sm-9 mb-0 fw-medium">{{ $member->name }}</dd>
 
-                    <dt class="col-sm-3 text-muted fw-normal">Nickname</dt>
+                    <dt class="col-sm-3 text-muted fw-normal">{{ __('members.nickname') }}</dt>
                     <dd class="col-sm-9 mb-0">{{ $member->nickname ?? '—' }}</dd>
 
-                    <dt class="col-sm-3 text-muted fw-normal">Mobile Number</dt>
+                    <dt class="col-sm-3 text-muted fw-normal">{{ __('members.mobile_number') }}</dt>
                     <dd class="col-sm-9 mb-0">{{ $member->phone ?? '—' }}</dd>
 
-                    <dt class="col-sm-3 text-muted fw-normal">Email</dt>
+                    <dt class="col-sm-3 text-muted fw-normal">{{ __('members.email') }}</dt>
                     <dd class="col-sm-9 mb-0">
                         @if ($member->email)
                             <a href="mailto:{{ $member->email }}" class="text-decoration-none">{{ $member->email }}</a>
@@ -508,27 +508,27 @@
                         @endif
                     </dd>
 
-                    <dt class="col-sm-3 text-muted fw-normal">Birthday</dt>
+                    <dt class="col-sm-3 text-muted fw-normal">{{ __('members.birthday') }}</dt>
                     <dd class="col-sm-9 mb-0">
                         {{ $member->birthday ? $member->birthday->format('d M Y') : '—' }}
                     </dd>
 
-                    <dt class="col-sm-3 text-muted fw-normal">Member Since</dt>
+                    <dt class="col-sm-3 text-muted fw-normal">{{ __('members.member_since') }}</dt>
                     <dd class="col-sm-9 mb-0">{{ $member->joined_at->format('d M Y') }}</dd>
 
-                    <dt class="col-sm-3 text-muted fw-normal">Status</dt>
+                    <dt class="col-sm-3 text-muted fw-normal">{{ __('members.col_status') }}</dt>
                     <dd class="col-sm-9 mb-0">
                         @if ($isArchived)
-                            <span class="badge bg-danger">Archived</span>
+                            <span class="badge bg-danger">{{ __('members.status_archived') }}</span>
                         @else
                             <span class="{{ $member->status->badgeClass() }}">{{ $member->status->label() }}</span>
                         @endif
                     </dd>
 
-                    <dt class="col-sm-3 text-muted fw-normal">Member Code</dt>
+                    <dt class="col-sm-3 text-muted fw-normal">{{ __('members.member_code_label') }}</dt>
                     <dd class="col-sm-9 mb-0 font-monospace">{{ $member->member_code }}</dd>
 
-                    <dt class="col-sm-3 text-muted fw-normal">Notes</dt>
+                    <dt class="col-sm-3 text-muted fw-normal">{{ __('members.notes') }}</dt>
                     <dd class="col-sm-9 mb-0">
                         @if ($member->notes)
                             <span style="white-space:pre-line;">{{ $member->notes }}</span>
@@ -541,16 +541,16 @@
 
             {{-- Coming Soon Tabs --}}
             @foreach ([
-                'pane-points'  => ['icon' => 'bi-clock-history', 'label' => 'Points History'],
-                'pane-rewards' => ['icon' => 'bi-gift',          'label' => 'Rewards'],
-                'pane-notes'   => ['icon' => 'bi-journal-text',  'label' => 'Notes'],
+                'pane-points'  => ['icon' => 'bi-clock-history', 'label' => __('members.points_history_tab')],
+                'pane-rewards' => ['icon' => 'bi-gift',          'label' => __('members.rewards_tab')],
+                'pane-notes'   => ['icon' => 'bi-journal-text',  'label' => __('members.notes_tab')],
             ] as $paneId => $meta)
                 <div class="tab-pane fade text-center py-5" id="{{ $paneId }}" role="tabpanel">
                     <div class="coming-soon-icon bg-primary bg-opacity-10 mx-auto">
                         <i class="bi {{ $meta['icon'] }} text-primary"></i>
                     </div>
-                    <h6 class="fw-semibold mb-1">{{ $meta['label'] }} — Coming Soon</h6>
-                    <p class="text-muted mb-0 small">This feature will be available in a future sprint.</p>
+                    <h6 class="fw-semibold mb-1">{{ $meta['label'] }} — {{ __('buttons.coming_soon') }}</h6>
+                    <p class="text-muted mb-0 small">{{ __('members.coming_soon_note') }}</p>
                 </div>
             @endforeach
 
@@ -560,7 +560,7 @@
                 {{-- Immutable notice --}}
                 <div class="px-4 pt-3 pb-0">
                     <span class="text-muted small">
-                        <i class="bi bi-lock me-1"></i>Activity history cannot be edited.
+                        <i class="bi bi-lock me-1"></i>{{ __('members.activity_readonly') }}
                     </span>
                 </div>
 
@@ -568,12 +568,12 @@
                 <div class="p-3 border-bottom d-flex align-items-center gap-2 flex-wrap">
                     @php
                         $filterOptions = [
-                            'all'         => 'All',
-                            'purchases'   => 'Purchases',
-                            'rewards'     => 'Rewards',
-                            'birthday'    => 'Birthday',
-                            'adjustments' => 'Adjustments',
-                            'expired'     => 'Expired',
+                            'all'         => __('members.activity_all'),
+                            'purchases'   => __('members.activity_purchases'),
+                            'rewards'     => __('members.activity_rewards'),
+                            'birthday'    => __('members.activity_birthday'),
+                            'adjustments' => __('members.activity_adjustments'),
+                            'expired'     => __('members.activity_expired'),
                         ];
                     @endphp
                     <div class="btn-group btn-group-sm" role="group" aria-label="Activity filter">
@@ -592,13 +592,13 @@
                         <div class="coming-soon-icon bg-primary bg-opacity-10 mx-auto">
                             <i class="bi bi-lightning-charge text-primary"></i>
                         </div>
-                        <h6 class="fw-semibold mb-1">No activity yet.</h6>
+                        <h6 class="fw-semibold mb-1">{{ __('members.no_activity') }}</h6>
                         <p class="text-muted mb-3 small">
-                            Record the member's first purchase to start building their loyalty history.
+                            {{ __('members.no_activity_hint') }}
                         </p>
                         @unless ($isArchived)
                             <a href="#record-purchase-card" class="btn btn-sm btn-primary">
-                                <i class="bi bi-bag-plus me-1"></i>Record Purchase
+                                <i class="bi bi-bag-plus me-1"></i>{{ __('members.record_purchase') }}
                             </a>
                         @endunless
                     </div>
@@ -698,23 +698,23 @@
                 <div class="modal-content">
                     <div class="modal-header border-0 pb-0">
                         <h5 class="modal-title text-danger" id="archiveModalLabel">
-                            <i class="bi bi-archive me-2"></i>Archive Member
+                            <i class="bi bi-archive me-2"></i>{{ __('members.archive_member') }}
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p class="mb-1">Are you sure you want to archive <strong>{{ $member->name }}</strong>?</p>
+                        <p class="mb-1">{{ __('members.archive_confirm', ['name' => $member->name]) }}</p>
                         <p class="text-muted small mb-0">
-                            This member will be removed from your active list. Archiving does not delete any data.
+                            {{ __('members.archive_note') }}
                         </p>
                     </div>
                     <div class="modal-footer border-0 pt-0">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{{ __('buttons.cancel') }}</button>
                         <form method="POST" action="{{ route('members.archive', $member) }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">
-                                <i class="bi bi-archive me-1"></i>Archive Member
+                                <i class="bi bi-archive me-1"></i>{{ __('members.archive_member') }}
                             </button>
                         </form>
                     </div>
@@ -730,7 +730,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="redeemModalLabel">
-                            <i class="bi bi-ticket-perforated me-2 text-primary"></i>Redeem Reward
+                            <i class="bi bi-ticket-perforated me-2 text-primary"></i>{{ __('members.redeem_reward') }}
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>

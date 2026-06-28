@@ -27,67 +27,67 @@
         </a>
 
         {{-- Main Menu --}}
-        <div class="sidebar-section-label">Main Menu</div>
+        <div class="sidebar-section-label">{{ __('navigation.main_menu') }}</div>
         <ul class="nav flex-column gap-1 mb-2">
             <li class="nav-item">
                 <a href="{{ route('dashboard') }}"
                    class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     <i class="bi bi-speedometer2"></i>
-                    <span>Dashboard</span>
+                    <span>{{ __('navigation.dashboard') }}</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('members') }}"
                    class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('members') ? 'active' : '' }}">
                     <i class="bi bi-people"></i>
-                    <span>Members</span>
+                    <span>{{ __('navigation.members') }}</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('campaigns.index') }}"
                    class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('campaigns.*') ? 'active' : '' }}">
                     <i class="bi bi-star"></i>
-                    <span>Campaigns</span>
+                    <span>{{ __('navigation.campaigns') }}</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('rewards') }}"
                    class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('rewards') ? 'active' : '' }}">
                     <i class="bi bi-gift"></i>
-                    <span>Rewards</span>
+                    <span>{{ __('navigation.rewards') }}</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('transactions') }}"
                    class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('transactions') ? 'active' : '' }}">
                     <i class="bi bi-arrow-left-right"></i>
-                    <span>Transactions</span>
+                    <span>{{ __('navigation.transactions') }}</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('reports') }}"
                    class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('reports') ? 'active' : '' }}">
                     <i class="bi bi-bar-chart-line"></i>
-                    <span>Reports</span>
+                    <span>{{ __('navigation.reports') }}</span>
                 </a>
             </li>
         </ul>
 
         {{-- Account --}}
-        <div class="sidebar-section-label">Account</div>
+        <div class="sidebar-section-label">{{ __('navigation.account') }}</div>
         <ul class="nav flex-column gap-1">
             <li class="nav-item">
                 <a href="{{ route('subscription.index') }}"
                    class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('subscription.*') ? 'active' : '' }}">
                     <i class="bi bi-credit-card"></i>
-                    <span>Subscription</span>
+                    <span>{{ __('navigation.subscription') }}</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('settings') }}"
                    class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('settings*') ? 'active' : '' }}">
                     <i class="bi bi-gear"></i>
-                    <span>Settings</span>
+                    <span>{{ __('navigation.settings') }}</span>
                 </a>
             </li>
         </ul>
@@ -111,7 +111,7 @@
                 @csrf
                 <button type="submit" class="sidebar-logout-btn d-flex align-items-center gap-2">
                     <i class="bi bi-box-arrow-left"></i>
-                    <span>Log Out</span>
+                    <span>{{ __('navigation.log_out') }}</span>
                 </button>
             </form>
         </div>

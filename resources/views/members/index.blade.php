@@ -1,22 +1,22 @@
 <x-app-layout>
-    <x-slot name="title">Members – {{ config('app.name') }}</x-slot>
-    <x-slot name="pageTitle">Members</x-slot>
+    <x-slot name="title">{{ __('members.title') }} – {{ config('app.name') }}</x-slot>
+    <x-slot name="pageTitle">{{ __('members.title') }}</x-slot>
 
     {{-- Page Header --}}
     <div class="page-header d-flex align-items-center justify-content-between">
         <div>
-            <h1>Members</h1>
-            <p>Manage your loyalty programme members.</p>
+            <h1>{{ __('members.title') }}</h1>
+            <p>{{ __('members.subtitle') }}</p>
         </div>
         <a href="{{ route('members.create') }}" class="btn btn-primary">
-            <i class="bi bi-person-plus me-1"></i> Add Member
+            <i class="bi bi-person-plus me-1"></i> {{ __('members.add_member') }}
         </a>
     </div>
 
     {{-- Filter Tabs --}}
     <div class="mb-3">
         <div class="btn-group btn-group-sm" role="group" aria-label="Member filter">
-            @foreach (['active' => 'Active', 'archived' => 'Archived', 'all' => 'All'] as $value => $label)
+            @foreach (['active' => __('members.filter_active'), 'archived' => __('members.filter_archived'), 'all' => __('members.filter_all')] as $value => $label)
                 <a href="{{ route('members', array_merge(request()->except(['filter', 'page']), ['filter' => $value])) }}"
                    class="btn {{ $filter === $value ? 'btn-primary' : 'btn-outline-secondary' }}">
                     {{ $label }}
@@ -33,29 +33,29 @@
                 <input type="hidden" name="direction" value="{{ $direction }}">
                 <input type="hidden" name="filter" value="{{ $filter }}">
                 <div class="col-12 col-md-5">
-                    <label for="search_name" class="form-label form-label-sm mb-1">Full Name</label>
+                    <label for="search_name" class="form-label form-label-sm mb-1">{{ __('members.full_name') }}</label>
                     <input type="text"
                            id="search_name"
                            name="search_name"
                            class="form-control form-control-sm"
-                           placeholder="Search by full name…"
+                           placeholder="{{ __('members.search_name_ph') }}"
                            value="{{ request('search_name') }}">
                 </div>
                 <div class="col-12 col-md-5">
-                    <label for="search_phone" class="form-label form-label-sm mb-1">Mobile Number</label>
+                    <label for="search_phone" class="form-label form-label-sm mb-1">{{ __('members.mobile_number') }}</label>
                     <input type="text"
                            id="search_phone"
                            name="search_phone"
                            class="form-control form-control-sm"
-                           placeholder="Search by mobile number…"
+                           placeholder="{{ __('members.search_phone_ph') }}"
                            value="{{ request('search_phone') }}">
                 </div>
                 <div class="col-12 col-md-2 d-flex gap-2">
                     <button type="submit" class="btn btn-sm btn-primary w-100">
-                        <i class="bi bi-search me-1"></i> Search
+                        <i class="bi bi-search me-1"></i> {{ __('buttons.search') }}
                     </button>
                     @if(request('search_name') || request('search_phone'))
-                        <a href="{{ route('members', ['filter' => $filter]) }}" class="btn btn-sm btn-outline-secondary w-100">Clear</a>
+                        <a href="{{ route('members', ['filter' => $filter]) }}" class="btn btn-sm btn-outline-secondary w-100">{{ __('buttons.clear') }}</a>
                     @endif
                 </div>
             </form>
@@ -71,20 +71,19 @@
                         <i class="bi bi-people text-primary"></i>
                     </div>
                     @if(request('search_name') || request('search_phone'))
-                        <h5 class="fw-semibold mb-2">No members found</h5>
+                        <h5 class="fw-semibold mb-2">{{ __('members.empty_search_title') }}</h5>
                         <p class="text-muted mb-0" style="max-width:380px;margin:0 auto;">
-                            No members matched your search. Try different keywords or
-                            <a href="{{ route('members', ['filter' => $filter]) }}">clear the search</a>.
+                            {!! __('members.empty_search_body', ['link' => route('members', ['filter' => $filter])]) !!}
                         </p>
                     @elseif($filter === 'archived')
-                        <h5 class="fw-semibold mb-2">No archived members</h5>
+                        <h5 class="fw-semibold mb-2">{{ __('members.empty_archived_title') }}</h5>
                         <p class="text-muted mb-0" style="max-width:380px;margin:0 auto;">
-                            Archived members will appear here once a member is archived.
+                            {{ __('members.empty_archived_body') }}
                         </p>
                     @else
-                        <h5 class="fw-semibold mb-2">No members yet</h5>
+                        <h5 class="fw-semibold mb-2">{{ __('members.empty_title') }}</h5>
                         <p class="text-muted mb-0" style="max-width:380px;margin:0 auto;">
-                            Members will appear here once they are added to your programme.
+                            {{ __('members.empty_body') }}
                         </p>
                     @endif
                 </div>
@@ -93,12 +92,12 @@
                     <table class="table table-hover align-middle mb-0">
                         <thead class="table-light">
                             <tr>
-                                <th class="ps-4" style="width:80px;">QR Code</th>
+                                <th class="ps-4" style="width:80px;">{{ __('members.col_code') }}</th>
                                 <th>
                                     @php $nameDir = ($sort === 'name' && $direction === 'asc') ? 'desc' : 'asc'; @endphp
                                     <a href="{{ route('members', array_merge(request()->query(), ['sort' => 'name', 'direction' => $nameDir])) }}"
                                        class="text-decoration-none text-dark d-inline-flex align-items-center gap-1">
-                                        Full Name
+                                        {{ __('members.full_name') }}
                                         @if($sort === 'name')
                                             <i class="bi bi-arrow-{{ $direction === 'asc' ? 'up' : 'down' }} text-primary"></i>
                                         @else
@@ -106,14 +105,14 @@
                                         @endif
                                     </a>
                                 </th>
-                                <th>Nickname</th>
-                                <th>Mobile Number</th>
-                                <th>Email</th>
+                                <th>{{ __('members.nickname') }}</th>
+                                <th>{{ __('members.mobile_number') }}</th>
+                                <th>{{ __('members.email') }}</th>
                                 <th>
                                     @php $bdDir = ($sort === 'birthday' && $direction === 'asc') ? 'desc' : 'asc'; @endphp
                                     <a href="{{ route('members', array_merge(request()->query(), ['sort' => 'birthday', 'direction' => $bdDir])) }}"
                                        class="text-decoration-none text-dark d-inline-flex align-items-center gap-1">
-                                        Birthday
+                                        {{ __('members.date_of_birth') }}
                                         @if($sort === 'birthday')
                                             <i class="bi bi-arrow-{{ $direction === 'asc' ? 'up' : 'down' }} text-primary"></i>
                                         @else
@@ -121,9 +120,9 @@
                                         @endif
                                     </a>
                                 </th>
-                                <th class="text-end">Points Balance</th>
-                                <th>Status</th>
-                                <th class="text-end pe-4">Actions</th>
+                                <th class="text-end">{{ __('members.col_points') }}</th>
+                                <th>{{ __('members.col_status') }}</th>
+                                <th class="text-end pe-4">{{ __('members.col_actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -154,7 +153,7 @@
                                     </td>
                                     <td>
                                         @if ($member->trashed())
-                                            <span class="badge bg-danger">Archived</span>
+                                            <span class="badge bg-danger">{{ __('members.status_archived') }}</span>
                                         @else
                                             <span class="{{ $member->status->badgeClass() }}">
                                                 {{ $member->status->label() }}
@@ -178,7 +177,7 @@
                 @if ($members->hasPages())
                     <div class="d-flex align-items-center justify-content-between px-4 py-3 border-top">
                         <div class="text-muted" style="font-size:.8125rem;">
-                            Showing {{ $members->firstItem() }}–{{ $members->lastItem() }} of {{ $members->total() }} members
+                            {{ __('members.pagination_showing', ['first' => $members->firstItem(), 'last' => $members->lastItem(), 'total' => $members->total()]) }}
                         </div>
                         <div>
                             {{ $members->links('pagination::bootstrap-5') }}
@@ -186,7 +185,7 @@
                     </div>
                 @else
                     <div class="px-4 py-3 border-top text-muted" style="font-size:.8125rem;">
-                        {{ $members->total() }} member{{ $members->total() !== 1 ? 's' : '' }}
+                        {{ trans_choice('members.count', $members->total(), ['count' => $members->total()]) }}
                     </div>
                 @endif
             @endif

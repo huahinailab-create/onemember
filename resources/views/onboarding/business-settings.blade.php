@@ -1,10 +1,10 @@
 @extends('layouts.wizard')
 
-@section('title', 'Business Settings – ' . config('app.name'))
+@section('title', __('onboarding.business_settings_title') . ' – ' . config('app.name'))
 
 @section('header-action')
     <a href="{{ route('onboarding.skip') }}" class="btn btn-sm btn-outline-secondary">
-        Skip for Now
+        {{ __('onboarding.skip_for_now') }}
     </a>
 @endsection
 
@@ -49,7 +49,7 @@
     {{-- Progress --}}
     <div class="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
         <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="text-muted small fw-medium">Step 3 of 6</span>
+            <span class="text-muted small fw-medium">{{ __('onboarding.step_3_of_6') }}</span>
             <span class="text-muted small">50%</span>
         </div>
         <div class="progress mb-1" style="height:6px;">
@@ -58,8 +58,8 @@
     </div>
 
     <div class="card-body p-4">
-        <h2 class="fw-bold fs-4 mb-1">Business settings</h2>
-        <p class="text-muted mb-4">These are used for transactions and reports.</p>
+        <h2 class="fw-bold fs-4 mb-1">{{ __('onboarding.business_settings_heading') }}</h2>
+        <p class="text-muted mb-4">{{ __('onboarding.business_settings_sub') }}</p>
 
         @if ($errors->any())
             <div class="alert alert-danger mb-4">
@@ -77,7 +77,7 @@
             {{-- Currency --}}
             <div class="mb-3">
                 <label for="currency" class="form-label fw-medium">
-                    Currency <span class="text-danger">*</span>
+                    {{ __('settings.currency') }} <span class="text-danger">*</span>
                 </label>
                 <select id="currency"
                         name="currency"
@@ -98,7 +98,7 @@
             {{-- Timezone --}}
             <div class="mb-3">
                 <label for="timezone" class="form-label fw-medium">
-                    Timezone <span class="text-danger">*</span>
+                    {{ __('settings.timezone') }} <span class="text-danger">*</span>
                 </label>
                 <select id="timezone"
                         name="timezone"
@@ -119,7 +119,7 @@
             {{-- Date Format --}}
             <div class="mb-4">
                 <label for="date_format" class="form-label fw-medium">
-                    Date Format <span class="text-danger">*</span>
+                    {{ __('settings.date_format') }} <span class="text-danger">*</span>
                 </label>
                 @php
                     $currentFormat = old('date_format', $merchant?->settings['date_format'] ?? 'DD/MM/YYYY');
@@ -141,7 +141,7 @@
 
             <div class="d-grid">
                 <button type="submit" class="btn btn-primary btn-lg">
-                    Save and Continue <i class="bi bi-arrow-right ms-1"></i>
+                    {{ __('onboarding.save_and_continue') }} <i class="bi bi-arrow-right ms-1"></i>
                 </button>
             </div>
         </form>

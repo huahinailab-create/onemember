@@ -308,6 +308,24 @@
                                 @error('date_format')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
+                            {{-- Language --}}
+                            <div class="col-md-3">
+                                <label for="locale" class="form-label fw-medium">
+                                    {{ __('settings.language') }} <span class="text-danger">*</span>
+                                </label>
+                                <select id="locale" name="locale"
+                                        class="form-select @error('locale') is-invalid @enderror" required>
+                                    <option value="en" {{ old('locale', $merchant?->settings['locale'] ?? 'en') === 'en' ? 'selected' : '' }}>
+                                        English
+                                    </option>
+                                    <option value="th" {{ old('locale', $merchant?->settings['locale'] ?? 'en') === 'th' ? 'selected' : '' }}>
+                                        ภาษาไทย
+                                    </option>
+                                </select>
+                                <div class="form-text">{{ __('settings.language_hint') }}</div>
+                                @error('locale')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+
                             <div class="col-12"><hr class="my-0"></div>
 
                             {{-- Points Expiration Default --}}

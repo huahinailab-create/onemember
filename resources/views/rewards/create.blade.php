@@ -1,10 +1,10 @@
 <x-app-layout>
-    <x-slot name="title">Add Reward – {{ config('app.name') }}</x-slot>
-    <x-slot name="pageTitle">Campaigns</x-slot>
+    <x-slot name="title">{{ __('rewards.add_reward') }} – {{ config('app.name') }}</x-slot>
+    <x-slot name="pageTitle">{{ __('campaigns.title') }}</x-slot>
 
     <div class="page-header d-flex align-items-center justify-content-between">
         <div>
-            <h1>Add Reward</h1>
+            <h1>{{ __('rewards.add_reward') }}</h1>
             <p>
                 <a href="{{ route('campaigns.show', $campaign) . '?active_tab=rewards' }}"
                    class="text-decoration-none text-muted">
@@ -19,7 +19,7 @@
             <div class="card">
                 <div class="card-header d-flex align-items-center gap-2">
                     <i class="bi bi-gift text-primary"></i>
-                    <span class="fw-semibold">Reward Details</span>
+                    <span class="fw-semibold">{{ __('rewards.reward_details') }}</span>
                     <span class="badge bg-secondary ms-auto">{{ $campaign->name }}</span>
                 </div>
                 <div class="card-body" x-data="{ unlimited: {{ old('unlimited') ? 'true' : 'false' }} }">
@@ -41,7 +41,7 @@
                         {{-- Reward Name --}}
                         <div class="mb-3">
                             <label for="name" class="form-label">
-                                Reward Name <span class="text-danger">*</span>
+                                {{ __('rewards.reward_name') }} <span class="text-danger">*</span>
                             </label>
                             <input type="text"
                                    id="name"
@@ -59,13 +59,13 @@
                         {{-- Reward Type --}}
                         <div class="mb-3">
                             <label for="type" class="form-label">
-                                Reward Type <span class="text-danger">*</span>
+                                {{ __('rewards.reward_type') }} <span class="text-danger">*</span>
                             </label>
                             <select id="type"
                                     name="type"
                                     class="form-select @error('type') is-invalid @enderror"
                                     required>
-                                <option value="" disabled {{ old('type') ? '' : 'selected' }}>Select a type…</option>
+                                <option value="" disabled {{ old('type') ? '' : 'selected' }}>{{ __('rewards.type_select_ph') }}</option>
                                 @foreach (\App\Enums\RewardType::cases() as $case)
                                     <option value="{{ $case->value }}" {{ old('type') === $case->value ? 'selected' : '' }}>
                                         {{ $case->label() }}
@@ -79,7 +79,7 @@
 
                         {{-- Description --}}
                         <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
+                            <label for="description" class="form-label">{{ __('rewards.description') }}</label>
                             <textarea id="description"
                                       name="description"
                                       class="form-control @error('description') is-invalid @enderror"
@@ -96,7 +96,7 @@
                         @if ($campaign->type->value === 'points')
                             <div class="mb-3">
                                 <label for="points_required" class="form-label">
-                                    Points Required <span class="text-danger">*</span>
+                                    {{ __('rewards.points_required') }} <span class="text-danger">*</span>
                                 </label>
                                 <div class="input-group" style="max-width:220px;">
                                     <input type="number"
@@ -111,18 +111,18 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="form-text">Customers spend this many points to claim this reward.</div>
+                                <div class="form-text">{{ __('rewards.points_required_hint') }}</div>
                             </div>
                         @else
                             {{-- Stamp campaigns: show completion info --}}
                             @php $stampsRequired = $campaign->settings['stamps_required'] ?? '—'; @endphp
                             <div class="mb-3">
-                                <label class="form-label">Stamp Requirement</label>
+                                <label class="form-label">{{ __('rewards.stamp_requirement') }}</label>
                                 <div class="form-control bg-light" style="cursor:default;">
-                                    {{ $stampsRequired }} stamps (campaign completion)
+                                    {{ __('rewards.stamps_completion', ['count' => $stampsRequired]) }}
                                 </div>
                                 <div class="form-text">
-                                    This reward is available when a customer completes the stamp card.
+                                    {{ __('rewards.stamp_card_hint') }}
                                 </div>
                             </div>
                         @endif
@@ -138,13 +138,13 @@
                                        x-model="unlimited"
                                        {{ old('unlimited') ? 'checked' : '' }}>
                                 <label class="form-check-label" for="unlimited">
-                                    Unlimited Quantity
+                                    {{ __('rewards.unlimited_quantity') }}
                                 </label>
                             </div>
 
                             <div x-show="!unlimited" x-cloak>
                                 <label for="quantity_available" class="form-label form-label-sm">
-                                    Quantity <span class="text-danger">*</span>
+                                    {{ __('rewards.quantity') }} <span class="text-danger">*</span>
                                 </label>
                                 <input type="number"
                                        id="quantity_available"
@@ -162,17 +162,17 @@
                         {{-- Status --}}
                         <div class="mb-3">
                             <label for="status" class="form-label">
-                                Status <span class="text-danger">*</span>
+                                {{ __('rewards.status') }} <span class="text-danger">*</span>
                             </label>
                             <select id="status"
                                     name="status"
                                     class="form-select @error('status') is-invalid @enderror"
                                     required>
                                 <option value="draft" {{ old('status', 'draft') === 'draft' ? 'selected' : '' }}>
-                                    Draft — not yet visible to customers
+                                    {{ __('rewards.status_draft_full') }}
                                 </option>
                                 <option value="active" {{ old('status') === 'active' ? 'selected' : '' }}>
-                                    Active — available for redemption
+                                    {{ __('rewards.status_active_full') }}
                                 </option>
                             </select>
                             @error('status')
@@ -184,7 +184,7 @@
 
                         {{-- Internal Notes --}}
                         <div class="mb-4">
-                            <label for="internal_notes" class="form-label">Internal Notes</label>
+                            <label for="internal_notes" class="form-label">{{ __('rewards.internal_notes') }}</label>
                             <textarea id="internal_notes"
                                       name="internal_notes"
                                       class="form-control @error('internal_notes') is-invalid @enderror"
@@ -193,15 +193,15 @@
                             @error('internal_notes')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
-                            <div class="form-text">Visible to you only. Not shown to customers.</div>
+                            <div class="form-text">{{ __('rewards.internal_notes_hint') }}</div>
                         </div>
 
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn btn-primary">
-                                <i class="bi bi-check-lg me-1"></i>Save Reward
+                                <i class="bi bi-check-lg me-1"></i>{{ __('buttons.save_reward') }}
                             </button>
                             <a href="{{ route('campaigns.show', $campaign) . '?active_tab=rewards' }}"
-                               class="btn btn-outline-secondary">Cancel</a>
+                               class="btn btn-outline-secondary">{{ __('buttons.cancel') }}</a>
                         </div>
 
                     </form>

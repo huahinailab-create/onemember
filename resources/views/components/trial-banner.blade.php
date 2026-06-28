@@ -15,32 +15,32 @@
         $bannerClass  = 'alert-secondary';
         $iconClass    = 'bi-info-circle text-secondary';
         $dismissible  = false;
-        $heading      = 'Your Professional Trial has ended.';
-        $body         = 'Your account has been moved to the Free plan. Your existing data is safe. Upgrade anytime to unlock Professional features again.';
+        $heading      = __('dashboard.trial_expired_heading');
+        $body         = __('dashboard.trial_expired_body');
     } elseif ($days <= 1) {
         $bannerClass  = 'alert-danger';
         $iconClass    = 'bi-exclamation-octagon-fill text-danger';
         $dismissible  = true;
-        $heading      = 'Your trial ends today!';
-        $body         = 'You have less than 1 day left on your Professional Trial. Upgrade now to keep full access.';
+        $heading      = __('dashboard.trial_ends_today');
+        $body         = __('dashboard.trial_ends_today_body');
     } elseif ($days <= 3) {
         $bannerClass  = 'alert-warning';
         $iconClass    = 'bi-exclamation-triangle-fill text-warning';
         $dismissible  = true;
-        $heading      = "Only {$days} days left on your trial.";
-        $body         = 'After your trial ends, your account will move to the Free plan. Upgrade to keep Professional features.';
+        $heading      = __('dashboard.trial_days_left', ['days' => $days]);
+        $body         = __('dashboard.trial_expiring_soon_body');
     } elseif ($days <= 7) {
         $bannerClass  = 'alert-warning';
         $iconClass    = 'bi-clock-fill text-warning';
         $dismissible  = true;
-        $heading      = "Your trial ends in {$days} days.";
-        $body         = 'Upgrade before your trial ends to avoid any interruption to your loyalty programme.';
+        $heading      = __('dashboard.trial_ends_in_days', ['days' => $days]);
+        $body         = __('dashboard.trial_7day_body');
     } else {
         $bannerClass  = 'alert-info';
         $iconClass    = 'bi-info-circle-fill text-info';
         $dismissible  = true;
-        $heading      = "Your Professional Trial ends in {$days} days.";
-        $body         = 'Enjoying OneMember? Upgrade to keep access to all Professional features.';
+        $heading      = __('dashboard.trial_ends_in_days', ['days' => $days]);
+        $body         = __('dashboard.trial_14day_body');
     }
 @endphp
 
@@ -61,9 +61,9 @@
     </div>
     <div class="d-flex align-items-center gap-2 flex-shrink-0">
         <button type="button" class="btn btn-sm btn-outline-primary" disabled>
-            Upgrade Plan
+            {{ __('buttons.upgrade_plan') }}
         </button>
-        <button type="button" class="btn-close" @click="dismiss()" aria-label="Dismiss"></button>
+        <button type="button" class="btn-close" @click="dismiss()" aria-label="{{ __('buttons.dismiss') }}"></button>
     </div>
 </div>
 @else
@@ -76,7 +76,7 @@
     </div>
     <div class="flex-shrink-0">
         <button type="button" class="btn btn-sm btn-outline-primary" disabled>
-            Upgrade Plan
+            {{ __('buttons.upgrade_plan') }}
         </button>
     </div>
 </div>

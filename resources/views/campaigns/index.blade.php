@@ -1,15 +1,15 @@
 <x-app-layout>
-    <x-slot name="title">Campaigns – {{ config('app.name') }}</x-slot>
-    <x-slot name="pageTitle">Campaigns</x-slot>
+    <x-slot name="title">{{ __('campaigns.title') }} – {{ config('app.name') }}</x-slot>
+    <x-slot name="pageTitle">{{ __('campaigns.title') }}</x-slot>
 
     {{-- Page Header --}}
     <div class="page-header d-flex align-items-center justify-content-between">
         <div>
-            <h1>Campaigns</h1>
-            <p>Manage your loyalty campaigns.</p>
+            <h1>{{ __('campaigns.title') }}</h1>
+            <p>{{ __('campaigns.subtitle') }}</p>
         </div>
         <a href="{{ route('campaigns.create') }}" class="btn btn-primary">
-            <i class="bi bi-plus-lg me-1"></i> Create Campaign
+            <i class="bi bi-plus-lg me-1"></i> {{ __('campaigns.create_campaign') }}
         </a>
     </div>
 
@@ -17,11 +17,11 @@
     <div class="mb-3">
         <div class="btn-group btn-group-sm" role="group" aria-label="Campaign filter">
             @foreach ([
-                'active'   => 'Active',
-                'draft'    => 'Draft',
-                'paused'   => 'Paused',
-                'archived' => 'Archived',
-                'all'      => 'All',
+                'active'   => __('campaigns.filter_active'),
+                'draft'    => __('campaigns.filter_draft'),
+                'paused'   => __('campaigns.filter_paused'),
+                'archived' => __('campaigns.filter_archived'),
+                'all'      => __('campaigns.filter_all'),
             ] as $value => $label)
                 <a href="{{ route('campaigns.index', array_merge(request()->except(['filter', 'page']), ['filter' => $value])) }}"
                    class="btn {{ $filter === $value ? 'btn-primary' : 'btn-outline-secondary' }}">
@@ -37,20 +37,20 @@
             <form method="GET" action="{{ route('campaigns.index') }}" class="row g-2 align-items-end">
                 <input type="hidden" name="filter" value="{{ $filter }}">
                 <div class="col-12 col-md-8">
-                    <label for="search_name" class="form-label form-label-sm mb-1">Campaign Name</label>
+                    <label for="search_name" class="form-label form-label-sm mb-1">{{ __('campaigns.campaign_name') }}</label>
                     <input type="text"
                            id="search_name"
                            name="search_name"
                            class="form-control form-control-sm"
-                           placeholder="Search by campaign name…"
+                           placeholder="{{ __('campaigns.search_ph') }}"
                            value="{{ request('search_name') }}">
                 </div>
                 <div class="col-12 col-md-4 d-flex gap-2">
                     <button type="submit" class="btn btn-sm btn-primary w-100">
-                        <i class="bi bi-search me-1"></i> Search
+                        <i class="bi bi-search me-1"></i> {{ __('buttons.search') }}
                     </button>
                     @if (request('search_name'))
-                        <a href="{{ route('campaigns.index', ['filter' => $filter]) }}" class="btn btn-sm btn-outline-secondary w-100">Clear</a>
+                        <a href="{{ route('campaigns.index', ['filter' => $filter]) }}" class="btn btn-sm btn-outline-secondary w-100">{{ __('buttons.clear') }}</a>
                     @endif
                 </div>
             </form>
@@ -66,20 +66,19 @@
                         <i class="bi bi-star text-primary"></i>
                     </div>
                     @if (request('search_name'))
-                        <h5 class="fw-semibold mb-2">No campaigns found</h5>
+                        <h5 class="fw-semibold mb-2">{{ __('campaigns.empty_search_title') }}</h5>
                         <p class="text-muted mb-0" style="max-width:380px;margin:0 auto;">
-                            No campaigns matched your search. Try different keywords or
-                            <a href="{{ route('campaigns.index', ['filter' => $filter]) }}">clear the search</a>.
+                            {!! __('campaigns.empty_search_body', ['link' => route('campaigns.index', ['filter' => $filter])]) !!}
                         </p>
                     @elseif ($filter === 'archived')
-                        <h5 class="fw-semibold mb-2">No archived campaigns</h5>
+                        <h5 class="fw-semibold mb-2">{{ __('campaigns.empty_archived_title') }}</h5>
                         <p class="text-muted mb-0" style="max-width:380px;margin:0 auto;">
-                            Archived campaigns will appear here once a campaign is archived.
+                            {{ __('campaigns.empty_archived_body') }}
                         </p>
                     @else
-                        <h5 class="fw-semibold mb-2">No campaigns yet</h5>
+                        <h5 class="fw-semibold mb-2">{{ __('campaigns.empty_title') }}</h5>
                         <p class="text-muted mb-0" style="max-width:380px;margin:0 auto;">
-                            <a href="{{ route('campaigns.create') }}">Create your first campaign</a> to start rewarding your customers.
+                            {!! __('campaigns.empty_body', ['link' => route('campaigns.create')]) !!}
                         </p>
                     @endif
                 </div>
@@ -88,11 +87,11 @@
                     <table class="table table-hover align-middle mb-0">
                         <thead class="table-light">
                             <tr>
-                                <th class="ps-4">Campaign Name</th>
-                                <th>Campaign Type</th>
-                                <th>Status</th>
-                                <th>Last Updated</th>
-                                <th class="text-end pe-4">Actions</th>
+                                <th class="ps-4">{{ __('campaigns.col_name') }}</th>
+                                <th>{{ __('campaigns.col_type') }}</th>
+                                <th>{{ __('campaigns.col_status') }}</th>
+                                <th>{{ __('campaigns.col_updated') }}</th>
+                                <th class="text-end pe-4">{{ __('campaigns.col_actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -112,7 +111,7 @@
                                     </td>
                                     <td>
                                         @if ($campaign->trashed())
-                                            <span class="badge bg-danger">Archived</span>
+                                            <span class="badge bg-danger">{{ __('campaigns.status_archived') }}</span>
                                         @else
                                             <span class="{{ $campaign->status->badgeClass() }}">
                                                 {{ $campaign->status->label() }}
@@ -125,7 +124,7 @@
                                     <td class="text-end pe-4">
                                         <a href="{{ route('campaigns.show', $campaign) }}"
                                            class="btn btn-sm btn-outline-secondary">
-                                            <i class="bi bi-pencil me-1"></i>View
+                                            <i class="bi bi-pencil me-1"></i>{{ __('buttons.view') }}
                                         </a>
                                     </td>
                                 </tr>
@@ -138,7 +137,7 @@
                 @if ($campaigns->hasPages())
                     <div class="d-flex align-items-center justify-content-between px-4 py-3 border-top">
                         <div class="text-muted" style="font-size:.8125rem;">
-                            Showing {{ $campaigns->firstItem() }}–{{ $campaigns->lastItem() }} of {{ $campaigns->total() }} campaigns
+                            {{ __('campaigns.pagination_showing', ['first' => $campaigns->firstItem(), 'last' => $campaigns->lastItem(), 'total' => $campaigns->total()]) }}
                         </div>
                         <div>
                             {{ $campaigns->links('pagination::bootstrap-5') }}
@@ -146,7 +145,7 @@
                     </div>
                 @else
                     <div class="px-4 py-3 border-top text-muted" style="font-size:.8125rem;">
-                        {{ $campaigns->total() }} campaign{{ $campaigns->total() !== 1 ? 's' : '' }}
+                        {{ trans_choice('campaigns.count', $campaigns->total(), ['count' => $campaigns->total()]) }}
                     </div>
                 @endif
             @endif

@@ -1,11 +1,11 @@
 <x-app-layout>
-    <x-slot name="title">Dashboard – {{ config('app.name') }}</x-slot>
-    <x-slot name="pageTitle">Dashboard</x-slot>
+    <x-slot name="title">{{ __('dashboard.title') }} – {{ config('app.name') }}</x-slot>
+    <x-slot name="pageTitle">{{ __('dashboard.title') }}</x-slot>
 
     {{-- Page Header --}}
     <div class="page-header">
-        <h1>Dashboard</h1>
-        <p>Welcome back, {{ Auth::user()->name }}. Here's what's happening today.</p>
+        <h1>{{ __('dashboard.title') }}</h1>
+        <p>{{ __('dashboard.welcome', ['name' => Auth::user()->name]) }}</p>
     </div>
 
     {{-- ── Trial Lifecycle Banner ───────────────────────────── --}}
@@ -22,7 +22,7 @@
                     </div>
                     <div>
                         <div class="fs-2 fw-bold lh-1">{{ number_format($totalActiveMembers) }}</div>
-                        <div class="text-muted small mt-1">Active Members</div>
+                        <div class="text-muted small mt-1">{{ __('dashboard.active_members') }}</div>
                     </div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                     </div>
                     <div>
                         <div class="fs-2 fw-bold lh-1">{{ number_format($activeCampaignCount) }}</div>
-                        <div class="text-muted small mt-1">Active Campaigns</div>
+                        <div class="text-muted small mt-1">{{ __('dashboard.active_campaigns') }}</div>
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                     </div>
                     <div>
                         <div class="fs-2 fw-bold lh-1">{{ number_format($redeemedToday) }}</div>
-                        <div class="text-muted small mt-1">Rewards Redeemed Today</div>
+                        <div class="text-muted small mt-1">{{ __('dashboard.rewards_redeemed_today') }}</div>
                     </div>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                     </div>
                     <div>
                         <div class="fs-2 fw-bold lh-1">{{ number_format($pointsIssuedToday) }}</div>
-                        <div class="text-muted small mt-1">Points Issued Today</div>
+                        <div class="text-muted small mt-1">{{ __('dashboard.points_issued_today') }}</div>
                     </div>
                 </div>
             </div>
@@ -73,35 +73,35 @@
 
     {{-- ── Section 2: Quick Actions ──────────────────────────── --}}
     <div class="card mb-4">
-        <div class="card-header fw-semibold">Quick Actions</div>
+        <div class="card-header fw-semibold">{{ __('dashboard.quick_actions') }}</div>
         <div class="card-body">
             <div class="row g-3">
                 <div class="col-6 col-md-3">
                     <a href="{{ route('members.create') }}"
                        class="btn btn-outline-primary w-100 py-3 d-flex flex-column align-items-center gap-2">
                         <i class="bi bi-person-plus fs-3"></i>
-                        <span class="fw-medium">Add Member</span>
+                        <span class="fw-medium">{{ __('dashboard.add_member') }}</span>
                     </a>
                 </div>
                 <div class="col-6 col-md-3">
                     <a href="{{ route('members') }}"
                        class="btn btn-outline-success w-100 py-3 d-flex flex-column align-items-center gap-2">
                         <i class="bi bi-bag-check fs-3"></i>
-                        <span class="fw-medium">Record Purchase</span>
+                        <span class="fw-medium">{{ __('dashboard.record_purchase') }}</span>
                     </a>
                 </div>
                 <div class="col-6 col-md-3">
                     <a href="{{ route('members') }}"
                        class="btn btn-outline-warning w-100 py-3 d-flex flex-column align-items-center gap-2">
                         <i class="bi bi-gift fs-3"></i>
-                        <span class="fw-medium">Redeem Reward</span>
+                        <span class="fw-medium">{{ __('dashboard.redeem_reward') }}</span>
                     </a>
                 </div>
                 <div class="col-6 col-md-3">
                     <a href="{{ route('campaigns.create') }}"
                        class="btn btn-outline-secondary w-100 py-3 d-flex flex-column align-items-center gap-2">
                         <i class="bi bi-star fs-3"></i>
-                        <span class="fw-medium">Create Campaign</span>
+                        <span class="fw-medium">{{ __('dashboard.create_campaign') }}</span>
                     </a>
                 </div>
             </div>
@@ -225,11 +225,11 @@
         {{-- Recent Activity --}}
         <div class="col-12 col-lg-8">
             <div class="card h-100">
-                <div class="card-header fw-semibold">Recent Activity</div>
+                <div class="card-header fw-semibold">{{ __('dashboard.recent_activity') }}</div>
                 @if ($recentActivity->isEmpty())
                     <div class="card-body text-center py-5">
                         <i class="bi bi-clock-history text-muted fs-1 d-block mb-3"></i>
-                        <p class="text-muted mb-0">No activity recorded yet.</p>
+                        <p class="text-muted mb-0">{{ __('dashboard.no_activity') }}</p>
                     </div>
                 @else
                     <div class="card-body p-0">
@@ -237,11 +237,11 @@
                             <table class="table table-hover align-middle mb-0">
                                 <thead class="table-light">
                                     <tr>
-                                        <th class="ps-3">Member</th>
-                                        <th>Type</th>
-                                        <th>Campaign</th>
-                                        <th class="text-end">Points</th>
-                                        <th class="text-end pe-3">Date &amp; Time</th>
+                                                        <th class="ps-3">{{ __('dashboard.member_col') }}</th>
+                                        <th>{{ __('dashboard.type_col') }}</th>
+                                        <th>{{ __('dashboard.campaign_col') }}</th>
+                                        <th class="text-end">{{ __('dashboard.points_col') }}</th>
+                                        <th class="text-end pe-3">{{ __('dashboard.date_time_col') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -284,17 +284,17 @@
         {{-- Top Members --}}
         <div class="col-12 col-lg-4">
             <div class="card h-100">
-                <div class="card-header fw-semibold">Top Members</div>
+                <div class="card-header fw-semibold">{{ __('dashboard.top_members') }}</div>
                 @if ($topMembers->isEmpty())
                     <div class="card-body text-center py-5">
                         <i class="bi bi-people text-muted fs-1 d-block mb-3"></i>
                         @if (! $hasAnyMembers)
-                            <p class="text-muted mb-3">You haven't added any members yet.</p>
+                            <p class="text-muted mb-3">{{ __('dashboard.no_members_yet') }}</p>
                             <a href="{{ route('members.create') }}" class="btn btn-primary btn-sm">
-                                <i class="bi bi-person-plus me-1"></i> Add Your First Member
+                                <i class="bi bi-person-plus me-1"></i> {{ __('dashboard.add_first_member') }}
                             </a>
                         @else
-                            <p class="text-muted mb-0">No member data available yet.</p>
+                            <p class="text-muted mb-0">{{ __('dashboard.no_member_data') }}</p>
                         @endif
                     </div>
                 @else
@@ -327,19 +327,19 @@
 
     {{-- ── Section 5: Active Campaigns ─────────────────────── --}}
     <div class="card mb-4">
-        <div class="card-header fw-semibold">Active Campaigns</div>
+        <div class="card-header fw-semibold">{{ __('dashboard.active_campaigns_card') }}</div>
         @if ($activeCampaigns->isEmpty())
             <div class="card-body text-center py-5">
                 <i class="bi bi-star text-muted fs-1 d-block mb-3"></i>
                 @if (! $hasAnyCampaigns)
-                    <p class="text-muted mb-3">You haven't created a campaign yet.</p>
+                    <p class="text-muted mb-3">{{ __('dashboard.no_campaigns_yet') }}</p>
                     <a href="{{ route('campaigns.create') }}" class="btn btn-primary btn-sm">
-                        <i class="bi bi-plus-lg me-1"></i> Create Your First Campaign
+                        <i class="bi bi-plus-lg me-1"></i> {{ __('dashboard.create_first_campaign') }}
                     </a>
                 @else
-                    <p class="text-muted mb-3">No active campaigns at the moment.</p>
+                    <p class="text-muted mb-3">{{ __('dashboard.no_active_campaigns') }}</p>
                     <a href="{{ route('campaigns.index') }}" class="btn btn-outline-secondary btn-sm">
-                        View All Campaigns
+                        {{ __('dashboard.view_all_campaigns') }}
                     </a>
                 @endif
             </div>
@@ -349,10 +349,10 @@
                     <table class="table table-hover align-middle mb-0">
                         <thead class="table-light">
                             <tr>
-                                <th class="ps-3">Campaign Name</th>
-                                <th>Type</th>
-                                <th>Status</th>
-                                <th>Rewards</th>
+                                <th class="ps-3">{{ __('dashboard.campaign_name_col') }}</th>
+                                <th>{{ __('dashboard.type_col2') }}</th>
+                                <th>{{ __('dashboard.status_col') }}</th>
+                                <th>{{ __('dashboard.rewards_col') }}</th>
                                 <th class="pe-3"></th>
                             </tr>
                         </thead>
@@ -374,7 +374,7 @@
                                     <td class="text-end pe-3">
                                         <a href="{{ route('campaigns.show', $campaign) }}"
                                            class="btn btn-outline-secondary btn-sm">
-                                            View
+                                            {{ __('buttons.view') }}
                                         </a>
                                     </td>
                                 </tr>
@@ -386,11 +386,11 @@
                     <div class="px-3 py-3 border-top">
                         <div class="d-flex align-items-center gap-3">
                             <i class="bi bi-gift text-muted fs-5"></i>
-                            <span class="text-muted small">Your campaigns don't have rewards yet.</span>
+                            <span class="text-muted small">{{ __('dashboard.no_rewards_yet') }}</span>
                             @if ($firstCampaignId)
                                 <a href="{{ route('campaigns.rewards.create', $firstCampaignId) }}"
                                    class="btn btn-primary btn-sm ms-auto">
-                                    <i class="bi bi-plus-lg me-1"></i> Add Your First Reward
+                                    <i class="bi bi-plus-lg me-1"></i> {{ __('dashboard.add_first_reward') }}
                                 </a>
                             @endif
                         </div>

@@ -55,10 +55,11 @@ class SettingsController extends Controller
         $validated = $request->validated();
         $settings  = $merchant->settings ?? [];
 
-        $settings['date_format']                = $validated['date_format'];
-        $settings['default_expiration_type']    = $validated['default_expiration_type'];
+        $settings['date_format']                 = $validated['date_format'];
+        $settings['default_expiration_type']     = $validated['default_expiration_type'];
         $settings['default_expiration_duration'] = $validated['default_expiration_duration'] ?? null;
-        $settings['default_birthday_enabled']   = $validated['default_birthday_enabled'];
+        $settings['default_birthday_enabled']    = $validated['default_birthday_enabled'];
+        $settings['locale']                      = $validated['locale'];
 
         $merchant->update([
             'currency' => $validated['currency'],
@@ -67,7 +68,7 @@ class SettingsController extends Controller
         ]);
 
         return redirect(route('settings') . '?tab=preferences')
-            ->with('success', 'Business preferences updated successfully.');
+            ->with('success', __('messages.preferences_updated'));
     }
 
     public function updatePassword(UpdateSettingsPasswordRequest $request)

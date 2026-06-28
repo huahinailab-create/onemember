@@ -1,14 +1,14 @@
 <x-app-layout>
-    <x-slot name="title">Add Member – {{ config('app.name') }}</x-slot>
-    <x-slot name="pageTitle">Members</x-slot>
+    <x-slot name="title">{{ __('members.add_member_heading') }} – {{ config('app.name') }}</x-slot>
+    <x-slot name="pageTitle">{{ __('members.title') }}</x-slot>
 
     {{-- Page Header --}}
     <div class="page-header d-flex align-items-center justify-content-between">
         <div>
-            <h1>Add Member</h1>
+            <h1>{{ __('members.add_member_heading') }}</h1>
             <p>
                 <a href="{{ route('members') }}" class="text-decoration-none text-muted">
-                    <i class="bi bi-arrow-left me-1"></i>Back to Members
+                    <i class="bi bi-arrow-left me-1"></i>{{ __('members.back_to_members') }}
                 </a>
             </p>
         </div>
@@ -18,7 +18,7 @@
         <div class="col-12 col-lg-7">
             <div class="card">
                 <div class="card-header">
-                    <span class="fw-semibold">Member Details</span>
+                    <span class="fw-semibold">{{ __('members.member_details') }}</span>
                 </div>
                 <div class="card-body">
 
@@ -43,7 +43,7 @@
                         {{-- Full Name --}}
                         <div class="mb-3">
                             <label for="name" class="form-label">
-                                Full Name <span class="text-danger">*</span>
+                                {{ __('members.full_name') }} <span class="text-danger">*</span>
                             </label>
                             <input type="text"
                                    id="name"
@@ -61,7 +61,7 @@
                         {{-- Mobile Number --}}
                         <div class="mb-3">
                             <label for="phone" class="form-label">
-                                Mobile Number <span class="text-danger">*</span>
+                                {{ __('members.mobile_number') }} <span class="text-danger">*</span>
                             </label>
                             <input type="text"
                                    id="phone"
@@ -78,7 +78,7 @@
                         {{-- Date of Birth --}}
                         <div class="mb-3">
                             <label for="birthday" class="form-label">
-                                Date of Birth <span class="text-danger">*</span>
+                                {{ __('members.date_of_birth') }} <span class="text-danger">*</span>
                             </label>
                             <input type="date"
                                    id="birthday"
@@ -95,7 +95,7 @@
 
                         {{-- Nickname --}}
                         <div class="mb-3">
-                            <label for="nickname" class="form-label">Nickname</label>
+                            <label for="nickname" class="form-label">{{ __('members.nickname') }}</label>
                             <input type="text"
                                    id="nickname"
                                    name="nickname"
@@ -109,7 +109,7 @@
 
                         {{-- Email --}}
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
+                            <label for="email" class="form-label">{{ __('members.email') }}</label>
                             <input type="email"
                                    id="email"
                                    name="email"
@@ -123,7 +123,7 @@
 
                         {{-- Notes --}}
                         <div class="mb-4">
-                            <label for="notes" class="form-label">Notes</label>
+                            <label for="notes" class="form-label">{{ __('members.notes') }}</label>
                             <textarea id="notes"
                                       name="notes"
                                       class="form-control @error('notes') is-invalid @enderror"
@@ -132,15 +132,15 @@
                             @error('notes')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
-                            <div class="form-text">Maximum 500 characters.</div>
+                            <div class="form-text">{{ __('members.notes_hint') }}</div>
                         </div>
 
                         {{-- Actions --}}
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn btn-primary">
-                                <i class="bi bi-person-check me-1"></i> Save Member
+                                <i class="bi bi-person-check me-1"></i> {{ __('buttons.save_member') }}
                             </button>
-                            <a href="{{ route('members') }}" class="btn btn-outline-secondary">Cancel</a>
+                            <a href="{{ route('members') }}" class="btn btn-outline-secondary">{{ __('buttons.cancel') }}</a>
                         </div>
 
                     </form>

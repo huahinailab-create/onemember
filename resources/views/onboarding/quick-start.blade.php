@@ -1,10 +1,10 @@
 @extends('layouts.wizard')
 
-@section('title', 'Quick Start – ' . config('app.name'))
+@section('title', __('onboarding.quick_start_title') . ' – ' . config('app.name'))
 
 @section('header-action')
     <a href="{{ route('onboarding.skip') }}" class="btn btn-sm btn-outline-secondary">
-        Skip for Now
+        {{ __('onboarding.skip_for_now') }}
     </a>
 @endsection
 
@@ -14,7 +14,7 @@
     {{-- Progress --}}
     <div class="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
         <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="text-muted small fw-medium">Step 5 of 6</span>
+            <span class="text-muted small fw-medium">{{ __('onboarding.step_5_of_6') }}</span>
             <span class="text-muted small">83%</span>
         </div>
         <div class="progress mb-1" style="height:6px;">
@@ -23,7 +23,7 @@
     </div>
 
     <div class="card-body p-4">
-        <h2 class="fw-bold fs-4 mb-1">Would you like OneMember to create a starter campaign?</h2>
+        <h2 class="fw-bold fs-4 mb-1">{{ __('onboarding.quick_start_heading') }}</h2>
         <p class="text-muted mb-4">
             We'll create a
             {{ $loyaltyType === 'stamps' ? 'stamp card campaign' : 'points campaign' }}
@@ -33,7 +33,7 @@
         @if ($hasCampaigns)
             <div class="alert alert-info mb-4">
                 <i class="bi bi-info-circle me-2"></i>
-                You already have a campaign set up. We won't create a duplicate.
+                {{ __('onboarding.has_campaign_notice') }}
             </div>
         @endif
 
@@ -65,16 +65,16 @@
                            {{ $selected === 'yes' ? 'checked' : '' }}
                            onchange="highlightCard(this)">
                     <div>
-                        <div class="fw-semibold">Yes, create my starter campaign
-                            <span class="badge bg-primary ms-1 fw-normal" style="font-size:0.7rem;">Recommended</span>
+                        <div class="fw-semibold">{{ __('onboarding.quick_start_yes') }}
+                            <span class="badge bg-primary ms-1 fw-normal" style="font-size:0.7rem;">{{ __('onboarding.recommended') }}</span>
                         </div>
                         @if ($loyaltyType === 'stamps')
                             <div class="text-muted small mt-1">
-                                Creates a "Stamp Card" campaign (10 stamps required) with a "Free Item" reward.
+                                {{ __('onboarding.quick_start_stamps_desc') }}
                             </div>
                         @else
                             <div class="text-muted small mt-1">
-                                Creates a "Points Rewards Program" (1 pt per ฿100 spent) with a "Free Item" reward (500 pts).
+                                {{ __('onboarding.quick_start_points_desc') }}
                             </div>
                         @endif
                     </div>
@@ -94,15 +94,15 @@
                            {{ $selected === 'no' ? 'checked' : '' }}
                            onchange="highlightCard(this)">
                     <div>
-                        <div class="fw-semibold">No, I'll create my own</div>
-                        <div class="text-muted small mt-1">I'll set up my campaign and rewards manually.</div>
+                        <div class="fw-semibold">{{ __('onboarding.quick_start_no') }}</div>
+                        <div class="text-muted small mt-1">{{ __('onboarding.quick_start_no_sub') }}</div>
                     </div>
                 </div>
             </label>
 
             <div class="d-grid">
                 <button type="submit" class="btn btn-primary btn-lg">
-                    Finish Setup <i class="bi bi-check-lg ms-1"></i>
+                    {{ __('onboarding.finish_setup') }} <i class="bi bi-check-lg ms-1"></i>
                 </button>
             </div>
         </form>

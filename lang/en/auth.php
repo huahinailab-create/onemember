@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'sign_in_heading'        => 'Sign in to your account',
+    'create_account_heading' => 'Create an account',
+    'email'                  => 'Email address',
+    'password'               => 'Password',
+    'confirm_password'       => 'Confirm Password',
+    'new_password'           => 'New Password',
+    'current_password'       => 'Current Password',
+    'forgot_password'        => 'Forgot password?',
+    'forgot_password_heading'=> 'Forgot Password',
+    'reset_password'         => 'Reset Password',
+    'remember_me'            => 'Remember me',
+    'no_account'             => "Don't have an account?",
+    'have_account'           => 'Already have an account?',
+    'sign_in_link'           => 'Sign in',
+    'register_link'          => 'Register',
+    'name'                   => 'Name',
+    'forgot_description'     => 'Enter your email address and we will send you a password reset link.',
+    'email_reset_link'       => 'Email Password Reset Link',
+    'verify_email_heading'   => 'Verify Email Address',
+    'verify_email_body'      => 'Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you did not receive the email, we will gladly send you another.',
+    'resend_verification'    => 'Resend Verification Email',
+    'log_out'                => 'Log Out',
+    'confirm_password_heading' => 'Confirm Password',
+    'confirm_password_body'  => 'This is a secure area of the application. Please confirm your password before continuing.',
+];

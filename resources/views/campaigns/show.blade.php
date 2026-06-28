@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="title">{{ $campaign->name }} – {{ config('app.name') }}</x-slot>
-    <x-slot name="pageTitle">Campaigns</x-slot>
+    <x-slot name="pageTitle">{{ __('campaigns.title') }}</x-slot>
 
     @php $isArchived = $campaign->trashed(); @endphp
 
@@ -9,13 +9,13 @@
         <div>
             <div class="mb-1">
                 <a href="{{ route('campaigns.index') }}" class="text-decoration-none text-muted small">
-                    <i class="bi bi-arrow-left me-1"></i>Back to Campaigns
+                    <i class="bi bi-arrow-left me-1"></i>{{ __('campaigns.back_to_campaigns') }}
                 </a>
             </div>
             <h1 class="d-flex align-items-center gap-2 flex-wrap">
                 {{ $campaign->name }}
                 @if ($isArchived)
-                    <span class="badge bg-danger fs-6 fw-normal">Archived</span>
+                    <span class="badge bg-danger fs-6 fw-normal">{{ __('campaigns.status_archived') }}</span>
                 @else
                     <span class="{{ $campaign->status->badgeClass() }} fs-6 fw-normal">
                         {{ $campaign->status->label() }}
@@ -26,8 +26,8 @@
         <div class="d-flex gap-2 flex-shrink-0">
             @if ($isArchived)
                 <button type="button" class="btn btn-outline-success disabled" title="Coming in a future sprint">
-                    <i class="bi bi-arrow-counterclockwise me-1"></i>Restore Campaign
-                    <span class="badge bg-secondary ms-1" style="font-size:.65rem;">Coming Soon</span>
+                    <i class="bi bi-arrow-counterclockwise me-1"></i>{{ __('campaigns.restore_campaign') }}
+                    <span class="badge bg-secondary ms-1" style="font-size:.65rem;">{{ __('buttons.coming_soon') }}</span>
                 </button>
             @else
                 @if ($campaign->status === \App\Enums\CampaignStatus::Active)
@@ -35,7 +35,7 @@
                         @csrf
                         @method('PATCH')
                         <button type="submit" class="btn btn-outline-warning">
-                            <i class="bi bi-pause-circle me-1"></i>Pause Campaign
+                            <i class="bi bi-pause-circle me-1"></i>{{ __('campaigns.pause_campaign') }}
                         </button>
                     </form>
                 @endif
@@ -43,11 +43,11 @@
                         class="btn btn-outline-danger"
                         data-bs-toggle="modal"
                         data-bs-target="#archiveModal">
-                    <i class="bi bi-archive me-1"></i>Archive Campaign
+                    <i class="bi bi-archive me-1"></i>{{ __('campaigns.archive_campaign') }}
                 </button>
             @endif
             <a href="{{ route('campaigns.index') }}" class="btn btn-outline-secondary">
-                <i class="bi bi-arrow-left me-1"></i>Back
+                <i class="bi bi-arrow-left me-1"></i>{{ __('buttons.back') }}
             </a>
         </div>
     </div>
@@ -59,9 +59,9 @@
             <div class="card h-100">
                 <div class="card-header d-flex align-items-center gap-2">
                     <i class="bi bi-star text-primary"></i>
-                    <span class="fw-semibold">Campaign Settings</span>
+                    <span class="fw-semibold">{{ __('campaigns.campaign_settings') }}</span>
                     @if ($isArchived)
-                        <span class="badge bg-danger ms-auto" style="font-size:.65rem;">Read-only</span>
+                        <span class="badge bg-danger ms-auto" style="font-size:.65rem;">{{ __('campaigns.read_only') }}</span>
                     @endif
                 </div>
 
@@ -74,7 +74,7 @@
                         {{-- Campaign Name --}}
                         <div class="mb-3">
                             <label for="name" class="form-label form-label-sm">
-                                Campaign Name <span class="text-danger">*</span>
+                                {{ __('campaigns.campaign_name') }} <span class="text-danger">*</span>
                             </label>
                             <input type="text"
                                    id="name"
@@ -92,17 +92,17 @@
                         {{-- Campaign Type --}}
                         <div class="mb-3">
                             <label for="type" class="form-label form-label-sm">
-                                Campaign Type <span class="text-danger">*</span>
+                                {{ __('campaigns.campaign_type') }} <span class="text-danger">*</span>
                             </label>
                             <select id="type"
                                     name="type"
                                     class="form-select form-select-sm @error('type') is-invalid @enderror"
                                     {{ $isArchived ? 'disabled' : '' }}>
                                 <option value="points" {{ old('type', $campaign->type->value) === 'points' ? 'selected' : '' }}>
-                                    Points — customers earn points for every purchase
+                                    {{ __('campaigns.type_points') }}
                                 </option>
                                 <option value="stamps" {{ old('type', $campaign->type->value) === 'stamps' ? 'selected' : '' }}>
-                                    Stamp Card — customers collect stamps per visit
+                                    {{ __('campaigns.type_stamps') }}
                                 </option>
                             </select>
                             @error('type')
@@ -112,7 +112,7 @@
 
                         {{-- Description --}}
                         <div class="mb-3">
-                            <label for="description" class="form-label form-label-sm">Description</label>
+                            <label for="description" class="form-label form-label-sm">{{ __('campaigns.description') }}</label>
                             <textarea id="description"
                                       name="description"
                                       class="form-control form-control-sm @error('description') is-invalid @enderror"
@@ -127,20 +127,20 @@
                         {{-- Status --}}
                         <div class="mb-3">
                             <label for="status" class="form-label form-label-sm">
-                                Status <span class="text-danger">*</span>
+                                {{ __('campaigns.status') }} <span class="text-danger">*</span>
                             </label>
                             <select id="status"
                                     name="status"
                                     class="form-select form-select-sm @error('status') is-invalid @enderror"
                                     {{ $isArchived ? 'disabled' : '' }}>
                                 <option value="draft" {{ old('status', $campaign->status?->value) === 'draft' ? 'selected' : '' }}>
-                                    Draft — not yet active
+                                    {{ __('campaigns.status_draft') }}
                                 </option>
                                 <option value="active" {{ old('status', $campaign->status?->value) === 'active' ? 'selected' : '' }}>
-                                    Active — open for earning
+                                    {{ __('campaigns.status_active') }}
                                 </option>
                                 <option value="paused" {{ old('status', $campaign->status?->value) === 'paused' ? 'selected' : '' }}>
-                                    Paused — temporarily suspended
+                                    {{ __('campaigns.status_paused') }}
                                 </option>
                             </select>
                             @error('status')
@@ -152,10 +152,10 @@
 
                         {{-- Read-only meta --}}
                         <dl class="row mb-0 small" style="row-gap:.5rem;">
-                            <dt class="col-5 text-muted fw-normal">Created</dt>
+                            <dt class="col-5 text-muted fw-normal">{{ __('campaigns.created') }}</dt>
                             <dd class="col-7 mb-0">{{ $campaign->created_at->format('d M Y') }}</dd>
 
-                            <dt class="col-5 text-muted fw-normal">Last Updated</dt>
+                            <dt class="col-5 text-muted fw-normal">{{ __('campaigns.col_updated') }}</dt>
                             <dd class="col-7 mb-0">{{ $campaign->updated_at->format('d M Y, H:i') }}</dd>
                         </dl>
 
@@ -164,10 +164,10 @@
                     @unless ($isArchived)
                         <div class="card-footer bg-transparent d-flex gap-2">
                             <button type="submit" class="btn btn-primary btn-sm">
-                                <i class="bi bi-check-lg me-1"></i>Save Changes
+                                <i class="bi bi-check-lg me-1"></i>{{ __('buttons.save_changes') }}
                             </button>
                             <a href="{{ route('campaigns.show', $campaign) }}" class="btn btn-outline-secondary btn-sm">
-                                Discard
+                                {{ __('buttons.discard') }}
                             </a>
                         </div>
                     @endunless
@@ -181,29 +181,29 @@
             <div class="card h-100">
                 <div class="card-header d-flex align-items-center gap-2">
                     <i class="bi bi-info-circle text-primary"></i>
-                    <span class="fw-semibold">Summary</span>
+                    <span class="fw-semibold">{{ __('campaigns.campaign_summary') }}</span>
                 </div>
                 <div class="card-body">
                     <dl class="row mb-0" style="row-gap:.75rem;">
-                        <dt class="col-5 text-muted fw-normal">Campaign Name</dt>
+                        <dt class="col-5 text-muted fw-normal">{{ __('campaigns.campaign_name') }}</dt>
                         <dd class="col-7 mb-0 fw-medium">{{ $campaign->name }}</dd>
 
-                        <dt class="col-5 text-muted fw-normal">Type</dt>
+                        <dt class="col-5 text-muted fw-normal">{{ __('campaigns.col_type') }}</dt>
                         <dd class="col-7 mb-0 d-flex align-items-center gap-1">
                             <i class="bi {{ $campaign->type->icon() }} text-muted" style="font-size:.875rem;"></i>
                             {{ $campaign->type->label() }}
                         </dd>
 
-                        <dt class="col-5 text-muted fw-normal">Status</dt>
+                        <dt class="col-5 text-muted fw-normal">{{ __('campaigns.col_status') }}</dt>
                         <dd class="col-7 mb-0">
                             @if ($isArchived)
-                                <span class="badge bg-danger">Archived</span>
+                                <span class="badge bg-danger">{{ __('campaigns.status_archived') }}</span>
                             @else
                                 <span class="{{ $campaign->status->badgeClass() }}">{{ $campaign->status->label() }}</span>
                             @endif
                         </dd>
 
-                        <dt class="col-5 text-muted fw-normal">Description</dt>
+                        <dt class="col-5 text-muted fw-normal">{{ __('campaigns.description') }}</dt>
                         <dd class="col-7 mb-0">
                             @if ($campaign->description)
                                 <span style="white-space:pre-line;">{{ $campaign->description }}</span>
@@ -225,25 +225,25 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="tab-rules" data-bs-toggle="tab"
                             data-bs-target="#pane-rules" type="button" role="tab">
-                        <i class="bi bi-sliders me-1"></i>Rules
+                        <i class="bi bi-sliders me-1"></i>{{ __('campaigns.tab_rules') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="tab-rewards" data-bs-toggle="tab"
                             data-bs-target="#pane-rewards" type="button" role="tab">
-                        <i class="bi bi-gift me-1"></i>Rewards
+                        <i class="bi bi-gift me-1"></i>{{ __('campaigns.tab_rewards') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="tab-transactions" data-bs-toggle="tab"
                             data-bs-target="#pane-transactions" type="button" role="tab">
-                        <i class="bi bi-arrow-left-right me-1"></i>Transactions
+                        <i class="bi bi-arrow-left-right me-1"></i>{{ __('campaigns.tab_transactions') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="tab-analytics" data-bs-toggle="tab"
                             data-bs-target="#pane-analytics" type="button" role="tab">
-                        <i class="bi bi-bar-chart-line me-1"></i>Analytics
+                        <i class="bi bi-bar-chart-line me-1"></i>{{ __('campaigns.tab_analytics') }}
                     </button>
                 </li>
             </ul>
@@ -302,7 +302,7 @@
 
                         @if ($isArchived)
                             <div class="alert alert-secondary py-2 px-3 mb-4 small">
-                                <i class="bi bi-lock me-1"></i>This campaign is archived. Rules are read-only.
+                                <i class="bi bi-lock me-1"></i>{{ __('campaigns.archived_rules_note') }}
                             </div>
                         @endif
 
@@ -314,25 +314,25 @@
                                 @method('PUT')
 
                                 <h6 class="fw-semibold mb-3 text-primary">
-                                    <i class="bi bi-star-fill me-1"></i>Points Rules
+                                    <i class="bi bi-star-fill me-1"></i>{{ __('campaigns.points_rules') }}
                                 </h6>
 
                                 {{-- Earn Method (read-only in MVP) --}}
                                 <div class="mb-3">
-                                    <label class="form-label form-label-sm">Earn Method</label>
+                                    <label class="form-label form-label-sm">{{ __('campaigns.earn_method') }}</label>
                                     <select class="form-select form-select-sm bg-light" disabled>
-                                        <option selected>Spend Amount</option>
+                                        <option selected>{{ __('campaigns.spend_amount') }}</option>
                                     </select>
-                                    <div class="form-text">Only Spend Amount is supported in this version.</div>
+                                    <div class="form-text">{{ __('campaigns.earn_method_hint') }}</div>
                                 </div>
 
                                 {{-- Earn Rate --}}
                                 <div class="mb-4">
-                                    <label class="form-label form-label-sm fw-medium">Earn Rate</label>
+                                    <label class="form-label form-label-sm fw-medium">{{ __('campaigns.earn_rate') }}</label>
                                     <div class="row g-2 align-items-end">
                                         <div class="col">
                                             <label for="spend_amount" class="form-label form-label-sm">
-                                                Spend Amount <span class="text-danger">*</span>
+                                                {{ __('campaigns.spend_amount') }} <span class="text-danger">*</span>
                                             </label>
                                             <div class="input-group input-group-sm">
                                                 <input type="number"
@@ -354,7 +354,7 @@
                                         <div class="col-auto pb-1 text-muted fw-bold">→</div>
                                         <div class="col">
                                             <label for="points_awarded" class="form-label form-label-sm">
-                                                Points Awarded <span class="text-danger">*</span>
+                                                {{ __('campaigns.points_awarded') }} <span class="text-danger">*</span>
                                             </label>
                                             <div class="input-group input-group-sm">
                                                 <input type="number"
@@ -380,7 +380,7 @@
 
                                 {{-- Point Expiration --}}
                                 <div class="mb-4">
-                                    <label class="form-label form-label-sm fw-medium mb-2">Point Expiration</label>
+                                    <label class="form-label form-label-sm fw-medium mb-2">{{ __('campaigns.point_expiration') }}</label>
 
                                     <div class="form-check mb-1">
                                         <input type="radio"
@@ -391,8 +391,8 @@
                                                x-model="expirationType"
                                                {{ $isArchived ? 'disabled' : '' }}>
                                         <label class="form-check-label" for="exp_never">
-                                            Points never expire
-                                            <span class="badge bg-success ms-1" style="font-size:.65rem;">Recommended</span>
+                                            {{ __('campaigns.exp_never') }}
+                                            <span class="badge bg-success ms-1" style="font-size:.65rem;">{{ __('onboarding.recommended') }}</span>
                                         </label>
                                     </div>
 
@@ -405,7 +405,7 @@
                                                x-model="expirationType"
                                                {{ $isArchived ? 'disabled' : '' }}>
                                         <label class="form-check-label" for="exp_months">
-                                            Expire after a set number of months
+                                            {{ __('campaigns.exp_months') }}
                                         </label>
                                     </div>
 
@@ -418,13 +418,13 @@
                                                x-model="expirationType"
                                                {{ $isArchived ? 'disabled' : '' }}>
                                         <label class="form-check-label" for="exp_years">
-                                            Expire after a set number of years
+                                            {{ __('campaigns.exp_years') }}
                                         </label>
                                     </div>
 
                                     <div x-show="expirationType !== 'never'" x-cloak class="ms-4 mt-1">
                                         <label for="expiration_duration" class="form-label form-label-sm">
-                                            Duration <span class="text-danger">*</span>
+                                            {{ __('campaigns.duration') }} <span class="text-danger">*</span>
                                         </label>
                                         <div class="input-group input-group-sm" style="max-width:200px;">
                                             <input type="number"
@@ -463,7 +463,7 @@
                                                {{ ($settings['birthday_enabled'] ?? false) ? 'checked' : '' }}
                                                {{ $isArchived ? 'disabled' : '' }}>
                                         <label class="form-check-label fw-medium" for="birthday_enabled">
-                                            Enable Birthday Bonus
+                                            {{ __('campaigns.enable_birthday_bonus') }}
                                         </label>
                                     </div>
 
@@ -472,7 +472,7 @@
                                         {{-- Birthday Points --}}
                                         <div class="mb-3">
                                             <label for="birthday_points" class="form-label form-label-sm">
-                                                Birthday Points <span class="text-danger">*</span>
+                                                {{ __('campaigns.birthday_points') }} <span class="text-danger">*</span>
                                             </label>
                                             <div class="input-group input-group-sm" style="max-width:180px;">
                                                 <input type="number"
@@ -495,7 +495,7 @@
                                         <div class="row g-3">
                                             <div class="col-6">
                                                 <label for="birthday_valid_days_before" class="form-label form-label-sm">
-                                                    Valid Days Before Birthday <span class="text-danger">*</span>
+                                                    {{ __('campaigns.birthday_days_before') }} <span class="text-danger">*</span>
                                                 </label>
                                                 <div class="input-group input-group-sm">
                                                     <input type="number"
@@ -514,7 +514,7 @@
                                             </div>
                                             <div class="col-6">
                                                 <label for="birthday_valid_days_after" class="form-label form-label-sm">
-                                                    Valid Days After Birthday <span class="text-danger">*</span>
+                                                    {{ __('campaigns.birthday_days_after') }} <span class="text-danger">*</span>
                                                 </label>
                                                 <div class="input-group input-group-sm">
                                                     <input type="number"
@@ -538,7 +538,7 @@
 
                                 @unless ($isArchived)
                                     <button type="submit" class="btn btn-primary btn-sm">
-                                        <i class="bi bi-check-lg me-1"></i>Save Rules
+                                        <i class="bi bi-check-lg me-1"></i>{{ __('campaigns.save_rules') }}
                                     </button>
                                 @endunless
 
@@ -552,12 +552,12 @@
                                 @method('PUT')
 
                                 <h6 class="fw-semibold mb-3 text-primary">
-                                    <i class="bi bi-grid-3x3-gap-fill me-1"></i>Stamp Card Rules
+                                    <i class="bi bi-grid-3x3-gap-fill me-1"></i>{{ __('campaigns.stamp_card_rules') }}
                                 </h6>
 
                                 <div class="mb-3">
                                     <label for="stamps_required" class="form-label form-label-sm">
-                                        Stamps Required <span class="text-danger">*</span>
+                                        {{ __('campaigns.stamps_required') }} <span class="text-danger">*</span>
                                     </label>
                                     <div class="input-group input-group-sm" style="max-width:220px;">
                                         <input type="number"
@@ -579,7 +579,7 @@
 
                                 <div class="mb-4">
                                     <label for="reward_description" class="form-label form-label-sm">
-                                        Reward Description <span class="text-danger">*</span>
+                                        {{ __('campaigns.reward_description') }} <span class="text-danger">*</span>
                                     </label>
                                     <input type="text"
                                            id="reward_description"
@@ -598,12 +598,12 @@
 
                                 <div class="alert alert-info py-2 px-3 small mb-4">
                                     <i class="bi bi-info-circle me-1"></i>
-                                    Each qualifying purchase earns one stamp.
+                                    {{ __('campaigns.one_stamp_per_purchase') }}
                                 </div>
 
                                 @unless ($isArchived)
                                     <button type="submit" class="btn btn-primary btn-sm">
-                                        <i class="bi bi-check-lg me-1"></i>Save Rules
+                                        <i class="bi bi-check-lg me-1"></i>{{ __('campaigns.save_rules') }}
                                     </button>
                                 @endunless
 
@@ -618,49 +618,49 @@
                         <div class="card border-primary border-opacity-25 h-100">
                             <div class="card-header bg-primary bg-opacity-10 d-flex align-items-center gap-2">
                                 <i class="bi bi-eye text-primary"></i>
-                                <span class="fw-semibold">Campaign Summary</span>
+                                <span class="fw-semibold">{{ __('campaigns.campaign_summary') }}</span>
                                 <span class="badge bg-primary bg-opacity-25 text-primary ms-auto"
-                                      style="font-size:.65rem;">Live Preview</span>
+                                      style="font-size:.65rem;">{{ __('campaigns.live_preview') }}</span>
                             </div>
                             <div class="card-body">
                                 <h6 class="fw-bold mb-3" x-text="campaignName"></h6>
 
                                 <dl class="row mb-0 small" style="row-gap:.5rem;">
 
-                                    <dt class="col-5 text-muted fw-normal">Type</dt>
+                                    <dt class="col-5 text-muted fw-normal">{{ __('campaigns.col_type') }}</dt>
                                     <dd class="col-7 mb-0">{{ $campaign->type->label() }}</dd>
 
                                     @if ($campaign->type->value === 'points')
 
-                                        <dt class="col-5 text-muted fw-normal">Earn Rule</dt>
+                                        <dt class="col-5 text-muted fw-normal">{{ __('campaigns.summary_earn_rule') }}</dt>
                                         <dd class="col-7 mb-0">
                                             <span x-text="'Customers earn ' + pointsAwarded + ' point' + (pointsAwarded === 1 ? '' : 's') + ' for every ' + spendAmount + ' ' + currency + ' spent.'"></span>
                                         </dd>
 
-                                        <dt class="col-5 text-muted fw-normal">Point Expiration</dt>
+                                        <dt class="col-5 text-muted fw-normal">{{ __('campaigns.summary_point_expiration') }}</dt>
                                         <dd class="col-7 mb-0" x-text="expirationText"></dd>
 
-                                        <dt class="col-5 text-muted fw-normal">Birthday Bonus</dt>
+                                        <dt class="col-5 text-muted fw-normal">{{ __('campaigns.summary_birthday_bonus') }}</dt>
                                         <dd class="col-7 mb-0" x-text="birthdayText"></dd>
 
                                     @else
 
-                                        <dt class="col-5 text-muted fw-normal">Earn Rule</dt>
-                                        <dd class="col-7 mb-0">Customers receive 1 stamp for every qualifying purchase.</dd>
+                                        <dt class="col-5 text-muted fw-normal">{{ __('campaigns.summary_earn_rule') }}</dt>
+                                        <dd class="col-7 mb-0">{{ __('campaigns.summary_stamp_earn_rule') }}</dd>
 
-                                        <dt class="col-5 text-muted fw-normal">Stamps Required</dt>
+                                        <dt class="col-5 text-muted fw-normal">{{ __('campaigns.summary_stamps_required') }}</dt>
                                         <dd class="col-7 mb-0">
                                             <span x-text="stampsRequired + ' stamp' + (stampsRequired === 1 ? '' : 's')"></span>
                                         </dd>
 
-                                        <dt class="col-5 text-muted fw-normal">Reward</dt>
+                                        <dt class="col-5 text-muted fw-normal">{{ __('campaigns.summary_reward') }}</dt>
                                         <dd class="col-7 mb-0">
                                             <span x-text="rewardDescription || '—'"></span>
                                         </dd>
 
                                     @endif
 
-                                    <dt class="col-5 text-muted fw-normal">Status</dt>
+                                    <dt class="col-5 text-muted fw-normal">{{ __('campaigns.col_status') }}</dt>
                                     <dd class="col-7 mb-0">
                                         <span x-text="campaignStatus"></span>
                                     </dd>
@@ -680,7 +680,7 @@
                 {{-- Rewards toolbar --}}
                 <div class="p-3 border-bottom d-flex align-items-center justify-content-between gap-3 flex-wrap">
                     <div class="btn-group btn-group-sm" role="group" aria-label="Reward filter">
-                        @foreach (['active' => 'Active', 'draft' => 'Draft', 'archived' => 'Archived', 'all' => 'All'] as $val => $lbl)
+                        @foreach (['active' => __('campaigns.filter_active'), 'draft' => __('campaigns.filter_draft'), 'archived' => __('campaigns.filter_archived'), 'all' => __('campaigns.filter_all')] as $val => $lbl)
                             <a href="{{ route('campaigns.show', $campaign) . '?' . http_build_query(['reward_filter' => $val, 'active_tab' => 'rewards'] + request()->only(['reward_search'])) }}"
                                class="btn {{ $rewardFilter === $val ? 'btn-primary' : 'btn-outline-secondary' }}">
                                 {{ $lbl }}
@@ -696,7 +696,7 @@
                             <input type="text"
                                    name="reward_search"
                                    class="form-control form-control-sm"
-                                   placeholder="Search rewards…"
+                                   placeholder="{{ __('campaigns.search_rewards_ph') }}"
                                    value="{{ request('reward_search') }}"
                                    style="width:180px;">
                             <button type="submit" class="btn btn-sm btn-outline-secondary">
@@ -704,14 +704,14 @@
                             </button>
                             @if (request('reward_search'))
                                 <a href="{{ route('campaigns.show', $campaign) . '?' . http_build_query(['reward_filter' => $rewardFilter, 'active_tab' => 'rewards']) }}"
-                                   class="btn btn-sm btn-outline-secondary">Clear</a>
+                                   class="btn btn-sm btn-outline-secondary">{{ __('buttons.clear') }}</a>
                             @endif
                         </form>
 
                         @unless ($isArchived)
                             <a href="{{ route('campaigns.rewards.create', $campaign) }}"
                                class="btn btn-sm btn-primary">
-                                <i class="bi bi-plus-lg me-1"></i>Add Reward
+                                <i class="bi bi-plus-lg me-1"></i>{{ __('buttons.add_reward') }}
                             </a>
                         @endunless
                     </div>
@@ -724,16 +724,16 @@
                             <i class="bi bi-gift text-primary"></i>
                         </div>
                         @if (request('reward_search'))
-                            <h6 class="fw-semibold mb-1">No rewards found</h6>
-                            <p class="text-muted mb-0 small">Try a different search term or <a href="{{ route('campaigns.show', $campaign) . '?' . http_build_query(['reward_filter' => $rewardFilter, 'active_tab' => 'rewards']) }}">clear the search</a>.</p>
+                            <h6 class="fw-semibold mb-1">{{ __('campaigns.rewards_empty_search_title') }}</h6>
+                            <p class="text-muted mb-0 small">{!! __('campaigns.rewards_empty_search_body', ['link' => route('campaigns.show', $campaign) . '?' . http_build_query(['reward_filter' => $rewardFilter, 'active_tab' => 'rewards'])]) !!}</p>
                         @elseif ($rewardFilter === 'archived')
-                            <h6 class="fw-semibold mb-1">No archived rewards</h6>
-                            <p class="text-muted mb-0 small">Archived rewards will appear here.</p>
+                            <h6 class="fw-semibold mb-1">{{ __('campaigns.rewards_empty_archived_title') }}</h6>
+                            <p class="text-muted mb-0 small">{{ __('campaigns.rewards_empty_archived_body') }}</p>
                         @else
-                            <h6 class="fw-semibold mb-1">No rewards yet</h6>
+                            <h6 class="fw-semibold mb-1">{{ __('campaigns.rewards_empty_title') }}</h6>
                             @unless ($isArchived)
                                 <p class="text-muted mb-0 small">
-                                    <a href="{{ route('campaigns.rewards.create', $campaign) }}">Add your first reward</a> to this campaign.
+                                    {!! __('campaigns.rewards_empty_body', ['link' => route('campaigns.rewards.create', $campaign)]) !!}
                                 </p>
                             @endunless
                         @endif
@@ -743,14 +743,14 @@
                         <table class="table table-hover align-middle mb-0">
                             <thead class="table-light">
                                 <tr>
-                                    <th class="ps-4">Reward Name</th>
-                                    <th>Reward Type</th>
+                                    <th class="ps-4">{{ __('campaigns.col_reward_name') }}</th>
+                                    <th>{{ __('campaigns.col_reward_type') }}</th>
                                     @if ($campaign->type->value === 'points')
-                                        <th class="text-end">Points Required</th>
+                                        <th class="text-end">{{ __('campaigns.col_points_required') }}</th>
                                     @endif
-                                    <th class="text-end">Quantity</th>
-                                    <th>Status</th>
-                                    <th class="text-end pe-4">Actions</th>
+                                    <th class="text-end">{{ __('campaigns.col_quantity') }}</th>
+                                    <th>{{ __('campaigns.col_status') }}</th>
+                                    <th class="text-end pe-4">{{ __('campaigns.col_actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -769,11 +769,11 @@
                                             </td>
                                         @endif
                                         <td class="text-end">
-                                            {{ $reward->quantity_available === null ? 'Unlimited' : number_format($reward->quantity_available) }}
+                                            {{ $reward->quantity_available === null ? __('campaigns.unlimited') : number_format($reward->quantity_available) }}
                                         </td>
                                         <td>
                                             @if ($reward->trashed())
-                                                <span class="badge bg-danger">Archived</span>
+                                                <span class="badge bg-danger">{{ __('campaigns.status_archived') }}</span>
                                             @else
                                                 <span class="{{ $reward->status->badgeClass() }}">
                                                     {{ $reward->status->label() }}
@@ -783,7 +783,7 @@
                                         <td class="text-end pe-4">
                                             <a href="{{ route('campaigns.rewards.show', [$campaign, $reward]) }}"
                                                class="btn btn-sm btn-outline-secondary">
-                                                <i class="bi bi-pencil me-1"></i>View
+                                                <i class="bi bi-pencil me-1"></i>{{ __('buttons.view') }}
                                             </a>
                                         </td>
                                     </tr>
@@ -792,7 +792,7 @@
                         </table>
                     </div>
                     <div class="px-4 py-3 border-top text-muted" style="font-size:.8125rem;">
-                        {{ $rewards->count() }} reward{{ $rewards->count() !== 1 ? 's' : '' }}
+                        {{ trans_choice('campaigns.reward_count', $rewards->count(), ['count' => $rewards->count()]) }}
                     </div>
                 @endif
 
@@ -801,15 +801,15 @@
 
             {{-- Coming Soon Tabs --}}
             @foreach ([
-                'pane-transactions' => ['icon' => 'bi-arrow-left-right',  'label' => 'Transactions'],
-                'pane-analytics'    => ['icon' => 'bi-bar-chart-line',    'label' => 'Analytics'],
+                'pane-transactions' => ['icon' => 'bi-arrow-left-right',  'label' => __('campaigns.tab_transactions')],
+                'pane-analytics'    => ['icon' => 'bi-bar-chart-line',    'label' => __('campaigns.tab_analytics')],
             ] as $paneId => $meta)
                 <div class="tab-pane fade text-center py-5" id="{{ $paneId }}" role="tabpanel">
                     <div class="coming-soon-icon bg-primary bg-opacity-10 mx-auto">
                         <i class="bi {{ $meta['icon'] }} text-primary"></i>
                     </div>
-                    <h6 class="fw-semibold mb-1">{{ $meta['label'] }} — Coming Soon</h6>
-                    <p class="text-muted mb-0 small">This feature will be available in a future sprint.</p>
+                    <h6 class="fw-semibold mb-1">{{ $meta['label'] }} — {{ __('buttons.coming_soon') }}</h6>
+                    <p class="text-muted mb-0 small">{{ __('campaigns.coming_soon_note') }}</p>
                 </div>
             @endforeach
 
@@ -834,23 +834,23 @@
                 <div class="modal-content">
                     <div class="modal-header border-0 pb-0">
                         <h5 class="modal-title text-danger" id="archiveModalLabel">
-                            <i class="bi bi-archive me-2"></i>Archive Campaign
+                            <i class="bi bi-archive me-2"></i>{{ __('campaigns.archive_campaign') }}
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p class="mb-1">Are you sure you want to archive <strong>{{ $campaign->name }}</strong>?</p>
+                        <p class="mb-1">{!! __('campaigns.archive_confirm', ['name' => '<strong>' . e($campaign->name) . '</strong>']) !!}</p>
                         <p class="text-muted small mb-0">
-                            This campaign will be removed from your active list. Archiving does not delete any data.
+                            {{ __('campaigns.archive_note') }}
                         </p>
                     </div>
                     <div class="modal-footer border-0 pt-0">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{{ __('buttons.cancel') }}</button>
                         <form method="POST" action="{{ route('campaigns.archive', $campaign) }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">
-                                <i class="bi bi-archive me-1"></i>Archive Campaign
+                                <i class="bi bi-archive me-1"></i>{{ __('campaigns.archive_campaign') }}
                             </button>
                         </form>
                     </div>

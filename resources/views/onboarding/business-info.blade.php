@@ -1,10 +1,10 @@
 @extends('layouts.wizard')
 
-@section('title', 'Business Information – ' . config('app.name'))
+@section('title', __('onboarding.business_info_title') . ' – ' . config('app.name'))
 
 @section('header-action')
     <a href="{{ route('onboarding.skip') }}" class="btn btn-sm btn-outline-secondary">
-        Skip for Now
+        {{ __('onboarding.skip_for_now') }}
     </a>
 @endsection
 
@@ -14,7 +14,7 @@
     {{-- Progress --}}
     <div class="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
         <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="text-muted small fw-medium">Step 2 of 6</span>
+            <span class="text-muted small fw-medium">{{ __('onboarding.step_2_of_6') }}</span>
             <span class="text-muted small">33%</span>
         </div>
         <div class="progress mb-1" style="height:6px;">
@@ -23,8 +23,8 @@
     </div>
 
     <div class="card-body p-4">
-        <h2 class="fw-bold fs-4 mb-1">Tell us about your business</h2>
-        <p class="text-muted mb-4">This helps us personalise your loyalty program.</p>
+        <h2 class="fw-bold fs-4 mb-1">{{ __('onboarding.business_info_heading') }}</h2>
+        <p class="text-muted mb-4">{{ __('onboarding.business_info_sub') }}</p>
 
         @if ($errors->any())
             <div class="alert alert-danger mb-4">
@@ -42,7 +42,7 @@
             {{-- Business Name --}}
             <div class="mb-3">
                 <label for="name" class="form-label fw-medium">
-                    Business Name <span class="text-danger">*</span>
+                    {{ __('onboarding.business_name') }} <span class="text-danger">*</span>
                 </label>
                 <input type="text"
                        id="name"
@@ -59,14 +59,14 @@
             {{-- Business Type --}}
             <div class="mb-3">
                 <label for="business_type" class="form-label fw-medium">
-                    Business Type <span class="text-danger">*</span>
+                    {{ __('onboarding.business_type') }} <span class="text-danger">*</span>
                 </label>
                 <select id="business_type"
                         name="business_type"
                         class="form-select form-select-lg @error('business_type') is-invalid @enderror"
                         required>
                     <option value="" disabled {{ old('business_type', $merchant?->business_type) ? '' : 'selected' }}>
-                        Select your business type…
+                        {{ __('onboarding.business_type_ph') }}
                     </option>
                     @foreach ([
                         'Hair Salon', 'Nail Salon', 'Massage & Spa', 'Restaurant & Café',
@@ -86,7 +86,7 @@
 
             {{-- Business Phone --}}
             <div class="mb-3">
-                <label for="phone" class="form-label fw-medium">Business Phone</label>
+                <label for="phone" class="form-label fw-medium">{{ __('onboarding.business_phone') }}</label>
                 <input type="text"
                        id="phone"
                        name="phone"
@@ -100,7 +100,7 @@
 
             {{-- Website --}}
             <div class="mb-4">
-                <label for="website" class="form-label fw-medium">Website</label>
+                <label for="website" class="form-label fw-medium">{{ __('onboarding.website') }}</label>
                 <input type="url"
                        id="website"
                        name="website"
@@ -114,7 +114,7 @@
 
             <div class="d-grid">
                 <button type="submit" class="btn btn-primary btn-lg">
-                    Save and Continue <i class="bi bi-arrow-right ms-1"></i>
+                    {{ __('onboarding.save_and_continue') }} <i class="bi bi-arrow-right ms-1"></i>
                 </button>
             </div>
         </form>
