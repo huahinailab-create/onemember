@@ -229,3 +229,5 @@ body {
     font-size: 2rem;
     margin: 0 auto 1.25rem;
 }
+
+[x-cloak] { display: none !important; }

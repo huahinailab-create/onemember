@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\CampaignStatus;
+use App\Http\Requests\ConfigureCampaignRequest;
 use App\Http\Requests\StoreCampaignRequest;
 use App\Http\Requests\UpdateCampaignRequest;
 use App\Models\LoyaltyProgram;
@@ -54,8 +55,20 @@ class CampaignController extends Controller
     public function show(Request $request, LoyaltyProgram $campaign)
     {
         abort_unless($campaign->merchant_id === $request->user()->merchant?->id, 403);
+        $campaign->loadMissing('merchant');
 
         return view('campaigns.show', compact('campaign'));
+    }
+
+    public function configure(ConfigureCampaignRequest $request, LoyaltyProgram $campaign)
+    {
+        abort_unless($campaign->merchant_id === $request->user()->merchant?->id, 403);
+        abort_if($campaign->trashed(), 403);
+
+        $campaign->update(['settings' => $request->validated()]);
+
+        return redirect()->route('campaigns.show', $campaign)
+                         ->with('success', 'Campaign configuration saved.');
     }
 
     public function update(UpdateCampaignRequest $request, LoyaltyProgram $campaign)

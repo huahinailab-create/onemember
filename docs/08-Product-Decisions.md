@@ -274,4 +274,27 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-026] Campaign Configuration — Settings JSON Keys (Sprint 3.2.1)
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 3.2.1 spec)
+- **Status:** Approved
+- **Decision:** Campaign configuration is stored in the existing `settings` JSON column on `loyalty_programs`. No new columns are added. The following keys are used per campaign type:
+  - **Points:** `spend_amount` (integer), `points_awarded` (integer), `expiration_enabled` (boolean), `expiration_duration` (integer or null), `expiration_unit` (string: "months" or "years"), `birthday_bonus_enabled` (boolean), `birthday_bonus_points` (integer or null).
+  - **Stamps:** `stamps_required` (integer), `reward_description` (string).
+  - These keys do not conflict with keys referenced in `docs/09-Loyalty-Business-Rules.md` Section 3. Keys from doc 09 (`min_purchase_amount`, `max_earn_per_transaction`, etc.) are reserved for the transaction engine sprint and are not used here.
+- **Reason:** Sprint 3.2.1 is configuration-only with no loyalty calculations. The settings JSON column is the correct location for type-specific campaign configuration per the sprint spec instruction.
+- **Impact:** `app/Http/Requests/ConfigureCampaignRequest.php` (new), `app/Http/Controllers/CampaignController.php` (new `configure` method), `routes/web.php` (new route), `resources/views/campaigns/show.blade.php` (Rules tab replaced with configuration form and live summary).
+
+---
+
+### [DECISION-027] Campaign Workspace UI Terminology — "Configuration" → "Rules" (Sprint 3.2.1 Change Request)
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Change Request after Sprint 3.2.1)
+- **Status:** Approved
+- **Decision:** In the merchant-facing Campaign Workspace UI, the word "Configuration" is replaced with "Rules" wherever it appears. Affected labels: "Points Configuration" → "Points Rules", "Stamp Card Configuration" → "Stamp Card Rules", "Save Configuration" button → "Save Rules". Internal code names (`configure()`, `ConfigureCampaignRequest`, `campaigns.configure` route, `settings` JSON) are unchanged. The Campaign Summary card earn description is rewritten as natural prose: "Customers earn X point(s) for every Y [currency] spent." (Points) and "Customers receive 1 stamp for every qualifying purchase." (Stamps), replacing the two-row "Customers earn / Every" format.
+- **Reason:** "Rules" is friendlier and more accessible than "Configuration" for small business owners who are the primary audience. The summary card natural language reads more clearly than two disconnected rows.
+- **Impact:** `resources/views/campaigns/show.blade.php` (text-only UI changes). No route, controller, database, or architectural changes.
+
+---
+
 *New decisions must be appended above this line in the format shown.*
