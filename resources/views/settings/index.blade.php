@@ -7,6 +7,9 @@
         <p>Manage your business profile and account preferences.</p>
     </div>
 
+    {{-- Trial Lifecycle Banner --}}
+    <x-trial-banner :merchant="$merchant" />
+
     {{-- Flash messages --}}
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
@@ -415,6 +418,11 @@
                                         <span class="badge {{ $merchant->subscriptionStatus()->badgeClass() }} ms-1">
                                             {{ $merchant->subscriptionStatus()->label() }}
                                         </span>
+                                        @if ($merchant->isOnTrial())
+                                            <span class="text-muted small ms-1">(Professional features active)</span>
+                                        @elseif ($merchant->isTrialExpired())
+                                            <span class="text-muted small ms-1">(Free plan limits apply)</span>
+                                        @endif
                                     @else
                                         <span class="badge bg-primary">Professional Trial</span>
                                     @endif
@@ -423,7 +431,9 @@
                                 <dt class="col-sm-4 text-muted fw-normal">Trial End Date</dt>
                                 <dd class="col-sm-8 text-muted">
                                     {{ $trialEndsAt->format('d M Y') }}
-                                    @if ($trialDaysRemaining > 0)
+                                    @if ($merchant?->isTrialExpired())
+                                        <span class="ms-2 badge bg-warning text-dark">Trial ended</span>
+                                    @elseif ($trialDaysRemaining > 0)
                                         <span class="ms-2 text-info small">{{ $trialDaysRemaining }} {{ Str::plural('day', $trialDaysRemaining) }} remaining</span>
                                     @else
                                         <span class="ms-2 text-muted small">Trial expired</span>

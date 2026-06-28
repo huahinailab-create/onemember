@@ -156,4 +156,21 @@ class Merchant extends Model
     {
         return $this->subscription_plan === SubscriptionPlan::Enterprise;
     }
+
+    /**
+     * True when the trial period has ended.
+     * Covers both the database-updated state (status = Expired) and the
+     * window between trial expiry and the next command run (status still Trial,
+     * but trial_ends_at is in the past).
+     */
+    public function isTrialExpired(): bool
+    {
+        if ($this->subscription_status === SubscriptionStatus::Expired) {
+            return true;
+        }
+
+        return $this->subscription_status === SubscriptionStatus::Trial
+            && $this->trial_ends_at !== null
+            && $this->trial_ends_at->isPast();
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\SubscriptionStatus;
 use App\Models\LoyaltyProgram;
 use App\Models\Merchant;
 
@@ -9,12 +10,22 @@ class SubscriptionService
 {
     /**
      * The plan key that applies to this merchant right now.
-     * During an active trial the merchant has Professional-tier access.
+     * - Active trial → Professional
+     * - Trial expired (command not yet run) → Free
+     * - Otherwise → stored subscription_plan
      */
     public function effectivePlanKey(Merchant $merchant): string
     {
         if ($merchant->isOnTrial()) {
             return config('subscriptions.trial.plan', 'professional');
+        }
+
+        // Trial date has passed but the nightly command hasn't updated the row yet.
+        // Enforce Free plan immediately so limits kick in without waiting for the command.
+        if ($merchant->subscription_status === SubscriptionStatus::Trial
+            && $merchant->trial_ends_at !== null
+            && $merchant->trial_ends_at->isPast()) {
+            return 'free';
         }
 
         return $merchant->subscription_plan?->value ?? 'free';

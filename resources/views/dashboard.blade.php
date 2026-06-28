@@ -8,6 +8,9 @@
         <p>Welcome back, {{ Auth::user()->name }}. Here's what's happening today.</p>
     </div>
 
+    {{-- ── Trial Lifecycle Banner ───────────────────────────── --}}
+    <x-trial-banner :merchant="Auth::user()->merchant" />
+
     {{-- ── Section 1: Business Overview ────────────────────── --}}
     <div class="row g-3 mb-4">
         <div class="col-12 col-sm-6 col-xl-3">

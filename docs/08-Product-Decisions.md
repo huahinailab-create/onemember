@@ -503,4 +503,21 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-042] Trial Lifecycle — Expiry, Downgrade, and Countdown Banners (Sprint 5.2.3)
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 5.2.3 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **`ProcessExpiredTrials` Artisan command** (`subscriptions:process-expired-trials`) — finds merchants with `subscription_status = trial` and `trial_ends_at <= now()`, sets `subscription_status = expired` and `subscription_plan = free`. Never deletes any data. Logs count via Laravel Log. Not yet scheduled.
+  2. **Immediate enforcement without waiting for the command** — `SubscriptionService::effectivePlanKey()` checks `trial_ends_at.isPast()` even when `subscription_status` is still `trial`. Free plan limits are enforced the moment the trial expires, not on the next command run.
+  3. **`Merchant::isTrialExpired()`** — new helper method. Returns true if `subscription_status = expired` OR if `subscription_status = trial` and `trial_ends_at.isPast()`.
+  4. **`trial-banner` Blade component** — anonymous component in `resources/views/components/`. Logic: expired = non-dismissible grey `alert-secondary`; ≤1 day = red `alert-danger`; ≤3 days = yellow `alert-warning`; ≤7 days = yellow `alert-warning`; ≤14 days = blue `alert-info`; >14 days = no output. Dismissible banners (countdown states) use Alpine.js + `sessionStorage` key `trial_banner_dismissed` — dismissed for the browser session only. Expired banner is not dismissible. All banners include a disabled "Upgrade Plan" button.
+  5. **Dashboard** — `<x-trial-banner :merchant="...">` included between page header and Section 1 KPI cards.
+  6. **Settings Account tab** — trial end date now shows "Trial ended" badge when expired; plan label shows "(Free plan limits apply)" when expired; "Professional features active" when on active trial.
+  7. **Data preservation guarantee** — the downgrade command only updates two columns (`subscription_status`, `subscription_plan`). Members, campaigns, rewards, and transactions are never touched.
+- **Reason:** Completes the trial lifecycle without requiring payment integration. Merchants experience a graceful expiry with clear messaging and immediate Free-plan enforcement.
+- **Impact:** New `app/Console/Commands/ProcessExpiredTrials.php`, new `resources/views/components/trial-banner.blade.php`, updated `app/Models/Merchant.php` (`isTrialExpired()`), updated `app/Services/SubscriptionService.php` (`effectivePlanKey()`), updated `resources/views/dashboard.blade.php`, updated `resources/views/settings/index.blade.php`.
+
+---
+
 *New decisions must be appended above this line in the format shown.*
