@@ -255,16 +255,20 @@
             return {
                 ...data,
                 get expirationText() {
-                    if (!this.expirationEnabled) return 'Never';
+                    if (this.expirationType === 'never') return 'Points never expire.';
                     const d = parseInt(this.expirationDuration) || 0;
-                    if (!d) return 'Not set';
-                    return d + ' ' + this.expirationUnit;
+                    if (!d) return 'Not configured.';
+                    return 'Points expire after ' + d + ' ' + this.expirationType + '.';
                 },
                 get birthdayText() {
-                    if (!this.birthdayEnabled) return 'None';
+                    if (!this.birthdayEnabled) return 'No birthday bonus.';
                     const p = parseInt(this.birthdayPoints) || 0;
-                    if (!p) return 'Not set';
-                    return p + ' Point' + (p === 1 ? '' : 's');
+                    if (!p) return 'Not configured.';
+                    const before = parseInt(this.birthdayDaysBefore) || 0;
+                    const after  = parseInt(this.birthdayDaysAfter)  || 0;
+                    return p + ' bonus point' + (p === 1 ? '' : 's') + '. Valid '
+                         + before + ' day' + (before === 1 ? '' : 's') + ' before until '
+                         + after  + ' day' + (after  === 1 ? '' : 's') + ' after birthday.';
                 },
             };
         }
@@ -279,15 +283,16 @@
                      'currency'           => $campaign->merchant->currency ?? 'THB',
                      'campaignName'       => $campaign->name,
                      'campaignStatus'     => $isArchived ? 'Archived' : $campaign->status->label(),
-                     'spendAmount'        => (int) ($settings['spend_amount']         ?? 100),
-                     'pointsAwarded'      => (int) ($settings['points_awarded']        ?? 1),
-                     'expirationEnabled'  => (bool)($settings['expiration_enabled']    ?? false),
-                     'expirationDuration' => $settings['expiration_duration']          ?? '',
-                     'expirationUnit'     => $settings['expiration_unit']              ?? 'months',
-                     'birthdayEnabled'    => (bool)($settings['birthday_bonus_enabled'] ?? false),
-                     'birthdayPoints'     => $settings['birthday_bonus_points']        ?? '',
-                     'stampsRequired'     => (int) ($settings['stamps_required']       ?? 10),
-                     'rewardDescription'  => $settings['reward_description']           ?? '',
+                     'spendAmount'        => (int) ($settings['spend_amount']              ?? 100),
+                     'pointsAwarded'      => (int) ($settings['points_awarded']             ?? 1),
+                     'expirationType'     => $settings['expiration_type']                   ?? 'never',
+                     'expirationDuration' => $settings['expiration_duration']               ?? '',
+                     'birthdayEnabled'    => (bool)($settings['birthday_enabled']           ?? false),
+                     'birthdayPoints'     => $settings['birthday_points']                   ?? '',
+                     'birthdayDaysBefore' => (int) ($settings['birthday_valid_days_before'] ?? 7),
+                     'birthdayDaysAfter'  => (int) ($settings['birthday_valid_days_after']  ?? 7),
+                     'stampsRequired'     => (int) ($settings['stamps_required']            ?? 10),
+                     'rewardDescription'  => $settings['reward_description']                ?? '',
                  ]))">
 
                 <div class="row g-0">
@@ -373,56 +378,74 @@
 
                                 <hr class="my-3">
 
-                                {{-- Points Expiration --}}
+                                {{-- Point Expiration --}}
                                 <div class="mb-4">
-                                    <div class="form-check mb-2">
-                                        <input type="checkbox"
-                                               id="expiration_enabled"
-                                               name="expiration_enabled"
-                                               value="1"
+                                    <label class="form-label form-label-sm fw-medium mb-2">Point Expiration</label>
+
+                                    <div class="form-check mb-1">
+                                        <input type="radio"
+                                               id="exp_never"
+                                               name="expiration_type"
+                                               value="never"
                                                class="form-check-input"
-                                               x-model="expirationEnabled"
-                                               {{ ($settings['expiration_enabled'] ?? false) ? 'checked' : '' }}
+                                               x-model="expirationType"
                                                {{ $isArchived ? 'disabled' : '' }}>
-                                        <label class="form-check-label fw-medium" for="expiration_enabled">
-                                            Enable Points Expiration
+                                        <label class="form-check-label" for="exp_never">
+                                            Points never expire
+                                            <span class="badge bg-success ms-1" style="font-size:.65rem;">Recommended</span>
                                         </label>
                                     </div>
 
-                                    <div x-show="expirationEnabled" x-cloak class="mt-2 ms-4">
-                                        <div class="row g-2">
-                                            <div class="col-5">
-                                                <label for="expiration_duration" class="form-label form-label-sm">Duration</label>
-                                                <input type="number"
-                                                       id="expiration_duration"
-                                                       name="expiration_duration"
-                                                       class="form-control form-control-sm @error('expiration_duration') is-invalid @enderror"
-                                                       min="1"
-                                                       x-model.number="expirationDuration"
-                                                       value="{{ old('expiration_duration', $settings['expiration_duration'] ?? '') }}"
-                                                       {{ $isArchived ? 'disabled' : '' }}
-                                                       placeholder="e.g. 24">
-                                                @error('expiration_duration')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                            <div class="col-5">
-                                                <label for="expiration_unit" class="form-label form-label-sm">Unit</label>
-                                                <select id="expiration_unit"
-                                                        name="expiration_unit"
-                                                        class="form-select form-select-sm"
-                                                        x-model="expirationUnit"
-                                                        {{ $isArchived ? 'disabled' : '' }}>
-                                                    <option value="months" {{ ($settings['expiration_unit'] ?? 'months') === 'months' ? 'selected' : '' }}>Months</option>
-                                                    <option value="years"  {{ ($settings['expiration_unit'] ?? '') === 'years'  ? 'selected' : '' }}>Years</option>
-                                                </select>
-                                            </div>
+                                    <div class="form-check mb-1">
+                                        <input type="radio"
+                                               id="exp_months"
+                                               name="expiration_type"
+                                               value="months"
+                                               class="form-check-input"
+                                               x-model="expirationType"
+                                               {{ $isArchived ? 'disabled' : '' }}>
+                                        <label class="form-check-label" for="exp_months">
+                                            Expire after a set number of months
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check mb-2">
+                                        <input type="radio"
+                                               id="exp_years"
+                                               name="expiration_type"
+                                               value="years"
+                                               class="form-check-input"
+                                               x-model="expirationType"
+                                               {{ $isArchived ? 'disabled' : '' }}>
+                                        <label class="form-check-label" for="exp_years">
+                                            Expire after a set number of years
+                                        </label>
+                                    </div>
+
+                                    <div x-show="expirationType !== 'never'" x-cloak class="ms-4 mt-1">
+                                        <label for="expiration_duration" class="form-label form-label-sm">
+                                            Duration <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="input-group input-group-sm" style="max-width:200px;">
+                                            <input type="number"
+                                                   id="expiration_duration"
+                                                   name="expiration_duration"
+                                                   class="form-control @error('expiration_duration') is-invalid @enderror"
+                                                   min="1"
+                                                   x-model.number="expirationDuration"
+                                                   value="{{ old('expiration_duration', $settings['expiration_duration'] ?? '') }}"
+                                                   {{ $isArchived ? 'disabled' : '' }}
+                                                   placeholder="e.g. 24">
+                                            <span class="input-group-text" x-text="expirationType === 'months' ? 'months' : 'years'"></span>
+                                            @error('expiration_duration')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
 
                                     <div class="form-text mt-2">
                                         <i class="bi bi-lightbulb text-warning me-1"></i>
-                                        Recommended: No expiration or a long expiration period (for example 2 years) to encourage customer loyalty.
+                                        Customers are more likely to return when points never expire or have a long expiration period such as 2 years.
                                     </div>
                                 </div>
 
@@ -432,37 +455,84 @@
                                 <div class="mb-4">
                                     <div class="form-check mb-2">
                                         <input type="checkbox"
-                                               id="birthday_bonus_enabled"
-                                               name="birthday_bonus_enabled"
+                                               id="birthday_enabled"
+                                               name="birthday_enabled"
                                                value="1"
                                                class="form-check-input"
                                                x-model="birthdayEnabled"
-                                               {{ ($settings['birthday_bonus_enabled'] ?? false) ? 'checked' : '' }}
+                                               {{ ($settings['birthday_enabled'] ?? false) ? 'checked' : '' }}
                                                {{ $isArchived ? 'disabled' : '' }}>
-                                        <label class="form-check-label fw-medium" for="birthday_bonus_enabled">
+                                        <label class="form-check-label fw-medium" for="birthday_enabled">
                                             Enable Birthday Bonus
                                         </label>
                                     </div>
 
                                     <div x-show="birthdayEnabled" x-cloak class="mt-2 ms-4">
-                                        <label for="birthday_bonus_points" class="form-label form-label-sm">
-                                            Bonus Points <span class="text-danger">*</span>
-                                        </label>
-                                        <div class="input-group input-group-sm" style="max-width:180px;">
-                                            <input type="number"
-                                                   id="birthday_bonus_points"
-                                                   name="birthday_bonus_points"
-                                                   class="form-control @error('birthday_bonus_points') is-invalid @enderror"
-                                                   min="1"
-                                                   x-model.number="birthdayPoints"
-                                                   value="{{ old('birthday_bonus_points', $settings['birthday_bonus_points'] ?? '') }}"
-                                                   {{ $isArchived ? 'disabled' : '' }}
-                                                   placeholder="e.g. 100">
-                                            <span class="input-group-text">pts</span>
-                                            @error('birthday_bonus_points')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
+
+                                        {{-- Birthday Points --}}
+                                        <div class="mb-3">
+                                            <label for="birthday_points" class="form-label form-label-sm">
+                                                Birthday Points <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="input-group input-group-sm" style="max-width:180px;">
+                                                <input type="number"
+                                                       id="birthday_points"
+                                                       name="birthday_points"
+                                                       class="form-control @error('birthday_points') is-invalid @enderror"
+                                                       min="1"
+                                                       x-model.number="birthdayPoints"
+                                                       value="{{ old('birthday_points', $settings['birthday_points'] ?? '') }}"
+                                                       {{ $isArchived ? 'disabled' : '' }}
+                                                       placeholder="e.g. 100">
+                                                <span class="input-group-text">pts</span>
+                                                @error('birthday_points')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
                                         </div>
+
+                                        {{-- Valid Days --}}
+                                        <div class="row g-3">
+                                            <div class="col-6">
+                                                <label for="birthday_valid_days_before" class="form-label form-label-sm">
+                                                    Valid Days Before Birthday <span class="text-danger">*</span>
+                                                </label>
+                                                <div class="input-group input-group-sm">
+                                                    <input type="number"
+                                                           id="birthday_valid_days_before"
+                                                           name="birthday_valid_days_before"
+                                                           class="form-control @error('birthday_valid_days_before') is-invalid @enderror"
+                                                           min="0"
+                                                           x-model.number="birthdayDaysBefore"
+                                                           value="{{ old('birthday_valid_days_before', $settings['birthday_valid_days_before'] ?? 7) }}"
+                                                           {{ $isArchived ? 'disabled' : '' }}>
+                                                    <span class="input-group-text">days</span>
+                                                    @error('birthday_valid_days_before')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <label for="birthday_valid_days_after" class="form-label form-label-sm">
+                                                    Valid Days After Birthday <span class="text-danger">*</span>
+                                                </label>
+                                                <div class="input-group input-group-sm">
+                                                    <input type="number"
+                                                           id="birthday_valid_days_after"
+                                                           name="birthday_valid_days_after"
+                                                           class="form-control @error('birthday_valid_days_after') is-invalid @enderror"
+                                                           min="0"
+                                                           x-model.number="birthdayDaysAfter"
+                                                           value="{{ old('birthday_valid_days_after', $settings['birthday_valid_days_after'] ?? 7) }}"
+                                                           {{ $isArchived ? 'disabled' : '' }}>
+                                                    <span class="input-group-text">days</span>
+                                                    @error('birthday_valid_days_after')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
 
@@ -567,7 +637,7 @@
                                             <span x-text="'Customers earn ' + pointsAwarded + ' point' + (pointsAwarded === 1 ? '' : 's') + ' for every ' + spendAmount + ' ' + currency + ' spent.'"></span>
                                         </dd>
 
-                                        <dt class="col-5 text-muted fw-normal">Points Expiration</dt>
+                                        <dt class="col-5 text-muted fw-normal">Point Expiration</dt>
                                         <dd class="col-7 mb-0" x-text="expirationText"></dd>
 
                                         <dt class="col-5 text-muted fw-normal">Birthday Bonus</dt>

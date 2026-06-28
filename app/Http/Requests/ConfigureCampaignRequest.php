@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ConfigureCampaignRequest extends FormRequest
 {
@@ -13,10 +14,8 @@ class ConfigureCampaignRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        // Unchecked checkboxes are not submitted; normalise to boolean.
         $this->merge([
-            'expiration_enabled'     => $this->boolean('expiration_enabled'),
-            'birthday_bonus_enabled' => $this->boolean('birthday_bonus_enabled'),
+            'birthday_enabled' => $this->boolean('birthday_enabled'),
         ]);
     }
 
@@ -33,21 +32,27 @@ class ConfigureCampaignRequest extends FormRequest
 
         // Points campaign
         return [
-            'spend_amount'           => ['required', 'integer', 'min:1'],
-            'points_awarded'         => ['required', 'integer', 'min:1'],
-            'expiration_enabled'     => ['boolean'],
-            'expiration_duration'    => ['nullable', 'integer', 'min:1', 'required_if:expiration_enabled,true'],
-            'expiration_unit'        => ['nullable', 'in:months,years'],
-            'birthday_bonus_enabled' => ['boolean'],
-            'birthday_bonus_points'  => ['nullable', 'integer', 'min:1', 'required_if:birthday_bonus_enabled,true'],
+            'spend_amount'               => ['required', 'integer', 'min:1'],
+            'points_awarded'             => ['required', 'integer', 'min:1'],
+            'expiration_type'            => ['required', 'in:never,months,years'],
+            'expiration_duration'        => [
+                'nullable', 'integer', 'min:1',
+                Rule::requiredIf(fn () => in_array($this->input('expiration_type'), ['months', 'years'])),
+            ],
+            'birthday_enabled'           => ['boolean'],
+            'birthday_points'            => ['nullable', 'integer', 'min:1', 'required_if:birthday_enabled,true'],
+            'birthday_valid_days_before' => ['nullable', 'integer', 'min:0', 'required_if:birthday_enabled,true'],
+            'birthday_valid_days_after'  => ['nullable', 'integer', 'min:0', 'required_if:birthday_enabled,true'],
         ];
     }
 
     public function messages(): array
     {
         return [
-            'expiration_duration.required_if'    => 'Please enter a duration when expiration is enabled.',
-            'birthday_bonus_points.required_if'  => 'Please enter the bonus points when birthday bonus is enabled.',
+            'expiration_duration.required_if'        => 'Please enter a duration for point expiration.',
+            'birthday_points.required_if'            => 'Please enter the bonus points when birthday bonus is enabled.',
+            'birthday_valid_days_before.required_if' => 'Please enter valid days before birthday.',
+            'birthday_valid_days_after.required_if'  => 'Please enter valid days after birthday.',
         ];
     }
 }

@@ -351,4 +351,18 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-032] Earn Rules — Expiration UI Pattern and Birthday Valid-Days Fields (Sprint 3.2.3)
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 3.2.3 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **Point Expiration UI** — The existing checkbox + Duration + Unit pattern (stored as `expiration_enabled`, `expiration_duration`, `expiration_unit`) is replaced with three radio options: *Never expire (Recommended)*, *Expire after N months*, *Expire after N years*. The settings JSON keys change to `expiration_type` (values: `never` | `months` | `years`) and `expiration_duration` (integer, null when `never`). The old keys `expiration_enabled` and `expiration_unit` are removed.
+  2. **Birthday Bonus Valid-Days** — Two new settings keys are added: `birthday_valid_days_before` (integer ≥ 0, default 7) and `birthday_valid_days_after` (integer ≥ 0, default 7). The existing `birthday_bonus_enabled` and `birthday_bonus_points` keys are renamed to `birthday_enabled` and `birthday_points` for consistency.
+  3. **Helper text** — Point Expiration section must include: "Customers are more likely to return when points never expire or have a long expiration period such as 2 years."
+  4. These settings only apply to Points campaigns. Stamp campaigns retain `stamps_required` and `reward_description` and have no expiration or birthday configuration.
+- **Reason:** Sprint 3.2.3 refines the Earn Rules UX. Radio buttons communicate the three mutually-exclusive expiration options more clearly than a checkbox+select combo. Birthday valid-days allow merchants to define the claim window around a member's birthday.
+- **Impact:** `app/Http/Requests/ConfigureCampaignRequest.php`, `resources/views/campaigns/show.blade.php` (Alpine data keys, form fields, summary card getters). No new database migration — `settings` is a JSON column.
+
+---
+
 *New decisions must be appended above this line in the format shown.*
