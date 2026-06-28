@@ -420,4 +420,34 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-037] Onboarding Wizard — Schema, State Tracking, and Layout (Sprint 4.2)
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 4.2 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **New columns on `merchants`:** `business_type` (varchar nullable), `website` (varchar nullable), `onboarding_completed_at` (timestamp nullable). `onboarding_completed_at = null` means not yet complete; set to `now()` on Step 5 completion.
+  2. **Current step tracking:** stored in the existing `settings` JSON column as `settings['onboarding_step']` (integer 2–5 as each step is completed). Avoids a new column for transient wizard state.
+  3. **Loyalty type preference:** stored as `settings['onboarding_loyalty_type']` (`points` or `stamps`) during Step 4, consumed in Step 5 to create the starter campaign.
+  4. **Date format preference:** stored as `settings['date_format']` (string: `DD/MM/YYYY`, `MM/DD/YYYY`, or `YYYY-MM-DD`). Default: `DD/MM/YYYY`.
+  5. **Existing merchants:** migration seeds `onboarding_completed_at = NOW()` for all existing merchant records so they never see the wizard.
+  6. **Wizard layout:** a dedicated `resources/views/layouts/wizard.blade.php` (no sidebar, centered card, OneMember branding header) is used for all wizard steps. This is explicitly required by the wizard sprint — the sidebar-less layout reduces distraction during first-time setup.
+  7. **Skip for Now (Step 1 only):** sets `session('onboarding_skipped', true)` and redirects to dashboard. The wizard re-appears on next login if onboarding is not complete.
+  8. **Dashboard guard:** `DashboardController::index()` redirects to `/onboarding` if `$merchant` is null OR `onboarding_completed_at` is null, unless `session('onboarding_skipped')` is true.
+- **Reason:** Minimises schema changes (only 3 new columns), reuses the existing settings JSON for wizard-only state, and keeps the wizard experience clean by using a stripped-down layout without navigation.
+- **Impact:** New migration, updated `Merchant` model, new `OnboardingController`, new form requests, new layout, 6 new step views, updated routes, updated `DashboardController`.
+
+---
+
+### [DECISION-038] Onboarding Starter Campaign Defaults (Sprint 4.2)
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 4.2 spec)
+- **Status:** Approved
+- **Decision:** When the merchant selects "Yes – create a starter campaign" at Step 5, one campaign and one reward are created using the following defaults. No campaign is created if any campaign already exists (including archived).
+  - **Points program:** Campaign name "Points Rewards Program", status `active`, settings: `spend_amount=100`, `points_awarded=1`, `expiration_type=never`. One reward: name "Free Item", type `custom`, `points_required=500`, status `active`, unlimited quantity.
+  - **Stamps program:** Campaign name "Stamp Card", status `active`, settings: `stamps_required=10`, `reward_description="Complete your stamp card to claim your reward."`. One reward: name "Free Item", type `free_item`, status `active`, unlimited quantity, `points_required=null`.
+- **Reason:** Sensible defaults give the merchant a working campaign immediately. Guarding against existing campaigns prevents duplicate data if onboarding is resumed.
+- **Impact:** `OnboardingController::createStarterCampaign()` private method.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

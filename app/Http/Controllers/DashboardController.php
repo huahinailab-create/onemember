@@ -11,6 +11,11 @@ class DashboardController extends Controller
     {
         $merchant = $request->user()->merchant;
 
+        // Redirect new merchants to the onboarding wizard
+        if ((! $merchant || is_null($merchant->onboarding_completed_at)) && ! session('onboarding_skipped')) {
+            return redirect()->route('onboarding.index');
+        }
+
         if (! $merchant) {
             return view('dashboard', [
                 'totalActiveMembers'  => 0,

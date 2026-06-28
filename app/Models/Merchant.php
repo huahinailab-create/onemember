@@ -18,20 +18,24 @@ class Merchant extends Model
         'user_id',
         'name',
         'contact_person',
+        'business_type',
         'slug',
         'email',
         'phone',
+        'website',
         'address',
         'logo_path',
         'status',
         'currency',
         'timezone',
         'settings',
+        'onboarding_completed_at',
     ];
 
     protected $casts = [
-        'status'   => MerchantStatus::class,
-        'settings' => 'array',
+        'status'                  => MerchantStatus::class,
+        'settings'                => 'array',
+        'onboarding_completed_at' => 'datetime',
     ];
 
     protected static function booted(): void

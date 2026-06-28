@@ -3,6 +3,7 @@
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RedemptionController;
 use App\Http\Controllers\RewardController;
@@ -15,6 +16,21 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->prefix('onboarding')->name('onboarding.')->group(function () {
+    Route::get('/',                [OnboardingController::class, 'index'])->name('index');
+    Route::get('/welcome',         [OnboardingController::class, 'welcome'])->name('welcome');
+    Route::get('/skip',            [OnboardingController::class, 'skip'])->name('skip');
+    Route::get('/business-info',   [OnboardingController::class, 'businessInfo'])->name('business-info');
+    Route::post('/business-info',  [OnboardingController::class, 'storeBusinessInfo'])->name('business-info.store');
+    Route::get('/business-settings',  [OnboardingController::class, 'businessSettings'])->name('business-settings');
+    Route::post('/business-settings', [OnboardingController::class, 'storeBusinessSettings'])->name('business-settings.store');
+    Route::get('/loyalty',   [OnboardingController::class, 'loyaltyPreference'])->name('loyalty');
+    Route::post('/loyalty',  [OnboardingController::class, 'storeLoyaltyPreference'])->name('loyalty.store');
+    Route::get('/quick-start',  [OnboardingController::class, 'quickStart'])->name('quick-start');
+    Route::post('/quick-start', [OnboardingController::class, 'storeQuickStart'])->name('quick-start.store');
+    Route::get('/finish',  [OnboardingController::class, 'finish'])->name('finish');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
