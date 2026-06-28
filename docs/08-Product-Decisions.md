@@ -553,4 +553,19 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-045] Authorization Strategy — Sprint 5.4.2
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 5.4.2 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **Tenant isolation pattern** — all merchant-owned resources (Members, LoyaltyPrograms, Rewards, Transactions, Redemptions) are isolated by comparing `resource->merchant_id` to `$request->user()->merchant?->id` via `abort_unless(...)`. This pattern is applied consistently in every controller action that reads or mutates a resource.
+  2. **No Laravel Policies introduced** — audit confirmed the `abort_unless` pattern already provides correct, non-duplicated isolation across all controllers. Adding Policies would add abstraction without improving correctness. Decision: retain the existing inline `abort_unless` checks.
+  3. **Route model binding** — `resolveRouteBinding` on `Member`, `LoyaltyProgram`, and `Reward` models uses `withTrashed()->where(id)->firstOrFail()` (global scope). Tenant checks are performed at the controller level after binding. This is safe because no data is returned to the caller before the tenant check fires.
+  4. **Indirect cross-tenant access** — verified: PurchaseController scopes the campaign lookup to `merchant_id`. RedemptionController scopes the reward lookup to `merchant_id`. No indirect paths expose cross-tenant data.
+  5. **Feature tests added** — `tests/Feature/TenantIsolationTest.php` proves Merchant A cannot view, edit, or delete Merchant B's Members, Campaigns, or Rewards; cannot record purchases for Merchant B's members; cannot redeem Merchant B's rewards. 13 tests, all passing.
+- **Reason:** Multi-tenant SaaS requires hard isolation. Using `abort_unless` at the controller level is the simplest correct approach for the current codebase complexity. Policies are reserved for when authorization logic diverges between roles.
+- **Impact:** No application code changed. New: `tests/Feature/TenantIsolationTest.php`.
+
+---
+
 *New decisions must be appended above this line in the format shown.*
