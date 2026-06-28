@@ -297,4 +297,20 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-028] Merchant-Facing Terminology Standard (Standing Rule)
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner
+- **Status:** Approved
+- **Decision:** All merchant-facing UI text must use business-friendly language that small business owners immediately understand. The following terminology is approved and mandatory:
+  - **Rules** (not "Configuration")
+  - **Campaign** (not "Loyalty Program")
+  - **Members** (not "Users")
+  - **Rewards** (not "Redemptions")
+  - Natural language descriptions preferred. Examples: "Customers earn 1 point for every ฿100 spent." / "Customers receive 1 stamp for every qualifying purchase."
+  - Developer terminology (controllers, requests, models, database columns, routes, enums, etc.) may continue using technical naming internally and is not subject to this rule.
+- **Reason:** OneMember's target audience is small business owners, not developers. The merchant interface must feel approachable and immediately understood without any technical background.
+- **Impact:** All future Blade view copy must comply. Any merchant-facing label, button, heading, placeholder, flash message, or help text that uses non-approved terminology must be corrected before shipping. Internal code naming is unaffected.
+
+---
+
 *New decisions must be appended above this line in the format shown.*
