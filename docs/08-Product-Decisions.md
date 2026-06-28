@@ -410,4 +410,14 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-036] Merchant Dashboard — Data Model and Query Strategy (Sprint 4.1)
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 4.1 spec)
+- **Status:** Approved
+- **Decision:** The Merchant Dashboard is served by a new `DashboardController` replacing the existing route closure. It reads exclusively from existing tables — no new columns or migrations required. KPIs: (1) total active members = non-trashed `members` count, (2) active campaigns = `loyalty_programs` with `status = active` and `deleted_at = null`, (3) rewards redeemed today = `redemptions` where `redeemed_at` date = today, (4) points issued today = sum of `transactions.points` where `type = earn` and `created_at` date = today. Recent Activity = latest 10 transactions with `member` and `loyaltyProgram` (withTrashed) eager-loaded. Top Members = top 5 by `total_points` desc. Active Campaigns section = all active campaigns with non-deleted reward count via `withCount`. Empty states are shown per section when no data exists.
+- **Reason:** Dashboard answers "What does the merchant need to know right now?" using data already collected by the earn/redeem cycle. No schema changes needed.
+- **Impact:** New `app/Http/Controllers/DashboardController.php`. Updated `routes/web.php` (closure replaced with controller). Updated `resources/views/dashboard.blade.php`.
+
+---
+
 *New decisions must be appended above this line in the format shown.*
