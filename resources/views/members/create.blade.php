@@ -21,6 +21,22 @@
                     <span class="fw-semibold">Member Details</span>
                 </div>
                 <div class="card-body">
+
+                    @if ($errors->has('limit'))
+                        <x-subscription-limit-warning level="limit_reached" feature="member" />
+                    @elseif ($memberUsage && $memberUsage['level'] !== 'normal')
+                        <x-subscription-limit-warning
+                            :level="$memberUsage['level']"
+                            feature="member"
+                            :percentage="$memberUsage['percentage']"
+                            :used="$memberUsage['used']"
+                            :limit="$memberUsage['limit']" />
+                    @endif
+
+                    @error('limit')
+                        {{-- error displayed via component above --}}
+                    @enderror
+
                     <form method="POST" action="{{ route('members.store') }}" novalidate>
                         @csrf
 

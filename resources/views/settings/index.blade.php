@@ -408,20 +408,94 @@
                                 <dt class="col-sm-4 text-muted fw-normal">Account Created</dt>
                                 <dd class="col-sm-8">{{ $user->created_at->format('d M Y') }}</dd>
 
-                                <dt class="col-sm-4 text-muted fw-normal">Current Subscription</dt>
+                                <dt class="col-sm-4 text-muted fw-normal">Current Plan</dt>
                                 <dd class="col-sm-8">
-                                    <span class="badge bg-primary">Professional Trial</span>
-                                    @if ($trialDaysRemaining > 0)
-                                        <span class="text-muted small ms-2">{{ $trialDaysRemaining }} {{ Str::plural('day', $trialDaysRemaining) }} remaining</span>
+                                    @if ($merchant)
+                                        <span class="badge bg-primary">{{ $merchant->currentPlan()->label() }}</span>
+                                        <span class="badge {{ $merchant->subscriptionStatus()->badgeClass() }} ms-1">
+                                            {{ $merchant->subscriptionStatus()->label() }}
+                                        </span>
                                     @else
-                                        <span class="text-muted small ms-2">Trial expired</span>
+                                        <span class="badge bg-primary">Professional Trial</span>
                                     @endif
                                 </dd>
 
                                 <dt class="col-sm-4 text-muted fw-normal">Trial End Date</dt>
-                                <dd class="col-sm-8 text-muted">{{ $trialEndsAt->format('d M Y') }}</dd>
+                                <dd class="col-sm-8 text-muted">
+                                    {{ $trialEndsAt->format('d M Y') }}
+                                    @if ($trialDaysRemaining > 0)
+                                        <span class="ms-2 text-info small">{{ $trialDaysRemaining }} {{ Str::plural('day', $trialDaysRemaining) }} remaining</span>
+                                    @else
+                                        <span class="ms-2 text-muted small">Trial expired</span>
+                                    @endif
+                                </dd>
 
                             </dl>
+
+                            {{-- Subscription Usage Summary --}}
+                            @if ($merchant)
+                            <hr>
+                            <h6 class="fw-semibold mb-3">Current Usage</h6>
+                            @php
+                                use App\Services\SubscriptionService;
+                                $svc   = app(SubscriptionService::class);
+                                $usage = $svc->usageSummary($merchant);
+                            @endphp
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <div class="d-flex justify-content-between align-items-baseline mb-1">
+                                        <span class="small fw-medium">Members</span>
+                                        <span class="small text-muted">
+                                            @if ($usage['members']['unlimited'])
+                                                {{ number_format($usage['members']['used']) }} / Unlimited
+                                            @else
+                                                {{ number_format($usage['members']['used']) }} / {{ number_format($usage['members']['limit']) }}
+                                            @endif
+                                        </span>
+                                    </div>
+                                    @if (! $usage['members']['unlimited'])
+                                        @php $mPct = min($usage['members']['percentage'], 100); @endphp
+                                        <div class="progress" style="height:5px;">
+                                            <div class="progress-bar {{ $usage['members']['level'] === 'limit_reached' ? 'bg-danger' : ($usage['members']['level'] === 'warning' ? 'bg-warning' : 'bg-primary') }}"
+                                                 style="width:{{ $mPct }}%;"></div>
+                                        </div>
+                                    @else
+                                        <div class="progress" style="height:5px;">
+                                            <div class="progress-bar bg-success" style="width:100%;"></div>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="d-flex justify-content-between align-items-baseline mb-1">
+                                        <span class="small fw-medium">Campaigns</span>
+                                        <span class="small text-muted">
+                                            @if ($usage['campaigns']['unlimited'])
+                                                {{ number_format($usage['campaigns']['used']) }} / Unlimited
+                                            @else
+                                                {{ number_format($usage['campaigns']['used']) }} / {{ number_format($usage['campaigns']['limit']) }}
+                                            @endif
+                                        </span>
+                                    </div>
+                                    @if (! $usage['campaigns']['unlimited'])
+                                        @php $cPct = min($usage['campaigns']['percentage'], 100); @endphp
+                                        <div class="progress" style="height:5px;">
+                                            <div class="progress-bar {{ $usage['campaigns']['level'] === 'limit_reached' ? 'bg-danger' : ($usage['campaigns']['level'] === 'warning' ? 'bg-warning' : 'bg-primary') }}"
+                                                 style="width:{{ $cPct }}%;"></div>
+                                        </div>
+                                    @else
+                                        <div class="progress" style="height:5px;">
+                                            <div class="progress-bar bg-success" style="width:100%;"></div>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <button class="btn btn-sm btn-outline-primary" disabled>
+                                    <i class="bi bi-arrow-up-circle me-1"></i>Upgrade Plan
+                                </button>
+                                <span class="text-muted small ms-2">Subscription management coming soon.</span>
+                            </div>
+                            @endif
 
                             <div class="alert alert-info mt-4 mb-0">
                                 <i class="bi bi-info-circle me-2"></i>

@@ -6,23 +6,40 @@ use App\Http\Requests\StoreRewardRequest;
 use App\Http\Requests\UpdateRewardRequest;
 use App\Models\LoyaltyProgram;
 use App\Models\Reward;
+use App\Services\SubscriptionService;
 use Illuminate\Http\Request;
 
 class RewardController extends Controller
 {
-    public function create(Request $request, LoyaltyProgram $campaign)
+    public function create(Request $request, LoyaltyProgram $campaign, SubscriptionService $subscriptionService)
     {
         abort_unless($campaign->merchant_id === $request->user()->merchant?->id, 403);
         abort_if($campaign->trashed(), 403);
         $campaign->loadMissing('merchant');
 
-        return view('rewards.create', compact('campaign'));
+        $merchant    = $request->user()->merchant;
+        $rewardUsage = $merchant ? [
+            'used'       => $subscriptionService->rewardUsageCount($campaign),
+            'limit'      => $subscriptionService->featureLimit($merchant, 'rewards_per_campaign'),
+            'unlimited'  => $subscriptionService->isUnlimited($merchant, 'rewards_per_campaign'),
+            'percentage' => $subscriptionService->rewardUsagePercentage($merchant, $campaign),
+            'level'      => $subscriptionService->rewardWarningLevel($merchant, $campaign),
+        ] : null;
+
+        return view('rewards.create', compact('campaign', 'rewardUsage'));
     }
 
-    public function store(StoreRewardRequest $request, LoyaltyProgram $campaign)
+    public function store(StoreRewardRequest $request, LoyaltyProgram $campaign, SubscriptionService $subscriptionService)
     {
         abort_unless($campaign->merchant_id === $request->user()->merchant?->id, 403);
         abort_if($campaign->trashed(), 403);
+
+        $merchant = $request->user()->merchant;
+        if ($merchant && ! $subscriptionService->canCreateReward($merchant, $campaign)) {
+            return back()->withInput()->withErrors([
+                'limit' => 'You have reached the reward limit for this campaign on your current plan. Please upgrade your subscription to add more rewards.',
+            ]);
+        }
 
         $data = $request->validated();
         unset($data['unlimited']);

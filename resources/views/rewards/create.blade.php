@@ -23,6 +23,18 @@
                     <span class="badge bg-secondary ms-auto">{{ $campaign->name }}</span>
                 </div>
                 <div class="card-body" x-data="{ unlimited: {{ old('unlimited') ? 'true' : 'false' }} }">
+
+                    @if ($errors->has('limit'))
+                        <x-subscription-limit-warning level="limit_reached" feature="reward" />
+                    @elseif ($rewardUsage && $rewardUsage['level'] !== 'normal')
+                        <x-subscription-limit-warning
+                            :level="$rewardUsage['level']"
+                            feature="reward"
+                            :percentage="$rewardUsage['percentage']"
+                            :used="$rewardUsage['used']"
+                            :limit="$rewardUsage['limit']" />
+                    @endif
+
                     <form method="POST" action="{{ route('campaigns.rewards.store', $campaign) }}" novalidate>
                         @csrf
 

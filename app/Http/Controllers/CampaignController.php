@@ -8,6 +8,7 @@ use App\Http\Requests\StoreCampaignRequest;
 use App\Http\Requests\UpdateCampaignRequest;
 use App\Models\LoyaltyProgram;
 use App\Models\Reward;
+use App\Services\SubscriptionService;
 use Illuminate\Http\Request;
 
 class CampaignController extends Controller
@@ -41,14 +42,27 @@ class CampaignController extends Controller
         return view('campaigns.index', compact('campaigns', 'filter'));
     }
 
-    public function create()
+    public function create(SubscriptionService $subscriptionService)
     {
-        return view('campaigns.create');
+        $merchant = request()->user()->merchant;
+        $campaignUsage = $merchant
+            ? $subscriptionService->usageSummary($merchant)['campaigns']
+            : null;
+
+        return view('campaigns.create', compact('campaignUsage'));
     }
 
-    public function store(StoreCampaignRequest $request)
+    public function store(StoreCampaignRequest $request, SubscriptionService $subscriptionService)
     {
-        $request->user()->merchant->loyaltyPrograms()->create($request->validated());
+        $merchant = $request->user()->merchant;
+
+        if ($merchant && ! $subscriptionService->canCreateCampaign($merchant)) {
+            return back()->withInput()->withErrors([
+                'limit' => 'You have reached your campaign limit on your current plan. Please upgrade your subscription to create more campaigns.',
+            ]);
+        }
+
+        $merchant->loyaltyPrograms()->create($request->validated());
 
         return redirect()->route('campaigns.index')->with('success', 'Campaign created successfully.');
     }

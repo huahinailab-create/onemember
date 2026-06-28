@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Enums\TransactionType;
+use App\Services\SubscriptionService;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, SubscriptionService $subscriptionService)
     {
         $merchant = $request->user()->merchant;
 
@@ -29,6 +30,7 @@ class DashboardController extends Controller
                 'hasAnyCampaigns'     => false,
                 'hasAnyRewards'       => false,
                 'firstCampaignId'     => null,
+                'subscriptionUsage'   => null,
             ]);
         }
 
@@ -75,6 +77,8 @@ class DashboardController extends Controller
         $firstCampaign   = $merchant->loyaltyPrograms()->withTrashed()->oldest('id')->first();
         $firstCampaignId = $firstCampaign?->id;
 
+        $subscriptionUsage = $subscriptionService->usageSummary($merchant);
+
         return view('dashboard', compact(
             'totalActiveMembers',
             'activeCampaignCount',
@@ -87,6 +91,7 @@ class DashboardController extends Controller
             'hasAnyCampaigns',
             'hasAnyRewards',
             'firstCampaignId',
+            'subscriptionUsage',
         ));
     }
 }

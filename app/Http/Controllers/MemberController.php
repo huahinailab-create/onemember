@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateMemberRequest;
 use App\Models\LoyaltyProgram;
 use App\Models\Member;
 use App\Models\Reward;
+use App\Services\SubscriptionService;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
@@ -99,14 +100,25 @@ class MemberController extends Controller
         return redirect()->route('members')->with('success', 'Member archived successfully.');
     }
 
-    public function create()
+    public function create(SubscriptionService $subscriptionService)
     {
-        return view('members.create');
+        $merchant = request()->user()->merchant;
+        $memberUsage = $merchant
+            ? $subscriptionService->usageSummary($merchant)['members']
+            : null;
+
+        return view('members.create', compact('memberUsage'));
     }
 
-    public function store(StoreMemberRequest $request)
+    public function store(StoreMemberRequest $request, SubscriptionService $subscriptionService)
     {
         $merchant = $request->user()->merchant;
+
+        if ($merchant && ! $subscriptionService->canCreateMember($merchant)) {
+            return back()->withInput()->withErrors([
+                'limit' => 'You have reached your member limit on your current plan. Please upgrade your subscription to add more members.',
+            ]);
+        }
 
         $merchant->members()->create($request->validated());
 

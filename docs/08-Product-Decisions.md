@@ -484,4 +484,23 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-041] Usage Limits & Upgrade Experience (Sprint 5.2.2)
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 5.2.2 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **`config/subscriptions.php` extended** — each plan now contains a `limits` section with four keys: `members`, `campaigns`, `rewards_per_campaign`, `staff_users`. Values are integers (capped) or `null` (unlimited). Free and Starter have placeholder integers clearly commented as TBD per DECISION-013. Professional and Enterprise have `null` for all limits.
+  2. **`app/Services/SubscriptionService`** — central class for all plan enforcement. No controller or view may contain subscription logic. Methods: `effectivePlanKey`, `featureLimit`, `usageCount`, `rewardUsageCount`, `isUnlimited`, `remaining`, `rewardRemaining`, `usagePercentage`, `rewardUsagePercentage`, `warningLevel`, `rewardWarningLevel`, `canCreateMember`, `canCreateCampaign`, `canCreateReward`, `usageSummary`.
+  3. **Warning levels** — `normal` (<80%), `warning` (80–99%), `limit_reached` (≥100%). Thresholds driven by `config/subscriptions.php` `warning_threshold` and `limit_reached_threshold` keys.
+  4. **Blade component `subscription-limit-warning`** — anonymous component in `resources/views/components/`. Accepts `level`, `feature`, `percentage`, `used`, `limit`. Renders yellow warning (Bootstrap `alert-warning`) for the warning state, blue informational card (`alert-info`) with disabled "Upgrade Plan" button for limit-reached state. Silent (no output) for normal state.
+  5. **Controller enforcement** — `MemberController::store()`, `CampaignController::store()`, `RewardController::store()` check `canCreate*()` before creating. If limit reached, redirect back with a user-friendly `errors['limit']` message. Create views (`members/create`, `campaigns/create`, `rewards/create`) show the warning component above the form.
+  6. **Dashboard Subscription card** — shows effective plan name, trial badge + days remaining (if applicable), members and campaigns progress bars with colour-coded warning states, disabled Upgrade Plan button.
+  7. **Settings Account tab updated** — shows current plan badge, subscription status badge, trial end date with days remaining, compact usage progress bars for members and campaigns, disabled Upgrade Plan button.
+  8. **No payment integration** — the Upgrade Plan button is disabled on all surfaces. Billing is a future sprint.
+  9. **Unlimited plans never blocked** — `null` limit = `canCreate*()` always returns `true`. Professional and Enterprise merchants are never blocked.
+- **Reason:** Builds the usage enforcement layer on top of Sprint 5.2.1's subscription foundation. All limit values come from config, not code, so they can be updated by the Product Owner without code changes after beta testing.
+- **Impact:** Updated `config/subscriptions.php`, new `app/Services/SubscriptionService.php`, new `resources/views/components/subscription-limit-warning.blade.php`, updated `MemberController`, `CampaignController`, `RewardController`, `DashboardController`, `resources/views/dashboard.blade.php`, `resources/views/settings/index.blade.php`, `resources/views/members/create.blade.php`, `resources/views/campaigns/create.blade.php`, `resources/views/rewards/create.blade.php`.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

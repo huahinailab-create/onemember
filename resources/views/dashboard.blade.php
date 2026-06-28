@@ -105,6 +105,117 @@
         </div>
     </div>
 
+    {{-- ── Section 2b: Subscription Usage ────────────────────── --}}
+    @if ($subscriptionUsage)
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <span class="fw-semibold">Subscription</span>
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-primary">{{ $subscriptionUsage['effective_plan_name'] }}</span>
+                @if ($subscriptionUsage['is_on_trial'])
+                    <span class="badge bg-info text-dark">Trial</span>
+                @endif
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row g-4 align-items-start">
+
+                {{-- Plan & Trial Info --}}
+                <div class="col-12 col-md-4">
+                    @if ($subscriptionUsage['is_on_trial'])
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            <i class="bi bi-clock text-info"></i>
+                            <span class="fw-medium">{{ $subscriptionUsage['trial_days_remaining'] }} {{ Str::plural('day', $subscriptionUsage['trial_days_remaining']) }} remaining</span>
+                        </div>
+                        <p class="text-muted small mb-3">
+                            You're on the Professional trial. All features are unlocked.
+                        </p>
+                    @else
+                        <p class="text-muted small mb-3">
+                            Plan: <strong>{{ $subscriptionUsage['effective_plan_name'] }}</strong><br>
+                            Status: <span class="text-capitalize">{{ $subscriptionUsage['subscription_status'] }}</span>
+                        </p>
+                    @endif
+                    <button class="btn btn-sm btn-outline-primary" disabled>
+                        <i class="bi bi-arrow-up-circle me-1"></i>Upgrade Plan
+                    </button>
+                </div>
+
+                {{-- Members Usage --}}
+                <div class="col-12 col-md-4">
+                    <div class="d-flex justify-content-between align-items-baseline mb-1">
+                        <span class="small fw-medium">Members</span>
+                        <span class="small text-muted">
+                            @if ($subscriptionUsage['members']['unlimited'])
+                                {{ number_format($subscriptionUsage['members']['used']) }} / Unlimited
+                            @else
+                                {{ number_format($subscriptionUsage['members']['used']) }} / {{ number_format($subscriptionUsage['members']['limit']) }}
+                            @endif
+                        </span>
+                    </div>
+                    @if (! $subscriptionUsage['members']['unlimited'])
+                        @php
+                            $mPct   = min($subscriptionUsage['members']['percentage'], 100);
+                            $mLevel = $subscriptionUsage['members']['level'];
+                            $mBar   = $mLevel === 'limit_reached' ? 'bg-danger' : ($mLevel === 'warning' ? 'bg-warning' : 'bg-primary');
+                        @endphp
+                        <div class="progress" style="height:6px;">
+                            <div class="progress-bar {{ $mBar }}" role="progressbar"
+                                 style="width:{{ $mPct }}%;" aria-valuenow="{{ $mPct }}" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        @if ($mLevel === 'warning')
+                            <div class="text-warning small mt-1">{{ $subscriptionUsage['members']['percentage'] }}% used</div>
+                        @elseif ($mLevel === 'limit_reached')
+                            <div class="text-danger small mt-1">Limit reached</div>
+                        @endif
+                    @else
+                        <div class="progress" style="height:6px;">
+                            <div class="progress-bar bg-success" role="progressbar" style="width:100%;"></div>
+                        </div>
+                        <div class="text-muted small mt-1">Unlimited</div>
+                    @endif
+                </div>
+
+                {{-- Campaigns Usage --}}
+                <div class="col-12 col-md-4">
+                    <div class="d-flex justify-content-between align-items-baseline mb-1">
+                        <span class="small fw-medium">Campaigns</span>
+                        <span class="small text-muted">
+                            @if ($subscriptionUsage['campaigns']['unlimited'])
+                                {{ number_format($subscriptionUsage['campaigns']['used']) }} / Unlimited
+                            @else
+                                {{ number_format($subscriptionUsage['campaigns']['used']) }} / {{ number_format($subscriptionUsage['campaigns']['limit']) }}
+                            @endif
+                        </span>
+                    </div>
+                    @if (! $subscriptionUsage['campaigns']['unlimited'])
+                        @php
+                            $cPct   = min($subscriptionUsage['campaigns']['percentage'], 100);
+                            $cLevel = $subscriptionUsage['campaigns']['level'];
+                            $cBar   = $cLevel === 'limit_reached' ? 'bg-danger' : ($cLevel === 'warning' ? 'bg-warning' : 'bg-primary');
+                        @endphp
+                        <div class="progress" style="height:6px;">
+                            <div class="progress-bar {{ $cBar }}" role="progressbar"
+                                 style="width:{{ $cPct }}%;" aria-valuenow="{{ $cPct }}" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        @if ($cLevel === 'warning')
+                            <div class="text-warning small mt-1">{{ $subscriptionUsage['campaigns']['percentage'] }}% used</div>
+                        @elseif ($cLevel === 'limit_reached')
+                            <div class="text-danger small mt-1">Limit reached</div>
+                        @endif
+                    @else
+                        <div class="progress" style="height:6px;">
+                            <div class="progress-bar bg-success" role="progressbar" style="width:100%;"></div>
+                        </div>
+                        <div class="text-muted small mt-1">Unlimited</div>
+                    @endif
+                </div>
+
+            </div>
+        </div>
+    </div>
+    @endif
+
     {{-- ── Sections 3 & 4: Recent Activity + Top Members ─────── --}}
     <div class="row g-4 mb-4">
 

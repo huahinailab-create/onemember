@@ -21,6 +21,18 @@
                     <span class="fw-semibold">Campaign Details</span>
                 </div>
                 <div class="card-body">
+
+                    @if ($errors->has('limit'))
+                        <x-subscription-limit-warning level="limit_reached" feature="campaign" />
+                    @elseif ($campaignUsage && $campaignUsage['level'] !== 'normal')
+                        <x-subscription-limit-warning
+                            :level="$campaignUsage['level']"
+                            feature="campaign"
+                            :percentage="$campaignUsage['percentage']"
+                            :used="$campaignUsage['used']"
+                            :limit="$campaignUsage['limit']" />
+                    @endif
+
                     <form method="POST" action="{{ route('campaigns.store') }}" novalidate>
                         @csrf
 
