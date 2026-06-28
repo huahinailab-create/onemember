@@ -383,4 +383,14 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-034] "Activity" as Merchant-Facing Label for Transactions (Sprint 3.3.2)
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 3.3.2 spec)
+- **Status:** Approved
+- **Decision:** The merchant-facing UI displays the word **Activity** wherever the underlying `transactions` table records are shown. The database table, Eloquent model (`Transaction`), controller classes, routes, and PHP variables retain the word "Transaction" internally. Only UI copy (tab labels, headings, descriptions) uses "Activity."
+- **Reason:** "Transactions" feels like accounting/developer terminology. "Activity" is more natural for small business merchants reviewing member engagement history.
+- **Impact:** `resources/views/members/show.blade.php` — tab renamed from "Transactions" to "Activity". Internal code naming is unaffected.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

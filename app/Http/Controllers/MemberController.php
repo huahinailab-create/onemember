@@ -14,7 +14,33 @@ class MemberController extends Controller
         abort_unless($member->merchant_id === $request->user()->merchant?->id, 403);
         $member->loadMissing('merchant');
 
-        return view('members.show', compact('member'));
+        $activityFilter = $request->input('activity_filter', 'all');
+        if (! in_array($activityFilter, ['all', 'purchases', 'rewards', 'birthday', 'adjustments', 'expired'])) {
+            $activityFilter = 'all';
+        }
+
+        $typeMap = [
+            'purchases'   => 'earn',
+            'rewards'     => 'redeem',
+            'birthday'    => 'birthday',
+            'adjustments' => 'adjust',
+            'expired'     => 'expire',
+        ];
+
+        $txQuery = $member->transactions()
+                          ->with([
+                              'loyaltyProgram' => fn ($q) => $q->withTrashed(),
+                              'createdBy',
+                          ])
+                          ->latest('created_at');
+
+        if ($activityFilter !== 'all' && isset($typeMap[$activityFilter])) {
+            $txQuery->where('type', $typeMap[$activityFilter]);
+        }
+
+        $transactions = $txQuery->paginate(50)->withQueryString();
+
+        return view('members.show', compact('member', 'transactions', 'activityFilter'));
     }
 
     public function update(UpdateMemberRequest $request, Member $member)

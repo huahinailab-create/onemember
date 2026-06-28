@@ -282,7 +282,7 @@
     @endif
 
     {{-- Record Purchase Card --}}
-    <div class="card mb-4">
+    <div id="record-purchase-card" class="card mb-4">
         <div class="card-header d-flex align-items-center gap-2">
             <i class="bi bi-bag-plus text-primary"></i>
             <span class="fw-semibold">Record Purchase</span>
@@ -385,9 +385,9 @@
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="tab-transactions" data-bs-toggle="tab"
-                            data-bs-target="#pane-transactions" type="button" role="tab">
-                        <i class="bi bi-arrow-left-right me-1"></i>Transactions
+                    <button class="nav-link" id="tab-activity" data-bs-toggle="tab"
+                            data-bs-target="#pane-activity" type="button" role="tab">
+                        <i class="bi bi-lightning-charge me-1"></i>Activity
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
@@ -454,10 +454,9 @@
 
             {{-- Coming Soon Tabs --}}
             @foreach ([
-                'pane-points'       => ['icon' => 'bi-clock-history',    'label' => 'Points History'],
-                'pane-rewards'      => ['icon' => 'bi-gift',             'label' => 'Rewards'],
-                'pane-transactions' => ['icon' => 'bi-arrow-left-right', 'label' => 'Transactions'],
-                'pane-notes'        => ['icon' => 'bi-journal-text',     'label' => 'Notes'],
+                'pane-points'  => ['icon' => 'bi-clock-history', 'label' => 'Points History'],
+                'pane-rewards' => ['icon' => 'bi-gift',          'label' => 'Rewards'],
+                'pane-notes'   => ['icon' => 'bi-journal-text',  'label' => 'Notes'],
             ] as $paneId => $meta)
                 <div class="tab-pane fade text-center py-5" id="{{ $paneId }}" role="tabpanel">
                     <div class="coming-soon-icon bg-primary bg-opacity-10 mx-auto">
@@ -467,6 +466,140 @@
                     <p class="text-muted mb-0 small">This feature will be available in a future sprint.</p>
                 </div>
             @endforeach
+
+            {{-- ── Activity Tab ──────────────────────────────── --}}
+            <div class="tab-pane fade" id="pane-activity" role="tabpanel">
+
+                {{-- Immutable notice --}}
+                <div class="px-4 pt-3 pb-0">
+                    <span class="text-muted small">
+                        <i class="bi bi-lock me-1"></i>Activity history cannot be edited.
+                    </span>
+                </div>
+
+                {{-- Filter buttons --}}
+                <div class="p-3 border-bottom d-flex align-items-center gap-2 flex-wrap">
+                    @php
+                        $filterOptions = [
+                            'all'         => 'All',
+                            'purchases'   => 'Purchases',
+                            'rewards'     => 'Rewards',
+                            'birthday'    => 'Birthday',
+                            'adjustments' => 'Adjustments',
+                            'expired'     => 'Expired',
+                        ];
+                    @endphp
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Activity filter">
+                        @foreach ($filterOptions as $val => $lbl)
+                            <a href="{{ route('members.show', $member) . '?' . http_build_query(['activity_filter' => $val, 'active_tab' => 'activity']) }}"
+                               class="btn {{ $activityFilter === $val ? 'btn-primary' : 'btn-outline-secondary' }}">
+                                {{ $lbl }}
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+
+                {{-- Activity list --}}
+                @if ($transactions->isEmpty())
+                    <div class="text-center py-5">
+                        <div class="coming-soon-icon bg-primary bg-opacity-10 mx-auto">
+                            <i class="bi bi-lightning-charge text-primary"></i>
+                        </div>
+                        <h6 class="fw-semibold mb-1">No activity yet.</h6>
+                        <p class="text-muted mb-3 small">
+                            Record the member's first purchase to start building their loyalty history.
+                        </p>
+                        @unless ($isArchived)
+                            <a href="#record-purchase-card" class="btn btn-sm btn-primary">
+                                <i class="bi bi-bag-plus me-1"></i>Record Purchase
+                            </a>
+                        @endunless
+                    </div>
+                @else
+                    <div class="px-4">
+                        @foreach ($transactions as $tx)
+                            @php
+                                $txMeta = [
+                                    'earn'     => ['icon' => 'bi-cart-check',        'bg' => 'bg-success',   'text' => 'text-success',  'label' => 'Purchase',          'desc' => 'Purchase recorded'],
+                                    'birthday' => ['icon' => 'bi-gift',              'bg' => 'bg-danger',    'text' => 'text-danger',   'label' => 'Birthday Bonus',     'desc' => 'Birthday bonus awarded'],
+                                    'redeem'   => ['icon' => 'bi-ticket-perforated', 'bg' => 'bg-warning',   'text' => 'text-warning',  'label' => 'Reward Redemption',  'desc' => 'Reward redeemed'],
+                                    'adjust'   => ['icon' => 'bi-pencil-square',     'bg' => 'bg-primary',   'text' => 'text-primary',  'label' => 'Manual Adjustment',  'desc' => 'Points adjusted'],
+                                    'expire'   => ['icon' => 'bi-clock-history',     'bg' => 'bg-secondary', 'text' => 'text-secondary','label' => 'Points Expired',     'desc' => 'Points expired'],
+                                ];
+                                $m       = $txMeta[$tx->type->value] ?? $txMeta['earn'];
+                                $isStamp = $tx->loyaltyProgram?->type->value === 'stamps';
+                                $unit    = $isStamp ? 'Stamp' : 'Point';
+                                $pts     = abs($tx->points);
+                                $sign    = $tx->points >= 0 ? '+' : '-';
+                            @endphp
+                            <div class="d-flex gap-3 py-3 border-bottom">
+
+                                {{-- Type icon --}}
+                                <div class="flex-shrink-0 mt-1">
+                                    <span class="rounded-circle d-inline-flex align-items-center justify-content-center {{ $m['bg'] }} bg-opacity-10"
+                                          style="width:38px;height:38px;">
+                                        <i class="bi {{ $m['icon'] }} {{ $m['text'] }}"></i>
+                                    </span>
+                                </div>
+
+                                {{-- Details --}}
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                                        <span class="fw-semibold small">{{ $m['label'] }}</span>
+                                        <span class="text-muted" style="font-size:.75rem;white-space:nowrap;">
+                                            {{ $tx->created_at->format('d M Y, H:i') }}
+                                        </span>
+                                    </div>
+                                    <p class="text-muted mb-2" style="font-size:.8rem;">
+                                        {{ $tx->note ?? $m['desc'] }}
+                                    </p>
+                                    <div class="d-flex flex-wrap gap-3" style="font-size:.8rem;">
+                                        @if ($tx->loyaltyProgram)
+                                            <div>
+                                                <div class="text-muted" style="font-size:.7rem;">Campaign</div>
+                                                <div>{{ $tx->loyaltyProgram->name }}</div>
+                                            </div>
+                                        @endif
+                                        @if ($tx->invoice_number)
+                                            <div>
+                                                <div class="text-muted" style="font-size:.7rem;">Invoice</div>
+                                                <div>{{ $tx->invoice_number }}</div>
+                                            </div>
+                                        @endif
+                                        @if ($tx->purchase_amount !== null)
+                                            <div>
+                                                <div class="text-muted" style="font-size:.7rem;">Purchase</div>
+                                                <div>{{ number_format((float) $tx->purchase_amount, 2) }} {{ $member->merchant->currency ?? 'THB' }}</div>
+                                            </div>
+                                        @endif
+                                        <div>
+                                            <div class="text-muted" style="font-size:.7rem;">
+                                                {{ $tx->points >= 0 ? 'Earned' : 'Deducted' }}
+                                            </div>
+                                            <div class="{{ $m['text'] }} fw-medium">
+                                                {{ $sign }}{{ number_format($pts) }} {{ $pts === 1 ? $unit : $unit . 's' }}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="text-muted" style="font-size:.7rem;">Balance</div>
+                                            <div>{{ number_format($tx->balance_before) }} → {{ number_format($tx->balance_after) }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        @endforeach
+                    </div>
+
+                    @if ($transactions->hasPages())
+                        <div class="px-4 py-3">
+                            {{ $transactions->links() }}
+                        </div>
+                    @endif
+                @endif
+
+            </div>
+            {{-- ── /Activity Tab ──────────────────────────────── --}}
 
         </div>
     </div>
@@ -502,5 +635,15 @@
             </div>
         </div>
     @endunless
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const tab = new URLSearchParams(window.location.search).get('active_tab');
+    if (tab) {
+        const el = document.getElementById('tab-' + tab);
+        if (el) bootstrap.Tab.getOrCreateInstance(el).show();
+    }
+});
+</script>
 
 </x-app-layout>
