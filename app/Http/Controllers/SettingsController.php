@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateMerchantPreferencesRequest;
 use App\Http\Requests\UpdateMerchantProfileRequest;
-use App\Http\Requests\UpdateSettingsPasswordRequest;
 use App\Models\Merchant;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class SettingsController extends Controller
 {
@@ -71,15 +68,4 @@ class SettingsController extends Controller
             ->with('success', __('messages.preferences_updated'));
     }
 
-    public function updatePassword(UpdateSettingsPasswordRequest $request)
-    {
-        $user = $request->user();
-
-        $user->password            = Hash::make($request->input('password'));
-        $user->password_changed_at = now();
-        $user->save();
-
-        return redirect(route('settings') . '?tab=security')
-            ->with('success', 'Password changed successfully.');
-    }
 }

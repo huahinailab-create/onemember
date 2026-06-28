@@ -32,6 +32,15 @@ class User extends Authenticatable
         ];
     }
 
+    protected static function booted(): void
+    {
+        static::updating(function (User $user) {
+            if ($user->isDirty('password')) {
+                $user->password_changed_at = now();
+            }
+        });
+    }
+
     public function merchant(): HasOne
     {
         return $this->hasOne(Merchant::class);

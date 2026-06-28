@@ -11,9 +11,10 @@
     <x-trial-banner :merchant="$merchant" />
 
     {{-- Flash messages --}}
-    @if (session('success'))
+    @if (session('success') || session('status') === 'password-updated')
         <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
-            <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
+            <i class="bi bi-check-circle-fill me-2"></i>
+            {{ session('success') ?? __('settings.password_updated') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     @endif
@@ -484,24 +485,25 @@
                         </div>
                     </div>
 
-                    <form method="POST" action="{{ route('settings.password.update') }}"
+                    <form method="POST" action="{{ route('password.update') }}"
                           style="max-width:480px;">
                         @csrf
+                        @method('PUT')
 
                         <div class="mb-3">
                             <label for="current_password" class="form-label fw-medium">Current Password</label>
                             <input type="password" id="current_password" name="current_password"
-                                   class="form-control @error('current_password') is-invalid @enderror"
+                                   class="form-control @error('current_password', 'updatePassword') is-invalid @enderror"
                                    autocomplete="current-password">
-                            @error('current_password')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            @error('current_password', 'updatePassword')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="password" class="form-label fw-medium">New Password</label>
                             <input type="password" id="password" name="password"
-                                   class="form-control @error('password') is-invalid @enderror"
+                                   class="form-control @error('password', 'updatePassword') is-invalid @enderror"
                                    autocomplete="new-password">
-                            @error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            @error('password', 'updatePassword')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
 
                         <div class="mb-4">
@@ -512,7 +514,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-shield-lock me-1"></i>Save Password
+                            <i class="bi bi-shield-lock me-1"></i>{{ __('buttons.save_password') }}
                         </button>
 
                     </form>

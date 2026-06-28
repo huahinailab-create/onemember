@@ -52,4 +52,5 @@ return [
     'trial_professional_active'  => '(Professional features active)',
     'trial_free_limits'          => '(Free plan limits apply)',
     'account_info'               => 'Account details are managed by OneMember. To update your email address, please contact support.',
+    'password_updated'           => 'Password changed successfully.',
 ];

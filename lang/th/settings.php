@@ -52,4 +52,5 @@ return [
     'trial_professional_active'  => '(ฟีเจอร์ Professional ใช้งานได้)',
     'trial_free_limits'          => '(จำกัดตามแผน Free)',
     'account_info'               => 'ข้อมูลบัญชีจัดการโดย OneMember หากต้องการเปลี่ยนอีเมล กรุณาติดต่อฝ่ายสนับสนุน',
+    'password_updated'           => 'เปลี่ยนรหัสผ่านเรียบร้อยแล้ว',
 ];

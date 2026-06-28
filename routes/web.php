@@ -46,7 +46,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
     Route::put('/settings/profile', [SettingsController::class, 'updateProfile'])->name('settings.profile.update');
     Route::put('/settings/preferences', [SettingsController::class, 'updatePreferences'])->name('settings.preferences.update');
-    Route::post('/settings/password', [SettingsController::class, 'updatePassword'])->name('settings.password.update');
 
     // Legacy redirect — keeps old links working
     Route::get('/merchant/profile', fn () => redirect()->route('settings'))->name('merchant.profile.edit');
