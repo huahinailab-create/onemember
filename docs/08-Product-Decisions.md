@@ -520,4 +520,20 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-043] Subscription Centre — Dedicated Page (Sprint 5.2.4)
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 5.2.4 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **`SubscriptionController`** — new controller with a single `index()` action. Injects `SubscriptionService`. Passes merchant, usage summary, effective plan key, and full plan config array to the view. No form submissions in this sprint — no `SubscriptionRequest` required.
+  2. **Route** — `GET /subscription` → `SubscriptionController@index`, named `subscription.index`. Protected by `auth` middleware.
+  3. **`resources/views/subscription/index.blade.php`** — dedicated Subscription Centre page showing: current plan status card (plan, status, trial end date, days remaining), usage summary with progress bars, plan comparison table (all four plans from `config/subscriptions.php`), feature comparison grid. All plan names and descriptions read from config — nothing hardcoded. Current effective plan is highlighted in the comparison table. Upgrade buttons are disabled placeholders labelled "Coming Soon". Enterprise contact button is a disabled placeholder.
+  4. **Settings Account tab simplified** — the full subscription block (plan badge, usage bars, upgrade button, "coming soon" text) is replaced with a concise two-row summary (Current Plan + Subscription Status) and a single "Manage Subscription" button linking to `subscription.index`. No subscription logic remains in the Settings view.
+  5. **Sidebar** — "Subscription" nav link added under the Account section above Settings, pointing to `subscription.index`. Active when route matches `subscription.*`.
+  6. **No payment integration** — this sprint is display-only.
+- **Reason:** Centralises all subscription information in one place. Prevents duplication between Settings and subscription display. Gives merchants a clear view of their plan, usage, and available upgrades.
+- **Impact:** New `app/Http/Controllers/SubscriptionController.php`, new `resources/views/subscription/index.blade.php`, updated `routes/web.php`, updated `resources/views/layouts/app.blade.php` (sidebar), updated `resources/views/settings/index.blade.php` (Account tab).
+
+---
+
 *New decisions must be appended above this line in the format shown.*

@@ -77,6 +77,13 @@
         <div class="sidebar-section-label">Account</div>
         <ul class="nav flex-column gap-1">
             <li class="nav-item">
+                <a href="{{ route('subscription.index') }}"
+                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('subscription.*') ? 'active' : '' }}">
+                    <i class="bi bi-credit-card"></i>
+                    <span>Subscription</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="{{ route('settings') }}"
                    class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('settings*') ? 'active' : '' }}">
                     <i class="bi bi-gear"></i>
