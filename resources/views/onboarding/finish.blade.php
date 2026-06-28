@@ -49,6 +49,6 @@
 
 <p class="text-center text-muted small mt-3">
     You can update your business details any time in
-    <a href="{{ route('merchant.profile.edit') }}">Merchant Profile</a>.
+    <a href="{{ route('settings') }}">Settings</a>.
 </p>
 @endsection

@@ -450,4 +450,20 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-039] Settings Module — Schema, Tabs, and Route Strategy (Sprint 5.1)
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 5.1 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **New structured address columns on `merchants`:** `address_line_1`, `address_line_2`, `city`, `state`, `postal_code`, `country` (all varchar nullable). The existing `address` text column is retained for historical data but the new Settings form uses the structured fields. A `notes` text column (nullable) is also added.
+  2. **`password_changed_at` timestamp on `users`:** Nullable. Set by `SettingsController` whenever the merchant changes their password. Displayed as "Last Password Change" in the Security tab. Null displays as "Never changed."
+  3. **Settings module replaces Merchant Profile page:** A new `SettingsController` and `resources/views/settings/index.blade.php` with 4 Bootstrap tab panes (Business Profile, Business Preferences, Account, Security). The sidebar "Merchant Profile" item is renamed to "Settings" and links to `settings.index`. The old `GET /merchant/profile` route redirects to `/settings` for backward compatibility. The old `PUT /merchant/profile` route is retained to avoid 404s.
+  4. **Business Preferences stored in settings JSON:** `date_format` (already from DECISION-037), `default_expiration_type`, `default_expiration_duration`, `default_birthday_enabled` are merchant-level preference defaults stored in `merchants.settings`. These do NOT retroactively modify existing campaigns.
+  5. **Account tab — subscription display:** Professional Trial with days remaining computed as `$user->created_at->addDays(30)`. Read-only. No billing logic.
+  6. **Routes:** `GET /settings`, `PUT /settings/profile`, `PUT /settings/preferences`, `POST /settings/password`.
+- **Reason:** Centralises merchant configuration into a single tabbed workspace. Structured address fields replace the freeform textarea for better data quality. Separate routes per tab allow per-form validation errors to return to the correct tab.
+- **Impact:** 2 new migrations, updated `Merchant` and `User` models, new `SettingsController`, 3 new Form Requests, new view, updated sidebar, updated routes.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

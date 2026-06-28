@@ -77,10 +77,10 @@
         <div class="sidebar-section-label">Account</div>
         <ul class="nav flex-column gap-1">
             <li class="nav-item">
-                <a href="{{ route('merchant.profile.edit') }}"
-                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('merchant.profile.*') ? 'active' : '' }}">
-                    <i class="bi bi-shop"></i>
-                    <span>Merchant Profile</span>
+                <a href="{{ route('settings') }}"
+                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('settings*') ? 'active' : '' }}">
+                    <i class="bi bi-gear"></i>
+                    <span>Settings</span>
                 </a>
             </li>
         </ul>
