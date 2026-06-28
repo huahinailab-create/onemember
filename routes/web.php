@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\RewardController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MerchantProfileController;
 use App\Http\Controllers\ProfileController;
@@ -37,6 +38,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/campaigns/{campaign}/configure', [CampaignController::class, 'configure'])->name('campaigns.configure');
     Route::patch('/campaigns/{campaign}/pause', [CampaignController::class, 'pause'])->name('campaigns.pause');
     Route::delete('/campaigns/{campaign}', [CampaignController::class, 'archive'])->name('campaigns.archive');
+
+    Route::get('/campaigns/{campaign}/rewards/create', [RewardController::class, 'create'])->name('campaigns.rewards.create');
+    Route::post('/campaigns/{campaign}/rewards', [RewardController::class, 'store'])->name('campaigns.rewards.store');
+    Route::get('/campaigns/{campaign}/rewards/{reward}', [RewardController::class, 'show'])->name('campaigns.rewards.show');
+    Route::put('/campaigns/{campaign}/rewards/{reward}', [RewardController::class, 'update'])->name('campaigns.rewards.update');
+    Route::delete('/campaigns/{campaign}/rewards/{reward}', [RewardController::class, 'archive'])->name('campaigns.rewards.archive');
 
     Route::get('/rewards', fn () => view('coming-soon', [
         'pageTitle' => 'Rewards',

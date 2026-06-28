@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\RewardStatus;
 use App\Enums\RewardType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,25 +21,26 @@ class Reward extends Model
         'description',
         'type',
         'points_required',
-        'value',
-        'image_path',
         'quantity_available',
-        'quantity_redeemed',
-        'is_active',
-        'valid_from',
-        'valid_until',
+        'status',
+        'internal_notes',
     ];
 
     protected $casts = [
         'type'               => RewardType::class,
+        'status'             => RewardStatus::class,
         'points_required'    => 'integer',
-        'value'              => 'decimal:2',
         'quantity_available' => 'integer',
         'quantity_redeemed'  => 'integer',
         'is_active'          => 'boolean',
-        'valid_from'         => 'date',
-        'valid_until'        => 'date',
     ];
+
+    public function resolveRouteBinding($value, $field = null): ?static
+    {
+        return $this->withTrashed()
+                    ->where($field ?? $this->getRouteKeyName(), $value)
+                    ->firstOrFail();
+    }
 
     public function merchant(): BelongsTo
     {

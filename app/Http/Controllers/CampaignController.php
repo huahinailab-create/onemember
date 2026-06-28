@@ -7,6 +7,7 @@ use App\Http\Requests\ConfigureCampaignRequest;
 use App\Http\Requests\StoreCampaignRequest;
 use App\Http\Requests\UpdateCampaignRequest;
 use App\Models\LoyaltyProgram;
+use App\Models\Reward;
 use Illuminate\Http\Request;
 
 class CampaignController extends Controller
@@ -57,7 +58,27 @@ class CampaignController extends Controller
         abort_unless($campaign->merchant_id === $request->user()->merchant?->id, 403);
         $campaign->loadMissing('merchant');
 
-        return view('campaigns.show', compact('campaign'));
+        $rewardFilter = $request->input('reward_filter', 'active');
+        if (! in_array($rewardFilter, ['draft', 'active', 'archived', 'all'])) {
+            $rewardFilter = 'active';
+        }
+
+        if ($rewardFilter === 'archived') {
+            $rewardsQuery = Reward::onlyTrashed()->where('loyalty_program_id', $campaign->id);
+        } elseif ($rewardFilter === 'all') {
+            $rewardsQuery = Reward::withTrashed()->where('loyalty_program_id', $campaign->id);
+        } else {
+            $rewardsQuery = Reward::where('loyalty_program_id', $campaign->id)
+                                  ->where('status', $rewardFilter);
+        }
+
+        if ($rewardSearch = $request->input('reward_search')) {
+            $rewardsQuery->where('name', 'like', '%' . $rewardSearch . '%');
+        }
+
+        $rewards = $rewardsQuery->orderBy('created_at', 'desc')->get();
+
+        return view('campaigns.show', compact('campaign', 'rewards', 'rewardFilter'));
     }
 
     public function configure(ConfigureCampaignRequest $request, LoyaltyProgram $campaign)

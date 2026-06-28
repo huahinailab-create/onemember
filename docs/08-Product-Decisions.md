@@ -331,4 +331,24 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-030] Reward Types for MVP (Sprint 3.2.2)
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 3.2.2 spec)
+- **Status:** Approved
+- **Decision:** The `RewardType` enum supports five values for MVP: `free_item`, `discount_percentage`, `discount_amount`, `voucher`, `custom`. This supersedes the types suggested in `docs/09-Loyalty-Business-Rules.md` Section 4.1 (`discount`, `free_item`, `gift`, `cashback`), which are deferred or replaced. The `type` column in the `rewards` table stores these string values.
+- **Reason:** The sprint 3.2.2 spec defines the merchant-facing reward types. The doc 09 types were architectural placeholders and are updated here.
+- **Impact:** New `app/Enums/RewardType.php`. `app/Models/Reward.php` cast updated.
+
+---
+
+### [DECISION-031] Reward Status — Draft/Active + Soft Delete for Archived (Sprint 3.2.2)
+- **Date:** 2026-06-28
+- **Requested by:** Product Owner (Sprint 3.2.2 spec)
+- **Status:** Approved
+- **Decision:** Rewards have two explicit statuses: `draft` and `active`, stored in a new `status` varchar column (default `draft`). Archived rewards use the existing `deleted_at` soft-delete column — no third status value. This pattern is consistent with Campaigns and Members. A new `App\Enums\RewardStatus` enum (Draft, Active) is added. The `is_active` boolean column remains in the schema but `status` is the authoritative field from this sprint onward. A new `internal_notes` text column (nullable) and making `points_required` nullable are required via a new migration.
+- **Reason:** Stamp campaigns do not use `points_required`; it must be nullable. The `status` and `internal_notes` fields were not in the original migration. Soft delete is already supported by the schema.
+- **Impact:** New migration `2026_06_28_000002_update_rewards_for_sprint_3_2_2.php`. New `app/Enums/RewardStatus.php`. `app/Models/Reward.php` updated.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

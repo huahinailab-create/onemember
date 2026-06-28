@@ -604,9 +604,133 @@
             </div>
             {{-- ── /Rules Tab ──────────────────────────────────── --}}
 
+            {{-- ── Rewards Tab ─────────────────────────────────── --}}
+            <div class="tab-pane fade" id="pane-rewards" role="tabpanel">
+
+                {{-- Rewards toolbar --}}
+                <div class="p-3 border-bottom d-flex align-items-center justify-content-between gap-3 flex-wrap">
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Reward filter">
+                        @foreach (['active' => 'Active', 'draft' => 'Draft', 'archived' => 'Archived', 'all' => 'All'] as $val => $lbl)
+                            <a href="{{ route('campaigns.show', $campaign) . '?' . http_build_query(['reward_filter' => $val, 'active_tab' => 'rewards'] + request()->only(['reward_search'])) }}"
+                               class="btn {{ $rewardFilter === $val ? 'btn-primary' : 'btn-outline-secondary' }}">
+                                {{ $lbl }}
+                            </a>
+                        @endforeach
+                    </div>
+
+                    <div class="d-flex gap-2 align-items-center">
+                        <form method="GET" action="{{ route('campaigns.show', $campaign) }}"
+                              class="d-flex gap-2 align-items-center">
+                            <input type="hidden" name="reward_filter" value="{{ $rewardFilter }}">
+                            <input type="hidden" name="active_tab" value="rewards">
+                            <input type="text"
+                                   name="reward_search"
+                                   class="form-control form-control-sm"
+                                   placeholder="Search rewards…"
+                                   value="{{ request('reward_search') }}"
+                                   style="width:180px;">
+                            <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-search"></i>
+                            </button>
+                            @if (request('reward_search'))
+                                <a href="{{ route('campaigns.show', $campaign) . '?' . http_build_query(['reward_filter' => $rewardFilter, 'active_tab' => 'rewards']) }}"
+                                   class="btn btn-sm btn-outline-secondary">Clear</a>
+                            @endif
+                        </form>
+
+                        @unless ($isArchived)
+                            <a href="{{ route('campaigns.rewards.create', $campaign) }}"
+                               class="btn btn-sm btn-primary">
+                                <i class="bi bi-plus-lg me-1"></i>Add Reward
+                            </a>
+                        @endunless
+                    </div>
+                </div>
+
+                {{-- Rewards list --}}
+                @if ($rewards->isEmpty())
+                    <div class="text-center py-5">
+                        <div class="coming-soon-icon bg-primary bg-opacity-10 mx-auto">
+                            <i class="bi bi-gift text-primary"></i>
+                        </div>
+                        @if (request('reward_search'))
+                            <h6 class="fw-semibold mb-1">No rewards found</h6>
+                            <p class="text-muted mb-0 small">Try a different search term or <a href="{{ route('campaigns.show', $campaign) . '?' . http_build_query(['reward_filter' => $rewardFilter, 'active_tab' => 'rewards']) }}">clear the search</a>.</p>
+                        @elseif ($rewardFilter === 'archived')
+                            <h6 class="fw-semibold mb-1">No archived rewards</h6>
+                            <p class="text-muted mb-0 small">Archived rewards will appear here.</p>
+                        @else
+                            <h6 class="fw-semibold mb-1">No rewards yet</h6>
+                            @unless ($isArchived)
+                                <p class="text-muted mb-0 small">
+                                    <a href="{{ route('campaigns.rewards.create', $campaign) }}">Add your first reward</a> to this campaign.
+                                </p>
+                            @endunless
+                        @endif
+                    </div>
+                @else
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="ps-4">Reward Name</th>
+                                    <th>Reward Type</th>
+                                    @if ($campaign->type->value === 'points')
+                                        <th class="text-end">Points Required</th>
+                                    @endif
+                                    <th class="text-end">Quantity</th>
+                                    <th>Status</th>
+                                    <th class="text-end pe-4">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($rewards as $reward)
+                                    <tr class="{{ $reward->trashed() ? 'text-muted' : '' }}">
+                                        <td class="ps-4 fw-medium">
+                                            <a href="{{ route('campaigns.rewards.show', [$campaign, $reward]) }}"
+                                               class="text-decoration-none {{ $reward->trashed() ? 'text-muted' : '' }}">
+                                                {{ $reward->name }}
+                                            </a>
+                                        </td>
+                                        <td>{{ $reward->type->label() }}</td>
+                                        @if ($campaign->type->value === 'points')
+                                            <td class="text-end">
+                                                {{ $reward->points_required ? number_format($reward->points_required) . ' pts' : '—' }}
+                                            </td>
+                                        @endif
+                                        <td class="text-end">
+                                            {{ $reward->quantity_available === null ? 'Unlimited' : number_format($reward->quantity_available) }}
+                                        </td>
+                                        <td>
+                                            @if ($reward->trashed())
+                                                <span class="badge bg-danger">Archived</span>
+                                            @else
+                                                <span class="{{ $reward->status->badgeClass() }}">
+                                                    {{ $reward->status->label() }}
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td class="text-end pe-4">
+                                            <a href="{{ route('campaigns.rewards.show', [$campaign, $reward]) }}"
+                                               class="btn btn-sm btn-outline-secondary">
+                                                <i class="bi bi-pencil me-1"></i>View
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="px-4 py-3 border-top text-muted" style="font-size:.8125rem;">
+                        {{ $rewards->count() }} reward{{ $rewards->count() !== 1 ? 's' : '' }}
+                    </div>
+                @endif
+
+            </div>
+            {{-- ── /Rewards Tab ─────────────────────────────────── --}}
+
             {{-- Coming Soon Tabs --}}
             @foreach ([
-                'pane-rewards'      => ['icon' => 'bi-gift',              'label' => 'Rewards'],
                 'pane-transactions' => ['icon' => 'bi-arrow-left-right',  'label' => 'Transactions'],
                 'pane-analytics'    => ['icon' => 'bi-bar-chart-line',    'label' => 'Analytics'],
             ] as $paneId => $meta)
@@ -620,6 +744,17 @@
             @endforeach
 
         </div>
+
+        {{-- Activate correct tab from URL param --}}
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tab = new URLSearchParams(window.location.search).get('active_tab');
+            if (tab) {
+                const el = document.getElementById('tab-' + tab);
+                if (el) bootstrap.Tab.getOrCreateInstance(el).show();
+            }
+        });
+        </script>
     </div>
 
     {{-- Archive Modal --}}

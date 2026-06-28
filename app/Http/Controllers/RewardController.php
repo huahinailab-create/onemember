@@ -1,0 +1,82 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\StoreRewardRequest;
+use App\Http\Requests\UpdateRewardRequest;
+use App\Models\LoyaltyProgram;
+use App\Models\Reward;
+use Illuminate\Http\Request;
+
+class RewardController extends Controller
+{
+    public function create(Request $request, LoyaltyProgram $campaign)
+    {
+        abort_unless($campaign->merchant_id === $request->user()->merchant?->id, 403);
+        abort_if($campaign->trashed(), 403);
+        $campaign->loadMissing('merchant');
+
+        return view('rewards.create', compact('campaign'));
+    }
+
+    public function store(StoreRewardRequest $request, LoyaltyProgram $campaign)
+    {
+        abort_unless($campaign->merchant_id === $request->user()->merchant?->id, 403);
+        abort_if($campaign->trashed(), 403);
+
+        $data = $request->validated();
+        unset($data['unlimited']);
+
+        if ($campaign->type->value === 'stamps') {
+            $data['points_required'] = null;
+        }
+
+        $data['merchant_id']        = $campaign->merchant_id;
+        $data['loyalty_program_id'] = $campaign->id;
+
+        Reward::create($data);
+
+        return redirect(route('campaigns.show', $campaign) . '?active_tab=rewards')
+               ->with('success', 'Reward added successfully.');
+    }
+
+    public function show(Request $request, LoyaltyProgram $campaign, Reward $reward)
+    {
+        abort_unless($campaign->merchant_id === $request->user()->merchant?->id, 403);
+        abort_unless($reward->loyalty_program_id === $campaign->id, 403);
+        $campaign->loadMissing('merchant');
+
+        return view('rewards.show', compact('campaign', 'reward'));
+    }
+
+    public function update(UpdateRewardRequest $request, LoyaltyProgram $campaign, Reward $reward)
+    {
+        abort_unless($campaign->merchant_id === $request->user()->merchant?->id, 403);
+        abort_unless($reward->loyalty_program_id === $campaign->id, 403);
+        abort_if($reward->trashed(), 403);
+
+        $data = $request->validated();
+        unset($data['unlimited']);
+
+        if ($campaign->type->value === 'stamps') {
+            $data['points_required'] = null;
+        }
+
+        $reward->update($data);
+
+        return redirect(route('campaigns.rewards.show', [$campaign, $reward]))
+               ->with('success', 'Reward updated successfully.');
+    }
+
+    public function archive(Request $request, LoyaltyProgram $campaign, Reward $reward)
+    {
+        abort_unless($campaign->merchant_id === $request->user()->merchant?->id, 403);
+        abort_unless($reward->loyalty_program_id === $campaign->id, 403);
+        abort_if($reward->trashed(), 409);
+
+        $reward->delete();
+
+        return redirect(route('campaigns.show', $campaign) . '?active_tab=rewards')
+               ->with('success', 'Reward archived.');
+    }
+}
