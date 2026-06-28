@@ -32,7 +32,6 @@ class Reward extends Model
         'points_required'    => 'integer',
         'quantity_available' => 'integer',
         'quantity_redeemed'  => 'integer',
-        'is_active'          => 'boolean',
     ];
 
     public function resolveRouteBinding($value, $field = null): ?static
@@ -55,29 +54,6 @@ class Reward extends Model
     public function redemptions(): HasMany
     {
         return $this->hasMany(Redemption::class);
-    }
-
-    public function isAvailable(): bool
-    {
-        if (! $this->is_active) {
-            return false;
-        }
-
-        if ($this->quantity_available !== null && $this->quantity_redeemed >= $this->quantity_available) {
-            return false;
-        }
-
-        $today = today();
-
-        if ($this->valid_from && $today->lt($this->valid_from)) {
-            return false;
-        }
-
-        if ($this->valid_until && $today->gt($this->valid_until)) {
-            return false;
-        }
-
-        return true;
     }
 
     public function remainingQuantity(): ?int

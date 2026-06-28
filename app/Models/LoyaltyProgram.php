@@ -19,22 +19,14 @@ class LoyaltyProgram extends Model
         'name',
         'type',
         'description',
-        'points_per_unit',
-        'is_active',
         'status',
-        'starts_at',
-        'ends_at',
         'settings',
     ];
 
     protected $casts = [
-        'type'            => LoyaltyProgramType::class,
-        'status'          => CampaignStatus::class,
-        'points_per_unit' => 'decimal:2',
-        'is_active'       => 'boolean',
-        'starts_at'       => 'datetime',
-        'ends_at'         => 'datetime',
-        'settings'        => 'array',
+        'type'     => LoyaltyProgramType::class,
+        'status'   => CampaignStatus::class,
+        'settings' => 'array',
     ];
 
     public function resolveRouteBinding($value, $field = null): ?static
@@ -64,27 +56,4 @@ class LoyaltyProgram extends Model
         return $this->hasMany(BirthdayReward::class);
     }
 
-    public function calculatePoints(float $amount): int
-    {
-        return (int) floor($amount * $this->points_per_unit);
-    }
-
-    public function isRunning(): bool
-    {
-        if (! $this->is_active) {
-            return false;
-        }
-
-        $now = now();
-
-        if ($this->starts_at && $now->lt($this->starts_at)) {
-            return false;
-        }
-
-        if ($this->ends_at && $now->gt($this->ends_at)) {
-            return false;
-        }
-
-        return true;
-    }
 }
