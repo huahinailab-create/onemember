@@ -615,4 +615,22 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-048] Production Security Review — Sprint 5.4.5
+- **Date:** 2026-06-29
+- **Requested by:** Product Owner (Sprint 5.4.5 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **Full security audit completed** — all categories audited: Laravel config, PHP runtime, sessions/cookies, HTTPS/HSTS, authentication, authorisation, security headers, XSS/injection, CSRF, secrets management, dependencies, logging, scheduling, queues. See `docs/16-Production-Security-Review.md` for complete findings.
+  2. **Security score: 93/100** — application is production-ready from a security perspective. All critical controls are in place. Remaining gaps are deployment-time configuration requirements, not code deficiencies.
+  3. **One code fix applied** — `ProcessExpiredTrials` command was not registered in the scheduler. Added `Schedule::command(ProcessExpiredTrials::class)->dailyAt('01:00')` to `routes/console.php`. This is a blocking deployment requirement (trial expiration would never run otherwise).
+  4. **Dependency audit: clean** — `composer audit` and `npm audit` both returned 0 vulnerabilities.
+  5. **No secrets committed** — `.env` confirmed in `.gitignore` and not in git history. All secret fields empty in `.env.example`.
+  6. **Accepted risk: `'unsafe-inline'` in CSP** — already documented in DECISION-046. Not changed in this sprint.
+  7. **Warnings documented** — W-001 (TrustProxies), W-002 (registration rate limiting), W-003 (session encryption), W-004 (CSP unsafe-inline), W-005 (TrustHosts). None are blocking for V1.0; all are addressed by env config or deferred to post-launch hardening.
+  8. **Required production settings** — documented in `docs/16-Production-Security-Review.md` including all mandatory `.env` values, scheduler crontab entry, queue worker Supervisor config, storage permissions, and php.ini recommendations.
+- **Reason:** Pre-launch security audit is required by the Launch Checklist (section 2, OWASP Top 10 review). Complete audit ensures no security regressions have been introduced across the 5.4.x sprint series.
+- **Impact:** New: `docs/16-Production-Security-Review.md`. Modified: `routes/console.php` (ProcessExpiredTrials scheduled).
+
+---
+
 *New decisions must be appended above this line in the format shown.*
