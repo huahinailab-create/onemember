@@ -664,4 +664,22 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-051] Backup, Disaster Recovery & Operational Policy — Sprint 5.5.3
+- **Date:** 2026-06-29
+- **Requested by:** Product Owner (Sprint 5.5.3 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **Backup philosophy — simple, shell-based, no packages** — database backups are performed by a shell script (`onemember-backup.sh`) invoking `mysqldump` and compressing with `gzip -9`. No Laravel backup package (e.g., spatie/laravel-backup) is introduced for V1.0. The shell script approach has no package dependencies, is auditable, and can be run independently of the Laravel application. Packages may be evaluated post-launch if operational complexity grows.
+  2. **Backup schedule** — database backup: daily at 02:00 server time. File storage sync: daily at 02:30. Backup verification: daily at 03:00 (via Laravel scheduler, `backup:verify` command). The 1-hour window between backup and verification provides time for the dump to complete before the check runs.
+  3. **`backup:verify` Artisan command** — a minimal command (`app/Console/Commands/VerifyDatabaseBackup.php`) checks whether a `db_*.sql.gz` file exists in the configured `BACKUP_PATH` directory that is less than 25 hours old. It logs pass/fail to the application log channel and exits 0 (success) or 1 (failure). The `--path` option allows testing with a custom directory. The backup path is configured via `BACKUP_PATH` in `.env` (default: `/var/backups/onemember`). This command has 5 automated feature tests.
+  4. **Recovery objectives** — RTO (Recovery Time Objective): < 4 hours. RPO (Recovery Point Objective): < 24 hours. These are achievable with daily backups and the procedures in `docs/19-Backup-and-Disaster-Recovery.md`. A lower RPO requires MySQL binary log shipping or a managed database with point-in-time recovery — deferred to post-launch.
+  5. **Retention policy** — local: daily backups retained 30 days; weekly snapshots retained 12 weeks. Off-site: daily backups retained 90 days; weekly snapshots retained 1 year. Pre-deployment snapshots retained 7 days locally, 30 days off-site.
+  6. **Off-site backups are operator-configured, not code-driven** — the application does not hardcode any cloud provider or backup destination. Off-site sync (via rsync, rclone, SFTP, or any tool) is documented as an operational step performed by the hosting engineer. This preserves full provider independence.
+  7. **Annual disaster recovery drill** — documented in `docs/19`, Section 15. Required annually. Verifies that the full rebuild procedure (Section 12.4) can be executed from scratch using only off-site backups and git. Target: < 4 hours end-to-end.
+  8. **Secrets backup is manual and encrypted** — `.env` must be backed up to a secure vault (password manager, GPG-encrypted file, or secrets manager of operator's choice). It must never be committed to git. This is a standing operational requirement.
+- **Reason:** Disaster recovery readiness is a launch prerequisite (docs/11-Launch-Checklist.md, Section 4.6). Without documented and tested restore procedures, production data loss is unrecoverable. A minimal code addition (backup:verify) provides automated daily confidence that backups are running without introducing package dependencies.
+- **Impact:** New: `app/Console/Commands/VerifyDatabaseBackup.php`, `tests/Feature/BackupVerifyCommandTest.php` (5 tests), `docs/19-Backup-and-Disaster-Recovery.md`. Modified: `routes/console.php` (backup:verify scheduled at 03:00), `.env.example` (BACKUP_PATH key added).
+
+---
+
 *New decisions must be appended above this line in the format shown.*
