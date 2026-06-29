@@ -8,10 +8,11 @@ use App\Http\Requests\RecordPurchaseRequest;
 use App\Models\LoyaltyProgram;
 use App\Models\Member;
 use App\Models\Transaction;
+use App\Services\AnalyticsService;
 
 class PurchaseController extends Controller
 {
-    public function store(RecordPurchaseRequest $request, Member $member)
+    public function store(RecordPurchaseRequest $request, Member $member, AnalyticsService $analytics)
     {
         $merchant = $request->user()->merchant;
 
@@ -72,6 +73,8 @@ class PurchaseController extends Controller
         }
 
         $member->save();
+
+        $analytics->track('purchase_recorded', ['campaign_type' => $campaign->type->value], $request->user()->id, $merchant->id);
 
         return redirect()->route('members.show', $member)
                          ->with('purchase_success', [

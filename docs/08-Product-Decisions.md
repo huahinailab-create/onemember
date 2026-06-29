@@ -722,4 +722,20 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-054] Feedback and Analytics Abstraction Layer — Sprint 5.7
+- **Date:** 2026-06-29
+- **Requested by:** Product Owner (Sprint 5.7 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **Abstraction layer required** — all analytics and error tracking must go through `App\Services\AnalyticsService`. Vendor SDKs (PostHog, Sentry, Clarity) must never be called directly from controllers, commands, or any application code outside of `AnalyticsService`.
+  2. **No-op by default** — analytics is disabled by default (`ANALYTICS_ENABLED=false`). The service never throws; all errors are swallowed silently so analytics failures cannot break the application.
+  3. **No database migration** — user feedback is stored as timestamped JSON files in `storage/app/feedback/`. No new database table is introduced.
+  4. **Vendor independence** — PostHog integration uses native PHP `file_get_contents()` with stream context; no SDK package dependency added. Sentry integration uses `class_exists()` to detect an optional SDK; no hard `require` added.
+  5. **Feature toggles** — individual analytics features (page views, events, exceptions, identify) can be enabled or disabled independently via `.env` flags without code changes.
+  6. **14 named events tracked** — `merchant_registered`, `onboarding_completed`, `campaign_created`, `campaign_archived`, `member_created`, `member_archived`, `reward_created`, `reward_archived`, `purchase_recorded`, `reward_redeemed`, `settings_updated`, `subscription_viewed`, `trial_expired`, `dashboard_viewed`, `feedback_submitted`.
+- **Reason:** Preventing vendor lock-in is a core architectural principle. Analytics providers change. Wrapping all provider calls in a service layer ensures a provider swap requires editing only one file. Feedback-as-files avoids premature database schema complexity before V1.0 launch.
+- **Impact:** New: `app/Services/AnalyticsService.php`, `config/analytics.php`, `app/Http/Controllers/FeedbackController.php`, `app/Http/Requests/FeedbackRequest.php`, `resources/views/feedback/modal.blade.php`, `lang/en/feedback.php`, `lang/th/feedback.php`, `storage/app/feedback/.gitkeep`, `docs/22-Feedback-and-Analytics.md`, `tests/Feature/FeedbackAnalyticsTest.php`. Modified: `resources/views/layouts/app.blade.php`, `lang/en/navigation.php`, `lang/th/navigation.php`, `routes/web.php`, `.env.example`, all controllers listed in point 6 above, `app/Console/Commands/ProcessExpiredTrials.php`.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

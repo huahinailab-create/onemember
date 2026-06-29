@@ -12,4 +12,5 @@ return [
     'subscription' => 'Subscription',
     'settings'     => 'Settings',
     'log_out'      => 'Log Out',
+    'send_feedback' => 'Send Feedback',
 ];

@@ -92,6 +92,18 @@
             </li>
         </ul>
 
+        {{-- Send Feedback --}}
+        <div class="mt-3 mb-1 px-1">
+            <button type="button"
+                    class="btn btn-sm btn-outline-secondary w-100 d-flex align-items-center gap-2 justify-content-center"
+                    data-bs-toggle="modal"
+                    data-bs-target="#feedbackModal"
+                    title="{{ __('navigation.send_feedback') }}">
+                <i class="bi bi-chat-dots"></i>
+                <span>{{ __('navigation.send_feedback') }}</span>
+            </button>
+        </div>
+
         {{-- User & Logout --}}
         <div class="mt-auto">
             <div class="sidebar-divider"></div>
@@ -167,6 +179,18 @@
     {{-- ── /Main area ────────────────────────────────────── --}}
 
 </div>
+
+{{-- Floating feedback button (desktop only) --}}
+<button type="button"
+        class="d-none d-md-flex align-items-center justify-content-center position-fixed rounded-circle shadow-sm border-0"
+        style="bottom:1.5rem;right:1.5rem;width:44px;height:44px;z-index:1040;background:var(--bs-secondary-bg);color:var(--bs-secondary-color);opacity:0.75;"
+        data-bs-toggle="modal"
+        data-bs-target="#feedbackModal"
+        title="{{ __('navigation.send_feedback') }}">
+    <i class="bi bi-chat-dots fs-5"></i>
+</button>
+
+@include('feedback.modal')
 
 </body>
 </html>

@@ -6,6 +6,7 @@ use App\Http\Requests\StoreRewardRequest;
 use App\Http\Requests\UpdateRewardRequest;
 use App\Models\LoyaltyProgram;
 use App\Models\Reward;
+use App\Services\AnalyticsService;
 use App\Services\SubscriptionService;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,7 @@ class RewardController extends Controller
         return view('rewards.create', compact('campaign', 'rewardUsage'));
     }
 
-    public function store(StoreRewardRequest $request, LoyaltyProgram $campaign, SubscriptionService $subscriptionService)
+    public function store(StoreRewardRequest $request, LoyaltyProgram $campaign, SubscriptionService $subscriptionService, AnalyticsService $analytics)
     {
         abort_unless($campaign->merchant_id === $request->user()->merchant?->id, 403);
         abort_if($campaign->trashed(), 403);
@@ -52,6 +53,8 @@ class RewardController extends Controller
         $data['loyalty_program_id'] = $campaign->id;
 
         Reward::create($data);
+
+        $analytics->track('reward_created', [], $request->user()->id, $campaign->merchant_id);
 
         return redirect(route('campaigns.show', $campaign) . '?active_tab=rewards')
                ->with('success', 'Reward added successfully.');
@@ -85,13 +88,15 @@ class RewardController extends Controller
                ->with('success', 'Reward updated successfully.');
     }
 
-    public function archive(Request $request, LoyaltyProgram $campaign, Reward $reward)
+    public function archive(Request $request, LoyaltyProgram $campaign, Reward $reward, AnalyticsService $analytics)
     {
         abort_unless($campaign->merchant_id === $request->user()->merchant?->id, 403);
         abort_unless($reward->loyalty_program_id === $campaign->id, 403);
         abort_if($reward->trashed(), 409);
 
         $reward->delete();
+
+        $analytics->track('reward_archived', [], $request->user()->id, $campaign->merchant_id);
 
         return redirect(route('campaigns.show', $campaign) . '?active_tab=rewards')
                ->with('success', 'Reward archived.');

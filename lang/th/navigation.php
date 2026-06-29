@@ -12,4 +12,5 @@ return [
     'subscription' => 'การสมัครใช้งาน',
     'settings'     => 'การตั้งค่า',
     'log_out'      => 'ออกจากระบบ',
+    'send_feedback' => 'ส่งข้อเสนอแนะ',
 ];

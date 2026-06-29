@@ -8,12 +8,13 @@ use App\Http\Requests\StoreCampaignRequest;
 use App\Http\Requests\UpdateCampaignRequest;
 use App\Models\LoyaltyProgram;
 use App\Models\Reward;
+use App\Services\AnalyticsService;
 use App\Services\SubscriptionService;
 use Illuminate\Http\Request;
 
 class CampaignController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, AnalyticsService $analytics)
     {
         $merchant = $request->user()->merchant;
         $filter   = $request->input('filter', 'active');
@@ -39,6 +40,8 @@ class CampaignController extends Controller
 
         $campaigns = $query->orderBy('updated_at', 'desc')->paginate(10)->withQueryString();
 
+        $analytics->page('Campaigns');
+
         return view('campaigns.index', compact('campaigns', 'filter'));
     }
 
@@ -52,7 +55,7 @@ class CampaignController extends Controller
         return view('campaigns.create', compact('campaignUsage'));
     }
 
-    public function store(StoreCampaignRequest $request, SubscriptionService $subscriptionService)
+    public function store(StoreCampaignRequest $request, SubscriptionService $subscriptionService, AnalyticsService $analytics)
     {
         $merchant = $request->user()->merchant;
 
@@ -63,6 +66,8 @@ class CampaignController extends Controller
         }
 
         $merchant->loyaltyPrograms()->create($request->validated());
+
+        $analytics->track('campaign_created', [], $request->user()->id, $merchant?->id);
 
         return redirect()->route('campaigns.index')->with('success', 'Campaign created successfully.');
     }
@@ -126,12 +131,14 @@ class CampaignController extends Controller
         return redirect()->route('campaigns.show', $campaign)->with('success', 'Campaign paused.');
     }
 
-    public function archive(Request $request, LoyaltyProgram $campaign)
+    public function archive(Request $request, LoyaltyProgram $campaign, AnalyticsService $analytics)
     {
         abort_unless($campaign->merchant_id === $request->user()->merchant?->id, 403);
         abort_if($campaign->trashed(), 409);
 
         $campaign->delete();
+
+        $analytics->track('campaign_archived', [], $request->user()->id, $request->user()->merchant?->id);
 
         return redirect()->route('campaigns.index')->with('success', 'Campaign archived.');
     }

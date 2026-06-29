@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateMerchantPreferencesRequest;
 use App\Http\Requests\UpdateMerchantProfileRequest;
 use App\Models\Merchant;
+use App\Services\AnalyticsService;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, AnalyticsService $analytics)
     {
         $user     = $request->user();
         $merchant = $user->merchant;
@@ -22,10 +23,12 @@ class SettingsController extends Controller
         $trialEndsAt        = $merchant?->trial_ends_at ?? $user->created_at->addDays(30);
         $trialDaysRemaining = $merchant ? $merchant->trialDaysRemaining() : max(0, (int) now()->diffInDays($trialEndsAt, false));
 
+        $analytics->page('Settings');
+
         return view('settings.index', compact('user', 'merchant', 'activeTab', 'trialEndsAt', 'trialDaysRemaining'));
     }
 
-    public function updateProfile(UpdateMerchantProfileRequest $request)
+    public function updateProfile(UpdateMerchantProfileRequest $request, AnalyticsService $analytics)
     {
         $user     = $request->user();
         $merchant = $user->merchant;
@@ -40,11 +43,13 @@ class SettingsController extends Controller
             ]));
         }
 
+        $analytics->track('settings_updated', ['section' => 'profile'], $user->id, $user->fresh()->merchant?->id);
+
         return redirect(route('settings') . '?tab=profile')
             ->with('success', 'Business profile updated successfully.');
     }
 
-    public function updatePreferences(UpdateMerchantPreferencesRequest $request)
+    public function updatePreferences(UpdateMerchantPreferencesRequest $request, AnalyticsService $analytics)
     {
         $merchant = $request->user()->merchant;
         abort_unless($merchant, 403);
@@ -63,6 +68,8 @@ class SettingsController extends Controller
             'timezone' => $validated['timezone'],
             'settings' => $settings,
         ]);
+
+        $analytics->track('settings_updated', ['section' => 'preferences'], $request->user()->id, $merchant->id);
 
         return redirect(route('settings') . '?tab=preferences')
             ->with('success', __('messages.preferences_updated'));

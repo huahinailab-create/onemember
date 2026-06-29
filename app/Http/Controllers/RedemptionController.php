@@ -11,10 +11,11 @@ use App\Models\Member;
 use App\Models\Redemption;
 use App\Models\Reward;
 use App\Models\Transaction;
+use App\Services\AnalyticsService;
 
 class RedemptionController extends Controller
 {
-    public function store(RedeemRewardRequest $request, Member $member)
+    public function store(RedeemRewardRequest $request, Member $member, AnalyticsService $analytics)
     {
         $merchant = $request->user()->merchant;
 
@@ -109,6 +110,8 @@ class RedemptionController extends Controller
         $member->total_points     = $balanceAfter;
         $member->last_activity_at = now();
         $member->save();
+
+        $analytics->track('reward_redeemed', ['campaign_type' => $campaign->type->value], $request->user()->id, $merchant->id);
 
         return redirect()->route('members.show', $member)
                          ->with('redemption_success', [

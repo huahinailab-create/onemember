@@ -10,6 +10,7 @@ use App\Enums\RewardType;
 use App\Http\Requests\StoreOnboardingBusinessInfoRequest;
 use App\Http\Requests\StoreOnboardingBusinessSettingsRequest;
 use App\Models\Merchant;
+use App\Services\AnalyticsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -176,7 +177,7 @@ class OnboardingController extends Controller
         return view('onboarding.quick-start', compact('merchant', 'loyaltyType', 'hasCampaigns'));
     }
 
-    public function storeQuickStart(Request $request)
+    public function storeQuickStart(Request $request, AnalyticsService $analytics)
     {
         $merchant = $request->user()->merchant;
         abort_unless($merchant, 403);
@@ -202,6 +203,8 @@ class OnboardingController extends Controller
             $request->user()->email,
             $merchant->id
         );
+
+        $analytics->track('onboarding_completed', [], $request->user()->id, $merchant->id);
 
         return redirect()->route('onboarding.finish');
     }

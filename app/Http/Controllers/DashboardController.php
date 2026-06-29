@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Enums\TransactionType;
+use App\Services\AnalyticsService;
 use App\Services\SubscriptionService;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request, SubscriptionService $subscriptionService)
+    public function index(Request $request, SubscriptionService $subscriptionService, AnalyticsService $analytics)
     {
         $merchant = $request->user()->merchant;
 
@@ -16,6 +17,9 @@ class DashboardController extends Controller
         if ((! $merchant || is_null($merchant->onboarding_completed_at)) && ! session('onboarding_skipped')) {
             return redirect()->route('onboarding.index');
         }
+
+        $analytics->page('Dashboard');
+        $analytics->track('dashboard_viewed', [], $request->user()->id, $merchant?->id);
 
         if (! $merchant) {
             return view('dashboard', [
