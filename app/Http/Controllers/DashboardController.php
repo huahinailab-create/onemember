@@ -34,7 +34,9 @@ class DashboardController extends Controller
             ]);
         }
 
-        $totalActiveMembers = $merchant->members()->count();
+        // usageSummary already counts members — read from it to avoid a duplicate query.
+        $subscriptionUsage  = $subscriptionService->usageSummary($merchant);
+        $totalActiveMembers = $subscriptionUsage['members']['used'];
 
         $activeCampaignCount = $merchant->loyaltyPrograms()
             ->where('status', 'active')
@@ -70,14 +72,13 @@ class DashboardController extends Controller
             ->withCount(['rewards as rewards_count' => fn ($q) => $q->whereNull('deleted_at')])
             ->get();
 
-        $hasAnyMembers   = $merchant->members()->withTrashed()->exists();
+        // Short-circuit: skip the withTrashed query when active members already exist.
+        $hasAnyMembers   = $totalActiveMembers > 0 || $merchant->members()->withTrashed()->exists();
         $hasAnyCampaigns = $merchant->loyaltyPrograms()->withTrashed()->exists();
         $hasAnyRewards   = $merchant->rewards()->withTrashed()->exists();
 
         $firstCampaign   = $merchant->loyaltyPrograms()->withTrashed()->oldest('id')->first();
         $firstCampaignId = $firstCampaign?->id;
-
-        $subscriptionUsage = $subscriptionService->usageSummary($merchant);
 
         return view('dashboard', compact(
             'totalActiveMembers',

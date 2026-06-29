@@ -682,4 +682,24 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-052] Performance Optimization — Sprint 5.5.4
+- **Date:** 2026-06-29
+- **Requested by:** Product Owner (Sprint 5.5.4 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **Duplicate member COUNT query eliminated** — `DashboardController::index` previously called `$merchant->members()->count()` and then `$subscriptionService->usageSummary($merchant)`, which internally also called `$merchant->members()->count()`. Fixed by calling `usageSummary` first and reading `$subscriptionUsage['members']['used']` as `$totalActiveMembers`. Saves one `COUNT(*)` query per dashboard load.
+  2. **`hasAnyMembers` short-circuit** — `$merchant->members()->withTrashed()->exists()` is now skipped when `$totalActiveMembers > 0` (the common case). The `EXISTS` query only fires for new merchants with no active members — the rare cold-start path.
+  3. **Three composite indexes added** — migration `2026_06_29_000001_add_performance_indexes`:
+     - `loyalty_programs (merchant_id, status)`: the `status` column was added in Sprint 3.1 without a supporting index. Every campaign list page and dashboard query filters `WHERE merchant_id = ? AND status = ?`. Without this index, the query performs a full tenant scan of `loyalty_programs`.
+     - `redemptions (merchant_id, redeemed_at)`: the dashboard "Redeemed Today" KPI queries `WHERE merchant_id = ? AND DATE(redeemed_at) = ?`. Without this index, the query scans all redemption rows for the tenant.
+     - `members (merchant_id, total_points)`: the dashboard "Top Members" query `ORDER BY total_points DESC LIMIT 5` can use this composite index to skip a full-tenant sort; MySQL returns the top 5 via an index range scan instead.
+  4. **No new packages** — all optimizations are in application code and database schema only. No query caching, Redis caching, or external dependencies introduced. KISS principle followed.
+  5. **No N+1 queries found** — all controllers were audited. Relationships that would cause N+1 are already eager-loaded (`transactions → member, loyaltyProgram`). List pages return flat columns without nested relationship access.
+  6. **Legacy `is_active` indexes left in place** — `loyalty_programs` and `rewards` have legacy `(merchant_id, is_active)` indexes from the original migration. These are inert but harmless. Dropping them would require a destructive migration and provides no functional benefit at V1.0 scale. Deferred to a future maintenance sprint.
+  7. **Production optimization commands** — documented in `docs/20-Performance-Optimization.md` Section 7. `php artisan optimize` must run after every deployment. Already included in `docs/17-Production-Deployment-Guide.md`.
+- **Reason:** Performance audit is part of pre-launch hardening. The two code fixes reduce dashboard DB round-trips. The three indexes prevent full-tenant table scans on the most frequently executed queries. All changes are targeted and safe with no business logic impact.
+- **Impact:** Modified: `app/Http/Controllers/DashboardController.php` (query order + short-circuit). New: `database/migrations/2026_06_29_000001_add_performance_indexes.php`, `docs/20-Performance-Optimization.md`. No schema columns changed.
+
+---
+
 *New decisions must be appended above this line in the format shown.*
