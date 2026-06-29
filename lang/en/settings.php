@@ -55,5 +55,11 @@ return [
     'trial_professional_active'  => '(Professional features active)',
     'trial_free_limits'          => '(Free plan limits apply)',
     'account_info'               => 'Account details are managed by OneMember. To update your email address, please contact support.',
-    'password_updated'           => 'Password changed successfully.',
+    'password_updated'              => 'Password changed successfully.',
+    'email_notifications'           => 'Email Notifications',
+    'email_notifications_hint'      => 'Choose which emails you receive. Billing and security alerts cannot be disabled.',
+    'email_product_updates'         => 'Product updates and new feature announcements',
+    'email_tips'                    => 'Tips and best practices',
+    'email_feature_announcements'   => 'Feature announcements and newsletters',
+    'email_always_on_note'          => 'Billing receipts and security alerts are always sent.',
 ];

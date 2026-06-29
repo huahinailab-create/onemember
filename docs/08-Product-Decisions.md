@@ -757,4 +757,24 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-056] All Transactional Email is Event-Driven — Sprint 6.2
+- **Date:** 2026-06-29
+- **Requested by:** Product Owner (Sprint 6.2 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **Controllers never send email.** No `Mail::send()`, `Mail::to()->send()`, or `Mail::to()->queue()` call may appear in any controller, service, or model. The only permitted location is `EmailEventSubscriber`.
+  2. **All email is triggered by Laravel events.** An event is dispatched (registration, password change, billing update, feedback submission) and `EmailEventSubscriber` handles the email dispatch. This decouples email delivery from business logic.
+  3. **Every Mailable implements ShouldQueue.** Emails are never sent synchronously. All emails go through the Laravel queue (`QUEUE_CONNECTION=database`). If the queue is not running, emails are delayed — not lost.
+  4. **EmailEventSubscriber is the sole email dispatcher.** It subscribes to all relevant events and calls `Mail::to($email)->queue($mailable)`. It is auto-discovered by Laravel 13 — no manual registration in `AppServiceProvider` or `EventServiceProvider`.
+  5. **EmailLogger records all email activity.** Every send attempt (sending, sent, failed) is written to `storage/logs/email.log` via a dedicated `email` log channel. Email addresses are masked in log output.
+  6. **Delivery status events are dispatched.** `EmailSending`, `EmailSent`, and `EmailFailed` events are dispatched for future telemetry or retry integration.
+  7. **Notification preferences are merchant-controlled.** Optional email categories (`product_updates`, `tips`, `feature_announcements`) can be disabled per-merchant via Settings → Preferences. Billing receipts and security alerts cannot be disabled.
+  8. **Billing emails come from billing events.** No email logic exists in `BillingService`. `BillingService` dispatches billing events; `EmailEventSubscriber` sends the emails.
+  9. **All emails are localized.** EN and TH translations must maintain identical key counts. The locale at render time is the merchant's configured locale.
+  10. **FeedbackSubmitted sends two emails.** A thank-you to the submitter and a support notification to `SUPPORT_EMAIL`. Both go through `FeedbackReceivedEmail` with a `$forSupport` flag.
+- **Reason:** Keeping email dispatch event-driven ensures that (a) any future email provider change only requires updating `EmailEventSubscriber`, not hunting through controllers; (b) email sending failures never break controller flows (exceptions are caught and logged); (c) queued delivery ensures emails don't block HTTP response times.
+- **Impact:** New: `config/email.php`, `app/Events/TrialStarted.php`, `app/Events/PasswordChanged.php`, `app/Events/FeedbackSubmitted.php`, `app/Events/EmailSending.php`, `app/Events/EmailSent.php`, `app/Events/EmailFailed.php`, `app/Listeners/EmailEventSubscriber.php`, `app/Services/EmailLogger.php`, `app/Mail/` (10 mailables), `resources/views/emails/` (11 templates), `lang/en/email.php`, `lang/th/email.php`, `tests/Feature/EmailInfrastructureTest.php`, `docs/24-Production-Email.md`. Modified: `app/Http/Controllers/Auth/PasswordController.php` (dispatch PasswordChanged), `app/Http/Controllers/FeedbackController.php` (dispatch FeedbackSubmitted), `app/Http/Controllers/OnboardingController.php` (dispatch TrialStarted), `app/Http/Controllers/SettingsController.php` (save email_notifications), `app/Http/Requests/UpdateMerchantPreferencesRequest.php` (add email prefs fields), `app/Models/Merchant.php` (add wantsEmail()), `config/logging.php` (add email channel), `lang/en/settings.php`, `lang/th/settings.php`, `resources/views/settings/index.blade.php` (email notification UI), `.env.example`.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

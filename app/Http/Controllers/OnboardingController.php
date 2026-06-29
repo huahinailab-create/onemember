@@ -7,6 +7,7 @@ use App\Enums\LoyaltyProgramType;
 use App\Enums\MerchantStatus;
 use App\Enums\RewardStatus;
 use App\Enums\RewardType;
+use App\Events\TrialStarted;
 use App\Http\Requests\StoreOnboardingBusinessInfoRequest;
 use App\Http\Requests\StoreOnboardingBusinessSettingsRequest;
 use App\Models\Merchant;
@@ -203,6 +204,8 @@ class OnboardingController extends Controller
             $request->user()->email,
             $merchant->id
         );
+
+        TrialStarted::dispatch($merchant);
 
         $analytics->track('onboarding_completed', [], $request->user()->id, $merchant->id);
 

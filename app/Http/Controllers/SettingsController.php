@@ -62,6 +62,11 @@ class SettingsController extends Controller
         $settings['default_expiration_duration'] = $validated['default_expiration_duration'] ?? null;
         $settings['default_birthday_enabled']    = $validated['default_birthday_enabled'];
         $settings['locale']                      = $validated['locale'];
+        $settings['email_notifications']         = [
+            'product_updates'        => $validated['email_product_updates'],
+            'tips'                   => $validated['email_tips'],
+            'feature_announcements'  => $validated['email_feature_announcements'],
+        ];
 
         $merchant->update([
             'currency' => $validated['currency'],

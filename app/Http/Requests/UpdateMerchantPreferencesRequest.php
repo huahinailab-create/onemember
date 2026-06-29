@@ -15,7 +15,10 @@ class UpdateMerchantPreferencesRequest extends FormRequest
     public function prepareForValidation(): void
     {
         $this->merge([
-            'default_birthday_enabled' => $this->boolean('default_birthday_enabled'),
+            'default_birthday_enabled'    => $this->boolean('default_birthday_enabled'),
+            'email_product_updates'        => $this->boolean('email_product_updates'),
+            'email_tips'                   => $this->boolean('email_tips'),
+            'email_feature_announcements'  => $this->boolean('email_feature_announcements'),
         ]);
     }
 
@@ -32,8 +35,11 @@ class UpdateMerchantPreferencesRequest extends FormRequest
             'default_expiration_duration' => ['nullable', 'integer', 'min:1', 'max:120',
                 Rule::requiredIf(fn () => in_array($this->input('default_expiration_type'), ['months', 'years'])),
             ],
-            'default_birthday_enabled'    => ['required', 'boolean'],
-            'locale'                      => ['required', 'string', Rule::in(['en', 'th'])],
+            'default_birthday_enabled'   => ['required', 'boolean'],
+            'locale'                     => ['required', 'string', Rule::in(['en', 'th'])],
+            'email_product_updates'       => ['required', 'boolean'],
+            'email_tips'                  => ['required', 'boolean'],
+            'email_feature_announcements' => ['required', 'boolean'],
         ];
     }
 

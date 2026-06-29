@@ -171,6 +171,15 @@ class Merchant extends Model
      * window between trial expiry and the next command run (status still Trial,
      * but trial_ends_at is in the past).
      */
+    public function wantsEmail(string $category): bool
+    {
+        if (in_array($category, ['billing', 'security_alerts'])) {
+            return true;
+        }
+        $prefs = $this->settings['email_notifications'] ?? [];
+        return (bool) ($prefs[$category] ?? true);
+    }
+
     public function isTrialExpired(): bool
     {
         if ($this->subscription_status === SubscriptionStatus::Expired) {

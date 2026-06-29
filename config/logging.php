@@ -131,6 +131,14 @@ return [
             'replace_placeholders' => true,
         ],
 
+        'email' => [
+            'driver'              => 'daily',
+            'path'                => storage_path('logs/email.log'),
+            'level'               => 'info',
+            'days'                => 90,
+            'replace_placeholders' => true,
+        ],
+
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],

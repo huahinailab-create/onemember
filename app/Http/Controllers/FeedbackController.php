@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\FeedbackSubmitted;
 use App\Http\Requests\FeedbackRequest;
 use App\Services\AnalyticsService;
 use Illuminate\Http\RedirectResponse;
@@ -40,6 +41,8 @@ class FeedbackController extends Controller
         $analytics->track('feedback_submitted', [
             'category' => $payload['category'],
         ], $user->id, $merchant?->id);
+
+        FeedbackSubmitted::dispatch($user, $merchant, $payload);
 
         return back()->with('success', __('feedback.submitted'));
     }

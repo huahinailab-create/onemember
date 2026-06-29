@@ -399,6 +399,53 @@
 
                         </div>
 
+                        {{-- Email Notifications --}}
+                        @php
+                            $emailPrefs = $merchant?->settings['email_notifications'] ?? [];
+                        @endphp
+                        <div class="col-12 mt-4 pt-3 border-top">
+                            <label class="form-label fw-medium">{{ __('settings.email_notifications') }}</label>
+                            <div class="text-muted small mb-3">{{ __('settings.email_notifications_hint') }}</div>
+
+                            <div class="row g-2">
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox"
+                                               id="email_product_updates" name="email_product_updates" value="1"
+                                               {{ old('email_product_updates', $emailPrefs['product_updates'] ?? true) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="email_product_updates">
+                                            {{ __('settings.email_product_updates') }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox"
+                                               id="email_tips" name="email_tips" value="1"
+                                               {{ old('email_tips', $emailPrefs['tips'] ?? true) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="email_tips">
+                                            {{ __('settings.email_tips') }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox"
+                                               id="email_feature_announcements" name="email_feature_announcements" value="1"
+                                               {{ old('email_feature_announcements', $emailPrefs['feature_announcements'] ?? true) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="email_feature_announcements">
+                                            {{ __('settings.email_feature_announcements') }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-1">
+                                    <small class="text-muted">
+                                        <i class="bi bi-lock-fill me-1"></i>{{ __('settings.email_always_on_note') }}
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="mt-4 pt-2 border-top">
                             <button type="submit" class="btn btn-primary">
                                 <i class="bi bi-check-lg me-1"></i>{{ __('buttons.save_changes') }}
