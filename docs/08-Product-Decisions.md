@@ -648,4 +648,20 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-050] Operational Readiness Philosophy — Sprint 5.5.2
+- **Date:** 2026-06-29
+- **Requested by:** Product Owner (Sprint 5.5.2 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **Operations runbook over automated tooling** — For V1.0 with a small operations team, a comprehensive runbook (`docs/18-Operations-Runbook.md`) is preferred over automated monitoring dashboards or alert integrations. The runbook documents all procedures that a single operator can execute. Automated tooling (uptime monitors, error tracking, log aggregation) is documented as recommendations but not integrated into the codebase — keeping the application code free of vendor-specific monitoring dependencies.
+  2. **Vendor-neutral monitoring strategy** — monitoring tool recommendations are provided for each category (uptime, errors, logs, metrics, scheduler, SSL, queue, disk) without prescribing a specific vendor. This preserves optionality for hosting and tooling choices. All monitoring is based on standard interfaces: the `/up` JSON endpoint for uptime, standard log files for log aggregation, standard Supervisor for process monitoring.
+  3. **Health endpoint is the single uptime signal** — `GET /up` (DECISION-049) is the canonical target for all external uptime monitors. It is unauthenticated, returns structured JSON, exposes no sensitive data, and responds 200 even during `php artisan down` maintenance mode (it is excluded from the maintenance middleware). No alternative health routes are added.
+  4. **Security log retention: 90 days** — `storage/logs/security.log` is retained for 90 days on the production server using Laravel's `daily` driver. Logs older than 90 days must be archived to off-site storage before local deletion. This satisfies basic audit trail requirements without prescribing a SIEM or external log service. Application logs (`laravel.log`) retain 14 days by default (configurable via `LOG_DAILY_DAYS`).
+  5. **Incident severity model: P1–P4** — incidents are classified into four severity levels (P1 Critical, P2 High, P3 Medium, P4 Low) with defined response times and escalation paths. This model is documented in the runbook and does not require any tooling changes.
+  6. **No new business features** — this sprint added only operational documentation and procedures. All business logic, authentication flows, subscription logic, and UI are unchanged.
+- **Reason:** An operations team (even a team of one) needs documented procedures before going live. Documented runbooks reduce mean time to recovery (MTTR) during incidents by removing the need to derive procedures under pressure. A vendor-neutral approach avoids lock-in and keeps infrastructure costs predictable.
+- **Impact:** New: `docs/18-Operations-Runbook.md`. Modified: `docs/08-Product-Decisions.md` (this entry). No code changes.
+
+---
+
 *New decisions must be appended above this line in the format shown.*
