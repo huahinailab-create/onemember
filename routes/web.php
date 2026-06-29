@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\HealthController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MemberController;
@@ -12,6 +13,9 @@ use App\Http\Controllers\MerchantProfileController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
+
+// Health check — no auth required, returns JSON for uptime monitors
+Route::get('/up', HealthController::class)->name('health');
 
 Route::get('/', function () {
     return view('welcome');

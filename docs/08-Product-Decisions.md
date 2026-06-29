@@ -633,4 +633,19 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-049] Production Deployment Infrastructure — Sprint 5.5.1
+- **Date:** 2026-06-29
+- **Requested by:** Product Owner (Sprint 5.5.1 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **Provider-agnostic deployment** — all deployment documentation, scripts, and configuration are written for a generic Linux server (Ubuntu 22.04/24.04 LTS). No cloud-provider-specific code (no AWS-specific configs, no GCP/Azure SDKs, no platform.sh or Forge-specific files) is introduced. The application deploys equally to any VPS, dedicated server, or managed Linux host.
+  2. **JSON health endpoint at `GET /up`** — replaced Laravel's built-in HTML `/up` page (from `withRouting(health:...)`) with a custom `HealthController` returning structured JSON: `{status, app, environment, timestamp, version}`. Rationale: (a) uptime monitors expect machine-readable responses; (b) HTML responses are fragile to parse; (c) the custom controller is 10 lines and testable. The endpoint is unauthenticated and intentionally returns no sensitive data (no DB credentials, no APP_KEY, no internal paths).
+  3. **`APP_VERSION` config key** — added `'version' => env('APP_VERSION', '1.0')` to `config/app.php`. Version is surfaced in the health endpoint only. It is set via `.env` so deployments can inject the git tag or release number without code changes. Default is `'1.0'`.
+  4. **Deployment guide scope** — `docs/17-Production-Deployment-Guide.md` covers: server requirements, PHP extensions, production environment variables, first-time and update deployment steps, database migrations, storage link, cache commands, queue setup (Supervisor), scheduler (crontab), HTTPS/Nginx configuration, SSL (Let's Encrypt/Certbot), file permissions, database backup strategy, monitoring recommendations, rollback procedure, post-deployment checklist, and common troubleshooting. The guide is the single source of truth for operating OneMember V1.0 in production.
+  5. **No new business features** — this sprint added only infrastructure and operational tooling. All business logic, authentication flows, subscription logic, and UI remain unchanged.
+- **Reason:** Production readiness requires both runnable infrastructure and documented operational procedures. A health endpoint is the minimum viability requirement for uptime monitoring. Provider-agnostic documentation preserves optionality for hosting decisions.
+- **Impact:** New: `app/Http/Controllers/HealthController.php`, `tests/Feature/HealthCheckTest.php`, `docs/17-Production-Deployment-Guide.md`. Modified: `config/app.php` (APP_VERSION), `bootstrap/app.php` (removed built-in health route), `routes/web.php` (added `/up` route), `.env.example` (APP_VERSION, session security keys, production comments).
+
+---
+
 *New decisions must be appended above this line in the format shown.*
