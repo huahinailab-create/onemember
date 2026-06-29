@@ -1,4 +1,10 @@
 @component('mail::message')
+@if ($merchant->logo_path)
+![{{ $merchant->name }}]({{ Storage::disk('public')->url($merchant->logo_path) }})
+@endif
+**{{ $merchant->name }}** &middot; {{ __('email.powered_by', ['app' => config('app.name')]) }}
+
+---
 # {{ __('email.trial_started_heading') }}
 
 {{ __('email.trial_started_body_1', ['name' => $merchant->owner->name ?? '']) }}

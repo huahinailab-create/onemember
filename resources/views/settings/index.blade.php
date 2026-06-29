@@ -64,7 +64,24 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('settings.profile.update') }}">
+                    @php
+                        
+                        $branding = new \App\Services\MerchantBrandingService($merchant);
+                    @endphp
+                    <form method="POST" action="{{ route('settings.profile.update') }}"
+                          enctype="multipart/form-data"
+                          x-data="{
+                              logoPreview: '{{ $branding->logo() ?? '' }}',
+                              removeLogo: false,
+                              handleLogo(e) {
+                                  const file = e.target.files[0];
+                                  if (!file) return;
+                                  const reader = new FileReader();
+                                  reader.onload = ev => { this.logoPreview = ev.target.result; this.removeLogo = false; };
+                                  reader.readAsDataURL(file);
+                              }
+                          }">
+                        <input type="hidden" name="remove_logo" :value="removeLogo ? '1' : '0'">
                         @csrf
                         @method('PUT')
 
@@ -213,6 +230,149 @@
                             </div>
 
                         </div>
+
+                        {{-- ── Branding Section ──────────────────────────────── --}}
+                        <div class="mt-4 pt-4 border-top">
+                            <h6 class="fw-semibold mb-1">
+                                {{ __('settings.branding_title') }}
+                                <span class="badge bg-primary-subtle text-primary ms-1 fw-normal small">{{ __('settings.branding_badge') }}</span>
+                            </h6>
+                            <p class="text-muted small mb-3">{{ __('settings.branding_powered_by_note') }}</p>
+
+                            <div class="row g-3">
+
+                                {{-- Logo --}}
+                                <div class="col-12">
+                                    <label class="form-label fw-medium">{{ __('settings.logo_label') }}</label>
+                                    <div class="d-flex align-items-start gap-3 flex-wrap">
+                                        <div class="rounded-3 border d-flex align-items-center justify-content-center flex-shrink-0"
+                                             style="width:80px;height:80px;background:#f8f9fa;overflow:hidden;">
+                                            <template x-if="logoPreview">
+                                                <img :src="logoPreview" alt="{{ __('settings.logo_preview_alt') }}"
+                                                     style="max-width:80px;max-height:80px;object-fit:contain;">
+                                            </template>
+                                            <template x-if="!logoPreview">
+                                                <i class="bi bi-shop text-secondary fs-2"></i>
+                                            </template>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <input type="file" id="settings_logo" name="logo"
+                                                   class="form-control @error('logo') is-invalid @enderror"
+                                                   accept=".jpg,.jpeg,.png,.webp"
+                                                   @change="handleLogo($event)">
+                                            <div class="form-text">{{ __('settings.logo_hint') }}</div>
+                                            @error('logo')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                            @if ($merchant?->logo_path)
+                                                <div class="mt-2">
+                                                    <button type="button" class="btn btn-sm btn-outline-danger"
+                                                            @click="removeLogo = true; logoPreview = ''">
+                                                        <i class="bi bi-trash me-1"></i>{{ __('settings.logo_remove') }}
+                                                    </button>
+                                                    <span x-show="removeLogo" class="text-danger small ms-2">
+                                                        {{ __('settings.logo_remove_note') }}
+                                                    </span>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Brand Colors --}}
+                                <div class="col-md-6">
+                                    <label for="brand_color_s" class="form-label fw-medium">{{ __('settings.brand_color') }}</label>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <input type="color" id="brand_color_picker_s"
+                                               value="{{ old('brand_color', $merchant?->brand_color ?? '#2563EB') }}"
+                                               class="form-control form-control-color"
+                                               oninput="document.getElementById('brand_color_s').value=this.value">
+                                        <input type="text" id="brand_color_s" name="brand_color"
+                                               class="form-control @error('brand_color') is-invalid @enderror"
+                                               value="{{ old('brand_color', $merchant?->brand_color ?? '#2563EB') }}"
+                                               placeholder="#2563EB" maxlength="7"
+                                               oninput="document.getElementById('brand_color_picker_s').value=this.value">
+                                    </div>
+                                    <div class="form-text">{{ __('settings.brand_color_hint') }}</div>
+                                    @error('brand_color')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="secondary_color_s" class="form-label fw-medium">{{ __('settings.secondary_color') }}</label>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <input type="color" id="secondary_color_picker_s"
+                                               value="{{ old('secondary_color', $merchant?->secondary_color ?? '#1E293B') }}"
+                                               class="form-control form-control-color"
+                                               oninput="document.getElementById('secondary_color_s').value=this.value">
+                                        <input type="text" id="secondary_color_s" name="secondary_color"
+                                               class="form-control @error('secondary_color') is-invalid @enderror"
+                                               value="{{ old('secondary_color', $merchant?->secondary_color ?? '#1E293B') }}"
+                                               placeholder="#1E293B" maxlength="7"
+                                               oninput="document.getElementById('secondary_color_picker_s').value=this.value">
+                                    </div>
+                                    <div class="form-text">{{ __('settings.secondary_color_hint') }}</div>
+                                    @error('secondary_color')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
+                                </div>
+
+                                {{-- Tagline --}}
+                                <div class="col-12">
+                                    <label for="business_tagline" class="form-label fw-medium">{{ __('settings.business_tagline') }}</label>
+                                    <input type="text" id="business_tagline" name="business_tagline"
+                                           class="form-control @error('business_tagline') is-invalid @enderror"
+                                           value="{{ old('business_tagline', $merchant?->business_tagline) }}"
+                                           placeholder="{{ __('settings.business_tagline_ph') }}"
+                                           maxlength="100">
+                                    <div class="form-text">{{ __('settings.business_tagline_hint') }}</div>
+                                    @error('business_tagline')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                </div>
+
+                                {{-- Receipt Footer --}}
+                                <div class="col-12">
+                                    <label for="receipt_footer" class="form-label fw-medium">{{ __('settings.receipt_footer') }}</label>
+                                    <textarea id="receipt_footer" name="receipt_footer" rows="3"
+                                              class="form-control @error('receipt_footer') is-invalid @enderror"
+                                              placeholder="{{ __('settings.receipt_footer_ph') }}"
+                                              maxlength="500">{{ old('receipt_footer', $merchant?->receipt_footer) }}</textarea>
+                                    <div class="form-text">{{ __('settings.receipt_footer_hint') }}</div>
+                                    @error('receipt_footer')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                </div>
+
+                                {{-- Social Links --}}
+                                <div class="col-md-6">
+                                    <label class="form-label fw-medium">{{ __('settings.facebook_url') }}</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-facebook"></i></span>
+                                        <input type="url" name="facebook_url"
+                                               class="form-control @error('facebook_url') is-invalid @enderror"
+                                               value="{{ old('facebook_url', $merchant?->facebook_url) }}"
+                                               placeholder="https://facebook.com/yourbusiness">
+                                    </div>
+                                    @error('facebook_url')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-medium">{{ __('settings.instagram_url') }}</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-instagram"></i></span>
+                                        <input type="url" name="instagram_url"
+                                               class="form-control @error('instagram_url') is-invalid @enderror"
+                                               value="{{ old('instagram_url', $merchant?->instagram_url) }}"
+                                               placeholder="https://instagram.com/yourbusiness">
+                                    </div>
+                                    @error('instagram_url')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-medium">{{ __('settings.line_url') }}</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-chat-fill"></i></span>
+                                        <input type="url" name="line_url"
+                                               class="form-control @error('line_url') is-invalid @enderror"
+                                               value="{{ old('line_url', $merchant?->line_url) }}"
+                                               placeholder="https://line.me/ti/p/yourline">
+                                    </div>
+                                    @error('line_url')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
+                                </div>
+
+                            </div>
+                        </div>
+                        {{-- ── /Branding Section ─────────────────────────────── --}}
 
                         <div class="mt-4 pt-2 border-top">
                             <button type="submit" class="btn btn-primary">

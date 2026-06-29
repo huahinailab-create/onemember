@@ -20,11 +20,28 @@
     <nav class="sidebar p-3" :class="{ 'collapsed': !sidebarOpen }" aria-label="Main navigation">
 
         {{-- Brand --}}
+        @php
+            
+            $__branding = new \App\Services\MerchantBrandingService(Auth::user()?->merchant);
+            $__logo     = $__branding->logo();
+        @endphp
         <a href="{{ route('dashboard') }}"
-           class="d-flex align-items-center gap-2 text-decoration-none text-white px-1 mb-4">
-            <i class="bi bi-hexagon-fill text-primary fs-4 flex-shrink-0"></i>
-            <span class="fw-bold fs-5 text-white">{{ config('app.name') }}</span>
+           class="d-flex align-items-center gap-2 text-decoration-none text-white px-1 mb-1">
+            @if ($__logo)
+                <img src="{{ $__logo }}" alt="{{ $__branding->displayName() }}"
+                     style="height:36px;width:auto;max-width:120px;object-fit:contain;border-radius:4px;">
+            @else
+                <i class="bi bi-hexagon-fill text-primary fs-4 flex-shrink-0"></i>
+                <span class="fw-bold fs-5 text-white text-truncate">{{ $__branding->displayName() }}</span>
+            @endif
         </a>
+        @if ($__logo)
+            <div class="px-1 mb-4" style="font-size:0.65rem;opacity:0.5;line-height:1;">
+                {{ __('navigation.powered_by') }} {{ config('app.name') }}
+            </div>
+        @else
+            <div class="mb-3"></div>
+        @endif
 
         {{-- Main Menu --}}
         <div class="sidebar-section-label">{{ __('navigation.main_menu') }}</div>

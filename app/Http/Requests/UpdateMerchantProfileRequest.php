@@ -34,7 +34,17 @@ class UpdateMerchantProfileRequest extends FormRequest
             'state'          => ['nullable', 'string', 'max:100'],
             'postal_code'    => ['nullable', 'string', 'max:20'],
             'country'        => ['nullable', 'string', 'max:100'],
-            'notes'          => ['nullable', 'string', 'max:2000'],
+            'notes'            => ['nullable', 'string', 'max:2000'],
+            // Branding
+            'logo'             => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'remove_logo'      => ['nullable', 'boolean'],
+            'brand_color'      => ['nullable', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'secondary_color'  => ['nullable', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'business_tagline' => ['nullable', 'string', 'max:100'],
+            'receipt_footer'   => ['nullable', 'string', 'max:500'],
+            'facebook_url'     => ['nullable', 'url', 'max:255'],
+            'instagram_url'    => ['nullable', 'url', 'max:255'],
+            'line_url'         => ['nullable', 'url', 'max:255'],
         ];
     }
 

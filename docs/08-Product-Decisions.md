@@ -777,4 +777,23 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### DECISION-057: White Label Lite — Merchant Branding with Visible OneMember Credit
+
+- **Date:** 2026-06-29
+- **Requested by:** Product Owner (Sprint 6.3 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **OneMember is not a full white-label platform in V1.** Merchants can customize their dashboard and emails with a logo, brand colors, tagline, and social links, but OneMember branding is always visible. Full white-label (removing all OneMember references) is deferred to V2.
+  2. **White Label Lite definition:** Merchant logo is displayed in the sidebar and emails. "Powered by OneMember" text appears alongside the merchant logo in the sidebar. The OneMember favicon, footer, and domain remain unchanged.
+  3. **MerchantBrandingService is the sole source of branding logic.** Controllers and views may NOT access the Merchant model directly for any branding purpose. All branding decisions (logo URL, colors, fallbacks) go through `MerchantBrandingService`.
+  4. **Fallback behavior is defined.** When no merchant logo exists: show hexagon icon + app name. When no brand_color: use `#2563EB`. When no secondary_color: use `#1E293B`. All fallbacks are defined as constants in `MerchantBrandingService`.
+  5. **Logo files are tenant-namespaced.** Filenames include `merchant_id` to prevent cross-tenant file collision or overwrite. Pattern: `merchant-logos/{merchant_id}_{timestamp}.{ext}`.
+  6. **Billing emails show merchant identity.** `subscription-purchased`, `subscription-renewed`, `subscription-cancelled`, `payment-failed`, `trial-starting`, and `trial-ending-reminder` templates show the merchant logo and business name so the merchant's customers recognize the email source.
+  7. **Receipt footer is opt-in.** Merchants can add a custom footer to billing emails via `receipt_footer`. This is shown below the email body and above the sender name. It is nullable.
+  8. **Billing and security categories cannot be white-labeled away.** The `billing` and `security_alerts` email preferences remain always-on regardless of branding settings.
+- **Reason:** A full white-label offering in V1 would require domain mapping, custom favicon, footer customization, and revenue-share or reseller agreements. "White Label Lite" gives merchants the brand personalization they need (logo, colors) while keeping the platform's identity visible — which builds trust for members and reduces support burden.
+- **Impact:** New: `app/Services/MerchantBrandingService.php`, `database/migrations/2026_06_29_000001_add_branding_fields_to_merchants_table.php`, `tests/Feature/MerchantBrandingTest.php`, `docs/25-Merchant-Branding.md`. Modified: `app/Models/Merchant.php` (fillable), `app/Http/Requests/UpdateMerchantProfileRequest.php` (branding validation), `app/Http/Controllers/SettingsController.php` (logo upload + branding save), `resources/views/layouts/app.blade.php` (merchant logo in sidebar), `resources/views/settings/index.blade.php` (branding section), `resources/views/emails/*.blade.php` (6 templates updated), `lang/en/settings.php`, `lang/th/settings.php`, `lang/en/navigation.php`, `lang/th/navigation.php`, `lang/en/email.php`, `lang/th/email.php`.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

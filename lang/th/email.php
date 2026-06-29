@@ -90,5 +90,6 @@ return [
     'label_merchant_id'  => 'รหัสร้านค้า',
     'label_submitted_at' => 'ส่งเมื่อ',
     'label_url'          => 'URL',
+    'powered_by'         => 'ขับเคลื่อนโดย :app',
 
 ];

@@ -90,5 +90,6 @@ return [
     'label_merchant_id'  => 'Merchant ID',
     'label_submitted_at' => 'Submitted at',
     'label_url'          => 'URL',
+    'powered_by'         => 'Powered by :app',
 
 ];

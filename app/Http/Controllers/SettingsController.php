@@ -6,6 +6,7 @@ use App\Http\Requests\UpdateMerchantPreferencesRequest;
 use App\Http\Requests\UpdateMerchantProfileRequest;
 use App\Models\Merchant;
 use App\Services\AnalyticsService;
+use App\Services\MerchantBrandingService;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller
@@ -34,6 +35,21 @@ class SettingsController extends Controller
         $merchant = $user->merchant;
         $data     = $request->validated();
 
+        // Logo removal
+        if ($request->boolean('remove_logo') && $merchant) {
+            (new MerchantBrandingService($merchant))->deleteLogo();
+            $data['logo_path'] = null;
+        }
+
+        // Logo upload
+        if ($request->hasFile('logo') && $merchant) {
+            $data['logo_path'] = (new MerchantBrandingService($merchant))->storeLogo($request->file('logo'));
+            $analytics->track('merchant_logo_uploaded', [], $user->id, $merchant->id);
+        }
+
+        // Remove upload-only keys that are not DB columns
+        unset($data['logo'], $data['remove_logo']);
+
         if ($merchant) {
             $merchant->update($data);
         } else {
@@ -41,6 +57,13 @@ class SettingsController extends Controller
                 'user_id' => $user->id,
                 'status'  => \App\Enums\MerchantStatus::Active,
             ]));
+        }
+
+        $brandingFields  = ['brand_color', 'secondary_color', 'business_tagline', 'receipt_footer',
+                            'facebook_url', 'instagram_url', 'line_url'];
+        $brandingChanged = array_filter(array_intersect_key($data, array_flip($brandingFields)));
+        if (! empty($brandingChanged)) {
+            $analytics->track('merchant_branding_updated', [], $user->id, $merchant?->id ?? $user->fresh()->merchant?->id);
         }
 
         $analytics->track('settings_updated', ['section' => 'profile'], $user->id, $user->fresh()->merchant?->id);
