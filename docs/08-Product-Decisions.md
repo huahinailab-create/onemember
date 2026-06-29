@@ -738,4 +738,23 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-055] Stripe as Billing Source of Truth — Sprint 6.1
+- **Date:** 2026-06-29
+- **Requested by:** Product Owner (Sprint 6.1 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **Stripe is the billing source of truth.** All subscription state (plan, status, renewal date, cancellation flag) is updated exclusively through verified Stripe webhook events. Browser-initiated actions (clicking upgrade, cancel, portal) only trigger Stripe API calls — they never directly mutate `merchants.subscription_status`, `merchants.subscription_plan`, or `merchants.subscription_renews_at`.
+  2. **BillingService is the sole Stripe integration point.** No Stripe SDK class may be imported or instantiated outside of `App\Services\BillingService`. Controllers call BillingService methods only.
+  3. **Webhook signatures must be verified.** Every incoming webhook is verified with `Stripe\Webhook::constructEvent()` using `STRIPE_WEBHOOK_SECRET`. Any request that fails signature verification receives a 400 response without processing.
+  4. **Idempotency via cache.** Processed Stripe event IDs are cached for 24 hours. Duplicate delivery of the same event ID is silently skipped.
+  5. **Webhook route is CSRF-exempt.** The route `POST /stripe/webhook` is excluded from Laravel CSRF verification because Stripe's signature verification serves the equivalent security purpose.
+  6. **Billing events are dispatched, not emails.** `SubscriptionPurchased`, `SubscriptionCancelled`, `SubscriptionRenewed`, `PaymentFailed`, and `TrialEnding` Laravel events are dispatched from `BillingService`. No email delivery is implemented in this sprint — a future email sprint will add listeners.
+  7. **No card data touches OneMember.** Stripe Checkout and Billing Portal handle all payment method collection. OneMember never sees or stores raw card numbers. PCI scope is Stripe's responsibility.
+  8. **Stripe Checkout used for new subscriptions.** Trial merchants who wish to subscribe are redirected to Stripe Checkout. Existing subscribers who upgrade/downgrade use `Subscription::update()` with proration.
+  9. **Billing Portal used for self-service.** Card updates, invoice downloads, and cancellations can all be performed via the Stripe Billing Portal. The portal URL is created server-side and is merchant-specific.
+- **Reason:** Making Stripe the authoritative source prevents split-brain states where the application database and Stripe disagree on the merchant's subscription. Webhook-only state updates ensure consistency even when browser sessions disconnect, payment processing is asynchronous, or Stripe retries failed events.
+- **Impact:** New: `app/Services/BillingService.php`, `config/stripe.php`, `database/migrations/2026_06_29_100001_add_stripe_fields_to_merchants_table.php`, `app/Events/SubscriptionPurchased.php`, `app/Events/SubscriptionCancelled.php`, `app/Events/SubscriptionRenewed.php`, `app/Events/PaymentFailed.php`, `app/Events/TrialEnding.php`, `resources/views/subscription/success.blade.php`, `tests/Feature/StripeBillingTest.php`, `docs/23-Stripe-Billing.md`. Modified: `app/Http/Controllers/SubscriptionController.php` (expanded), `app/Models/Merchant.php` (new fillable/casts), `resources/views/subscription/index.blade.php` (live buttons), `routes/web.php` (8 new routes), `bootstrap/app.php` (CSRF exclusion), `lang/en/subscription.php`, `lang/th/subscription.php`, `.env.example`, `composer.json` (`stripe/stripe-php ^20`).
+
+---
+
 *New decisions must be appended above this line in the format shown.*

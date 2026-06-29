@@ -70,4 +70,31 @@ return [
     'feature_multi_location'   => 'Multi-Location',
     'feature_data_export'      => 'Data Export',
     'help_note'                => 'Questions about your plan? Contact us at support@onemember.app',
+
+    // Billing actions
+    'subscribe_to'             => 'Subscribe to :plan',
+    'manage_billing'           => 'Manage Billing',
+    'open_billing_portal'      => 'Open Billing Portal',
+    'cancel_subscription'      => 'Cancel Subscription',
+    'resume_subscription'      => 'Resume Subscription',
+    'contact_sales'            => 'Contact Sales',
+    'renews_on'                => 'Renews On',
+    'cancels_on'               => 'Cancels On',
+    'payment_method'           => 'Payment Method',
+    'managed_via_stripe'       => 'Managed via Stripe',
+    'cancellation_scheduled'   => 'Cancellation scheduled at end of billing period.',
+    'upgrade_to_plan'          => 'Upgrade to :plan',
+    'downgrade_to_plan'        => 'Downgrade to :plan',
+
+    // Flash messages
+    'cancelled_notice'         => 'Your subscription will be cancelled at the end of the current billing period.',
+    'resumed_notice'           => 'Your subscription has been reactivated.',
+    'upgraded_notice'          => 'Your plan change is being processed.',
+    'downgraded_notice'        => 'Your plan change is being processed.',
+
+    // Success page
+    'success_title'            => 'Subscription Activated',
+    'success_body'             => 'Thank you! Your subscription is now active. You have full access to your plan features.',
+    'success_cta'              => 'Go to Dashboard',
+    'feature_reports'          => 'Reports & Analytics',
 ];

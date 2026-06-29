@@ -51,6 +51,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Subscription Centre
     Route::get('/subscription', [SubscriptionController::class, 'index'])->name('subscription.index');
+    Route::get('/subscription/success', [SubscriptionController::class, 'success'])->name('subscription.success');
+    Route::post('/subscription/checkout', [SubscriptionController::class, 'checkout'])->name('subscription.checkout');
+    Route::post('/subscription/portal', [SubscriptionController::class, 'portal'])->name('subscription.portal');
+    Route::post('/subscription/cancel', [SubscriptionController::class, 'cancel'])->name('subscription.cancel');
+    Route::post('/subscription/resume', [SubscriptionController::class, 'resume'])->name('subscription.resume');
+    Route::post('/subscription/upgrade', [SubscriptionController::class, 'upgrade'])->name('subscription.upgrade');
+    Route::post('/subscription/downgrade', [SubscriptionController::class, 'downgrade'])->name('subscription.downgrade');
 
     // Settings (replaces Merchant Profile)
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
@@ -100,5 +107,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'icon'      => 'bi-bar-chart-line',
     ]))->name('reports');
 });
+
+// Stripe webhook — no auth middleware, signature-verified instead
+Route::post('/stripe/webhook', [SubscriptionController::class, 'webhook'])->name('stripe.webhook');
 
 require __DIR__.'/auth.php';

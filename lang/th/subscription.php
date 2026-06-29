@@ -70,4 +70,31 @@ return [
     'feature_multi_location'   => 'หลายสาขา',
     'feature_data_export'      => 'ส่งออกข้อมูล',
     'help_note'                => 'มีคำถามเกี่ยวกับแผน? ติดต่อเราที่ support@onemember.app',
+
+    // Billing actions
+    'subscribe_to'             => 'สมัครแผน :plan',
+    'manage_billing'           => 'จัดการการชำระเงิน',
+    'open_billing_portal'      => 'เปิดพอร์ทัลการชำระเงิน',
+    'cancel_subscription'      => 'ยกเลิกการสมัครใช้งาน',
+    'resume_subscription'      => 'ดำเนินการสมัครใช้งานต่อ',
+    'contact_sales'            => 'ติดต่อฝ่ายขาย',
+    'renews_on'                => 'ต่ออายุเมื่อ',
+    'cancels_on'               => 'ยกเลิกเมื่อ',
+    'payment_method'           => 'วิธีการชำระเงิน',
+    'managed_via_stripe'       => 'จัดการผ่าน Stripe',
+    'cancellation_scheduled'   => 'กำหนดการยกเลิกเมื่อสิ้นรอบการชำระเงิน',
+    'upgrade_to_plan'          => 'อัปเกรดเป็น :plan',
+    'downgrade_to_plan'        => 'ดาวน์เกรดเป็น :plan',
+
+    // Flash messages
+    'cancelled_notice'         => 'การสมัครใช้งานของคุณจะถูกยกเลิกเมื่อสิ้นสุดรอบการชำระเงินปัจจุบัน',
+    'resumed_notice'           => 'การสมัครใช้งานของคุณได้รับการเปิดใช้งานอีกครั้งแล้ว',
+    'upgraded_notice'          => 'การเปลี่ยนแปลงแผนของคุณกำลังดำเนินการ',
+    'downgraded_notice'        => 'การเปลี่ยนแปลงแผนของคุณกำลังดำเนินการ',
+
+    // Success page
+    'success_title'            => 'เปิดใช้งานการสมัครแล้ว',
+    'success_body'             => 'ขอบคุณ! การสมัครใช้งานของคุณเปิดใช้งานแล้ว คุณสามารถเข้าถึงฟีเจอร์ทั้งหมดในแผนของคุณได้',
+    'success_cta'              => 'ไปยังแดชบอร์ด',
+    'feature_reports'          => 'รายงานและการวิเคราะห์',
 ];

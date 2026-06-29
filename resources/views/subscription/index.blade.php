@@ -81,6 +81,21 @@
 
                             <dt class="col-5 text-muted fw-normal">{{ __('subscription.billing') }}</dt>
                             <dd class="col-7 text-muted">{{ __('subscription.billing_monthly') }}</dd>
+
+                            @if ($merchant->subscription_renews_at && ! $merchant->cancel_at_period_end)
+                                <dt class="col-5 text-muted fw-normal">{{ __('subscription.renews_on') }}</dt>
+                                <dd class="col-7">{{ $merchant->subscription_renews_at->format('d M Y') }}</dd>
+                            @endif
+
+                            @if ($merchant->cancel_at_period_end && $merchant->subscription_renews_at)
+                                <dt class="col-5 text-muted fw-normal">{{ __('subscription.cancels_on') }}</dt>
+                                <dd class="col-7 text-warning">{{ $merchant->subscription_renews_at->format('d M Y') }}</dd>
+                            @endif
+
+                            @if ($merchant->stripe_subscription_id)
+                                <dt class="col-5 text-muted fw-normal">{{ __('subscription.payment_method') }}</dt>
+                                <dd class="col-7 text-muted small">{{ __('subscription.managed_via_stripe') }}</dd>
+                            @endif
                         </dl>
 
                         @if ($merchant->isOnTrial())
@@ -98,11 +113,40 @@
                         <p class="text-muted mb-0">{{ __('subscription.no_info') }}</p>
                     @endif
                 </div>
-                <div class="card-footer bg-transparent">
-                    <button class="btn btn-primary btn-sm" disabled>
-                        <i class="bi bi-arrow-up-circle me-1"></i>{{ __('buttons.upgrade_plan') }}
-                    </button>
-                    <span class="text-muted small ms-2">{{ __('buttons.coming_soon') }}</span>
+                <div class="card-footer bg-transparent d-flex flex-wrap gap-2">
+                    @if ($merchant?->stripe_subscription_id)
+                        {{-- Merchant has a Stripe subscription — show portal --}}
+                        <form method="POST" action="{{ route('subscription.portal') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-box-arrow-up-right me-1"></i>{{ __('subscription.manage_billing') }}
+                            </button>
+                        </form>
+                        @if ($merchant->cancel_at_period_end)
+                            <form method="POST" action="{{ route('subscription.resume') }}">
+                                @csrf
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    <i class="bi bi-arrow-repeat me-1"></i>{{ __('subscription.resume_subscription') }}
+                                </button>
+                            </form>
+                        @else
+                            <form method="POST" action="{{ route('subscription.cancel') }}">
+                                @csrf
+                                <button type="submit" class="btn btn-outline-danger btn-sm"
+                                        onclick="return confirm('Cancel your subscription? You will keep access until the end of the current period.')">
+                                    {{ __('subscription.cancel_subscription') }}
+                                </button>
+                            </form>
+                        @endif
+                    @endif
+                    {{-- Cancellation note --}}
+                    @if ($merchant?->cancel_at_period_end && $merchant->subscription_renews_at)
+                        <div class="w-100 small text-warning mt-1">
+                            <i class="bi bi-exclamation-triangle me-1"></i>
+                            {{ __('subscription.cancellation_scheduled') }}
+                            {{ $merchant->subscription_renews_at->format('d M Y') }}
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -289,20 +333,61 @@
                             </tr>
                         @endforeach
 
-                        {{-- Upgrade row --}}
+                        {{-- Upgrade / Subscribe row --}}
                         <tr>
                             <td class="ps-4"></td>
                             @foreach ($planOrder as $planKey)
-                                @php $plan = $plans[$planKey] ?? null; if (!$plan) continue; @endphp
+                                @php
+                                    $plan    = $plans[$planKey] ?? null;
+                                    if (!$plan) continue;
+                                    $priceId = $stripePrices[$planKey]['monthly'] ?? '';
+                                @endphp
                                 <td class="text-center py-3 {{ $planKey === $effectivePlan ? 'table-primary' : '' }}">
-                                    @if ($planKey === $effectivePlan)
+                                    @if ($planKey === $effectivePlan && ! $merchant?->isOnTrial())
                                         <span class="badge bg-primary px-3 py-2">{{ __('subscription.current') }}</span>
+                                    @elseif ($planKey === 'free')
+                                        {{-- Free is a downgrade target, not a checkout --}}
+                                        @if ($merchant?->stripe_subscription_id)
+                                            <form method="POST" action="{{ route('subscription.downgrade') }}">
+                                                @csrf
+                                                <input type="hidden" name="price_id" value="free">
+                                                <button type="submit" class="btn btn-outline-secondary btn-sm">
+                                                    {{ __('subscription.downgrade_to_plan', ['plan' => $plan['name']]) }}
+                                                </button>
+                                            </form>
+                                        @else
+                                            <span class="badge bg-secondary px-3 py-2">{{ __('subscription.current') }}</span>
+                                        @endif
                                     @elseif ($planKey === 'enterprise')
-                                        <button class="btn btn-outline-dark btn-sm" disabled>
-                                            <i class="bi bi-envelope me-1"></i>{{ __('buttons.contact_us') }}
-                                        </button>
-                                        <div class="text-muted small mt-1">{{ __('buttons.coming_soon') }}</div>
+                                        <a href="mailto:sales@onemember.app" class="btn btn-outline-dark btn-sm">
+                                            <i class="bi bi-envelope me-1"></i>{{ __('subscription.contact_sales') }}
+                                        </a>
+                                    @elseif ($priceId)
+                                        @php
+                                            // Determine if this is an upgrade or downgrade relative to current plan
+                                            $planRank    = ['free' => 0, 'starter' => 1, 'professional' => 2, 'enterprise' => 3];
+                                            $currentRank = $planRank[$effectivePlan] ?? 0;
+                                            $targetRank  = $planRank[$planKey] ?? 0;
+                                            $isUpgrade   = $targetRank > $currentRank;
+                                            $action      = $merchant?->stripe_subscription_id
+                                                ? ($isUpgrade ? route('subscription.upgrade') : route('subscription.downgrade'))
+                                                : route('subscription.checkout');
+                                        @endphp
+                                        <form method="POST" action="{{ $action }}">
+                                            @csrf
+                                            <input type="hidden" name="price_id" value="{{ $priceId }}">
+                                            <button type="submit" class="btn {{ $isUpgrade ? 'btn-primary' : 'btn-outline-secondary' }} btn-sm">
+                                                @if ($merchant?->isOnTrial() || ! $merchant?->stripe_subscription_id)
+                                                    {{ __('subscription.subscribe_to', ['plan' => $plan['name']]) }}
+                                                @elseif ($isUpgrade)
+                                                    {{ __('subscription.upgrade_to_plan', ['plan' => $plan['name']]) }}
+                                                @else
+                                                    {{ __('subscription.downgrade_to_plan', ['plan' => $plan['name']]) }}
+                                                @endif
+                                            </button>
+                                        </form>
                                     @else
+                                        {{-- Price ID not configured yet --}}
                                         <button class="btn btn-outline-primary btn-sm" disabled>
                                             {{ __('subscription.upgrade_to', ['plan' => $plan['name']]) }}
                                         </button>

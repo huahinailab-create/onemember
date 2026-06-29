@@ -42,6 +42,12 @@ class Merchant extends Model
         'subscription_plan',
         'subscription_status',
         'trial_ends_at',
+        'stripe_customer_id',
+        'stripe_subscription_id',
+        'stripe_price_id',
+        'billing_email',
+        'subscription_renews_at',
+        'cancel_at_period_end',
     ];
 
     protected $casts = [
@@ -51,6 +57,8 @@ class Merchant extends Model
         'subscription_plan'       => SubscriptionPlan::class,
         'subscription_status'     => SubscriptionStatus::class,
         'trial_ends_at'           => 'datetime',
+        'subscription_renews_at'  => 'datetime',
+        'cancel_at_period_end'    => 'boolean',
     ];
 
     protected static function booted(): void
