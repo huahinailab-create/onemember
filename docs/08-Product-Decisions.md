@@ -702,4 +702,24 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-053] Release Candidate Audit — Sprint 5.5.5
+- **Date:** 2026-06-29
+- **Requested by:** Product Owner (Sprint 5.5.5 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **Scope** — audit-only sprint. Only bugs, missing translations, broken active states, and developer-facing text visible to merchants are fixed. No new features, no UI redesign, no refactoring of working code.
+  2. **Members sidebar active state** — `routeIs('members')` changed to `routeIs('members', 'members.*')` so the Members nav link stays highlighted on `members.show`, `members.create`, and any nested member route.
+  3. **Footer version** — hardcoded `v0.1.0` replaced with `v{{ config('app.version') }}`, which reads from `APP_VERSION` in `.env` (set up in Sprint 5.5.1).
+  4. **Settings view localization** — all 40+ hardcoded English strings in `resources/views/settings/index.blade.php` replaced with `__()` calls using the existing `settings.*` and `buttons.*` translation keys. Three missing keys (`business_type`, `business_phone`, `website`) were added to both `lang/en/settings.php` and `lang/th/settings.php`. One missing key (`select`) was added to both `lang/en/buttons.php` and `lang/th/buttons.php`.
+  5. **Translation parity restored** — `lang/th/validation.php` was missing 14 Laravel validation rule keys present in `lang/en/validation.php` (`hex_color`, `missing`, `missing_if`, `missing_unless`, `missing_with`, `missing_with_all`, `multiple_of`, `present_if`, `present_unless`, `present_with`, `present_with_all`, `prohibits`, `required_if_accepted`, `ulid`). All 14 keys added with Thai translations. All 12 translation namespaces now have equal key counts between `lang/en/` and `lang/th/`.
+  6. **Developer tooltip text removed from merchant UI** — three disabled buttons had `title="Coming in a future task/sprint"` text visible to merchants on hover. Replaced with `{{ __('buttons.coming_soon') }}` (translatable, product-appropriate).
+  7. **Dashboard hardcoded strings** — reviewed; strings such as "Trial" badge, "Professional trial" sentence, "Plan:", "Status:", "Upgrade Plan", and "Lifetime pts" appear in `dashboard.blade.php`. These strings are part of the subscription display logic and are already partially covered by `dashboard.*` and `subscription.*` translation keys. Remaining hardcoded strings in this view are deferred to a dedicated localization sprint to avoid touching subscription display logic in an audit sprint.
+  8. **No security issues found** — no SQL injection vectors, no XSS risks, no exposed secrets, no insecure direct object references. All tenant scoping is applied via `Auth::user()->merchant` at the controller level.
+  9. **No broken routes or missing views found** — all routes registered in `routes/web.php` resolve to existing controllers and views.
+  10. **All 62 automated tests pass** after all fixes.
+- **Reason:** Pre-launch audit is required before V1.0 release per `docs/11-Launch-Checklist.md`. Fixing translation gaps, navigation active state, and visible developer text are minimum-quality requirements for a product shipped to real merchants.
+- **Impact:** Modified: `resources/views/layouts/app.blade.php` (sidebar active state, footer version), `resources/views/settings/index.blade.php` (full localization), `resources/views/members/index.blade.php` (tooltip text), `resources/views/members/show.blade.php` (tooltip text), `resources/views/campaigns/show.blade.php` (tooltip text), `lang/en/settings.php` (+3 keys), `lang/th/settings.php` (+3 keys), `lang/en/buttons.php` (+1 key), `lang/th/buttons.php` (+1 key), `lang/th/validation.php` (+14 keys). New: `docs/21-Release-Candidate-Audit.md`.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

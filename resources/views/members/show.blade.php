@@ -25,7 +25,7 @@
         </div>
         <div class="d-flex gap-2 flex-shrink-0">
             @if ($isArchived)
-                <button type="button" class="btn btn-outline-success disabled" title="Coming in a future sprint">
+                <button type="button" class="btn btn-outline-success disabled" title="{{ __('buttons.coming_soon') }}">
                     <i class="bi bi-arrow-counterclockwise me-1"></i>{{ __('members.restore_member') }}
                     <span class="badge bg-secondary ms-1" style="font-size:.65rem;">{{ __('buttons.coming_soon') }}</span>
                 </button>

@@ -37,4 +37,5 @@ return [
     'pause'               => 'Pause',
     'activate'            => 'Activate',
     'discard'             => 'Discard',
+    'select'              => 'Select…',
 ];

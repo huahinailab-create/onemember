@@ -38,7 +38,7 @@
             </li>
             <li class="nav-item">
                 <a href="{{ route('members') }}"
-                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('members') ? 'active' : '' }}">
+                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('members', 'members.*') ? 'active' : '' }}">
                     <i class="bi bi-people"></i>
                     <span>{{ __('navigation.members') }}</span>
                 </a>
@@ -160,7 +160,7 @@
         {{-- Footer --}}
         <footer class="app-footer d-flex align-items-center justify-content-between">
             <span>&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</span>
-            <span>v0.1.0</span>
+            <span>v{{ config('app.version') }}</span>
         </footer>
 
     </div>

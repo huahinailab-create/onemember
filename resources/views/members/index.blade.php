@@ -163,7 +163,7 @@
                                     <td class="text-end pe-4">
                                         <button type="button"
                                                 class="btn btn-sm btn-outline-secondary disabled"
-                                                title="Coming in a future task">
+                                                title="{{ __('buttons.coming_soon') }}">
                                             <i class="bi bi-three-dots"></i>
                                         </button>
                                     </td>

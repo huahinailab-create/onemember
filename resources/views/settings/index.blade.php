@@ -1,10 +1,10 @@
 <x-app-layout>
-    <x-slot name="title">Settings – {{ config('app.name') }}</x-slot>
-    <x-slot name="pageTitle">Settings</x-slot>
+    <x-slot name="title">{{ __('settings.title') }} – {{ config('app.name') }}</x-slot>
+    <x-slot name="pageTitle">{{ __('settings.title') }}</x-slot>
 
     <div class="page-header">
-        <h1>Settings</h1>
-        <p>Manage your business profile and account preferences.</p>
+        <h1>{{ __('settings.title') }}</h1>
+        <p>{{ __('settings.subtitle') }}</p>
     </div>
 
     {{-- Trial Lifecycle Banner --}}
@@ -24,25 +24,25 @@
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="tab-profile" data-bs-toggle="tab"
                     data-bs-target="#pane-profile" type="button" role="tab">
-                <i class="bi bi-building me-1"></i>Business Profile
+                <i class="bi bi-building me-1"></i>{{ __('settings.tab_profile') }}
             </button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="tab-preferences" data-bs-toggle="tab"
                     data-bs-target="#pane-preferences" type="button" role="tab">
-                <i class="bi bi-sliders me-1"></i>Business Preferences
+                <i class="bi bi-sliders me-1"></i>{{ __('settings.tab_preferences') }}
             </button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="tab-account" data-bs-toggle="tab"
                     data-bs-target="#pane-account" type="button" role="tab">
-                <i class="bi bi-person-circle me-1"></i>Account
+                <i class="bi bi-person-circle me-1"></i>{{ __('settings.tab_account') }}
             </button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="tab-security" data-bs-toggle="tab"
                     data-bs-target="#pane-security" type="button" role="tab">
-                <i class="bi bi-shield-lock me-1"></i>Security
+                <i class="bi bi-shield-lock me-1"></i>{{ __('settings.tab_security') }}
             </button>
         </li>
     </ul>
@@ -72,23 +72,23 @@
 
                             <div class="col-md-6">
                                 <label for="name" class="form-label fw-medium">
-                                    Business Name <span class="text-danger">*</span>
+                                    {{ __('settings.business_name') }} <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" id="name" name="name"
                                        class="form-control @error('name') is-invalid @enderror"
                                        value="{{ old('name', $merchant?->name) }}"
-                                       placeholder="e.g. Happy Coffee Shop" required>
+                                       placeholder="{{ __('settings.business_name_ph') }}" required>
                                 @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
                             <div class="col-md-6">
                                 <label for="business_type" class="form-label fw-medium">
-                                    Business Type <span class="text-danger">*</span>
+                                    {{ __('settings.business_type') }} <span class="text-danger">*</span>
                                 </label>
                                 <select id="business_type" name="business_type"
                                         class="form-select @error('business_type') is-invalid @enderror" required>
                                     <option value="" disabled {{ old('business_type', $merchant?->business_type) ? '' : 'selected' }}>
-                                        Select…
+                                        {{ __('buttons.select') }}
                                     </option>
                                     @foreach ([
                                         'Hair Salon', 'Nail Salon', 'Massage & Spa', 'Restaurant & Café',
@@ -105,7 +105,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label for="phone" class="form-label fw-medium">Business Phone</label>
+                                <label for="phone" class="form-label fw-medium">{{ __('settings.business_phone') }}</label>
                                 <input type="text" id="phone" name="phone"
                                        class="form-control @error('phone') is-invalid @enderror"
                                        value="{{ old('phone', $merchant?->phone) }}"
@@ -114,7 +114,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label for="website" class="form-label fw-medium">Website</label>
+                                <label for="website" class="form-label fw-medium">{{ __('settings.website') }}</label>
                                 <input type="url" id="website" name="website"
                                        class="form-control @error('website') is-invalid @enderror"
                                        value="{{ old('website', $merchant?->website) }}"
@@ -124,7 +124,7 @@
 
                             <div class="col-md-6">
                                 <label for="email" class="form-label fw-medium">
-                                    Business Email <span class="text-danger">*</span>
+                                    {{ __('settings.business_email') }} <span class="text-danger">*</span>
                                 </label>
                                 <input type="email" id="email" name="email"
                                        class="form-control @error('email') is-invalid @enderror"
@@ -136,25 +136,25 @@
                             <div class="col-12"><hr class="my-1"></div>
 
                             <div class="col-12">
-                                <label for="address_line_1" class="form-label fw-medium">Address Line 1</label>
+                                <label for="address_line_1" class="form-label fw-medium">{{ __('settings.address_line_1') }}</label>
                                 <input type="text" id="address_line_1" name="address_line_1"
                                        class="form-control @error('address_line_1') is-invalid @enderror"
                                        value="{{ old('address_line_1', $merchant?->address_line_1) }}"
-                                       placeholder="Street address, building number">
+                                       placeholder="{{ __('settings.address_line_1_ph') }}">
                                 @error('address_line_1')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
                             <div class="col-12">
-                                <label for="address_line_2" class="form-label fw-medium">Address Line 2</label>
+                                <label for="address_line_2" class="form-label fw-medium">{{ __('settings.address_line_2') }}</label>
                                 <input type="text" id="address_line_2" name="address_line_2"
                                        class="form-control @error('address_line_2') is-invalid @enderror"
                                        value="{{ old('address_line_2', $merchant?->address_line_2) }}"
-                                       placeholder="Suite, floor, unit (optional)">
+                                       placeholder="{{ __('settings.address_line_2_ph') }}">
                                 @error('address_line_2')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
                             <div class="col-md-4">
-                                <label for="city" class="form-label fw-medium">City</label>
+                                <label for="city" class="form-label fw-medium">{{ __('settings.city') }}</label>
                                 <input type="text" id="city" name="city"
                                        class="form-control @error('city') is-invalid @enderror"
                                        value="{{ old('city', $merchant?->city) }}"
@@ -163,7 +163,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="state" class="form-label fw-medium">State / Province</label>
+                                <label for="state" class="form-label fw-medium">{{ __('settings.state') }}</label>
                                 <input type="text" id="state" name="state"
                                        class="form-control @error('state') is-invalid @enderror"
                                        value="{{ old('state', $merchant?->state) }}"
@@ -172,7 +172,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="postal_code" class="form-label fw-medium">Postal Code</label>
+                                <label for="postal_code" class="form-label fw-medium">{{ __('settings.postal_code') }}</label>
                                 <input type="text" id="postal_code" name="postal_code"
                                        class="form-control @error('postal_code') is-invalid @enderror"
                                        value="{{ old('postal_code', $merchant?->postal_code) }}"
@@ -181,10 +181,10 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label for="country" class="form-label fw-medium">Country</label>
+                                <label for="country" class="form-label fw-medium">{{ __('settings.country') }}</label>
                                 <select id="country" name="country"
                                         class="form-select @error('country') is-invalid @enderror">
-                                    <option value="">— Select country —</option>
+                                    <option value="">— {{ __('settings.country') }} —</option>
                                     @php
                                         $countries = [
                                             'Thailand','Singapore','Malaysia','Indonesia','Philippines',
@@ -205,7 +205,7 @@
                             </div>
 
                             <div class="col-12">
-                                <label for="notes" class="form-label fw-medium">Notes</label>
+                                <label for="notes" class="form-label fw-medium">{{ __('settings.notes') }}</label>
                                 <textarea id="notes" name="notes" rows="3"
                                           class="form-control @error('notes') is-invalid @enderror"
                                           placeholder="Internal notes about your business (optional)">{{ old('notes', $merchant?->notes) }}</textarea>
@@ -216,7 +216,7 @@
 
                         <div class="mt-4 pt-2 border-top">
                             <button type="submit" class="btn btn-primary">
-                                <i class="bi bi-check-lg me-1"></i>Save Changes
+                                <i class="bi bi-check-lg me-1"></i>{{ __('buttons.save_changes') }}
                             </button>
                         </div>
 
@@ -263,7 +263,7 @@
                             {{-- Currency --}}
                             <div class="col-md-4">
                                 <label for="currency" class="form-label fw-medium">
-                                    Currency <span class="text-danger">*</span>
+                                    {{ __('settings.currency') }} <span class="text-danger">*</span>
                                 </label>
                                 <select id="currency" name="currency"
                                         class="form-select @error('currency') is-invalid @enderror" required>
@@ -280,7 +280,7 @@
                             {{-- Timezone --}}
                             <div class="col-md-5">
                                 <label for="timezone" class="form-label fw-medium">
-                                    Timezone <span class="text-danger">*</span>
+                                    {{ __('settings.timezone') }} <span class="text-danger">*</span>
                                 </label>
                                 <select id="timezone" name="timezone"
                                         class="form-select @error('timezone') is-invalid @enderror" required>
@@ -297,7 +297,7 @@
                             {{-- Date Format --}}
                             <div class="col-md-3">
                                 <label for="date_format" class="form-label fw-medium">
-                                    Date Format <span class="text-danger">*</span>
+                                    {{ __('settings.date_format') }} <span class="text-danger">*</span>
                                 </label>
                                 @php $df = old('date_format', $merchant?->settings['date_format'] ?? 'DD/MM/YYYY'); @endphp
                                 <select id="date_format" name="date_format"
@@ -331,9 +331,9 @@
 
                             {{-- Points Expiration Default --}}
                             <div class="col-12 col-md-8">
-                                <label class="form-label fw-medium">Points Expiration Default</label>
+                                <label class="form-label fw-medium">{{ __('settings.points_expiration') }}</label>
                                 <div class="text-muted small mb-2">
-                                    Default setting applied when creating a new Points campaign.
+                                    {{ __('settings.points_expiration_hint') }}
                                 </div>
                                 <div class="d-flex flex-column gap-2">
                                     <div class="form-check">
@@ -342,7 +342,7 @@
                                                x-model="expType"
                                                {{ old('default_expiration_type', $merchant?->settings['default_expiration_type'] ?? 'never') === 'never' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="exp-never">
-                                            Never expire <span class="badge bg-primary-subtle text-primary ms-1" style="font-size:.7rem;">Recommended</span>
+                                            {{ __('settings.exp_never') }} <span class="badge bg-primary-subtle text-primary ms-1" style="font-size:.7rem;">{{ __('settings.exp_recommended') }}</span>
                                         </label>
                                     </div>
                                     <div class="form-check">
@@ -350,14 +350,14 @@
                                                id="exp-months" value="months"
                                                x-model="expType"
                                                {{ old('default_expiration_type', $merchant?->settings['default_expiration_type'] ?? '') === 'months' ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="exp-months">Expire after N months</label>
+                                        <label class="form-check-label" for="exp-months">{{ __('settings.exp_months') }}</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="default_expiration_type"
                                                id="exp-years" value="years"
                                                x-model="expType"
                                                {{ old('default_expiration_type', $merchant?->settings['default_expiration_type'] ?? '') === 'years' ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="exp-years">Expire after N years</label>
+                                        <label class="form-check-label" for="exp-years">{{ __('settings.exp_years') }}</label>
                                     </div>
                                 </div>
                                 <div class="mt-2" x-show="expType === 'months' || expType === 'years'" x-cloak>
@@ -382,9 +382,9 @@
 
                             {{-- Birthday Reward Default --}}
                             <div class="col-12">
-                                <label class="form-label fw-medium">Birthday Reward Default</label>
+                                <label class="form-label fw-medium">{{ __('settings.birthday_default') }}</label>
                                 <div class="text-muted small mb-2">
-                                    Default setting applied when creating a new Points campaign.
+                                    {{ __('settings.birthday_default_hint') }}
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox"
@@ -392,7 +392,7 @@
                                            value="1"
                                            {{ old('default_birthday_enabled', $merchant?->settings['default_birthday_enabled'] ?? false) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="default_birthday_enabled">
-                                        Enable birthday bonus by default
+                                        {{ __('settings.birthday_enabled_label') }}
                                     </label>
                                 </div>
                             </div>
@@ -401,7 +401,7 @@
 
                         <div class="mt-4 pt-2 border-top">
                             <button type="submit" class="btn btn-primary">
-                                <i class="bi bi-check-lg me-1"></i>Save Changes
+                                <i class="bi bi-check-lg me-1"></i>{{ __('buttons.save_changes') }}
                             </button>
                         </div>
 
@@ -419,18 +419,18 @@
                         <div class="col-12">
                             <dl class="row mb-0">
 
-                                <dt class="col-sm-4 text-muted fw-normal">Merchant Name</dt>
+                                <dt class="col-sm-4 text-muted fw-normal">{{ __('settings.merchant_name') }}</dt>
                                 <dd class="col-sm-8 fw-medium">
                                     {{ $merchant?->name ?? '—' }}
                                 </dd>
 
-                                <dt class="col-sm-4 text-muted fw-normal">Email Address</dt>
+                                <dt class="col-sm-4 text-muted fw-normal">{{ __('settings.email_address') }}</dt>
                                 <dd class="col-sm-8">{{ $user->email }}</dd>
 
-                                <dt class="col-sm-4 text-muted fw-normal">Account Created</dt>
+                                <dt class="col-sm-4 text-muted fw-normal">{{ __('settings.account_created') }}</dt>
                                 <dd class="col-sm-8">{{ $user->created_at->format('d M Y') }}</dd>
 
-                                <dt class="col-sm-4 text-muted fw-normal">Current Plan</dt>
+                                <dt class="col-sm-4 text-muted fw-normal">{{ __('settings.current_plan') }}</dt>
                                 <dd class="col-sm-8">
                                     @if ($merchant)
                                         <span class="badge bg-primary">{{ $merchant->currentPlan()->label() }}</span>
@@ -447,10 +447,10 @@
                                     @endif
                                 </dd>
 
-                                <dt class="col-sm-4 text-muted fw-normal">Subscription</dt>
+                                <dt class="col-sm-4 text-muted fw-normal">{{ __('settings.subscription') }}</dt>
                                 <dd class="col-sm-8">
                                     <a href="{{ route('subscription.index') }}" class="btn btn-sm btn-outline-primary">
-                                        <i class="bi bi-credit-card me-1"></i>Manage Subscription
+                                        <i class="bi bi-credit-card me-1"></i>{{ __('settings.manage_subscription') }}
                                     </a>
                                 </dd>
 
@@ -458,7 +458,7 @@
 
                             <div class="alert alert-info mt-4 mb-0">
                                 <i class="bi bi-info-circle me-2"></i>
-                                Account details are managed by OneMember. To update your email address, please contact support.
+                                {{ __('settings.account_info') }}
                             </div>
                         </div>
                     </div>
@@ -472,15 +472,15 @@
             <div class="card border-top-0 rounded-top-0">
                 <div class="card-body p-4">
 
-                    <h6 class="fw-semibold mb-3">Change Password</h6>
+                    <h6 class="fw-semibold mb-3">{{ __('settings.change_password') }}</h6>
 
                     <div class="row mb-4">
-                        <div class="col-sm-4 text-muted">Last Password Change</div>
+                        <div class="col-sm-4 text-muted">{{ __('settings.last_password_change') }}</div>
                         <div class="col-sm-8">
                             @if ($user->password_changed_at)
                                 {{ $user->password_changed_at->format('d M Y, H:i') }}
                             @else
-                                <span class="text-muted">Never changed</span>
+                                <span class="text-muted">{{ __('settings.never_changed') }}</span>
                             @endif
                         </div>
                     </div>
@@ -491,7 +491,7 @@
                         @method('PUT')
 
                         <div class="mb-3">
-                            <label for="current_password" class="form-label fw-medium">Current Password</label>
+                            <label for="current_password" class="form-label fw-medium">{{ __('settings.current_password') }}</label>
                             <input type="password" id="current_password" name="current_password"
                                    class="form-control @error('current_password', 'updatePassword') is-invalid @enderror"
                                    autocomplete="current-password">
@@ -499,7 +499,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label fw-medium">New Password</label>
+                            <label for="password" class="form-label fw-medium">{{ __('settings.new_password') }}</label>
                             <input type="password" id="password" name="password"
                                    class="form-control @error('password', 'updatePassword') is-invalid @enderror"
                                    autocomplete="new-password">
@@ -507,7 +507,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="password_confirmation" class="form-label fw-medium">Confirm Password</label>
+                            <label for="password_confirmation" class="form-label fw-medium">{{ __('settings.confirm_password') }}</label>
                             <input type="password" id="password_confirmation" name="password_confirmation"
                                    class="form-control"
                                    autocomplete="new-password">
