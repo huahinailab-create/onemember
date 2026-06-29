@@ -796,4 +796,24 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### DECISION-058: Data Import Never Overwrites; Duplicates Require Explicit Action
+
+- **Date:** 2026-06-30
+- **Requested by:** Product Owner (Sprint 6.4 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **Imports never overwrite existing records automatically.** When a CSV row matches an existing member (by phone or email), the row is flagged as a duplicate and skipped — never updated, merged, or overwritten. The merchant receives a report showing which rows were skipped and why.
+  2. **Duplicate detection is based on phone (primary) and email (secondary).** A row is a duplicate if a member with the same phone number OR the same email address already exists for that merchant. Phone is checked first because it is the primary identifier in OneMember.
+  3. **Merchants must take explicit action to resolve duplicates.** Resolving duplicates (e.g., editing existing records or choosing to skip) must be a deliberate manual step in the application — never automatic.
+  4. **Large imports (>5,000 rows) are automatically queued.** Imports with more than 5,000 rows dispatch an `ImportMembersJob` and the merchant is notified that the import is processing. Imports ≤5,000 rows run synchronously.
+  5. **Imports use per-row transactions.** Each row is committed or rolled back independently. A failure on one row does not abort the remaining rows. The result report distinguishes: imported, skipped (duplicate), failed (error), and warnings.
+  6. **Exports are always scoped to the authenticated merchant.** No cross-tenant data can appear in any export. Exports are streamed (not buffered in memory) and include a UTF-8 BOM for Excel compatibility.
+  7. **CSV only.** Imports and exports use CSV format exclusively. Excel (`.xlsx`) support is deferred.
+  8. **Maximum upload size: 10 MB.** Files exceeding 10 MB are rejected at the request validation layer.
+  9. **Security logging.** Import attempts, completions, and failures are written to the security log. Export generation is also logged. No PII (member names, emails, phones) is written to logs.
+- **Reason:** Silent overwrites are a data-safety risk. A merchant who re-imports a CSV after edits should not silently lose changes made inside OneMember. The "flag and skip" approach maximises data integrity while still giving the merchant visibility into what happened. Queue-based large import prevents HTTP timeouts and provides a better UX for bulk migrations.
+- **Impact:** New: `app/Services/ImportService.php`, `app/Services/ExportService.php`, `app/Http/Controllers/DataManagementController.php`, `app/Jobs/ImportMembersJob.php`, `resources/views/data/*.blade.php`, `lang/en/data.php`, `lang/th/data.php`, `tests/Feature/DataImportExportTest.php`, `docs/26-Data-Import-and-Export.md`. Modified: `routes/web.php`, `resources/views/settings/index.blade.php`, `app/Http/Controllers/SettingsController.php`, `app/Services/SecurityLogger.php`, `lang/en/settings.php`, `lang/th/settings.php`.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

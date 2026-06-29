@@ -45,6 +45,12 @@
                 <i class="bi bi-shield-lock me-1"></i>{{ __('settings.tab_security') }}
             </button>
         </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab-data" data-bs-toggle="tab"
+                    data-bs-target="#pane-data" type="button" role="tab">
+                <i class="bi bi-database me-1"></i>{{ __('settings.tab_data') }}
+            </button>
+        </li>
     </ul>
 
     <div class="tab-content">
@@ -725,6 +731,134 @@
                         </button>
 
                     </form>
+
+                </div>
+            </div>
+        </div>
+
+        {{-- ── TAB 5: Data Management ──────────────────────────── --}}
+        <div class="tab-pane fade" id="pane-data" role="tabpanel">
+            <div class="card border-top-0 rounded-top-0">
+                <div class="card-body p-4">
+
+                    <h5 class="fw-semibold mb-1">{{ __('data.tab_data') }}</h5>
+                    <p class="text-muted small mb-4">{{ __('data.tab_data_subtitle') }}</p>
+
+                    <div class="row g-3">
+
+                        {{-- Import Members --}}
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card h-100 shadow-sm border-primary-subtle">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="mb-2">
+                                        <span class="fs-3 text-primary"><i class="bi bi-cloud-upload"></i></span>
+                                    </div>
+                                    <h6 class="fw-semibold">{{ __('data.import_members_title') }}</h6>
+                                    <p class="text-muted small flex-grow-1">{{ __('data.import_members_desc') }}</p>
+                                    <a href="{{ route('data.import.form') }}" class="btn btn-primary btn-sm">
+                                        <i class="bi bi-upload me-1"></i>{{ __('data.import_members_btn') }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Export Members --}}
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="mb-2">
+                                        <span class="fs-3 text-success"><i class="bi bi-people"></i></span>
+                                    </div>
+                                    <h6 class="fw-semibold">{{ __('data.export_members_title') }}</h6>
+                                    <p class="text-muted small flex-grow-1">{{ __('data.export_members_desc') }}</p>
+                                    <a href="{{ route('data.export', 'members') }}" class="btn btn-outline-success btn-sm">
+                                        <i class="bi bi-download me-1"></i>{{ __('data.export_members_btn') }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Export Campaigns --}}
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="mb-2">
+                                        <span class="fs-3 text-info"><i class="bi bi-megaphone"></i></span>
+                                    </div>
+                                    <h6 class="fw-semibold">{{ __('data.export_campaigns_title') }}</h6>
+                                    <p class="text-muted small flex-grow-1">{{ __('data.export_campaigns_desc') }}</p>
+                                    <a href="{{ route('data.export', 'campaigns') }}" class="btn btn-outline-info btn-sm">
+                                        <i class="bi bi-download me-1"></i>{{ __('data.export_campaigns_btn') }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Export Rewards --}}
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="mb-2">
+                                        <span class="fs-3 text-warning"><i class="bi bi-gift"></i></span>
+                                    </div>
+                                    <h6 class="fw-semibold">{{ __('data.export_rewards_title') }}</h6>
+                                    <p class="text-muted small flex-grow-1">{{ __('data.export_rewards_desc') }}</p>
+                                    <a href="{{ route('data.export', 'rewards') }}" class="btn btn-outline-warning btn-sm">
+                                        <i class="bi bi-download me-1"></i>{{ __('data.export_rewards_btn') }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Export Purchases --}}
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="mb-2">
+                                        <span class="fs-3 text-secondary"><i class="bi bi-cart-check"></i></span>
+                                    </div>
+                                    <h6 class="fw-semibold">{{ __('data.export_purchases_title') }}</h6>
+                                    <p class="text-muted small flex-grow-1">{{ __('data.export_purchases_desc') }}</p>
+                                    <a href="{{ route('data.export', 'purchases') }}" class="btn btn-outline-secondary btn-sm">
+                                        <i class="bi bi-download me-1"></i>{{ __('data.export_purchases_btn') }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Export Redemptions --}}
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="mb-2">
+                                        <span class="fs-3 text-danger"><i class="bi bi-bag-check"></i></span>
+                                    </div>
+                                    <h6 class="fw-semibold">{{ __('data.export_redemptions_title') }}</h6>
+                                    <p class="text-muted small flex-grow-1">{{ __('data.export_redemptions_desc') }}</p>
+                                    <a href="{{ route('data.export', 'redemptions') }}" class="btn btn-outline-danger btn-sm">
+                                        <i class="bi bi-download me-1"></i>{{ __('data.export_redemptions_btn') }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Import History (placeholder) --}}
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card h-100 shadow-sm border-dashed opacity-75">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="mb-2">
+                                        <span class="fs-3 text-muted"><i class="bi bi-clock-history"></i></span>
+                                    </div>
+                                    <h6 class="fw-semibold text-muted">{{ __('data.import_history_title') }}</h6>
+                                    <p class="text-muted small flex-grow-1">{{ __('data.import_history_desc') }}</p>
+                                    <span class="badge bg-secondary-subtle text-secondary">
+                                        {{ __('data.import_history_coming_soon') }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
 
                 </div>
             </div>

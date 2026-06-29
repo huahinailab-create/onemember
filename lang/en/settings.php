@@ -7,6 +7,7 @@ return [
     'tab_preferences'            => 'Business Preferences',
     'tab_account'                => 'Account',
     'tab_security'               => 'Security',
+    'tab_data'                   => 'Data',
     'business_name'              => 'Business Name',
     'business_name_ph'           => 'e.g. Happy Coffee Shop',
     'business_type'              => 'Business Type',

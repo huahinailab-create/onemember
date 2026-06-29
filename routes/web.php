@@ -9,6 +9,7 @@ use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RedemptionController;
 use App\Http\Controllers\RewardController;
+use App\Http\Controllers\DataManagementController;
 use App\Http\Controllers\MerchantProfileController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FeedbackController;
@@ -63,6 +64,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
     Route::put('/settings/profile', [SettingsController::class, 'updateProfile'])->name('settings.profile.update');
     Route::put('/settings/preferences', [SettingsController::class, 'updatePreferences'])->name('settings.preferences.update');
+
+    // Data Management
+    Route::get('/settings/data/import/members',         [DataManagementController::class, 'importForm'])->name('data.import.form');
+    Route::post('/settings/data/import/members/upload', [DataManagementController::class, 'importUpload'])->name('data.import.upload');
+    Route::post('/settings/data/import/members/preview',[DataManagementController::class, 'importPreview'])->name('data.import.preview');
+    Route::post('/settings/data/import/members/execute',[DataManagementController::class, 'importExecute'])->name('data.import.execute');
+    Route::get('/settings/data/export/{type}',          [DataManagementController::class, 'export'])->name('data.export');
 
     // Legacy redirect — keeps old links working
     Route::get('/merchant/profile', fn () => redirect()->route('settings'))->name('merchant.profile.edit');

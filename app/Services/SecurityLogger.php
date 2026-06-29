@@ -98,6 +98,43 @@ class SecurityLogger
     }
 
     // ---------------------------------------------------------------
+    // Data import / export
+    // ---------------------------------------------------------------
+
+    public function importAttempted(int $userId, int $merchantId, string $type, int $rowCount): void
+    {
+        $this->write('data.import.attempted', $userId, null, $merchantId, [
+            'type'      => $type,
+            'row_count' => $rowCount,
+        ]);
+    }
+
+    public function importCompleted(int $userId, int $merchantId, string $type, int $imported, int $duplicates, int $failed): void
+    {
+        $this->write('data.import.completed', $userId, null, $merchantId, [
+            'type'       => $type,
+            'imported'   => $imported,
+            'duplicates' => $duplicates,
+            'failed'     => $failed,
+        ]);
+    }
+
+    public function importFailed(int $userId, int $merchantId, string $type, string $reason): void
+    {
+        $this->write('data.import.failed', $userId, null, $merchantId, [
+            'type'   => $type,
+            'reason' => $reason,
+        ]);
+    }
+
+    public function exportGenerated(int $userId, int $merchantId, string $type): void
+    {
+        $this->write('data.export.generated', $userId, null, $merchantId, [
+            'type' => $type,
+        ]);
+    }
+
+    // ---------------------------------------------------------------
     // Internal
     // ---------------------------------------------------------------
 

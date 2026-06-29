@@ -17,7 +17,7 @@ class SettingsController extends Controller
         $merchant = $user->merchant;
 
         $activeTab = $request->input('tab', 'profile');
-        if (! in_array($activeTab, ['profile', 'preferences', 'account', 'security'])) {
+        if (! in_array($activeTab, ['profile', 'preferences', 'account', 'security', 'data'])) {
             $activeTab = 'profile';
         }
 

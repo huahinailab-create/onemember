@@ -7,6 +7,7 @@ return [
     'tab_preferences'            => 'การตั้งค่าธุรกิจ',
     'tab_account'                => 'บัญชี',
     'tab_security'               => 'ความปลอดภัย',
+    'tab_data'                   => 'ข้อมูล',
     'business_name'              => 'ชื่อธุรกิจ',
     'business_name_ph'           => 'เช่น ร้านกาแฟแฮปปี้',
     'business_type'              => 'ประเภทธุรกิจ',
