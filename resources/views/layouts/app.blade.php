@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    {{-- PWA / mobile meta --}}
+    <meta name="theme-color" content="#1d4ed8">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="{{ config('app.name') }}">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+
     <title>{{ $title ?? config('app.name') }}</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -14,17 +23,23 @@
 </head>
 <body>
 
-<div class="d-flex" x-data="{ sidebarOpen: true }">
+@php
+    $__branding    = new \App\Services\MerchantBrandingService(Auth::user()?->merchant);
+    $__logo        = $__branding->logo();
+    $__counterMode = (bool) (Auth::user()?->merchant?->settings['counter_mode'] ?? false);
+@endphp
+
+<div class="d-flex" x-data="{ sidebarOpen: window.innerWidth >= 768 }">
+
+    {{-- ── Mobile backdrop ──────────────────────────────── --}}
+    <div class="sidebar-backdrop d-md-none"
+         x-show="sidebarOpen"
+         @click="sidebarOpen = false"></div>
 
     {{-- ── Sidebar ───────────────────────────────────────── --}}
-    <nav class="sidebar p-3" :class="{ 'collapsed': !sidebarOpen }" aria-label="Main navigation">
+    <nav class="sidebar p-3" :class="{ 'collapsed': !sidebarOpen }" aria-label="{{ __('navigation.main_menu') }}">
 
         {{-- Brand --}}
-        @php
-            
-            $__branding = new \App\Services\MerchantBrandingService(Auth::user()?->merchant);
-            $__logo     = $__branding->logo();
-        @endphp
         <a href="{{ route('dashboard') }}"
            class="d-flex align-items-center gap-2 text-decoration-none text-white px-1 mb-1">
             @if ($__logo)
@@ -48,42 +63,48 @@
         <ul class="nav flex-column gap-1 mb-2">
             <li class="nav-item">
                 <a href="{{ route('dashboard') }}"
-                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('dashboard') ? 'active' : '' }}"
+                   >
                     <i class="bi bi-speedometer2"></i>
                     <span>{{ __('navigation.dashboard') }}</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('members') }}"
-                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('members', 'members.*') ? 'active' : '' }}">
+                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('members', 'members.*') ? 'active' : '' }}"
+                   >
                     <i class="bi bi-people"></i>
                     <span>{{ __('navigation.members') }}</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('campaigns.index') }}"
-                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('campaigns.*') ? 'active' : '' }}">
+                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('campaigns.*') ? 'active' : '' }}"
+                   >
                     <i class="bi bi-star"></i>
                     <span>{{ __('navigation.campaigns') }}</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('rewards') }}"
-                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('rewards') ? 'active' : '' }}">
+                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('rewards') ? 'active' : '' }}"
+                   >
                     <i class="bi bi-gift"></i>
                     <span>{{ __('navigation.rewards') }}</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('transactions') }}"
-                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('transactions') ? 'active' : '' }}">
+                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('transactions') ? 'active' : '' }}"
+                   >
                     <i class="bi bi-arrow-left-right"></i>
                     <span>{{ __('navigation.transactions') }}</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('reports') }}"
-                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('reports') ? 'active' : '' }}">
+                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('reports') ? 'active' : '' }}"
+                   >
                     <i class="bi bi-bar-chart-line"></i>
                     <span>{{ __('navigation.reports') }}</span>
                 </a>
@@ -95,14 +116,16 @@
         <ul class="nav flex-column gap-1">
             <li class="nav-item">
                 <a href="{{ route('subscription.index') }}"
-                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('subscription.*') ? 'active' : '' }}">
+                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('subscription.*') ? 'active' : '' }}"
+                   >
                     <i class="bi bi-credit-card"></i>
                     <span>{{ __('navigation.subscription') }}</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('settings') }}"
-                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('settings*') ? 'active' : '' }}">
+                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('settings*') ? 'active' : '' }}"
+                   >
                     <i class="bi bi-gear"></i>
                     <span>{{ __('navigation.settings') }}</span>
                 </a>
@@ -153,15 +176,49 @@
 
         {{-- Topbar --}}
         <header class="topbar">
-            <button class="topbar-toggle" @click="sidebarOpen = !sidebarOpen" aria-label="Toggle sidebar">
+            <button class="topbar-toggle" @click="sidebarOpen = !sidebarOpen" aria-label="{{ __('mobile.toggle_sidebar') }}">
                 <i class="bi bi-list"></i>
             </button>
             <div class="topbar-title">{{ $pageTitle ?? '' }}</div>
-            <div class="topbar-user ms-auto">
-                <i class="bi bi-person-circle text-secondary"></i>
-                <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
+            <div class="ms-auto d-flex align-items-center gap-2">
+                {{-- Counter Mode toggle --}}
+                <form method="POST" action="{{ route('counter-mode.toggle') }}" class="d-inline">
+                    @csrf
+                    @method('PUT')
+                    <button type="submit"
+                            class="topbar-counter-btn {{ $__counterMode ? 'active' : '' }}"
+                            title="{{ $__counterMode ? __('mobile.counter_mode_disable') : __('mobile.counter_mode_enable') }}">
+                        <i class="bi bi-shop"></i>
+                        <span class="d-none d-sm-inline">{{ __('mobile.counter_mode') }}</span>
+                    </button>
+                </form>
+                <div class="topbar-user">
+                    <i class="bi bi-person-circle text-secondary"></i>
+                    <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
+                </div>
             </div>
         </header>
+
+        {{-- Counter Mode bar --}}
+        @if ($__counterMode)
+            <div class="counter-mode-bar">
+                <span class="counter-mode-label">
+                    <i class="bi bi-shop me-1"></i>{{ __('mobile.counter_mode_active') }}
+                </span>
+                <div class="counter-mode-actions ms-auto">
+                    <a href="{{ route('members') }}?search_focus=1"
+                       class="btn btn-sm btn-light d-flex align-items-center gap-1">
+                        <i class="bi bi-search"></i>
+                        <span>{{ __('mobile.counter_find_member') }}</span>
+                    </a>
+                    <a href="{{ route('members.create') }}"
+                       class="btn btn-sm btn-warning d-flex align-items-center gap-1">
+                        <i class="bi bi-person-plus"></i>
+                        <span>{{ __('mobile.counter_add_member') }}</span>
+                    </a>
+                </div>
+            </div>
+        @endif
 
         {{-- Flash messages --}}
         @if (session('success') || session('error'))
@@ -196,6 +253,9 @@
     {{-- ── /Main area ────────────────────────────────────── --}}
 
 </div>
+
+{{-- FAB — mobile only --}}
+<x-fab />
 
 {{-- Floating feedback button (desktop only) --}}
 <button type="button"

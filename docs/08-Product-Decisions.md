@@ -816,4 +816,23 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### DECISION-059: Mobile Experience — Overlay Sidebar, Counter Mode, FAB, PWA Readiness
+
+- **Date:** 2026-06-30
+- **Requested by:** Product Owner (Sprint 6.5 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **Mobile sidebar is an overlay, not a push layout.** On viewports narrower than 768 px, the sidebar slides in as a fixed overlay (z-index 1055) with a semi-transparent backdrop. Tapping the backdrop closes the sidebar. On desktop (≥768 px) the existing inline push layout is unchanged.
+  2. **Sidebar starts closed on mobile.** The Alpine.js initial state uses `window.innerWidth >= 768` so the sidebar is open by default on desktop and closed by default on mobile. No server-side detection is used.
+  3. **Counter Mode is a persisted merchant preference.** When enabled, a full-width quick-action bar is shown at the top of every authenticated page, providing one-tap access to Find Member and Add Purchase. The preference is stored as `merchant.settings['counter_mode']` (boolean) and toggled via `PUT /settings/counter-mode`. The toggle button appears in the topbar on all screens.
+  4. **FAB (Floating Action Button) is mobile-only.** A circular FAB is shown in the bottom-right corner of every authenticated page on viewports < 768 px. It links to Add Member (`/members/create`). It is hidden on desktop to avoid cluttering the desktop UX.
+  5. **Minimum touch target size is 44 × 44 px.** All interactive elements on mobile (nav links, buttons, form controls) must meet the WCAG 2.5.5 target size guideline. Achieved through `min-height: 44px` CSS rules in the mobile media query.
+  6. **Form keyboard hints.** Phone number inputs use `type="tel"` and `inputmode="numeric"`. Email inputs use `type="email"` and `autocomplete="email"`. This triggers the correct software keyboard on mobile without changing validation behaviour.
+  7. **PWA Readiness (groundwork only).** A `manifest.webmanifest` is served from `/public`, with app name, icons placeholder, and `theme-color`. Apple touch meta tags and `<meta name="theme-color">` are added to the layout `<head>`. Full PWA (service worker, offline cache) is deferred to a future sprint.
+  8. **No Tailwind. No inline CSS. No inline JS beyond Alpine.js attribute expressions.** All new styles go into `resources/css/app.css`. All behaviour is driven by Alpine.js `x-data`, `x-show`, `:class`, and `@click` attribute expressions — the established pattern in this project.
+- **Reason:** Merchants increasingly manage their loyalty programme from a phone at the counter. The existing desktop-first layout is unusable below 768 px: the sidebar takes up the full width, touch targets are too small, and there is no quick path to core POS actions. Counter Mode and the FAB address the two most common POS micro-tasks without restructuring the desktop experience.
+- **Impact:** New: `app/Http/Controllers/CounterModeController.php`, `resources/views/components/fab.blade.php`, `lang/en/mobile.php`, `lang/th/mobile.php`, `public/manifest.webmanifest`, `tests/Feature/MobileExperienceTest.php`, `docs/27-Mobile-Experience.md`. Modified: `resources/css/app.css` (mobile overlay sidebar, FAB, counter mode, touch targets), `resources/views/layouts/app.blade.php` (PWA meta, backdrop, counter mode bar, FAB include, x-data init), `resources/views/members/create.blade.php` (phone type="tel", email type="email"), `routes/web.php` (counter mode toggle route).
+
+---
+
 *New decisions must be appended above this line in the format shown.*

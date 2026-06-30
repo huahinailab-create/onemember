@@ -63,7 +63,8 @@
                             <label for="phone" class="form-label">
                                 {{ __('members.mobile_number') }} <span class="text-danger">*</span>
                             </label>
-                            <input type="text"
+                            <input type="tel"
+                                   inputmode="numeric"
                                    id="phone"
                                    name="phone"
                                    class="form-control @error('phone') is-invalid @enderror"
@@ -111,6 +112,8 @@
                         <div class="mb-3">
                             <label for="email" class="form-label">{{ __('members.email') }}</label>
                             <input type="email"
+                                   inputmode="email"
+                                   autocomplete="email"
                                    id="email"
                                    name="email"
                                    class="form-control @error('email') is-invalid @enderror"

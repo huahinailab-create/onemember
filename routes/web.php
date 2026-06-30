@@ -9,6 +9,7 @@ use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RedemptionController;
 use App\Http\Controllers\RewardController;
+use App\Http\Controllers\CounterModeController;
 use App\Http\Controllers\DataManagementController;
 use App\Http\Controllers\MerchantProfileController;
 use App\Http\Controllers\ProfileController;
@@ -64,6 +65,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
     Route::put('/settings/profile', [SettingsController::class, 'updateProfile'])->name('settings.profile.update');
     Route::put('/settings/preferences', [SettingsController::class, 'updatePreferences'])->name('settings.preferences.update');
+
+    // Counter Mode toggle
+    Route::put('/settings/counter-mode', [CounterModeController::class, 'toggle'])->name('counter-mode.toggle');
 
     // Data Management
     Route::get('/settings/data/import/members',         [DataManagementController::class, 'importForm'])->name('data.import.form');
