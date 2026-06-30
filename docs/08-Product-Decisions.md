@@ -855,4 +855,23 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### DECISION-061: Merchant Intelligence — Rule-Based V1; Architecture Supports Future AI
+
+- **Date:** 2026-06-30
+- **Requested by:** Product Owner (Sprint 6.7 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **Merchant Intelligence is rule-based in V1.** All insights, health scores, and opportunity cards are computed from existing merchant data using deterministic rules — no external AI services, no ML models, no API calls.
+  2. **The architecture is designed for future AI enhancement.** `InsightProviderInterface` defines the contract between the service and the insight logic. `RuleBasedInsightProvider` is the V1 implementation. A future `AiInsightProvider` can implement the same interface and replace or augment the rule-based provider without changing the UI, the controller, or the caching layer.
+  3. **`MerchantIntelligenceService` is the single source of truth.** All insight queries, health score calculations, and opportunity detection go through `MerchantIntelligenceService`. No controller or view may compute insights directly.
+  4. **Results are cached for 15 minutes per merchant.** All three outputs (insights, health score, opportunities) are computed together in one provider call and cached under a single key (`merchant_intelligence_{id}`). Cache is not invalidated on individual actions — it expires naturally.
+  5. **Health score is 0–100.** Factors: active campaign (+15), active rewards (+10), member count (+5/+10/+15/+20), recent purchases 30d (+5/+15/+20/+25), any redemptions (+15), paid plan (+15). Labels: Excellent (80+), Good (60–79), Needs Attention (40–59), Getting Started (20–39), New Business (0–19).
+  6. **Dashboard shows a maximum of 5 insights.** Insights are sorted by priority (high > medium > low). If more than 5 are generated, the lowest-priority ones are dropped.
+  7. **No controller business logic.** Business logic belongs inside `MerchantIntelligenceService` and `RuleBasedInsightProvider`. The controller only injects the service and passes data to the view.
+  8. **Weekly summary is a data stub.** `getWeeklySummary()` returns a structured array for future email use but does not send any emails in V1.
+- **Reason:** The product needs actionable business insights, but building an AI pipeline in V1 would be premature. Rule-based insights are predictable, fast, and testable. The interface-based architecture ensures that upgrading to AI recommendations later is a swap of one class, not a rewrite of the feature.
+- **Impact:** New: `app/Contracts/InsightProviderInterface.php`, `app/Services/Intelligence/RuleBasedInsightProvider.php`, `app/Services/MerchantIntelligenceService.php`, `lang/en/intelligence.php`, `lang/th/intelligence.php`, `tests/Feature/MerchantIntelligenceTest.php`, `docs/29-Merchant-Intelligence.md`. Modified: `app/Http/Controllers/DashboardController.php` (intelligence injection), `resources/views/dashboard.blade.php` (intelligence card), `app/Providers/AppServiceProvider.php` (interface binding).
+
+---
+
 *New decisions must be appended above this line in the format shown.*

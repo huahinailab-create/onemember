@@ -219,6 +219,62 @@
     </div>
     @endif
 
+    {{-- ── Section 2c: Business Insights ─────────────────────── --}}
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <span class="fw-semibold">{{ __('intelligence.card_title') }}</span>
+            <span class="badge {{ $healthScore['badge_class'] }}">
+                {{ $healthScore['label_text'] }} &middot; {{ $healthScore['score'] }}/100
+            </span>
+        </div>
+        @if (count($insights) > 0)
+            <div class="list-group list-group-flush">
+                @foreach ($insights as $insight)
+                    <div class="list-group-item d-flex align-items-start gap-3 py-3">
+                        <i class="bi {{ $insight['icon'] }} text-primary mt-1 flex-shrink-0"></i>
+                        <div class="flex-grow-1">
+                            <span class="small">{{ $insight['text'] }}</span>
+                            @if ($insight['action_url'])
+                                <a href="{{ $insight['action_url'] }}"
+                                   class="small ms-2 fw-medium text-decoration-none">
+                                    {{ $insight['action_label'] }} &rarr;
+                                </a>
+                            @endif
+                        </div>
+                        @if ($insight['priority'] === 'high')
+                            <span class="badge text-bg-danger flex-shrink-0">{{ __('intelligence.priority_high') }}</span>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <div class="card-body">
+                <p class="text-muted small mb-0">{{ __('intelligence.no_insights') }}</p>
+            </div>
+        @endif
+        @if (count($opportunities) > 0)
+            <div class="card-footer bg-transparent border-top">
+                <div class="row g-3">
+                    @foreach ($opportunities as $opp)
+                        <div class="col-12 col-md-6">
+                            <div class="d-flex align-items-start gap-2">
+                                <i class="bi {{ $opp['icon'] }} text-muted mt-1 flex-shrink-0"></i>
+                                <div>
+                                    <div class="small fw-medium">{{ $opp['title'] }}</div>
+                                    <div class="text-muted small">{{ $opp['description'] }}</div>
+                                    <a href="{{ $opp['action_url'] }}"
+                                       class="small text-primary fw-medium text-decoration-none">
+                                        {{ $opp['action_label'] }} &rarr;
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+    </div>
+
     {{-- ── Sections 3 & 4: Recent Activity + Top Members ─────── --}}
     <div class="row g-4 mb-4">
 

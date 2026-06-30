@@ -4,13 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Enums\TransactionType;
 use App\Services\AnalyticsService;
+use App\Services\MerchantIntelligenceService;
 use App\Services\SubscriptionService;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request, SubscriptionService $subscriptionService, AnalyticsService $analytics)
-    {
+    public function index(
+        Request $request,
+        SubscriptionService $subscriptionService,
+        AnalyticsService $analytics,
+        MerchantIntelligenceService $intelligence
+    ) {
         $merchant = $request->user()->merchant;
 
         // Redirect new merchants to the onboarding wizard
@@ -35,6 +40,9 @@ class DashboardController extends Controller
                 'hasAnyRewards'       => false,
                 'firstCampaignId'     => null,
                 'subscriptionUsage'   => null,
+                'insights'            => [],
+                'healthScore'         => ['score' => 0, 'label' => 'new_business', 'label_text' => __('intelligence.health_new_business'), 'explanation' => __('intelligence.health_new_business_explanation'), 'badge_class' => 'bg-secondary'],
+                'opportunities'       => [],
             ]);
         }
 
@@ -84,6 +92,10 @@ class DashboardController extends Controller
         $firstCampaign   = $merchant->loyaltyPrograms()->withTrashed()->oldest('id')->first();
         $firstCampaignId = $firstCampaign?->id;
 
+        $insights     = $intelligence->getInsights($merchant);
+        $healthScore  = $intelligence->getHealthScore($merchant);
+        $opportunities = $intelligence->getOpportunities($merchant);
+
         return view('dashboard', compact(
             'totalActiveMembers',
             'activeCampaignCount',
@@ -97,6 +109,9 @@ class DashboardController extends Controller
             'hasAnyRewards',
             'firstCampaignId',
             'subscriptionUsage',
+            'insights',
+            'healthScore',
+            'opportunities',
         ));
     }
 }
