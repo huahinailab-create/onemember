@@ -22,6 +22,8 @@ class Member extends Model
         'email',
         'phone',
         'member_code',
+        'public_uuid',
+        'portal_enabled',
         'birthday',
         'status',
         'total_points',
@@ -37,6 +39,7 @@ class Member extends Model
         'last_activity_at' => 'datetime',
         'total_points'     => 'integer',
         'lifetime_points'  => 'integer',
+        'portal_enabled'   => 'boolean',
     ];
 
     public function resolveRouteBinding($value, $field = null): ?static
@@ -51,6 +54,9 @@ class Member extends Model
         static::creating(function (Member $member) {
             if (empty($member->member_code)) {
                 $member->member_code = strtoupper(Str::random(10));
+            }
+            if (empty($member->public_uuid)) {
+                $member->public_uuid = (string) Str::uuid();
             }
         });
     }

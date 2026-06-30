@@ -97,4 +97,19 @@ return [
     'no_active_campaign'  => 'ไม่พบแคมเปญที่ใช้งานอยู่ กรุณาเปิดใช้งานแคมเปญเพื่อให้แลกรางวัลได้',
     'archive_confirm'     => 'คุณแน่ใจหรือไม่ว่าต้องการเก็บถาวร :name?',
     'archive_note'        => 'สมาชิกนี้จะถูกลบออกจากรายการที่ใช้งาน การเก็บถาวรไม่ได้ลบข้อมูลใดๆ',
+
+    // Portal controls
+    'portal_card_title'         => 'พอร์ทัลสมาชิก',
+    'portal_status_enabled'     => 'พอร์ทัลเปิดใช้งาน',
+    'portal_status_disabled'    => 'พอร์ทัลปิดใช้งาน',
+    'portal_open_link'          => 'เปิดพอร์ทัล',
+    'portal_view_card'          => 'ดูบัตร',
+    'portal_disable_btn'        => 'ปิดพอร์ทัล',
+    'portal_enable_btn'         => 'เปิดพอร์ทัล',
+    'portal_regenerate_btn'     => 'สร้าง QR ใหม่',
+    'portal_regenerate_confirm' => 'การสร้าง QR ใหม่จะยกเลิก QR ปัจจุบัน QR ที่พิมพ์ไปแล้วจะใช้ไม่ได้ ดำเนินการต่อหรือไม่?',
+    'portal_toggled_enabled'    => 'เปิดใช้งานพอร์ทัลสมาชิกแล้ว',
+    'portal_toggled_disabled'   => 'ปิดใช้งานพอร์ทัลสมาชิกแล้ว',
+    'portal_qr_regenerated'     => 'สร้าง QR โค้ดใหม่แล้ว QR เดิมใช้ไม่ได้แล้ว',
+    'qr_coming_soon'            => 'QR โค้ด — เร็วๆ นี้',
 ];

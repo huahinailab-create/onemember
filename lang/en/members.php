@@ -97,4 +97,19 @@ return [
     'no_active_campaign'  => 'No active campaign found. Activate a campaign to enable reward redemption.',
     'archive_confirm'     => 'Are you sure you want to archive :name?',
     'archive_note'        => 'This member will be removed from your active list. Archiving does not delete any data.',
+
+    // Portal controls
+    'portal_card_title'         => 'Member Portal',
+    'portal_status_enabled'     => 'Portal enabled',
+    'portal_status_disabled'    => 'Portal disabled',
+    'portal_open_link'          => 'Open portal',
+    'portal_view_card'          => 'View card',
+    'portal_disable_btn'        => 'Disable portal',
+    'portal_enable_btn'         => 'Enable portal',
+    'portal_regenerate_btn'     => 'Regenerate QR',
+    'portal_regenerate_confirm' => 'Regenerating the QR code will invalidate the current QR. Any printed QR codes will stop working. Continue?',
+    'portal_toggled_enabled'    => 'Member portal enabled.',
+    'portal_toggled_disabled'   => 'Member portal disabled.',
+    'portal_qr_regenerated'     => 'QR code regenerated. Old QR codes are now invalid.',
+    'qr_coming_soon'            => 'QR Code — Coming Soon',
 ];

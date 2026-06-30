@@ -198,20 +198,71 @@
 
         <div class="col-12 col-lg-7 d-flex flex-column gap-3">
 
-            {{-- QR Card --}}
+            {{-- Member Portal Card --}}
             <div class="card">
                 <div class="card-header d-flex align-items-center gap-2">
                     <i class="bi bi-qr-code text-primary"></i>
-                    <span class="fw-semibold">{{ __('members.col_code') }}</span>
+                    <span class="fw-semibold">{{ __('members.portal_card_title') }}</span>
+                    @if ($member->portal_enabled)
+                        <span class="badge bg-success ms-auto">{{ __('members.portal_status_enabled') }}</span>
+                    @else
+                        <span class="badge bg-secondary ms-auto">{{ __('members.portal_status_disabled') }}</span>
+                    @endif
                 </div>
-                <div class="card-body text-center py-4">
-                    <div class="coming-soon-icon bg-secondary bg-opacity-10 mx-auto">
-                        <i class="bi bi-qr-code text-secondary"></i>
-                    </div>
-                    <p class="text-muted mb-1 fw-medium">{{ __('members.qr_coming_soon') }}</p>
-                    <p class="text-muted mb-0 small">
-                        {{ __('members.member_code_label') }}: <span class="font-monospace fw-semibold">{{ $member->member_code }}</span>
-                    </p>
+                <div class="card-body text-center py-3">
+                    {{-- QR code --}}
+                    @if ($member->portal_enabled && $member->public_uuid)
+                        <div class="mb-3">
+                            <img src="{{ route('portal.qr', $member->public_uuid) }}"
+                                 alt="QR Code"
+                                 width="140" height="140"
+                                 class="img-fluid"
+                                 loading="lazy">
+                        </div>
+                        <p class="text-muted mb-0 small font-monospace">{{ $member->member_code }}</p>
+                        <div class="d-grid gap-2 mt-3">
+                            <a href="{{ route('portal.show', $member->public_uuid) }}"
+                               target="_blank"
+                               class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-box-arrow-up-right me-1"></i>{{ __('members.portal_open_link') }}
+                            </a>
+                            <a href="{{ route('portal.card', $member->public_uuid) }}"
+                               target="_blank"
+                               class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-credit-card me-1"></i>{{ __('members.portal_view_card') }}
+                            </a>
+                        </div>
+                    @else
+                        <div class="coming-soon-icon bg-secondary bg-opacity-10 mx-auto">
+                            <i class="bi bi-qr-code text-secondary"></i>
+                        </div>
+                        <p class="text-muted mb-0 small">{{ __('members.portal_status_disabled') }}</p>
+                    @endif
+                </div>
+                <div class="card-footer d-flex gap-2">
+                    {{-- Toggle portal --}}
+                    <form method="POST" action="{{ route('members.portal.toggle', $member) }}" class="flex-grow-1">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit" class="btn btn-sm btn-outline-secondary w-100">
+                            @if ($member->portal_enabled)
+                                <i class="bi bi-eye-slash me-1"></i>{{ __('members.portal_disable_btn') }}
+                            @else
+                                <i class="bi bi-eye me-1"></i>{{ __('members.portal_enable_btn') }}
+                            @endif
+                        </button>
+                    </form>
+                    {{-- Regenerate QR --}}
+                    @if ($member->portal_enabled)
+                        <form method="POST" action="{{ route('members.portal.regenerate', $member) }}" class="flex-grow-1"
+                              x-data="{}"
+                              @submit.prevent="confirm('{{ addslashes(__('members.portal_regenerate_confirm')) }}') && $el.submit()">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-outline-warning w-100">
+                                <i class="bi bi-arrow-repeat me-1"></i>{{ __('members.portal_regenerate_btn') }}
+                            </button>
+                        </form>
+                    @endif
                 </div>
             </div>
 

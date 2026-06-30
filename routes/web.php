@@ -10,6 +10,7 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RedemptionController;
 use App\Http\Controllers\RewardController;
 use App\Http\Controllers\CounterModeController;
+use App\Http\Controllers\CustomerPortalController;
 use App\Http\Controllers\DataManagementController;
 use App\Http\Controllers\MerchantProfileController;
 use App\Http\Controllers\ProfileController;
@@ -19,6 +20,11 @@ use Illuminate\Support\Facades\Route;
 
 // Health check — no auth required, returns JSON for uptime monitors
 Route::get('/up', HealthController::class)->name('health');
+
+// ── Customer self-service portal (public, no auth) ────────────────────────
+Route::get('/member/{publicUuid}',      [CustomerPortalController::class, 'show'])->name('portal.show');
+Route::get('/member/{publicUuid}/card', [CustomerPortalController::class, 'card'])->name('portal.card');
+Route::get('/member/{publicUuid}/qr.svg', [CustomerPortalController::class, 'qrSvg'])->name('portal.qr');
 
 Route::get('/', function () {
     return view('welcome');
@@ -88,6 +94,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/members/{member}', [MemberController::class, 'archive'])->name('members.archive');
     Route::post('/members/{member}/purchases', [PurchaseController::class, 'store'])->name('members.purchases.store');
     Route::post('/members/{member}/redemptions', [RedemptionController::class, 'store'])->name('members.redemptions.store');
+    // Member portal controls
+    Route::put('/members/{member}/portal/toggle',      [CustomerPortalController::class, 'togglePortal'])->name('members.portal.toggle');
+    Route::post('/members/{member}/portal/regenerate', [CustomerPortalController::class, 'regenerateQr'])->name('members.portal.regenerate');
 
     Route::get('/campaigns', [CampaignController::class, 'index'])->name('campaigns.index');
     Route::get('/campaigns/create', [CampaignController::class, 'create'])->name('campaigns.create');

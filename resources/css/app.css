@@ -232,6 +232,80 @@ body {
 
 [x-cloak] { display: none !important; }
 
+/* ── Customer Portal ─────────────────────────────────────── */
+.portal-body {
+    background-color: #f1f5f9;
+    min-height: 100vh;
+}
+
+.portal-wrapper {
+    min-height: calc(100vh - 60px);
+}
+
+.portal-header {
+    background: var(--portal-primary, #2563eb);
+}
+
+.portal-logo {
+    filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+}
+
+.portal-member-card {
+    background: linear-gradient(135deg, var(--portal-primary, #2563eb) 0%, var(--portal-secondary, #1e293b) 100%);
+    color: #ffffff;
+}
+
+.portal-card-logo {
+    filter: brightness(0) invert(1);
+}
+
+.portal-footer {
+    border-top: 1px solid #e2e8f0;
+    background: #ffffff;
+    font-size: 0.8125rem;
+}
+
+.portal-progress-bar {
+    background-color: var(--portal-primary, #2563eb);
+}
+
+/* Stamp dots */
+.stamp-dot {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid #dee2e6;
+    background: #ffffff;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.stamp-dot--filled {
+    background: var(--portal-primary, #2563eb);
+    border-color: var(--portal-primary, #2563eb);
+}
+
+/* Reward items */
+.portal-reward-item {
+    transition: box-shadow 0.15s ease;
+}
+
+.portal-reward-item--available {
+    background: #f0fdf4;
+}
+
+.portal-reward-item--locked {
+    opacity: 0.85;
+}
+
+/* ── Print styles ─────────────────────────────────────────── */
+@media print {
+    .d-print-none { display: none !important; }
+    .portal-footer { display: none !important; }
+    body { background: white; }
+    .portal-member-card { break-inside: avoid; }
+}
+
 /* ── Counter Mode ────────────────────────────────────────── */
 .counter-mode-bar {
     background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
