@@ -893,4 +893,23 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### DECISION-063: Developer Tools Sprint DEV-02 — Feature Flag + Productivity Suite
+
+- **Date:** 2026-07-01
+- **Requested by:** Engineering (Sprint DEV-02 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **Feature flag `DEV_TOOLS_ENABLED`** is added. Middleware now requires BOTH `APP_ENV != production` AND `DEV_TOOLS_ENABLED=true`. Defaults to `false`. Must be explicitly set on staging/local.
+  2. **No page is rebuilt from DEV-01.** All new pages are additive: Developer Dashboard (index), Quick Actions, Mail Inspector (replaces/extends existing mail page), Queue Inspector (extends), Environment Inspector (extends), Performance Tools, Log Viewer, Demo Data Reset.
+  3. **Queued jobs for heavy data generation.** `GenerateDemoDataJob` runs member/transaction/redemption seeding in the background. All jobs go through `QUEUE_CONNECTION`.
+  4. **Log Viewer tails `storage/logs/laravel.log`** — last 100 lines by default, search, filter by level, download, clear. Server-side only; no websocket tail.
+  5. **Developer Dashboard** is the new root `/dev` page showing system-wide stats and health at a glance.
+  6. **Demo Data Reset** runs inside a database transaction. Archives merchants, deletes demo members/transactions/campaigns/rewards/notifications/failed jobs, then re-seeds via `DatabaseSeeder` dev fixture classes.
+  7. **API keys are never displayed.** Only last 4 chars shown (e.g. `***xxxx`).
+  8. **Feature flags page** shows `DEV_TOOLS_ENABLED` and other boolean env vars relevant to development; cannot be edited from the UI (env is read-only at runtime).
+- **Reason:** DEV-01 built the operational tools. DEV-02 adds productivity tooling: at-a-glance dashboard, data generation, log inspection, and the safety gate of `DEV_TOOLS_ENABLED` so staging environments require opt-in.
+- **Impact:** Modified: `DevToolsAccess` middleware, `.env.example`, `routes/dev.php`, `_nav.blade.php`. New: `DevDashboardController`, `DevQuickActionsController`, `DevMailInspectorController`, `DevQueueInspectorController`, `DevEnvironmentInspectorController`, `DevPerformanceController`, `DevLogViewerController`, `DevDemoResetController`, `DevFeatureFlagsController`, `GenerateDemoDataJob`, `DevDemoService`, `tests/Feature/DevTools/`.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

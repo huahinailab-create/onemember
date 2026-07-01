@@ -10,12 +10,11 @@ class DevToolsAccess
 {
     public function handle(Request $request, Closure $next): Response
     {
-        $env   = app()->environment();
-        $debug = config('app.debug', false);
+        $flagEnabled = config('devtools.enabled', false);
+        $env         = app()->environment();
 
-        $allowed = $env === 'local'
-            || $env === 'development'
-            || ($debug && auth()->check());
+        $nonProduction = $env !== 'production';
+        $allowed       = $nonProduction && $flagEnabled;
 
         if (! $allowed) {
             abort(404);

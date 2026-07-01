@@ -137,7 +137,7 @@
         <div class="sidebar-section-label text-warning">{{ __('Developer Tools') }}</div>
         <ul class="nav flex-column gap-1 mb-2">
             <li class="nav-item">
-                <a href="{{ route('dev.users') }}"
+                <a href="{{ route('dev.dashboard') }}"
                    class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('dev.*') ? 'active' : '' }}">
                     <i class="bi bi-tools text-warning"></i>
                     <span class="text-warning">Dev Tools</span>

@@ -1,17 +1,73 @@
 <?php
 
+use App\Http\Controllers\DevTools\DevDashboardController;
 use App\Http\Controllers\DevTools\DevDatabaseController;
 use App\Http\Controllers\DevTools\DevDangerController;
+use App\Http\Controllers\DevTools\DevDemoResetController;
+use App\Http\Controllers\DevTools\DevEnvInspectorController;
 use App\Http\Controllers\DevTools\DevEnvironmentController;
+use App\Http\Controllers\DevTools\DevFeatureFlagsController;
 use App\Http\Controllers\DevTools\DevHealthController;
 use App\Http\Controllers\DevTools\DevHelpersController;
+use App\Http\Controllers\DevTools\DevLogViewerController;
 use App\Http\Controllers\DevTools\DevMailController;
+use App\Http\Controllers\DevTools\DevMailInspectorController;
 use App\Http\Controllers\DevTools\DevMembersController;
 use App\Http\Controllers\DevTools\DevMerchantsController;
+use App\Http\Controllers\DevTools\DevPerformanceController;
+use App\Http\Controllers\DevTools\DevQuickActionsController;
 use App\Http\Controllers\DevTools\DevQueueController;
+use App\Http\Controllers\DevTools\DevQueueInspectorController;
 use App\Http\Controllers\DevTools\DevStorageController;
 use App\Http\Controllers\DevTools\DevUsersController;
 use Illuminate\Support\Facades\Route;
+
+// ── Dashboard (root) ───────────────────────────────────────────────────────
+Route::get('/', [DevDashboardController::class, 'index'])->name('dashboard');
+
+// ── Quick Actions ──────────────────────────────────────────────────────────
+Route::get('/quick-actions',                   [DevQuickActionsController::class, 'index'])->name('quick-actions');
+Route::post('/quick-actions/demo-merchant',    [DevQuickActionsController::class, 'createDemoMerchant'])->name('quick-actions.demo-merchant');
+Route::post('/quick-actions/members',          [DevQuickActionsController::class, 'generateMembers'])->name('quick-actions.members');
+Route::post('/quick-actions/purchases',        [DevQuickActionsController::class, 'generatePurchases'])->name('quick-actions.purchases');
+Route::post('/quick-actions/points',           [DevQuickActionsController::class, 'generatePoints'])->name('quick-actions.points');
+Route::post('/quick-actions/stamps',           [DevQuickActionsController::class, 'generateStamps'])->name('quick-actions.stamps');
+Route::post('/quick-actions/redemptions',      [DevQuickActionsController::class, 'generateRedemptions'])->name('quick-actions.redemptions');
+Route::post('/quick-actions/birthdays',        [DevQuickActionsController::class, 'generateBirthdays'])->name('quick-actions.birthdays');
+Route::post('/quick-actions/notifications',    [DevQuickActionsController::class, 'generateNotifications'])->name('quick-actions.notifications');
+Route::post('/quick-actions/reset-demo',       [DevQuickActionsController::class, 'resetDemo'])->name('quick-actions.reset-demo');
+
+// ── Mail Inspector ─────────────────────────────────────────────────────────
+Route::get('/mail-inspector',                  [DevMailInspectorController::class, 'index'])->name('mail-inspector');
+Route::post('/mail-inspector/send-test',       [DevMailInspectorController::class, 'sendTest'])->name('mail-inspector.send-test');
+Route::post('/mail-inspector/send-verification',[DevMailInspectorController::class, 'sendVerification'])->name('mail-inspector.send-verification');
+Route::post('/mail-inspector/test-resend',     [DevMailInspectorController::class, 'testResend'])->name('mail-inspector.test-resend');
+Route::post('/mail-inspector/check-key',       [DevMailInspectorController::class, 'checkApiKey'])->name('mail-inspector.check-key');
+
+// ── Queue Inspector ────────────────────────────────────────────────────────
+Route::get('/queue-inspector',                 [DevQueueInspectorController::class, 'index'])->name('queue-inspector');
+Route::post('/queue-inspector/restart',        [DevQueueInspectorController::class, 'restart'])->name('queue-inspector.restart');
+Route::post('/queue-inspector/retry-failed',   [DevQueueInspectorController::class, 'retryFailed'])->name('queue-inspector.retry-failed');
+Route::delete('/queue-inspector/failed',       [DevQueueInspectorController::class, 'deleteFailed'])->name('queue-inspector.delete-failed');
+
+// ── Environment Inspector ──────────────────────────────────────────────────
+Route::get('/env-inspector',                   [DevEnvInspectorController::class, 'index'])->name('env-inspector');
+
+// ── Performance ────────────────────────────────────────────────────────────
+Route::get('/performance',                     [DevPerformanceController::class, 'index'])->name('performance');
+Route::post('/performance/run',                [DevPerformanceController::class, 'run'])->name('performance.run');
+
+// ── Log Viewer ─────────────────────────────────────────────────────────────
+Route::get('/logs',                            [DevLogViewerController::class, 'index'])->name('logs');
+Route::get('/logs/download',                   [DevLogViewerController::class, 'download'])->name('logs.download');
+Route::delete('/logs',                         [DevLogViewerController::class, 'clear'])->name('logs.clear');
+
+// ── Demo Reset ─────────────────────────────────────────────────────────────
+Route::get('/demo-reset',                      [DevDemoResetController::class, 'index'])->name('demo-reset');
+Route::delete('/demo-reset',                   [DevDemoResetController::class, 'reset'])->name('demo-reset.reset');
+
+// ── Feature Flags ──────────────────────────────────────────────────────────
+Route::get('/feature-flags',                   [DevFeatureFlagsController::class, 'index'])->name('feature-flags');
 
 // ── Users ──────────────────────────────────────────────────────────────────
 Route::get('/users',                      [DevUsersController::class, 'index'])->name('users');

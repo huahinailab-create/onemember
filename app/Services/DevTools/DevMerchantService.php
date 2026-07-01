@@ -85,9 +85,7 @@ class DevMerchantService
 
     public function resetCampaigns(Merchant $merchant): void
     {
-        DB::transaction(function () use ($merchant) {
-            $merchant->campaigns()->each(fn ($c) => $c->forceDelete());
-        });
+        // Campaigns relationship not present on Merchant — stub for future use
     }
 
     public function deleteAllData(Merchant $merchant): void
@@ -99,7 +97,6 @@ class DevMerchantService
                 DB::table('redemptions')->whereIn('member_id', $memberIds)->delete();
             }
             $merchant->members()->withTrashed()->forceDelete();
-            $merchant->campaigns()->withTrashed()->forceDelete();
             $merchant->rewards()->withTrashed()->forceDelete();
         });
     }
