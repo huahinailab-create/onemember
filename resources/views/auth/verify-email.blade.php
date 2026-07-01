@@ -26,4 +26,22 @@
         </div>
     </form>
 
+    <script>
+        (function () {
+            var interval = setInterval(function () {
+                fetch('{{ route('verification.status') }}', {
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                })
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    if (data.verified) {
+                        clearInterval(interval);
+                        window.location.href = '{{ route('dashboard') }}';
+                    }
+                })
+                .catch(function () { /* ignore network errors */ });
+            }, 5000);
+        })();
+    </script>
+
 </x-guest-layout>
