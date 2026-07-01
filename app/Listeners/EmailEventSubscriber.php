@@ -149,7 +149,7 @@ class EmailEventSubscriber
 
         try {
             Mail::to($to)->queue($mailable);
-            $this->logger->sent($template, $to, config('mail.default', 'ses'), $merchantId);
+            $this->logger->sent($template, $to, config('mail.default', 'log'), $merchantId);
             EmailSent::dispatch($template, $to, $merchantId);
         } catch (\Throwable $e) {
             $this->logger->failed($template, $to, $e->getMessage(), $merchantId);
