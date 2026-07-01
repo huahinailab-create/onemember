@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\MerchantStatus;
 use App\Enums\SubscriptionPlan;
 use App\Enums\SubscriptionStatus;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -59,7 +60,6 @@ class Merchant extends Model
 
     protected $casts = [
         'status'                  => MerchantStatus::class,
-        'settings'                => 'array',
         'onboarding_completed_at' => 'datetime',
         'subscription_plan'       => SubscriptionPlan::class,
         'subscription_status'     => SubscriptionStatus::class,
@@ -67,6 +67,14 @@ class Merchant extends Model
         'subscription_renews_at'  => 'datetime',
         'cancel_at_period_end'    => 'boolean',
     ];
+
+    protected function settings(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value === null ? [] : (is_array($value) ? $value : (json_decode($value, true) ?? [])),
+            set: fn ($value) => $value ? json_encode($value) : null,
+        );
+    }
 
     protected static function booted(): void
     {

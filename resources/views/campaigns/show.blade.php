@@ -277,23 +277,26 @@
         <div class="tab-content" id="campaignTabsContent">
 
             {{-- ── Rules Tab ──────────────────────────────────── --}}
+            @php
+                $campaignConfigData = [
+                    'type'               => $campaign->type->value,
+                    'currency'           => $campaign->merchant->currency ?? 'THB',
+                    'campaignName'       => $campaign->name,
+                    'campaignStatus'     => $isArchived ? 'Archived' : $campaign->status->label(),
+                    'spendAmount'        => (int) ($settings['spend_amount']              ?? 100),
+                    'pointsAwarded'      => (int) ($settings['points_awarded']             ?? 1),
+                    'expirationType'     => $settings['expiration_type']                   ?? 'never',
+                    'expirationDuration' => $settings['expiration_duration']               ?? '',
+                    'birthdayEnabled'    => (bool)($settings['birthday_enabled']           ?? false),
+                    'birthdayPoints'     => $settings['birthday_points']                   ?? '',
+                    'birthdayDaysBefore' => (int) ($settings['birthday_valid_days_before'] ?? 7),
+                    'birthdayDaysAfter'  => (int) ($settings['birthday_valid_days_after']  ?? 7),
+                    'stampsRequired'     => (int) ($settings['stamps_required']            ?? 10),
+                    'rewardDescription'  => $settings['reward_description']                ?? '',
+                ];
+            @endphp
             <div class="tab-pane fade show active" id="pane-rules" role="tabpanel"
-                 x-data="campaignConfig(@json([
-                     'type'               => $campaign->type->value,
-                     'currency'           => $campaign->merchant->currency ?? 'THB',
-                     'campaignName'       => $campaign->name,
-                     'campaignStatus'     => $isArchived ? 'Archived' : $campaign->status->label(),
-                     'spendAmount'        => (int) ($settings['spend_amount']              ?? 100),
-                     'pointsAwarded'      => (int) ($settings['points_awarded']             ?? 1),
-                     'expirationType'     => $settings['expiration_type']                   ?? 'never',
-                     'expirationDuration' => $settings['expiration_duration']               ?? '',
-                     'birthdayEnabled'    => (bool)($settings['birthday_enabled']           ?? false),
-                     'birthdayPoints'     => $settings['birthday_points']                   ?? '',
-                     'birthdayDaysBefore' => (int) ($settings['birthday_valid_days_before'] ?? 7),
-                     'birthdayDaysAfter'  => (int) ($settings['birthday_valid_days_after']  ?? 7),
-                     'stampsRequired'     => (int) ($settings['stamps_required']            ?? 10),
-                     'rewardDescription'  => $settings['reward_description']                ?? '',
-                 ]))">
+                 x-data="campaignConfig(@json($campaignConfigData))">
 
                 <div class="row g-0">
 

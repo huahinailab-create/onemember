@@ -535,7 +535,7 @@
                                            class="form-control @error('default_expiration_duration') is-invalid @enderror"
                                            style="max-width:120px;"
                                            min="1" max="120"
-                                           value="{{ old('default_expiration_duration', $merchant?->settings['default_expiration_duration']) }}"
+                                           value="{{ old('default_expiration_duration', $merchant?->settings['default_expiration_duration'] ?? '') }}"
                                            placeholder="e.g. 12">
                                     @error('default_expiration_duration')
                                         <div class="text-danger small mt-1">{{ $message }}</div>
