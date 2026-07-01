@@ -197,4 +197,11 @@ class Merchant extends Model
             && $this->trial_ends_at !== null
             && $this->trial_ends_at->isPast();
     }
+
+    public function resolveRouteBinding($value, $field = null): ?static
+    {
+        return $this->withTrashed()
+                    ->where($field ?? $this->getRouteKeyName(), $value)
+                    ->firstOrFail();
+    }
 }

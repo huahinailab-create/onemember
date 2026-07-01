@@ -874,4 +874,23 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### DECISION-062: Developer Tools Module — Development/Debug Only; Production Returns 404
+
+- **Date:** 2026-07-01
+- **Requested by:** Engineering (Sprint DEV-01 spec)
+- **Status:** Approved
+- **Decision:**
+  1. **Developer Tools is a development-only module.** It is enabled when `APP_ENV=local` or `APP_ENV=development` or (`APP_DEBUG=true` AND authenticated user). In production (`APP_ENV=production`) all routes return 404 and the nav section is hidden.
+  2. **Protection via dedicated middleware.** A `DevToolsAccess` middleware enforces the access rules at the route level. It cannot be bypassed by forgetting a Blade check.
+  3. **All developer actions are audit-logged.** Every action (user management, member manipulation, queue commands, DB operations, etc.) is recorded in `developer_actions` with user_id, action, target_type, target_id, details (JSON), ip_address, user_agent, created_at. No soft delete on audit rows.
+  4. **12 pages:** Users, Members, Merchant, OTP & Verification, Test Mail, Database, Queue, Storage, Development Helpers, Environment, System Health, Danger Zone.
+  5. **Danger Zone requires confirmation.** Destructive actions in the Danger Zone require the user to type `DELETE` in a Bootstrap modal before the action proceeds.
+  6. **Service class architecture.** Business logic is encapsulated in `App\Services\DevTools\*` service classes. Controllers are thin and only call services + log audit.
+  7. **No production data risk.** The middleware hard-blocks in production. The module is never registered in production routes.
+  8. **Uses existing Bootstrap admin layout.** Developer Tools pages use the standard `layouts.app` Blade layout and Bootstrap 5 + Bootstrap Icons consistent with the rest of OneMember.
+- **Reason:** Developers need a fast, safe way to manipulate data during local development and testing without writing artisan commands each time. The strict production block ensures the module can never be misused in a live environment.
+- **Impact:** New: `app/Http/Middleware/DevToolsAccess.php`, `app/Http/Controllers/DevTools/` (12 controllers), `app/Services/DevTools/` (service classes), `app/Models/DeveloperAction.php`, `database/migrations/*_create_developer_actions_table.php`, `routes/dev.php`, `resources/views/dev/` (12 pages + layout).
+
+---
+
 *New decisions must be appended above this line in the format shown.*
