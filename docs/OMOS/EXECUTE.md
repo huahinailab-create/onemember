@@ -3,10 +3,10 @@
 | Field | Value |
 |---|---|
 | **Document Owner** | ChatGPT CTO |
-| **Version** | 3.0.0 |
+| **Version** | 4.0.0 |
 | **Status** | Active |
 | **Last Updated** | 2026-07-02 |
-| **Related Documents** | [README.md](./README.md), [CurrentSprint.md](./CurrentSprint.md), [SprintSpecification.md](./SprintSpecification.md), [AI-Workflow.md](./AI-Workflow.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md), [Definition-of-Done.md](./Definition-of-Done.md), [CTO-Decisions.md](./CTO-Decisions.md), [CEO-Decisions.md](./CEO-Decisions.md) |
+| **Related Documents** | [README.md](./README.md), [Product-State.md](./Product-State.md), [CurrentSprint.md](./CurrentSprint.md), [Sprints/](./Sprints/), [AI-Workflow.md](./AI-Workflow.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md), [Definition-of-Done.md](./Definition-of-Done.md), [CTO-Decisions.md](./CTO-Decisions.md), [CEO-Decisions.md](./CEO-Decisions.md), [Product-Memory.md](./Product-Memory.md) |
 
 ---
 
@@ -22,20 +22,22 @@ When the Product Owner sends:
 
 > **Continue OMOS**
 
-Claude Developer must execute this exact sequence and nothing more:
+Claude Developer executes this exact 12-step sequence and nothing more:
 
 | Step | Action |
 |---|---|
 | 1 | Read `EXECUTE.md` (this file) |
-| 2 | Read `CurrentSprint.md` — identify the active sprint ID, status, and objective |
-| 3 | Read `SprintSpecification.md` — read the full sprint spec |
-| 4 | Read every document listed in the sprint spec's Related Documents section |
-| 5 | Execute ONLY the tasks defined in the active sprint spec |
-| 6 | Run `php artisan test` — zero failures required |
-| 7 | Commit all changes with the sprint commit message |
-| 8 | Update `CurrentSprint.md` — mark sprint complete, update commit hash |
-| 9 | Produce the sprint completion report |
-| 10 | ⛔ STOP — wait for CTO review and PO approval |
+| 2 | Read `Product-State.md` — understand the current health score, risks, and active sprint |
+| 3 | Read `CurrentSprint.md` — confirm the active sprint ID, status, and sprint file reference |
+| 4 | Read the active sprint file from `docs/OMOS/Sprints/[SPRINT-ID].md` |
+| 5 | Read all ADRs and RFCs referenced in the sprint file's Related Documents |
+| 6 | Execute ONLY the tasks defined in the active sprint file |
+| 7 | Run `php artisan test` — zero failures required |
+| 8 | Commit all changes with the sprint's defined commit message |
+| 9 | Update `Product-State.md` — current sprint, health score if changed, risks updated |
+| 10 | Update `CurrentSprint.md` — sprint status to `⏳ Awaiting CTO Review`, commit hash recorded |
+| 11 | Produce the sprint completion report |
+| 12 | ⛔ STOP — wait for CTO review and PO approval |
 
 **Do not start the next sprint. Do not read the next sprint spec. Do not take any further action.**
 
@@ -46,30 +48,35 @@ Claude Developer must execute this exact sequence and nothing more:
 ### Step 1 — Read EXECUTE.md (this file)
 You are reading it now.
 
-### Step 2 — Read CurrentSprint.md
+### Step 2 — Read Product-State.md
 Identify:
-- The current sprint ID and title
-- The current sprint status
-- If status is `Complete` or `Awaiting CTO Review`: stop and report — do not re-execute the sprint
+- Current application health score and known risks
+- Current and next sprint IDs
+- Production readiness status
+- Any blockers noted since the last session
 
-### Step 3 — Read SprintSpecification.md
+### Step 3 — Read CurrentSprint.md
 Identify:
-- The sprint objective
-- The exact task list
-- The Definition of Done
-- All related documents to read
+- The active sprint ID, title, and status
+- The sprint file path
+- If status is `⏳ Awaiting CTO Review` or `✅ Complete`: **stop and report** — do not re-execute the sprint
 
-### Step 4 — Read all Related Documents
-Read every document listed in the sprint spec's Related Documents section. Do not skip.
+### Step 4 — Read the active sprint file
+Find the sprint specification in `docs/OMOS/Sprints/[SPRINT-ID].md`.
+Identify the full task list, acceptance criteria, Definition of Done, and Related Documents.
 
-### Step 5 — Confirm before acting
+### Step 5 — Read all referenced ADRs and RFCs
+Read every document listed in the sprint file's Related Documents section. Do not skip.
+
+### Step 6 — Confirm before acting
 
 Before writing a single line of code or documentation, output the session start checklist:
 
 ```
 [ ] Read EXECUTE.md ✓
+[ ] Read Product-State.md — Health: [SCORE], Active sprint: [ID]
 [ ] Read CurrentSprint.md — Sprint [ID], Status [STATUS]
-[ ] Read SprintSpecification.md — [OBJECTIVE]
+[ ] Read sprint file: Sprints/[SPRINT-ID].md — [OBJECTIVE]
 [ ] Read all related documents
 [ ] Confirmed sprint objective and Definition of Done
 [ ] No ambiguities unresolved
@@ -98,30 +105,43 @@ If a test fails:
 **Do not delete tests. Do not skip tests. Do not use `--filter` to run only new tests.**
 
 ### Step 3 — Commit
+Use the commit message defined in the sprint file's `Commit Message` section.
+
 ```
 git commit -m "Sprint [ID] — [Sprint Title]
+
+[Optional summary]
 
 Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
 ```
 
-### Step 4 — Update CurrentSprint.md
+### Step 4 — Update Product-State.md
 After committing:
+- Update `Current Sprint` section — set to the sprint just completed
+- Update `Next Sprint` section — set to next known sprint from sprint backlog
+- Update `Current Risks` — remove resolved risks, add any new risks discovered
+- Update health score if the sprint changed it (e.g., after MVP-001 brand fix)
+
+### Step 5 — Update CurrentSprint.md
+After updating Product-State.md:
 - Set sprint status to `⏳ Awaiting CTO Review`
 - Record the commit hash
-- Move the completed sprint to Previous Sprint
-- Set Next Planned Sprint to the next known sprint (if defined)
+- Move current sprint to Previous Sprint
+- Set Next Planned Sprint from sprint backlog
 
-### Step 5 — Return completion report
-The completion report must include:
+### Step 6 — Return completion report
+
+Use the template from [Definition-of-Done.md](./Definition-of-Done.md):
+
 - **Sprint ID and Title**
 - **Summary:** What was built and why
 - **Files Created:** Full list with brief description of each
 - **Files Updated:** Full list with brief description of each change
 - **Tests:** Count, all pass/fail, new tests added
 - **Commit Hash**
-- **Recommendations:** Any Type 3/4 decisions encountered that need ADR or RFC
+- **Recommendations:** Any Type 3/4 decisions, out-of-scope issues, health score update
 
-### Step 6 — ⛔ STOP
+### Step 7 — ⛔ STOP
 
 **Do not begin the next sprint.**
 
@@ -169,7 +189,7 @@ The reason: every sprint requires CTO review before the next sprint begins. Revi
 
 ## How to Handle Ambiguity
 
-**If the sprint spec is ambiguous:** Stop. Ask the Product Owner to clarify before proceeding. A one-sentence ambiguity resolved upfront is worth more than hours of rework.
+**If the sprint spec is ambiguous:** Stop. Ask the Product Owner to clarify before proceeding.
 
 **If you discover a bug outside the sprint scope:** Note it in the completion report. Do not fix it in the current sprint unless it is blocking the sprint's objective.
 
@@ -179,9 +199,9 @@ The reason: every sprint requires CTO review before the next sprint begins. Revi
 
 **If a CEO or CTO decision is needed:** Stop. This is a Type 3 or Type 4 decision. Document the options. Wait for the decision before proceeding.
 
-**If the sprint spec conflicts with an existing ADR or CEO decision:** Stop immediately. Report the conflict to the Product Owner. Do not resolve it yourself.
+**If the sprint spec conflicts with an existing ADR or CEO decision:** Stop immediately. Report the conflict to the Product Owner.
 
-See [AI-CTO-Handoff.md](./AI-CTO-Handoff.md) for how to request clarification from the CTO.
+See [AI-CTO-Handoff.md](./AI-CTO-Handoff.md) for how to request clarification.
 
 ---
 
@@ -190,7 +210,7 @@ See [AI-CTO-Handoff.md](./AI-CTO-Handoff.md) for how to request clarification fr
 | Decision Type | Who Decides | How |
 |---|---|---|
 | Implementation detail (Type 1) | Claude Developer | Implement and document in commit |
-| Feature design within sprint (Type 2) | ChatGPT CTO (via sprint spec) | Defined in SprintSpecification.md |
+| Feature design within sprint (Type 2) | ChatGPT CTO (via sprint spec) | Defined in sprint file |
 | Architecture / hard-to-reverse (Type 3) | ChatGPT CTO | RFC → ADR required before implementation |
 | Strategic / irreversible (Type 4) | Product Owner | CEO-Decisions.md entry + CTO review |
 | Security override | Nobody | Security constraints are absolute |
@@ -228,6 +248,6 @@ These rules apply to every sprint. They are not repeated in individual sprint sp
 | Strategic decision needed (Type 4) | Stop, document options, wait for PO + CTO |
 | Sprint spec conflicts with ADR | Stop, report conflict immediately |
 | Security constraint at risk | Stop, report immediately — never override |
-| All tests passing, sprint complete | Return completion report, ⛔ STOP |
+| All tests passing, sprint complete | Update Product-State.md, update CurrentSprint.md, return completion report, ⛔ STOP |
 
 See [AI-Workflow.md](./AI-Workflow.md) for the full responsibility matrix.

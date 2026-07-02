@@ -4,10 +4,10 @@
 |---|---|
 | **Document Owner** | ChatGPT CTO |
 | **Version** | Live |
-| **OMOS Version** | 1.0 Operational |
+| **OMOS Version** | 1.1 |
 | **Status** | Active |
 | **Last Updated** | 2026-07-02 |
-| **Related Documents** | [SprintSpecification.md](./SprintSpecification.md), [SprintReview.md](./SprintReview.md), [EXECUTE.md](./EXECUTE.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md), [AI-Workflow.md](./AI-Workflow.md) |
+| **Related Documents** | [EXECUTE.md](./EXECUTE.md), [Product-State.md](./Product-State.md), [Sprints/README.md](./Sprints/README.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md) |
 
 ---
 
@@ -15,23 +15,35 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | AI-OMOS-BOOTSTRAP |
-| **Title** | OMOS Operational |
+| **Sprint ID** | OMOS-1.1 |
+| **Title** | Operational Readiness |
 | **Status** | ⏳ Awaiting CTO Review |
 | **Sprint Type** | Documentation / Governance |
+| **Sprint File** | [Sprints/](./Sprints/) — library created this sprint |
 | **Owner** | Product Owner |
 | **Developer** | Claude Sonnet 4.6 |
 | **Reviewer** | ChatGPT CTO (AI CTO) |
-| **Approved By** | AI CTO |
-| **CEO Approval** | Not Required |
 | **Started** | 2026-07-02 |
 | **Target Completion** | 2026-07-02 |
 | **Actual Completion** | 2026-07-02 |
-| **Commit Hash** | `17e0d40` |
+| **Commit Hash** | — |
 
 ### Business Objective
 
-Upgrade OMOS so that future sprints can be triggered with only `Continue OMOS`. Define the permanent workflow, roles, review process, approval gates, and sprint lifecycle. After this sprint, no long sprint specifications should be required — OMOS self-documents the operating system.
+Refine OMOS so it is completely self-driving. Create the sprint library, product state, product memory, engineering backlog, and roadmap separation. After this sprint, the CEO only needs to type `Continue OMOS`.
+
+---
+
+## Next Sprint
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | MVP-001 |
+| **Title** | Merchant Experience Polish |
+| **Status** | 🔲 Planning |
+| **Sprint File** | [Sprints/MVP-001-Merchant-Experience-Polish.md](./Sprints/MVP-001-Merchant-Experience-Polish.md) |
+| **Priority** | High |
+| **Awaiting** | CTO review of OMOS-1.1 + PO approval to begin |
 
 ---
 
@@ -39,10 +51,10 @@ Upgrade OMOS so that future sprints can be triggered with only `Continue OMOS`. 
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | AI-03 |
-| **Title** | Application Audit |
-| **Status** | ⏳ Awaiting CTO Review |
-| **Commit** | `f8d6ac8` |
+| **Sprint ID** | AI-OMOS-BOOTSTRAP |
+| **Title** | OMOS Operational |
+| **Status** | ✅ Complete |
+| **Commit** | `17e0d40` |
 
 ---
 
@@ -50,10 +62,11 @@ Upgrade OMOS so that future sprints can be triggered with only `Continue OMOS`. 
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
-| AI-OMOS-BOOTSTRAP | OMOS Operational | ⏳ CTO Review | `17e0d40` |
-| AI-03 | Application Audit | ⏳ CTO Review | `f8d6ac8` |
-| AI-02C | OMOS Self-Driving Foundation | ⏳ CTO Review | `965075d` |
-| AI-02B1+B2 | Executive and Product Foundation | ⏳ CTO Review | `67f669f` |
+| OMOS-1.1 | Operational Readiness | ⏳ CTO Review | TBD |
+| AI-OMOS-BOOTSTRAP | OMOS Operational | ✅ Complete | `17e0d40` |
+| AI-03 | Application Audit | ✅ Complete | `f8d6ac8` |
+| AI-02C | OMOS Self-Driving Foundation | ✅ Complete | `965075d` |
+| AI-02B1+B2 | Executive and Product Foundation | ✅ Complete | `67f669f` |
 | AI-02A | OneMember Operating System Foundation | ✅ Complete | `eeb9744` |
 | AI-01 | AI Development System | ✅ Complete | `09948b9` |
 | DEV-01 | Developer Tools | ✅ Complete | `962a82f` |
@@ -64,11 +77,13 @@ Upgrade OMOS so that future sprints can be triggered with only `Continue OMOS`. 
 
 ---
 
-## Next Planned Sprint
+## How to Read CurrentSprint.md
 
-| Sprint ID | Title | Priority |
-|---|---|---|
-| AI-04 | Merchant Experience Polish | High |
+This file is a **status board**, not a sprint specification.
+
+For the full sprint specification, read the sprint file linked in the `Sprint File` field above.
+
+For the complete sprint workflow, see [EXECUTE.md](./EXECUTE.md).
 
 ---
 
@@ -76,11 +91,11 @@ Upgrade OMOS so that future sprints can be triggered with only `Continue OMOS`. 
 
 | Status | Meaning |
 |---|---|
-| 🔲 Planning | Sprint is being defined. Spec is not yet final. |
-| ✅ Ready | Sprint meets Definition of Ready. Awaiting PO trigger. |
+| 🔲 Planning | Sprint spec is being written. Not yet ready for execution. |
+| ✅ Ready | Sprint meets Definition of Ready. Awaiting `Continue OMOS`. |
 | 🔄 In Progress | Claude Developer is implementing. |
-| ⏳ Awaiting CTO Review | Implementation complete. Waiting for ChatGPT CTO review. |
+| ⏳ Awaiting CTO Review | Completion report returned. Waiting for AI CTO review. |
 | ⏳ Awaiting PO Approval | CTO approved. Waiting for Product Owner deployment decision. |
 | ✅ Complete | Sprint approved, committed, and (if applicable) deployed. |
-| ❌ Blocked | Sprint cannot proceed due to unresolved dependency or decision. |
-| ⛔ Cancelled | Sprint cancelled before completion. Reason in SprintReview.md. |
+| ❌ Blocked | Sprint cannot proceed. Dependency or decision outstanding. |
+| ⛔ Cancelled | Sprint cancelled. Reason in SprintReview.md. |

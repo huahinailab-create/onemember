@@ -20,13 +20,14 @@ The sprint specification is the contract between the ChatGPT CTO (who writes it)
 
 ## Current Sprint Specification
 
-> **No sprint is currently active.**
+> **The active sprint specification is now in `docs/OMOS/Sprints/`.**
 >
-> The last completed sprint was **AI-OMOS-BOOTSTRAP**.
-> See [CurrentSprint.md](./CurrentSprint.md) for status.
+> As of OMOS 1.1, sprint specifications live in the sprint library folder.
+> The active sprint is **MVP-001 — Merchant Experience Polish**.
+> See: [Sprints/MVP-001-Merchant-Experience-Polish.md](./Sprints/MVP-001-Merchant-Experience-Polish.md)
 >
-> The next sprint specification will be written here when the Product Owner and ChatGPT CTO define the next sprint.
-> Use [NextSprintTemplate.md](./NextSprintTemplate.md) as the template.
+> See [CurrentSprint.md](./CurrentSprint.md) for the live status board.
+> Use [NextSprintTemplate.md](./NextSprintTemplate.md) for new sprint specs.
 
 ---
 

@@ -40,6 +40,8 @@ Version History tracks every significant release and documentation milestone for
 | OMOS 0.2.0 | 2026-07-02 | AI-02A | OMOS foundation: 17-folder docs/OMOS/ structure, 43 files including standards, ADR/RFC systems, roadmap, CurrentSprint | Product Owner |
 | OMOS 0.3.0 | 2026-07-02 | AI-02B1+B2 | Executive and product foundation: Vision, Mission, Values, Principles, Personas, Journeys, Revenue Model, Glossary, Parking Lot, EXECUTE.md | AI CTO |
 | OMOS 0.4.0 | 2026-07-02 | AI-02C | Self-driving foundation: Version History, CEO/CTO decision logs, Known Constraints, Assumptions, Knowledge Base, first ADRs, RFC templates | AI CTO |
+| OMOS 1.0 | 2026-07-02 | AI-OMOS-BOOTSTRAP | OMOS operational: EXECUTE.md v3, AI-Workflow, Sprint-Lifecycle, NextSprintTemplate, AI-CTO-Handoff, Definition-of-Ready, Definition-of-Done | AI CTO |
+| OMOS 1.1 | 2026-07-02 | OMOS-1.1 | Operational readiness: Sprint library, Product-State, Product-Memory, Engineering-Backlog, roadmap separation, EXECUTE.md v4, MVP-001 sprint spec | AI CTO |
 
 ---
 

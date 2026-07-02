@@ -83,19 +83,28 @@ See [Sprint-Lifecycle.md](./Sprint-Lifecycle.md) for the complete 8-phase workfl
 docs/OMOS/
 ├── README.md                  ← You are here. Start here.
 ├── EXECUTE.md                 ← Claude Developer operating protocol. Read every session.
-├── CurrentSprint.md           ← Active sprint board. Always read first.
-├── SprintSpecification.md     ← Active sprint specification.
+├── Product-State.md           ← Live snapshot: health score, active sprint, risks, priorities.
+├── Product-Memory.md          ← Permanent product knowledge influencing all decisions.
+├── CurrentSprint.md           ← Active sprint status board. Read second (after EXECUTE.md).
+├── SprintSpecification.md     ← Pointer to active sprint file in Sprints/.
 ├── AI-Workflow.md             ← Roles, responsibilities, review and approval process.
 ├── AI-CTO-Handoff.md          ← How AI CTO hands work to Claude Developer.
 ├── Sprint-Lifecycle.md        ← All 8 sprint phases with entry/exit gates.
 ├── NextSprintTemplate.md      ← Standard template for all sprint specifications.
 ├── Definition-of-Ready.md     ← Checklist: when a sprint may begin execution.
 ├── Definition-of-Done.md      ← Checklist: when a sprint is complete.
+├── Engineering-Backlog.md     ← Technical debt, security, performance, testing work queue.
 ├── CEO-Decisions.md           ← Strategic decisions made by the Product Owner.
 ├── CTO-Decisions.md           ← Technical standards set by the AI CTO.
 ├── Known-Constraints.md       ← Technical, business, and security constraints.
 ├── Assumptions.md             ← Documented product and technical assumptions.
-├── SprintReview.md            ← Sprint review history.
+├── Version-History.md         ← Application and OMOS version history.
+├── SprintReview.md            ← Sprint review records.
+│
+├── Sprints/                   ← Sprint library: all sprint specifications
+│   ├── README.md              ← Sprint library index and naming conventions
+│   ├── Backlog.md             ← All planned but not yet active sprints
+│   └── MVP-001-Merchant-Experience-Polish.md  ← Next sprint (Planning)
 │
 ├── Audits/                    ← Application audit reports
 │   └── AI-03-Application-Audit.md
@@ -111,7 +120,7 @@ docs/OMOS/
 ├── 06-Operations/             ← Deployment, monitoring, incident response, SLAs
 ├── 07-Brand/                  ← Visual identity, voice, design system
 ├── 08-Security/               ← Security policy, threat model, compliance
-├── 09-Roadmap/                ← Product roadmap, phases, milestones
+├── 09-Roadmap/                ← Strategic roadmap (phases), NOT sprint specs
 ├── 10-Architecture/           ← System architecture, data models, integrations
 ├── 11-Standards/              ← All coding, API, DB, UI, testing standards
 ├── 12-ADR/                    ← Architecture Decision Records
