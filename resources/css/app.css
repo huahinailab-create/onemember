@@ -6,14 +6,27 @@
 
 /* ── OneMember Brand Tokens ─────────────────────────────── */
 :root {
-    --om-sidebar-bg:       #1e293b;
-    --om-sidebar-hover:    #334155;
-    --om-sidebar-border:   #2d3f55;
+    /* Bootstrap primary override — OneMember Deep Navy */
+    --bs-primary:          #1A2E5A;
+    --bs-primary-rgb:      26,46,90;
+
+    /* OneMember palette */
+    --om-accent:           #FF1585;
+    --om-accent-rgb:       255,21,133;
+    --om-cloud:            #F0F0F4;
+    --om-ink:              #1A1A2E;
+
+    /* Sidebar */
+    --om-sidebar-bg:       #1A2E5A;
+    --om-sidebar-hover:    #1e3a6e;
+    --om-sidebar-border:   #243d6b;
     --om-sidebar-text:     #94a3b8;
     --om-sidebar-heading:  #475569;
     --om-sidebar-width:    260px;
+
+    /* Layout */
     --om-topbar-height:    60px;
-    --om-body-bg:          #f1f5f9;
+    --om-body-bg:          #F0F0F4;
     --bs-font-sans-serif:  'Figtree', system-ui, -apple-system, sans-serif;
 }
 
@@ -371,7 +384,7 @@ body {
     background-color: var(--bs-primary);
     color: #ffffff;
     border: none;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    box-shadow: 0 4px 12px rgba(var(--bs-primary-rgb), 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -382,7 +395,7 @@ body {
 
 .fab:hover {
     transform: scale(1.08);
-    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.5);
+    box-shadow: 0 6px 16px rgba(var(--bs-primary-rgb), 0.5);
     color: #ffffff;
 }
 
