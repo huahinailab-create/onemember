@@ -172,4 +172,6 @@ Include diagrams, schemas, or API sketches if helpful.]
 
 | RFC | Title | Status | Opened | Outcome |
 |---|---|---|---|---|
-| — | *(No RFCs opened yet)* | — | — | — |
+| [RFC-001](./RFC-001-Template.md) | RFC Template Reference | Active | 2026-07-02 | Template |
+| [RFC-002](./RFC-002-Feature-Proposal.md) | Feature Proposal Template | Template | 2026-07-02 | Template |
+| [RFC-003](./RFC-003-Architecture-Change.md) | Architecture Change Template | Template | 2026-07-02 | Template |

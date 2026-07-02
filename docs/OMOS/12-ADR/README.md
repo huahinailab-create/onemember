@@ -159,11 +159,9 @@ Reference the context, constraints, and principles that drove the decision.]
 
 | ADR | Title | Status | Date |
 |---|---|---|---|
-| ADR-001 | *(To be written — Laravel as application framework)* | Proposed | — |
-| ADR-002 | *(To be written — Resend as email transport)* | Proposed | — |
-| ADR-003 | *(To be written — Database session driver)* | Proposed | — |
-| ADR-004 | *(To be written — Queued email verification)* | Proposed | — |
-| ADR-005 | *(To be written — Single-database multi-tenancy)* | Proposed | — |
-| ADR-006 | *(To be written — Bootstrap 5 as frontend framework)* | Proposed | — |
-
-> **Note:** The decisions captured here are derived from `ai/07-Architecture-Rules.md` and prior sprint work. Full ADR documents will be written in Sprint AI-02B or a dedicated architecture sprint.
+| [ADR-001](./ADR-001-OneMember-First-Wallet.md) | Customer Wallet Is the Core Network Asset | Approved | 2026-07-02 |
+| [ADR-002](./ADR-002-Merchant-Growth-Platform.md) | OneMember Is a Merchant Growth Platform, Not a Loyalty App | Approved | 2026-07-02 |
+| [ADR-003](./ADR-003-Hybrid-Revenue-Model.md) | Hybrid Revenue Model | Approved | 2026-07-02 |
+| [ADR-004](./ADR-004-Laravel-Architecture.md) | Laravel as Application Framework with Event-Driven Architecture | Approved | 2026-07-02 |
+| [ADR-005](./ADR-005-Bootstrap-5-Standard.md) | Bootstrap 5 as the Sole Frontend Framework | Approved | 2026-07-02 |
+| [ADR-006](./ADR-006-Thailand-First-Strategy.md) | Thailand-First Market Entry Strategy | Approved | 2026-07-02 |
