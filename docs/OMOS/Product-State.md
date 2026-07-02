@@ -28,9 +28,10 @@ This file is read as part of the `Continue OMOS` initialisation sequence (step 2
 | **OMOS Version** | 1.1 |
 | **PHP Version** | 8.3+ (8.5 in production) |
 | **Laravel Version** | 13.17.0 |
-| **Last Code Commit** | `45619fc` — CurrentSprint.md hash update |
-| **Last Code Sprint** | AI-03 Application Audit (`f8d6ac8`) |
-| **Last OMOS Sprint** | OMOS-1.1 Operational Readiness (this sprint) |
+| **Application Version** | 0.5.0 |
+| **Last Code Commit** | `37b7d8c` — MVP-001 brand fix + LoyaltyProgram null-safe |
+| **Last Code Sprint** | MVP-001 Merchant Experience Polish (`37b7d8c`) |
+| **Last OMOS Sprint** | OMOS-1.1 Operational Readiness (`567939a`) |
 
 ---
 
@@ -53,22 +54,22 @@ Phase 2 (Customer Wallet) does not begin until Phase 1 exit criteria are met.
 
 ## Current Application Health Score
 
-**72 / 100** — as of AI-03 Audit (2026-07-02)
+**77 / 100** — updated after MVP-001 (2026-07-02)
 
-| Category | Score | Blocker |
+| Category | Score | Notes |
 |---|---|---|
-| Core Functionality | 90/100 | None |
+| Core Functionality | 90/100 | Unchanged |
 | Security | 85/100 | CSP unsafe-inline (documented, necessary) |
-| Testing | 80/100 | Missing CRUD coverage for campaigns, members, rewards |
-| Architecture | 85/100 | LoyaltyProgram/Campaign naming split |
-| Brand Compliance | 50/100 | `--bs-primary` not overridden — Bootstrap blue shown everywhere |
+| Testing | 82/100 | +5 new LoyaltyProgram regression tests |
+| Architecture | 85/100 | LoyaltyProgram/Campaign naming split (ADR-007 pending) |
+| Brand Compliance | 90/100 | ✅ `--bs-primary` now `#1A2E5A`, sidebar correct, theme-color correct |
 | Localization | 75/100 | THB hardcoded in fallbacks |
 | UX Completeness | 60/100 | 3 nav items lead to coming-soon pages |
-| Technical Debt | 70/100 | LoyaltyProgram nullable JSON, MerchantProfileController legacy |
+| Technical Debt | 80/100 | ✅ LoyaltyProgram null-safe fixed; MerchantProfileController legacy remains |
 | Performance | 70/100 | Dashboard N+1 risk, no caching layer |
 | Documentation | 95/100 | OMOS is comprehensive |
 
-Next health score update: after MVP-001 completes.
+Next health score update: after MVP-002 completes.
 
 ---
 
@@ -76,11 +77,11 @@ Next health score update: after MVP-001 completes.
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | OMOS-1.1 |
-| **Title** | Operational Readiness |
+| **Sprint ID** | MVP-001 |
+| **Title** | Merchant Experience Polish |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Sprint File** | [Sprints/](./Sprints/) |
-| **Type** | Documentation / Governance |
+| **Sprint File** | [Sprints/MVP-001-Merchant-Experience-Polish.md](./Sprints/MVP-001-Merchant-Experience-Polish.md) |
+| **Commit** | `37b7d8c` |
 
 ---
 
@@ -88,12 +89,11 @@ Next health score update: after MVP-001 completes.
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MVP-001 |
-| **Title** | Merchant Experience Polish |
-| **Status** | 🔲 Planning |
-| **Sprint File** | [Sprints/MVP-001-Merchant-Experience-Polish.md](./Sprints/MVP-001-Merchant-Experience-Polish.md) |
+| **Sprint ID** | MVP-002 |
+| **Title** | Birthday and Expiry Automation |
+| **Status** | ⬜ Deferred — awaiting MVP-001 CTO approval |
+| **Sprint File** | [Sprints/Backlog.md](./Sprints/Backlog.md) |
 | **Priority** | High |
-| **Depends On** | OMOS-1.1 complete and CTO approved |
 
 ---
 
@@ -124,8 +124,8 @@ Next health score update: after MVP-001 completes.
 
 | ID | Risk | Severity | Status |
 |---|---|---|---|
-| R-001 | `LoyaltyProgram.settings` raises ErrorException on NULL | High | 🔲 Scheduled — MVP-001 |
-| R-002 | Brand colours wrong (`#2563eb` shown instead of `#1A2E5A`) | Medium | 🔲 Scheduled — MVP-001 |
+| R-001 | `LoyaltyProgram.settings` raises ErrorException on NULL | High | ✅ Fixed — MVP-001 (`37b7d8c`) |
+| R-002 | Brand colours wrong (`#2563eb` shown instead of `#1A2E5A`) | Medium | ✅ Fixed — MVP-001 (`37b7d8c`) |
 | R-003 | Birthday automation built but not running | Medium | 🔲 Scheduled — MVP-002 |
 | R-004 | Point expiry configured but not processed | Medium | 🔲 Scheduled — MVP-002 |
 | R-005 | 3 navigation items lead to coming-soon pages | Low | ⏳ Phase 1 known — merchants notified via UI |
@@ -162,8 +162,8 @@ Based on the AI-03 audit and OMOS sprint backlog:
 | DevTools gated | ✅ | Double gate: env + flag |
 | Stripe billing integrated | ✅ | Subscription, checkout, webhooks |
 | 324 tests passing | ✅ | Full suite green |
-| Brand colours correct | ❌ | MVP-001 required |
-| LoyaltyProgram null-safe | ❌ | MVP-001 required |
+| Brand colours correct | ✅ | Fixed in MVP-001 (`37b7d8c`) |
+| LoyaltyProgram null-safe | ✅ | Fixed in MVP-001 (`37b7d8c`) |
 | Member notification emails | ❌ | MVP-003 required |
 | Birthday automation live | ❌ | MVP-002 required |
 

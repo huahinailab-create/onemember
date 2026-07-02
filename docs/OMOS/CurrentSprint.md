@@ -15,22 +15,22 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | OMOS-1.1 |
-| **Title** | Operational Readiness |
+| **Sprint ID** | MVP-001 |
+| **Title** | Merchant Experience Polish |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Sprint Type** | Documentation / Governance |
-| **Sprint File** | [Sprints/](./Sprints/) — library created this sprint |
+| **Sprint Type** | Feature + Bug Fix |
+| **Sprint File** | [Sprints/MVP-001-Merchant-Experience-Polish.md](./Sprints/MVP-001-Merchant-Experience-Polish.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Sonnet 4.6 |
 | **Reviewer** | ChatGPT CTO (AI CTO) |
 | **Started** | 2026-07-02 |
 | **Target Completion** | 2026-07-02 |
 | **Actual Completion** | 2026-07-02 |
-| **Commit Hash** | `567939a` |
+| **Commit Hash** | `37b7d8c` |
 
 ### Business Objective
 
-Refine OMOS so it is completely self-driving. Create the sprint library, product state, product memory, engineering backlog, and roadmap separation. After this sprint, the CEO only needs to type `Continue OMOS`.
+Fix brand colour mismatch (Bootstrap default blue → OneMember Deep Navy `#1A2E5A`) and eliminate `LoyaltyProgram.settings` nullable JSON bug risk (CTO-008 null-safe pattern applied).
 
 ---
 
@@ -38,12 +38,11 @@ Refine OMOS so it is completely self-driving. Create the sprint library, product
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MVP-001 |
-| **Title** | Merchant Experience Polish |
-| **Status** | 🔲 Planning |
-| **Sprint File** | [Sprints/MVP-001-Merchant-Experience-Polish.md](./Sprints/MVP-001-Merchant-Experience-Polish.md) |
+| **Sprint ID** | MVP-002 |
+| **Title** | Birthday and Expiry Automation |
+| **Status** | ⬜ Deferred — awaiting MVP-001 CTO approval |
+| **Sprint File** | [Sprints/Backlog.md](./Sprints/Backlog.md) |
 | **Priority** | High |
-| **Awaiting** | CTO review of OMOS-1.1 + PO approval to begin |
 
 ---
 
@@ -51,10 +50,10 @@ Refine OMOS so it is completely self-driving. Create the sprint library, product
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | AI-OMOS-BOOTSTRAP |
-| **Title** | OMOS Operational |
+| **Sprint ID** | OMOS-1.1 |
+| **Title** | Operational Readiness |
 | **Status** | ✅ Complete |
-| **Commit** | `17e0d40` |
+| **Commit** | `567939a` |
 
 ---
 
@@ -62,7 +61,8 @@ Refine OMOS so it is completely self-driving. Create the sprint library, product
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
-| OMOS-1.1 | Operational Readiness | ⏳ CTO Review | `567939a` |
+| MVP-001 | Merchant Experience Polish | ⏳ CTO Review | `37b7d8c` |
+| OMOS-1.1 | Operational Readiness | ✅ Complete | `567939a` |
 | AI-OMOS-BOOTSTRAP | OMOS Operational | ✅ Complete | `17e0d40` |
 | AI-03 | Application Audit | ✅ Complete | `f8d6ac8` |
 | AI-02C | OMOS Self-Driving Foundation | ✅ Complete | `965075d` |
