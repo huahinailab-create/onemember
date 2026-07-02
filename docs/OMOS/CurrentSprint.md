@@ -16,7 +16,7 @@
 | Field | Value |
 |---|---|
 | **Sprint ID** | MKTG-001 |
-| **Title** | Merchant Presentation v1.0 |
+| **Title** | Merchant Presentation v2.0 (EN + TH) |
 | **Status** | ⏳ Awaiting CTO Review |
 | **Sprint Type** | Marketing Asset |
 | **Sprint File** | — (inline PO spec) |
@@ -24,13 +24,22 @@
 | **Developer** | Claude Sonnet 4.6 |
 | **Reviewer** | ChatGPT CTO (AI CTO) |
 | **Started** | 2026-07-02 |
-| **Target Completion** | 2026-07-02 |
-| **Actual Completion** | 2026-07-02 |
-| **Commit Hash** | `776ce94` |
+| **Target Completion** | 2026-07-03 |
+| **Actual Completion** | 2026-07-03 |
+| **Final Commit** | `4d46d56` |
+
+### Commits This Sprint
+
+| Hash | Description |
+|---|---|
+| `776ce94` | Marketing — Merchant Presentation v1.0 (EN) |
+| `041ec21` | Marketing — Merchant Presentation v2.0 (EN, redesigned) |
+| `37b104a` | OMOS — CurrentSprint update |
+| `4d46d56` | Marketing — Merchant Presentation v1.0 (TH / ภาษาไทย) |
 
 ### Business Objective
 
-Create a professional 13-slide merchant sales presentation (python-pptx) with OneMember branding, speaker notes on every slide, and a companion Speaker-Notes PDF. For use in 20-minute merchant sales meetings.
+Create a professional 13-slide merchant sales presentation with OneMember branding for 20-minute sales meetings. Deliverables: English v2.0 (logo corrected, wireframe-inspired redesign) + full Thai translation. 4 files total: EN PPTX, EN PDF, TH PPTX, TH PDF.
 
 ---
 
@@ -73,7 +82,7 @@ Create a professional 13-slide merchant sales presentation (python-pptx) with On
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
-| MKTG-001 | Merchant Presentation v1.0 | ⏳ CTO Review | `776ce94` |
+| MKTG-001 | Merchant Presentation v2.0 (EN + TH) | ⏳ CTO Review | `4d46d56` |
 | MVP-001 | Merchant Experience Polish | ⏳ CTO Review | `37b7d8c` |
 | OMOS-1.1 | Operational Readiness | ✅ Complete | `567939a` |
 | AI-OMOS-BOOTSTRAP | OMOS Operational | ✅ Complete | `17e0d40` |

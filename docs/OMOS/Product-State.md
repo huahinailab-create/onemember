@@ -5,7 +5,7 @@
 | **Document Owner** | ChatGPT CTO |
 | **Version** | 1.0.0 |
 | **Status** | Active |
-| **Last Updated** | 2026-07-02 |
+| **Last Updated** | 2026-07-03 |
 | **Related Documents** | [CurrentSprint.md](./CurrentSprint.md), [Audits/AI-03-Application-Audit.md](./Audits/AI-03-Application-Audit.md), [Engineering-Backlog.md](./Engineering-Backlog.md), [09-Roadmap/Long-term-Roadmap.md](./09-Roadmap/Long-term-Roadmap.md) |
 
 ---
@@ -29,8 +29,8 @@ This file is read as part of the `Continue OMOS` initialisation sequence (step 2
 | **PHP Version** | 8.3+ (8.5 in production) |
 | **Laravel Version** | 13.17.0 |
 | **Application Version** | 0.5.0 |
-| **Last Code Commit** | `37b7d8c` — MVP-001 brand fix + LoyaltyProgram null-safe |
-| **Last Code Sprint** | MVP-001 Merchant Experience Polish (`37b7d8c`) |
+| **Last Code Commit** | `4d46d56` — Merchant Presentation TH v1.0 |
+| **Last Code Sprint** | MKTG-001 Merchant Presentation v2.0 EN + TH (`4d46d56`) |
 | **Last OMOS Sprint** | OMOS-1.1 Operational Readiness (`567939a`) |
 
 ---
@@ -77,11 +77,13 @@ Next health score update: after MVP-002 completes.
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MVP-001 |
-| **Title** | Merchant Experience Polish |
+| **Sprint ID** | MKTG-001 |
+| **Title** | Merchant Presentation v2.0 (EN + TH) |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Sprint File** | [Sprints/MVP-001-Merchant-Experience-Polish.md](./Sprints/MVP-001-Merchant-Experience-Polish.md) |
-| **Commit** | `37b7d8c` |
+| **Sprint File** | — (inline PO spec) |
+| **Final Commit** | `4d46d56` |
+
+Note: MVP-001 (Merchant Experience Polish, `37b7d8c`) is also awaiting CTO review.
 
 ---
 
