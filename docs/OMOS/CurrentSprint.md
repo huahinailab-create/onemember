@@ -14,9 +14,9 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | AI-02C |
+| **Sprint ID** | AI-03 |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Sprint Type** | Documentation / Governance |
+| **Sprint Type** | Audit |
 | **Owner** | Product Owner |
 | **Developer** | Claude Sonnet 4.6 |
 | **Reviewer** | ChatGPT CTO (AI CTO) |
@@ -29,7 +29,7 @@
 
 ### Business Objective
 
-Transform OMOS from a documentation repository into a self-driving engineering system. After this sprint, future instructions can simply be "Continue OMOS" and Claude Developer will know exactly what to do.
+Comprehensive audit of the entire OneMember codebase: routes, controllers, models, middleware, CSS, localisation, tests, and all feature modules. Deliver a structured audit report with health score, critical issues, and recommended development order. No fixes — audit only.
 
 ---
 
@@ -37,10 +37,10 @@ Transform OMOS from a documentation repository into a self-driving engineering s
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | AI-02B1+B2 |
-| **Title** | Executive and Product Foundation |
+| **Sprint ID** | AI-02C |
+| **Title** | OMOS Self-Driving Foundation |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Commit** | `67f669f` |
+| **Commit** | `965075d` |
 
 ---
 
@@ -48,7 +48,8 @@ Transform OMOS from a documentation repository into a self-driving engineering s
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
-| AI-02C | OMOS Self-Driving Foundation | ⏳ CTO Review | TBD |
+| AI-03 | Application Audit | ⏳ CTO Review | TBD |
+| AI-02C | OMOS Self-Driving Foundation | ⏳ CTO Review | `965075d` |
 | AI-02B1+B2 | Executive and Product Foundation | ⏳ CTO Review | `67f669f` |
 | AI-02A | OneMember Operating System Foundation | ✅ Complete | `eeb9744` |
 | AI-01 | AI Development System | ✅ Complete | `09948b9` |
@@ -64,7 +65,7 @@ Transform OMOS from a documentation repository into a self-driving engineering s
 
 | Sprint ID | Title | Priority |
 |---|---|---|
-| AI-03 | Architecture Foundation (ADRs, Technical Docs) | High |
+| AI-04 | Brand Fix + Critical Bug Prevention | High |
 
 ---
 
