@@ -6,7 +6,7 @@
 | **Version** | 1.0.0 |
 | **Status** | Active |
 | **Last Updated** | 2026-07-02 |
-| **Related Documents** | [ai/00-Roles.md](../../ai/00-Roles.md), [ai/04-Sprint-Workflow.md](../../ai/04-Sprint-Workflow.md), [CurrentSprint.md](./CurrentSprint.md) |
+| **Related Documents** | [CurrentSprint.md](./CurrentSprint.md), [EXECUTE.md](./EXECUTE.md), [AI-Workflow.md](./AI-Workflow.md) |
 
 ---
 
@@ -33,18 +33,19 @@ OMOS exists to prevent that. It captures the reasoning behind every significant 
 
 ---
 
-## How OMOS Relates to the AI Development System
+## How OMOS Relates to the Sprint System
 
-The `ai/` folder contains the **operating rules for the AI development team** — how sprints are written, how roles work, what quality gates must pass.
+OMOS operates on two layers:
 
-OMOS is the **content** those rules operate on — the product strategy, technical decisions, brand standards, and architecture that every sprint must respect.
+- **Governance layer** — `EXECUTE.md`, `AI-Workflow.md`, `Sprint-Lifecycle.md`, `Definition-of-Ready.md`, `Definition-of-Done.md` define HOW we work: roles, process, quality gates.
+- **Content layer** — `00-Executive/` through `16-Appendix/` define WHAT we know and have decided: product strategy, technical standards, brand, architecture.
 
 ```
-ai/          → HOW we work (process, roles, workflow)
-docs/OMOS/   → WHAT we know and have decided (content, standards, strategy)
+Governance (EXECUTE.md, AI-Workflow.md, Sprint-Lifecycle.md...)  → HOW we work
+Content (00-Executive/, 02-Product/, 12-ADR/...)                  → WHAT we know
 ```
 
-Every sprint spec written by the ChatGPT CTO should reference relevant OMOS documents. Claude Developer must read the cited OMOS documents before implementing.
+Every sprint spec written by the AI CTO should reference relevant content-layer documents. Claude Developer must read the cited documents before implementing.
 
 ---
 
@@ -64,15 +65,15 @@ When the Product Bible changes, all related OMOS documents must be reviewed for 
 
 ## How to Use CurrentSprint.md
 
-`docs/OMOS/CurrentSprint.md` is the **live sprint board**. It contains exactly one sprint at a time — the sprint currently in progress.
+`docs/OMOS/CurrentSprint.md` is the **live sprint board**. It shows the active sprint status, previous sprint, and sprint history.
 
-**Before starting a sprint:** The ChatGPT CTO fills in the template and the Product Owner approves it.
+**Before starting a sprint:** The AI CTO writes the spec in `SprintSpecification.md` using `NextSprintTemplate.md`. The Product Owner approves, then sends `Continue OMOS`.
 
-**During a sprint:** Claude updates the Tasks section as work progresses.
+**During a sprint:** Claude Developer executes tasks as defined in `SprintSpecification.md`.
 
-**After a sprint:** Claude marks the sprint complete and the file is archived to `sprints/` before the next sprint begins.
+**After a sprint:** Claude Developer updates `CurrentSprint.md` — sets status to `⏳ Awaiting CTO Review`, records the commit hash, and stops.
 
-This file is always the first thing Claude reads at the start of a session.
+See [Sprint-Lifecycle.md](./Sprint-Lifecycle.md) for the complete 8-phase workflow.
 
 ---
 
@@ -80,26 +81,44 @@ This file is always the first thing Claude reads at the start of a session.
 
 ```
 docs/OMOS/
-├── README.md               ← You are here. Start here.
-├── CurrentSprint.md        ← Active sprint. Always read first.
+├── README.md                  ← You are here. Start here.
+├── EXECUTE.md                 ← Claude Developer operating protocol. Read every session.
+├── CurrentSprint.md           ← Active sprint board. Always read first.
+├── SprintSpecification.md     ← Active sprint specification.
+├── AI-Workflow.md             ← Roles, responsibilities, review and approval process.
+├── AI-CTO-Handoff.md          ← How AI CTO hands work to Claude Developer.
+├── Sprint-Lifecycle.md        ← All 8 sprint phases with entry/exit gates.
+├── NextSprintTemplate.md      ← Standard template for all sprint specifications.
+├── Definition-of-Ready.md     ← Checklist: when a sprint may begin execution.
+├── Definition-of-Done.md      ← Checklist: when a sprint is complete.
+├── CEO-Decisions.md           ← Strategic decisions made by the Product Owner.
+├── CTO-Decisions.md           ← Technical standards set by the AI CTO.
+├── Known-Constraints.md       ← Technical, business, and security constraints.
+├── Assumptions.md             ← Documented product and technical assumptions.
+├── SprintReview.md            ← Sprint review history.
 │
-├── 00-Executive/           ← Vision, Mission, North Star, Principles
-├── 01-Company/             ← Culture, team, hiring, values in practice
-├── 02-Product/             ← Product Bible, feature specs, UX principles
-├── 03-Business/            ← Business model, pricing, partnerships
-├── 04-Technology/          ← Technology choices, integrations, third parties
-├── 05-Engineering/         ← Coding standards, PR process, testing philosophy
-├── 06-Operations/          ← Deployment, monitoring, incident response, SLAs
-├── 07-Brand/               ← Visual identity, voice, design system
-├── 08-Security/            ← Security policy, threat model, compliance
-├── 09-Roadmap/             ← Product roadmap, phases, milestones
-├── 10-Architecture/        ← System architecture, data models, integrations
-├── 11-Standards/           ← All coding, API, DB, UI, testing standards
-├── 12-ADR/                 ← Architecture Decision Records
-├── 13-RFC/                 ← Requests for Comment (proposals in review)
-├── 14-Research/            ← Market research, competitor analysis, user research
-├── 15-Legal/               ← Terms, privacy, compliance, PDPA
-└── 16-Appendix/            ← Glossary, reference tables, archived drafts
+├── Audits/                    ← Application audit reports
+│   └── AI-03-Application-Audit.md
+│
+├── Knowledge/                 ← Research, interviews, experiments, ideas
+│
+├── 00-Executive/              ← Vision, Mission, North Star, Principles
+├── 01-Company/                ← Culture, team, hiring, values in practice
+├── 02-Product/                ← Product Bible, feature specs, UX principles
+├── 03-Business/               ← Business model, pricing, partnerships
+├── 04-Technology/             ← Technology choices, integrations, third parties
+├── 05-Engineering/            ← Coding standards, PR process, testing philosophy
+├── 06-Operations/             ← Deployment, monitoring, incident response, SLAs
+├── 07-Brand/                  ← Visual identity, voice, design system
+├── 08-Security/               ← Security policy, threat model, compliance
+├── 09-Roadmap/                ← Product roadmap, phases, milestones
+├── 10-Architecture/           ← System architecture, data models, integrations
+├── 11-Standards/              ← All coding, API, DB, UI, testing standards
+├── 12-ADR/                    ← Architecture Decision Records
+├── 13-RFC/                    ← Requests for Comment (proposals in review)
+├── 14-Research/               ← Market research, competitor analysis, user research
+├── 15-Legal/                  ← Terms, privacy, compliance, PDPA
+└── 16-Appendix/               ← Glossary, reference tables, archived drafts
 ```
 
 ---
@@ -121,12 +140,10 @@ docs/OMOS/
 5. `11-Standards/` — confirm the spec respects all standards
 
 **For Claude Developer (before implementing):**
-1. `CurrentSprint.md` — the active sprint spec
-2. `11-Standards/Coding-Standards.md`
-3. `11-Standards/Bootstrap-Standards.md`
-4. `07-Brand/Brand-Standards.md`
-5. `11-Standards/Testing-Standards.md`
-6. Any specific documents cited in the sprint spec
+1. `EXECUTE.md` — read the protocol
+2. `CurrentSprint.md` — identify the active sprint
+3. `SprintSpecification.md` — read the full sprint spec
+4. Any specific documents cited in the sprint spec's Related Documents section
 
 ---
 

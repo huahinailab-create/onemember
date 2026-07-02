@@ -22,10 +22,11 @@ The sprint specification is the contract between the ChatGPT CTO (who writes it)
 
 > **No sprint is currently active.**
 >
-> The last completed sprint was **AI-02B1+B2**.
+> The last completed sprint was **AI-OMOS-BOOTSTRAP**.
 > See [CurrentSprint.md](./CurrentSprint.md) for status.
 >
 > The next sprint specification will be written here when the Product Owner and ChatGPT CTO define the next sprint.
+> Use [NextSprintTemplate.md](./NextSprintTemplate.md) as the template.
 
 ---
 

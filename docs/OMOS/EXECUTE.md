@@ -3,10 +3,10 @@
 | Field | Value |
 |---|---|
 | **Document Owner** | ChatGPT CTO |
-| **Version** | 2.0.0 |
+| **Version** | 3.0.0 |
 | **Status** | Active |
 | **Last Updated** | 2026-07-02 |
-| **Related Documents** | [README.md](./README.md), [CurrentSprint.md](./CurrentSprint.md), [SprintSpecification.md](./SprintSpecification.md), [CTO-Decisions.md](./CTO-Decisions.md), [CEO-Decisions.md](./CEO-Decisions.md) |
+| **Related Documents** | [README.md](./README.md), [CurrentSprint.md](./CurrentSprint.md), [SprintSpecification.md](./SprintSpecification.md), [AI-Workflow.md](./AI-Workflow.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md), [Definition-of-Done.md](./Definition-of-Done.md), [CTO-Decisions.md](./CTO-Decisions.md), [CEO-Decisions.md](./CEO-Decisions.md) |
 
 ---
 
@@ -14,39 +14,67 @@
 
 This is the first file Claude Developer reads at the start of every session. No exceptions.
 
-The five-step session initialisation protocol below must be completed before any action is taken. Do not skip steps. Do not assume context from a previous session.
+---
+
+## What "Continue OMOS" Means
+
+When the Product Owner sends:
+
+> **Continue OMOS**
+
+Claude Developer must execute this exact sequence and nothing more:
+
+| Step | Action |
+|---|---|
+| 1 | Read `EXECUTE.md` (this file) |
+| 2 | Read `CurrentSprint.md` — identify the active sprint ID, status, and objective |
+| 3 | Read `SprintSpecification.md` — read the full sprint spec |
+| 4 | Read every document listed in the sprint spec's Related Documents section |
+| 5 | Execute ONLY the tasks defined in the active sprint spec |
+| 6 | Run `php artisan test` — zero failures required |
+| 7 | Commit all changes with the sprint commit message |
+| 8 | Update `CurrentSprint.md` — mark sprint complete, update commit hash |
+| 9 | Produce the sprint completion report |
+| 10 | ⛔ STOP — wait for CTO review and PO approval |
+
+**Do not start the next sprint. Do not read the next sprint spec. Do not take any further action.**
 
 ---
 
 ## Session Initialisation Protocol
 
-Complete these five steps in order before doing anything else:
-
 ### Step 1 — Read EXECUTE.md (this file)
-You are reading it now. Confirm the protocol before proceeding.
+You are reading it now.
 
 ### Step 2 — Read CurrentSprint.md
 Identify:
-- The current sprint ID
+- The current sprint ID and title
 - The current sprint status
-- Whether this sprint is already complete (if so, stop and report to Product Owner)
+- If status is `Complete` or `Awaiting CTO Review`: stop and report — do not re-execute the sprint
 
 ### Step 3 — Read SprintSpecification.md
 Identify:
 - The sprint objective
 - The exact task list
 - The Definition of Done
-- Related documents to read
+- All related documents to read
 
 ### Step 4 — Read all Related Documents
 Read every document listed in the sprint spec's Related Documents section. Do not skip.
 
 ### Step 5 — Confirm before acting
-Before writing a single line of code or documentation, confirm in your response:
-- The sprint ID and objective
-- The files you will create or modify
-- The tests you will write (if applicable)
-- Any ambiguities you need resolved
+
+Before writing a single line of code or documentation, output the session start checklist:
+
+```
+[ ] Read EXECUTE.md ✓
+[ ] Read CurrentSprint.md — Sprint [ID], Status [STATUS]
+[ ] Read SprintSpecification.md — [OBJECTIVE]
+[ ] Read all related documents
+[ ] Confirmed sprint objective and Definition of Done
+[ ] No ambiguities unresolved
+[ ] Ready to implement Sprint [ID]
+```
 
 If there are ambiguities: **stop and ask.** Do not interpret and proceed.
 
@@ -76,15 +104,24 @@ git commit -m "Sprint [ID] — [Sprint Title]
 Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
 ```
 
-### Step 4 — Return completion report
-The completion report must include:
-- **Summary:** What was built and why
-- **Files created/modified:** Full list with brief description
-- **Tests:** Count before and after, test names added
-- **Commit hash**
-- **Architectural recommendations:** Any Type 3/4 decisions encountered that should be documented as ADRs
+### Step 4 — Update CurrentSprint.md
+After committing:
+- Set sprint status to `⏳ Awaiting CTO Review`
+- Record the commit hash
+- Move the completed sprint to Previous Sprint
+- Set Next Planned Sprint to the next known sprint (if defined)
 
-### Step 5 — ⛔ STOP
+### Step 5 — Return completion report
+The completion report must include:
+- **Sprint ID and Title**
+- **Summary:** What was built and why
+- **Files Created:** Full list with brief description of each
+- **Files Updated:** Full list with brief description of each change
+- **Tests:** Count, all pass/fail, new tests added
+- **Commit Hash**
+- **Recommendations:** Any Type 3/4 decisions encountered that need ADR or RFC
+
+### Step 6 — ⛔ STOP
 
 **Do not begin the next sprint.**
 
@@ -119,12 +156,14 @@ The reason: every sprint requires CTO review before the next sprint begins. Revi
 | Hardcode secrets, API keys, or credentials | Security is non-negotiable (CEO-006) |
 | Disable email verification | Security is non-negotiable (CEO-006) |
 | Use `--no-verify` on git commits | Fix the underlying issue instead |
-| Deploy to production | Deployment requires explicit PO approval |
+| Deploy to production | Deployment requires explicit PO approval (CEO-007) |
 | Make Type 3/4 architectural decisions independently | Stop and report instead |
 | Use Tailwind CSS | Bootstrap 5 only (ADR-005) |
 | Send email directly from a controller | Event-driven architecture required (CTO-003) |
 | Access another merchant's data without scoping | Multi-tenancy boundary (CTO-005) |
 | Expose developer tools in production | Security constraint (CEO-006) |
+| Edit OMOS governance documents outside a sprint | Open an RFC first |
+| Make a product decision not covered by existing CEO/CTO decisions | Stop and escalate |
 
 ---
 
@@ -136,9 +175,13 @@ The reason: every sprint requires CTO review before the next sprint begins. Revi
 
 **If a test is failing for an unrelated reason:** Report it. Do not delete the test. Do not mark the sprint complete until all tests pass.
 
-**If an architectural decision is required that is not covered by existing ADRs:** Stop. Describe the decision and the options to the Product Owner. Wait for guidance before implementing.
+**If an architectural decision is required that is not covered by existing ADRs:** Stop. Describe the decision and the options. Wait for the CTO to provide an RFC or ADR before implementing.
 
-**If a CEO or CTO decision is needed:** Stop. This is a Type 3 or Type 4 decision (see `Decision-Framework.md`). Document the options. Wait for the decision before proceeding.
+**If a CEO or CTO decision is needed:** Stop. This is a Type 3 or Type 4 decision. Document the options. Wait for the decision before proceeding.
+
+**If the sprint spec conflicts with an existing ADR or CEO decision:** Stop immediately. Report the conflict to the Product Owner. Do not resolve it yourself.
+
+See [AI-CTO-Handoff.md](./AI-CTO-Handoff.md) for how to request clarification from the CTO.
 
 ---
 
@@ -162,27 +205,29 @@ These rules apply to every sprint. They are not repeated in individual sprint sp
 |---|---|
 | Backend framework | Laravel 13, PHP 8.3+ |
 | Frontend framework | Bootstrap 5 only |
-| CSS framework not permitted | Tailwind CSS |
-| Email | Event-driven, queued, never in controllers |
-| Database pattern | Single DB, `merchant_id` scoping on every query |
-| Session driver (production) | `database` |
-| Queue driver (production) | `database` |
-| Test requirement | `php artisan test` — zero failures |
+| CSS framework not permitted | Tailwind CSS (ADR-005) |
+| Email | Event-driven, queued, never from controllers (CTO-003) |
+| Database pattern | Single DB, `merchant_id` scoping on every query (CTO-005) |
+| Session driver (production) | `database` (CTO-004) |
+| Queue driver (production) | `database` (CTO-004) |
+| Nullable JSON columns | Custom Attribute accessor returning `[]` (CTO-008) |
+| Blade `@json()` | Single variable only, never multiline array literal (CTO-009) |
+| Test requirement | `php artisan test` — zero failures (CTO-006) |
 | Secrets | `.env` only — never in code |
-| Developer tools | Never in production |
+| Developer tools | Never in production (CEO-006) |
 
 ---
 
-## Session Start Checklist
+## Escalation Reference
 
-Copy this into your response at the start of each sprint:
+| Situation | Action |
+|---|---|
+| Sprint spec is ambiguous | Stop, ask Product Owner for clarification |
+| Bug found outside sprint scope | Note in completion report, do not fix |
+| Architecture decision needed (Type 3) | Stop, document options, wait for CTO RFC/ADR |
+| Strategic decision needed (Type 4) | Stop, document options, wait for PO + CTO |
+| Sprint spec conflicts with ADR | Stop, report conflict immediately |
+| Security constraint at risk | Stop, report immediately — never override |
+| All tests passing, sprint complete | Return completion report, ⛔ STOP |
 
-```
-[ ] Read EXECUTE.md ✓
-[ ] Read CurrentSprint.md — Sprint [ID], Status [STATUS]
-[ ] Read SprintSpecification.md — [OBJECTIVE]
-[ ] Read all related documents
-[ ] Confirmed sprint objective and Definition of Done
-[ ] No ambiguities unresolved
-[ ] Ready to implement Sprint [ID]
-```
+See [AI-Workflow.md](./AI-Workflow.md) for the full responsibility matrix.

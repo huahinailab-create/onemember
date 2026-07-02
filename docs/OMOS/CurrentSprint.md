@@ -4,9 +4,10 @@
 |---|---|
 | **Document Owner** | ChatGPT CTO |
 | **Version** | Live |
+| **OMOS Version** | 1.0 Operational |
 | **Status** | Active |
 | **Last Updated** | 2026-07-02 |
-| **Related Documents** | [SprintSpecification.md](./SprintSpecification.md), [SprintReview.md](./SprintReview.md), [EXECUTE.md](./EXECUTE.md), [09-Roadmap/Roadmap.md](./09-Roadmap/Roadmap.md) |
+| **Related Documents** | [SprintSpecification.md](./SprintSpecification.md), [SprintReview.md](./SprintReview.md), [EXECUTE.md](./EXECUTE.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md), [AI-Workflow.md](./AI-Workflow.md) |
 
 ---
 
@@ -14,9 +15,10 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | AI-03 |
+| **Sprint ID** | AI-OMOS-BOOTSTRAP |
+| **Title** | OMOS Operational |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Sprint Type** | Audit |
+| **Sprint Type** | Documentation / Governance |
 | **Owner** | Product Owner |
 | **Developer** | Claude Sonnet 4.6 |
 | **Reviewer** | ChatGPT CTO (AI CTO) |
@@ -29,7 +31,7 @@
 
 ### Business Objective
 
-Comprehensive audit of the entire OneMember codebase: routes, controllers, models, middleware, CSS, localisation, tests, and all feature modules. Deliver a structured audit report with health score, critical issues, and recommended development order. No fixes — audit only.
+Upgrade OMOS so that future sprints can be triggered with only `Continue OMOS`. Define the permanent workflow, roles, review process, approval gates, and sprint lifecycle. After this sprint, no long sprint specifications should be required — OMOS self-documents the operating system.
 
 ---
 
@@ -37,10 +39,10 @@ Comprehensive audit of the entire OneMember codebase: routes, controllers, model
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | AI-02C |
-| **Title** | OMOS Self-Driving Foundation |
+| **Sprint ID** | AI-03 |
+| **Title** | Application Audit |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Commit** | `965075d` |
+| **Commit** | `f8d6ac8` |
 
 ---
 
@@ -48,7 +50,8 @@ Comprehensive audit of the entire OneMember codebase: routes, controllers, model
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
-| AI-03 | Application Audit | ⏳ CTO Review | TBD |
+| AI-OMOS-BOOTSTRAP | OMOS Operational | ⏳ CTO Review | TBD |
+| AI-03 | Application Audit | ⏳ CTO Review | `f8d6ac8` |
 | AI-02C | OMOS Self-Driving Foundation | ⏳ CTO Review | `965075d` |
 | AI-02B1+B2 | Executive and Product Foundation | ⏳ CTO Review | `67f669f` |
 | AI-02A | OneMember Operating System Foundation | ✅ Complete | `eeb9744` |
@@ -65,7 +68,7 @@ Comprehensive audit of the entire OneMember codebase: routes, controllers, model
 
 | Sprint ID | Title | Priority |
 |---|---|---|
-| AI-04 | Brand Fix + Critical Bug Prevention | High |
+| AI-04 | Merchant Experience Polish | High |
 
 ---
 
@@ -74,9 +77,10 @@ Comprehensive audit of the entire OneMember codebase: routes, controllers, model
 | Status | Meaning |
 |---|---|
 | 🔲 Planning | Sprint is being defined. Spec is not yet final. |
+| ✅ Ready | Sprint meets Definition of Ready. Awaiting PO trigger. |
 | 🔄 In Progress | Claude Developer is implementing. |
 | ⏳ Awaiting CTO Review | Implementation complete. Waiting for ChatGPT CTO review. |
-| ⏳ Awaiting PO Approval | CTO approved. Waiting for Product Owner deployment approval. |
+| ⏳ Awaiting PO Approval | CTO approved. Waiting for Product Owner deployment decision. |
 | ✅ Complete | Sprint approved, committed, and (if applicable) deployed. |
 | ❌ Blocked | Sprint cannot proceed due to unresolved dependency or decision. |
 | ⛔ Cancelled | Sprint cancelled before completion. Reason in SprintReview.md. |
