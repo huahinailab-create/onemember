@@ -15,22 +15,34 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MVP-001 |
-| **Title** | Merchant Experience Polish |
+| **Sprint ID** | MKTG-001 |
+| **Title** | Merchant Presentation v1.0 |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Sprint Type** | Feature + Bug Fix |
-| **Sprint File** | [Sprints/MVP-001-Merchant-Experience-Polish.md](./Sprints/MVP-001-Merchant-Experience-Polish.md) |
+| **Sprint Type** | Marketing Asset |
+| **Sprint File** | — (inline PO spec) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Sonnet 4.6 |
 | **Reviewer** | ChatGPT CTO (AI CTO) |
 | **Started** | 2026-07-02 |
 | **Target Completion** | 2026-07-02 |
 | **Actual Completion** | 2026-07-02 |
-| **Commit Hash** | `37b7d8c` |
+| **Commit Hash** | `776ce94` |
 
 ### Business Objective
 
-Fix brand colour mismatch (Bootstrap default blue → OneMember Deep Navy `#1A2E5A`) and eliminate `LoyaltyProgram.settings` nullable JSON bug risk (CTO-008 null-safe pattern applied).
+Create a professional 13-slide merchant sales presentation (python-pptx) with OneMember branding, speaker notes on every slide, and a companion Speaker-Notes PDF. For use in 20-minute merchant sales meetings.
+
+---
+
+## Previous Sprint (MVP-001)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | MVP-001 |
+| **Title** | Merchant Experience Polish |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint File** | [Sprints/MVP-001-Merchant-Experience-Polish.md](./Sprints/MVP-001-Merchant-Experience-Polish.md) |
+| **Commit Hash** | `37b7d8c` |
 
 ---
 
@@ -61,6 +73,7 @@ Fix brand colour mismatch (Bootstrap default blue → OneMember Deep Navy `#1A2E
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
+| MKTG-001 | Merchant Presentation v1.0 | ⏳ CTO Review | `776ce94` |
 | MVP-001 | Merchant Experience Polish | ⏳ CTO Review | `37b7d8c` |
 | OMOS-1.1 | Operational Readiness | ✅ Complete | `567939a` |
 | AI-OMOS-BOOTSTRAP | OMOS Operational | ✅ Complete | `17e0d40` |
