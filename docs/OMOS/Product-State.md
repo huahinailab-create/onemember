@@ -78,7 +78,7 @@ Next health score update: after MVP-001 completes.
 |---|---|
 | **Sprint ID** | OMOS-1.1 |
 | **Title** | Operational Readiness |
-| **Status** | 🔄 In Progress |
+| **Status** | ⏳ Awaiting CTO Review |
 | **Sprint File** | [Sprints/](./Sprints/) |
 | **Type** | Documentation / Governance |
 
