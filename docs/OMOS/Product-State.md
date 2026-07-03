@@ -29,8 +29,8 @@ This file is read as part of the `Continue OMOS` initialisation sequence (step 2
 | **PHP Version** | 8.3+ (8.5 in production) |
 | **Laravel Version** | 13.17.0 |
 | **Application Version** | 0.5.0 |
-| **Last Code Commit** | `1694b01` — MKTG-002 Merchant Sales Presentation Excellence |
-| **Last Code Sprint** | MKTG-002 Merchant Sales Presentation Excellence (`1694b01`) |
+| **Last Code Commit** | `7e3baf8` — Sprint MVP-002 Thai Localization Foundation |
+| **Last Code Sprint** | MVP-002 Thai Localization Foundation (`7e3baf8`) |
 | **Last OMOS Sprint** | OMOS-1.1 Operational Readiness (`567939a`) |
 
 ---
@@ -54,7 +54,7 @@ Phase 2 (Customer Wallet) does not begin until Phase 1 exit criteria are met.
 
 ## Current Application Health Score
 
-**77 / 100** — updated after MVP-001 (2026-07-02)
+**80 / 100** — updated after MVP-002 (2026-07-03)
 
 | Category | Score | Notes |
 |---|---|---|
@@ -63,13 +63,13 @@ Phase 2 (Customer Wallet) does not begin until Phase 1 exit criteria are met.
 | Testing | 82/100 | +5 new LoyaltyProgram regression tests |
 | Architecture | 85/100 | LoyaltyProgram/Campaign naming split (ADR-007 pending) |
 | Brand Compliance | 90/100 | ✅ `--bs-primary` now `#1A2E5A`, sidebar correct, theme-color correct |
-| Localization | 75/100 | THB hardcoded in fallbacks |
+| Localization | 88/100 | Default locale 'th', portal locale, starter campaigns localised, Alpine.js i18n |
 | UX Completeness | 60/100 | 3 nav items lead to coming-soon pages |
 | Technical Debt | 80/100 | ✅ LoyaltyProgram null-safe fixed; MerchantProfileController legacy remains |
 | Performance | 70/100 | Dashboard N+1 risk, no caching layer |
 | Documentation | 95/100 | OMOS is comprehensive |
 
-Next health score update: after MVP-002 completes.
+Next health score update: after MVP-003 completes.
 
 ---
 
@@ -77,13 +77,11 @@ Next health score update: after MVP-002 completes.
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MKTG-002 |
-| **Title** | Merchant Sales Presentation Excellence |
+| **Sprint ID** | MVP-002 |
+| **Title** | Thai Localization Foundation |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Sprint File** | [docs/Marketing/MKTG-002/](../Marketing/MKTG-002/) |
-| **Final Commit** | `1694b01` |
-
-Note: MKTG-001 (`4d46d56`) and MVP-001 (`37b7d8c`) are also awaiting CTO review.
+| **Sprint File** | [Sprints/MVP-002-Thai-Localization-Foundation.md](./Sprints/MVP-002-Thai-Localization-Foundation.md) |
+| **Final Commit** | `7e3baf8` |
 
 ---
 

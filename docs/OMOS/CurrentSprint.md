@@ -15,40 +15,40 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MKTG-002 |
-| **Title** | Merchant Sales Presentation Excellence |
+| **Sprint ID** | MVP-002 |
+| **Title** | Thai Localization Foundation |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Sprint Type** | Marketing Asset |
-| **Sprint File** | [docs/Marketing/MKTG-002/](../Marketing/MKTG-002/) |
+| **Sprint Type** | Feature |
+| **Sprint File** | [Sprints/MVP-002-Thai-Localization-Foundation.md](./Sprints/MVP-002-Thai-Localization-Foundation.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Sonnet 4.6 |
 | **Reviewer** | ChatGPT CTO (AI CTO) |
 | **Started** | 2026-07-03 |
 | **Target Completion** | 2026-07-03 |
 | **Actual Completion** | 2026-07-03 |
-| **Final Commit** | `1694b01` |
+| **Final Commit** | `7e3baf8` |
 
 ### Commits This Sprint
 
 | Hash | Description |
 |---|---|
-| `1694b01` | Marketing — MKTG-002 Merchant Sales Presentation Excellence |
+| `7e3baf8` | Sprint MVP-002 — Thai Localization Foundation |
 
 ### Business Objective
 
-Create the best merchant sales presentation possible. Objective: persuade a merchant to sign up, not explain the product. Persuasion-first 13-slide structure (problem → cost → solution → ROI → CTA). Full EN + TH PPTX and speaker notes PDFs. Full sales enablement suite: Sales Playbook, Demo Script, FAQ, Objection Handling Guide, ROI Calculator (Excel).
+A Thai merchant should feel that OneMember was built for Thailand, not translated into Thai. Default locale 'th', portal locale from merchant settings, starter campaigns in Thai, Alpine.js i18n.
 
 ---
 
-## Previous Sprint (MKTG-001)
+## Previous Sprint (MKTG-002)
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MKTG-001 |
-| **Title** | Merchant Presentation v2.0 (EN + TH) |
-| **Status** | ⏳ Awaiting CTO Review |
-| **Sprint File** | — (inline PO spec) |
-| **Final Commit** | `4d46d56` |
+| **Sprint ID** | MKTG-002 |
+| **Title** | Merchant Sales Presentation Excellence |
+| **Status** | ✅ CTO Approved — 2026-07-03 |
+| **Sprint File** | [docs/Marketing/MKTG-002/](../Marketing/MKTG-002/) |
+| **Final Commit** | `1694b01` |
 
 ---
 
@@ -56,9 +56,9 @@ Create the best merchant sales presentation possible. Objective: persuade a merc
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MVP-002 |
+| **Sprint ID** | MVP-003 |
 | **Title** | Birthday and Expiry Automation |
-| **Status** | ⬜ Deferred — awaiting MVP-001 CTO approval |
+| **Status** | ⬜ Deferred — awaiting MVP-002 CTO approval |
 | **Sprint File** | [Sprints/Backlog.md](./Sprints/Backlog.md) |
 | **Priority** | High |
 
@@ -79,10 +79,11 @@ Create the best merchant sales presentation possible. Objective: persuade a merc
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
-| MKTG-002 | Merchant Sales Presentation Excellence | ⏳ CTO Review | `1694b01` |
-| MKTG-001 | Merchant Presentation v2.0 (EN + TH) | ⏳ CTO Review | `4d46d56` |
-| MVP-001 | Merchant Experience Polish | ⏳ CTO Review | `37b7d8c` |
-| OMOS-1.1 | Operational Readiness | ✅ Complete | `567939a` |
+| MVP-002  | Thai Localization Foundation | ⏳ CTO Review | `7e3baf8` |
+| MKTG-002 | Merchant Sales Presentation Excellence | ✅ CTO Approved | `1694b01` |
+| MKTG-001 | Merchant Presentation v2.0 (EN + TH) | ✅ CTO Approved | `4d46d56` |
+| MVP-001 | Merchant Experience Polish | ✅ CTO Approved | `37b7d8c` |
+| OMOS-1.1 | Operational Readiness | ✅ CTO Approved | `567939a` |
 | AI-OMOS-BOOTSTRAP | OMOS Operational | ✅ Complete | `17e0d40` |
 | AI-03 | Application Audit | ✅ Complete | `f8d6ac8` |
 | AI-02C | OMOS Self-Driving Foundation | ✅ Complete | `965075d` |
