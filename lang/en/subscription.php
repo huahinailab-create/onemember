@@ -69,7 +69,7 @@ return [
     'feature_custom_branding'  => 'Custom Branding',
     'feature_multi_location'   => 'Multi-Location',
     'feature_data_export'      => 'Data Export',
-    'help_note'                => 'Questions about your plan? Contact us at support@onemember.app',
+    'help_note'                => 'Questions about your plan? Contact us at support@onemember.co',
 
     // Billing actions
     'subscribe_to'             => 'Subscribe to :plan',

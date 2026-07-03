@@ -14,6 +14,7 @@ use App\Http\Controllers\CustomerPortalController;
 use App\Http\Controllers\DataManagementController;
 use App\Http\Controllers\MerchantProfileController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CorporateController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +27,26 @@ Route::get('/member/{publicUuid}',      [CustomerPortalController::class, 'show'
 Route::get('/member/{publicUuid}/card', [CustomerPortalController::class, 'card'])->name('portal.card');
 Route::get('/member/{publicUuid}/qr.svg', [CustomerPortalController::class, 'qrSvg'])->name('portal.qr');
 
-Route::get('/', function () {
+// ── Corporate website (public) ────────────────────────────────────────────
+Route::get('/',            [CorporateController::class, 'home'])->name('corporate.home');
+Route::get('/solutions',   [CorporateController::class, 'solutions'])->name('corporate.solutions');
+Route::get('/industries',  [CorporateController::class, 'industries'])->name('corporate.industries');
+Route::get('/features',    [CorporateController::class, 'features'])->name('corporate.features');
+Route::get('/pricing',     [CorporateController::class, 'pricing'])->name('corporate.pricing');
+Route::get('/about',       [CorporateController::class, 'about'])->name('corporate.about');
+Route::get('/security',    [CorporateController::class, 'security'])->name('corporate.security');
+Route::get('/contact',     [CorporateController::class, 'contact'])->name('corporate.contact');
+Route::get('/faq',         [CorporateController::class, 'faq'])->name('corporate.faq');
+Route::get('/resources',   [CorporateController::class, 'resources'])->name('corporate.resources');
+Route::get('/blog',        [CorporateController::class, 'blog'])->name('corporate.blog');
+Route::get('/careers',     [CorporateController::class, 'careers'])->name('corporate.careers');
+Route::get('/partners',    [CorporateController::class, 'partners'])->name('corporate.partners');
+Route::get('/demo',        [CorporateController::class, 'demo'])->name('corporate.demo');
+Route::get('/privacy',     [CorporateController::class, 'privacy'])->name('corporate.privacy');
+Route::get('/terms',       [CorporateController::class, 'terms'])->name('corporate.terms');
+
+// LEGACY: old welcome route redirected to corporate home (kept for backwards-compat during transition)
+Route::get('/welcome', function () {
     return view('welcome');
 });
 

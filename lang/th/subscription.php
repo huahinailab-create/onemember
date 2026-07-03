@@ -69,7 +69,7 @@ return [
     'feature_custom_branding'  => 'แบรนด์ที่กำหนดเอง',
     'feature_multi_location'   => 'หลายสาขา',
     'feature_data_export'      => 'ส่งออกข้อมูล',
-    'help_note'                => 'มีคำถามเกี่ยวกับแผน? ติดต่อเราที่ support@onemember.app',
+    'help_note'                => 'มีคำถามเกี่ยวกับแผน? ติดต่อเราที่ support@onemember.co',
 
     // Billing actions
     'subscribe_to'             => 'สมัครแผน :plan',

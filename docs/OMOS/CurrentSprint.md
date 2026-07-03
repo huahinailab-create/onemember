@@ -15,35 +15,35 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | RELEASE-1A |
-| **Title** | OneMember Product Identity |
-| **Status** | ✅ Complete — CTO Approved + PO Approved for Deployment |
-| **Sprint Type** | Design + UX Transformation |
+| **Sprint ID** | RELEASE-1B |
+| **Title** | Corporate Website & Corporate Identity |
+| **Status** | 🔄 In Progress |
+| **Sprint Type** | Corporate Website + Identity |
 | **Classification** | Type B — CTO Review Required |
-| **Sprint File** | [Sprints/RELEASE-1A-Product-Identity.md](./Sprints/RELEASE-1A-Product-Identity.md) |
+| **Sprint File** | [Sprints/RELEASE-1B-Corporate-Website.md](./Sprints/RELEASE-1B-Corporate-Website.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Sonnet 4.6 |
 | **Reviewer** | ChatGPT CTO |
 | **Started** | 2026-07-03 |
 | **Target Completion** | 2026-07-03 |
-| **Actual Completion** | 2026-07-03 |
-| **Final Commit** | `364b29e` |
+| **Actual Completion** | — |
+| **Final Commit** | — |
 
 ### Business Objective
 
-Transform the OneMember application into a premium SaaS product that fully reflects the official OneMember brand. No new business features — design and UX transformation only.
+Establish OneMember's corporate presence at `www.onemember.co`, standardise corporate email identity to `@onemember.co`, and align all application references to the `.co` domain.
 
 ---
 
-## Previous Sprint (MVP-005)
+## Previous Sprint (RELEASE-1A)
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MVP-005 |
-| **Title** | Pilot Merchant Readiness |
-| **Status** | ✅ Complete (Type A — Auto-Approved) |
-| **Sprint File** | [Sprints/MVP-005-Pilot-Merchant-Readiness.md](./Sprints/MVP-005-Pilot-Merchant-Readiness.md) |
-| **Final Commit** | `74c6c94` |
+| **Sprint ID** | RELEASE-1A |
+| **Title** | OneMember Product Identity |
+| **Status** | ✅ Deployed — CTO Approved + PO Approved |
+| **Sprint File** | [Sprints/RELEASE-1A-Product-Identity.md](./Sprints/RELEASE-1A-Product-Identity.md) |
+| **Final Commit** | `364b29e` |
 
 ---
 

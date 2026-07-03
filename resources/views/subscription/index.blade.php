@@ -359,7 +359,7 @@
                                             <span class="badge bg-secondary px-3 py-2">{{ __('subscription.current') }}</span>
                                         @endif
                                     @elseif ($planKey === 'enterprise')
-                                        <a href="mailto:sales@onemember.app" class="btn btn-outline-dark btn-sm">
+                                        <a href="mailto:sales@onemember.co" class="btn btn-outline-dark btn-sm">
                                             <i class="bi bi-envelope me-1"></i>{{ __('subscription.contact_sales') }}
                                         </a>
                                     @elseif ($priceId)
