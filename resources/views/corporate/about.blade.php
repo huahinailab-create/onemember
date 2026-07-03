@@ -25,17 +25,20 @@
             </div>
             <div class="col-lg-6">
                 <div class="row g-3">
-                    @foreach([
+                    @php
+                    $aboutValues = [
                         ['bi-bullseye', 'Mission', 'Give every Thai SME the loyalty tools they deserve — simple, affordable, and PDPA-safe.'],
-                        ['bi-eye', 'Vision', 'Become the loyalty platform for ASEAN's 70 million small businesses.'],
+                        ['bi-eye', 'Vision', "Become the loyalty platform for ASEAN's 70 million small businesses."],
                         ['bi-heart', 'Values', 'Merchant-first. Simple by design. Honest pricing. Built for Thailand.'],
                         ['bi-flag', 'Thailand First', 'We designed for Thai merchants before thinking about any other market.'],
-                    ] as $v)
+                    ];
+                    @endphp
+                    @foreach($aboutValues as $value)
                     <div class="col-6">
                         <div class="corp-feature-card text-center">
-                            <div class="corp-feature-icon mx-auto"><i class="bi {{ $v[0] }}"></i></div>
-                            <h4>{{ $v[1] }}</h4>
-                            <p>{{ $v[2] }}</p>
+                            <div class="corp-feature-icon mx-auto"><i class="bi {{ $value[0] }}"></i></div>
+                            <h4>{{ $value[1] }}</h4>
+                            <p>{{ $value[2] }}</p>
                         </div>
                     </div>
                     @endforeach
