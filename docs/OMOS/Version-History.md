@@ -29,6 +29,9 @@ Version History tracks every significant release and documentation milestone for
 | 0.4.0 | — | DEV-02 | Developer Productivity Suite: enhanced dev tools, test data management | Product Owner |
 | 0.4.1 | 2026-07-02 | BUG-001 | Email verification stale-tab fix: JS polling, verification status endpoint | Product Owner |
 | 0.4.2 | 2026-07-02 | BUG-002 | Dashboard broken links fix: settings 500 error, campaign show Blade ParseError | Product Owner |
+| 0.5.0 | 2026-07-03 | MVP-001 | Merchant experience polish: brand colours fixed, LoyaltyProgram null-safe, sidebar, theme-color | Product Owner |
+| 0.6.0 | 2026-07-03 | MVP-002 | Thai localisation foundation: default locale 'th', portal locale, starter campaigns, Alpine.js i18n | Product Owner |
+| 0.7.0 | 2026-07-03 | MVP-003 | Merchant acquisition experience: landing page, brand logo, register trial strip, onboarding trial flow | Product Owner |
 
 ---
 
@@ -42,6 +45,7 @@ Version History tracks every significant release and documentation milestone for
 | OMOS 0.4.0 | 2026-07-02 | AI-02C | Self-driving foundation: Version History, CEO/CTO decision logs, Known Constraints, Assumptions, Knowledge Base, first ADRs, RFC templates | AI CTO |
 | OMOS 1.0 | 2026-07-02 | AI-OMOS-BOOTSTRAP | OMOS operational: EXECUTE.md v3, AI-Workflow, Sprint-Lifecycle, NextSprintTemplate, AI-CTO-Handoff, Definition-of-Ready, Definition-of-Done | AI CTO |
 | OMOS 1.1 | 2026-07-02 | OMOS-1.1 | Operational readiness: Sprint library, Product-State, Product-Memory, Engineering-Backlog, roadmap separation, EXECUTE.md v4, MVP-001 sprint spec | AI CTO |
+| OMOS 1.2 | 2026-07-03 | OMOS-1.2 | Autonomous sprint governance: Type A/B/C classification, Sprint-Classification.md, EXECUTE.md v5, Sprint-Lifecycle v2, AI-Workflow v2 | Product Owner |
 
 ---
 

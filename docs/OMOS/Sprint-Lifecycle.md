@@ -3,19 +3,33 @@
 | Field | Value |
 |---|---|
 | **Document Owner** | ChatGPT CTO |
-| **Version** | 1.0.0 |
+| **Version** | 2.0.0 |
 | **Status** | Active |
-| **Last Updated** | 2026-07-02 |
-| **Related Documents** | [EXECUTE.md](./EXECUTE.md), [AI-Workflow.md](./AI-Workflow.md), [Definition-of-Ready.md](./Definition-of-Ready.md), [Definition-of-Done.md](./Definition-of-Done.md), [NextSprintTemplate.md](./NextSprintTemplate.md), [CurrentSprint.md](./CurrentSprint.md) |
+| **Last Updated** | 2026-07-03 |
+| **OMOS Version** | 1.2 |
+| **Related Documents** | [EXECUTE.md](./EXECUTE.md), [Sprint-Classification.md](./Sprint-Classification.md), [AI-Workflow.md](./AI-Workflow.md), [Definition-of-Ready.md](./Definition-of-Ready.md), [Definition-of-Done.md](./Definition-of-Done.md), [NextSprintTemplate.md](./NextSprintTemplate.md), [CurrentSprint.md](./CurrentSprint.md) |
 
 ---
 
 ## Overview
 
-Every sprint at OneMember passes through eight phases. Each phase has an entry condition, defined actions, and an exit gate. No phase may be skipped.
+Every sprint at OneMember is classified as Type A, B, or C before execution. The classification determines which phases are required.
 
+See [Sprint-Classification.md](./Sprint-Classification.md) for the full classification rules.
+
+**Type A (Autonomous):**
 ```
-Planning → Execution → Testing → Review → Approval → Deployment → Retrospective → Archive
+Planning → Execution → Testing → Commit → Archive → [Next Sprint]
+```
+
+**Type B (CTO Decision Required):**
+```
+Planning → Execution → Testing → Commit → CTO Review → Approval → [Deployment] → Retrospective → Archive
+```
+
+**Type C (CEO Approval Required):**
+```
+Planning → Execution → Testing → Commit → CEO Review → Approval → Deployment → Retrospective → Archive
 ```
 
 ---
@@ -92,35 +106,55 @@ All sprint tasks implemented. Ready for testing.
 
 ---
 
-## Phase 4 — Review
+## Phase 4 — Review (Type B and C only)
 
-**Who:** AI CTO  
-**Entry condition:** Claude Developer has returned the completion report and stopped.
+**Who:** AI CTO (Type B) or Product Owner (Type C)
+**Entry condition:** Type B or Type C sprint — Claude Developer has returned the completion report and stopped.
+**Skipped for:** Type A sprints (auto-approved after testing and commit)
 
-### Actions
+### Type A — Auto-Approval
+
+After committing:
+1. Claude Developer marks sprint `✅ Complete`
+2. Archives the sprint in `CurrentSprint.md` Sprint History
+3. Activates the next approved sprint
+4. Continues OMOS automatically
+
+No CTO or PO action required.
+
+### Type B — CTO Review
 
 | Actor | Action |
 |---|---|
-| Claude Developer | Commits all changes, updates CurrentSprint.md, returns completion report, ⛔ stops |
+| Claude Developer | Commits, updates governance docs, returns completion report + CTO Decision Request, ⛔ stops |
 | AI CTO | Reviews completion report |
 | AI CTO | Verifies: architecture compliance, OMOS consistency, test coverage, security |
-| AI CTO | Checks: no forbidden actions taken, no scope creep, no ADR violations |
 | AI CTO | Returns verdict: Approved / Approved with notes / Rejected with reason |
 
-### Exit Gate
+### Exit Gate (Type B)
 AI CTO verdict is `Approved` or `Approved with notes`.
 
 If `Rejected`: AI CTO specifies what must change. Product Owner decides whether to re-run the sprint or abandon it.
 
+### Type C — CEO Review
+
+| Actor | Action |
+|---|---|
+| Claude Developer | Returns CEO Decision Request, ⛔ stops |
+| Product Owner | Makes the required strategic decision |
+| Product Owner | Sends updated instructions to continue |
+
 ### CurrentSprint.md Status
-`⏳ Awaiting CTO Review`
+- Type A: `✅ Complete` (set by Claude Developer automatically)
+- Type B: `⏳ Awaiting CTO Review`
+- Type C: `⏳ Awaiting CEO Approval`
 
 ---
 
-## Phase 5 — Approval
+## Phase 5 — Approval (Type B and C only)
 
-**Who:** Product Owner  
-**Entry condition:** AI CTO has approved the sprint.
+**Who:** Product Owner
+**Entry condition:** AI CTO has approved (Type B) or PO has decided (Type C). Skipped for Type A.
 
 ### Actions
 
@@ -215,16 +249,18 @@ Deployment confirmed successful. No production errors in first 15 minutes.
 
 ## Sprint Status Definitions
 
-| Status | Phase | Meaning |
-|---|---|---|
-| `🔲 Planning` | Planning | Sprint is being defined. Spec is not yet final. |
-| `✅ Ready` | Planning → Execution | Sprint meets Definition of Ready. Awaiting PO trigger. |
-| `🔄 In Progress` | Execution + Testing | Claude Developer is implementing. |
-| `⏳ Awaiting CTO Review` | Review | Completion report returned. Waiting for AI CTO review. |
-| `⏳ Awaiting PO Approval` | Approval | CTO approved. Waiting for Product Owner deployment decision. |
-| `✅ Complete` | Archive | Sprint approved, committed, and (if applicable) deployed. |
-| `❌ Blocked` | Any | Sprint cannot proceed due to unresolved dependency or decision. |
-| `⛔ Cancelled` | Any | Sprint cancelled before completion. Reason in SprintReview.md. |
+| Status | Type | Phase | Meaning |
+|---|---|---|---|
+| `🔲 Planning` | All | Planning | Sprint is being defined. Spec is not yet final. |
+| `✅ Ready` | All | Planning → Execution | Sprint meets Definition of Ready. Awaiting PO trigger. |
+| `🔄 In Progress` | All | Execution + Testing | Claude Developer is implementing. |
+| `✅ Complete` | A | Auto-Approval | Sprint auto-approved. Committed. OMOS continued automatically. |
+| `⏳ Awaiting CTO Review` | B | Review | Completion report returned. Waiting for AI CTO review. |
+| `⏳ Awaiting CEO Approval` | C | Review | CEO Decision Request returned. Waiting for Product Owner decision. |
+| `⏳ Awaiting PO Approval` | B/C | Approval | CTO/CEO approved. Waiting for Product Owner deployment decision. |
+| `✅ Complete` | B/C | Archive | Sprint approved, committed, and (if applicable) deployed. |
+| `❌ Blocked` | All | Any | Sprint cannot proceed due to unresolved dependency or decision. |
+| `⛔ Cancelled` | All | Any | Sprint cancelled before completion. Reason in SprintReview.md. |
 
 ---
 

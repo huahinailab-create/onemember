@@ -3,10 +3,11 @@
 | Field | Value |
 |---|---|
 | **Document Owner** | Product Owner |
-| **Version** | 1.0.0 |
+| **Version** | 2.0.0 |
 | **Status** | Active |
-| **Last Updated** | 2026-07-02 |
-| **Related Documents** | [EXECUTE.md](./EXECUTE.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md), [AI-CTO-Handoff.md](./AI-CTO-Handoff.md), [CTO-Decisions.md](./CTO-Decisions.md), [CEO-Decisions.md](./CEO-Decisions.md) |
+| **Last Updated** | 2026-07-03 |
+| **OMOS Version** | 1.2 |
+| **Related Documents** | [EXECUTE.md](./EXECUTE.md), [Sprint-Classification.md](./Sprint-Classification.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md), [AI-CTO-Handoff.md](./AI-CTO-Handoff.md), [CTO-Decisions.md](./CTO-Decisions.md), [CEO-Decisions.md](./CEO-Decisions.md) |
 
 ---
 
@@ -82,8 +83,9 @@ Claude Developer implements the sprint specification. Implementation authority i
 - Add features beyond the sprint scope
 - Skip the test suite
 - Deploy to production
-- Begin the next sprint without explicit instruction
+- Begin the next sprint without explicit instruction (unless sprint is Type A — then continues automatically)
 - Resolve conflicts between the sprint spec and existing ADRs independently
+- Self-classify a Type B sprint as Type A to avoid stopping
 
 ---
 
@@ -114,16 +116,32 @@ Claude Developer implements the sprint specification. Implementation authority i
 
 ## Review Process
 
-After Claude Developer returns a completion report, the review process is:
+After Claude Developer returns a completion report, the review process depends on sprint classification:
+
+### Type A — No Review Required
 
 | Step | Actor | Action |
 |---|---|---|
-| 1 | Claude Developer | Returns completion report. Stops. |
+| 1 | Claude Developer | Completes sprint, auto-approves, archives, continues to next approved sprint |
+
+### Type B — CTO Review
+
+| Step | Actor | Action |
+|---|---|---|
+| 1 | Claude Developer | Returns completion report + CTO Decision Request. Stops. |
 | 2 | AI CTO | Reviews: correctness, architecture compliance, test coverage, OMOS consistency |
 | 3 | AI CTO | Returns review verdict: Approved / Approved with notes / Rejected |
 | 4 | Product Owner | If approved: approves next sprint or triggers deployment |
 | 5 | Product Owner | If rejected: clarifies scope, AI CTO revises sprint spec |
 | 6 | Product Owner | Sends next sprint instruction: `Continue OMOS` or new sprint spec |
+
+### Type C — CEO Review
+
+| Step | Actor | Action |
+|---|---|---|
+| 1 | Claude Developer | Returns CEO Decision Request. Stops. |
+| 2 | Product Owner | Makes the required decision |
+| 3 | Product Owner | Sends updated instructions |
 
 ---
 
@@ -186,8 +204,8 @@ Hotfix sprints follow all normal security and test constraints. Emergency does n
 
 | What the PO sends | What Claude does |
 |---|---|
-| `Continue OMOS` | Read EXECUTE.md → CurrentSprint.md → SprintSpecification.md → execute active sprint → stop |
-| A full sprint specification | Update SprintSpecification.md → execute the spec → stop |
+| `Continue OMOS` | Read EXECUTE.md → classify sprint → execute → if Type A: auto-complete and continue; if Type B/C: stop |
+| A full sprint specification | Update SprintSpecification.md → classify → execute → act on classification |
 | `Deploy [sprint ID]` | Not Claude's role — Claude cannot deploy. Escalate to CTO. |
 | `Fix [bug description]` | Stop. Escalate to CTO for a hotfix sprint spec. Do not implement without a spec. |
 | Nothing | Wait. Do not self-initiate. |
