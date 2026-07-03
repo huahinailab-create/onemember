@@ -29,8 +29,8 @@ This file is read as part of the `Continue OMOS` initialisation sequence (step 2
 | **PHP Version** | 8.3+ (8.5 in production) |
 | **Laravel Version** | 13.17.0 |
 | **Application Version** | 0.5.0 |
-| **Last Code Commit** | `4d46d56` — Merchant Presentation TH v1.0 |
-| **Last Code Sprint** | MKTG-001 Merchant Presentation v2.0 EN + TH (`4d46d56`) |
+| **Last Code Commit** | `1694b01` — MKTG-002 Merchant Sales Presentation Excellence |
+| **Last Code Sprint** | MKTG-002 Merchant Sales Presentation Excellence (`1694b01`) |
 | **Last OMOS Sprint** | OMOS-1.1 Operational Readiness (`567939a`) |
 
 ---
@@ -77,13 +77,13 @@ Next health score update: after MVP-002 completes.
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MKTG-001 |
-| **Title** | Merchant Presentation v2.0 (EN + TH) |
+| **Sprint ID** | MKTG-002 |
+| **Title** | Merchant Sales Presentation Excellence |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Sprint File** | — (inline PO spec) |
-| **Final Commit** | `4d46d56` |
+| **Sprint File** | [docs/Marketing/MKTG-002/](../Marketing/MKTG-002/) |
+| **Final Commit** | `1694b01` |
 
-Note: MVP-001 (Merchant Experience Polish, `37b7d8c`) is also awaiting CTO review.
+Note: MKTG-001 (`4d46d56`) and MVP-001 (`37b7d8c`) are also awaiting CTO review.
 
 ---
 

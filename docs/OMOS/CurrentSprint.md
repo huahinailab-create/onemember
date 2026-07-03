@@ -15,43 +15,40 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MKTG-001 |
-| **Title** | Merchant Presentation v2.0 (EN + TH) |
+| **Sprint ID** | MKTG-002 |
+| **Title** | Merchant Sales Presentation Excellence |
 | **Status** | ⏳ Awaiting CTO Review |
 | **Sprint Type** | Marketing Asset |
-| **Sprint File** | — (inline PO spec) |
+| **Sprint File** | [docs/Marketing/MKTG-002/](../Marketing/MKTG-002/) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Sonnet 4.6 |
 | **Reviewer** | ChatGPT CTO (AI CTO) |
-| **Started** | 2026-07-02 |
+| **Started** | 2026-07-03 |
 | **Target Completion** | 2026-07-03 |
 | **Actual Completion** | 2026-07-03 |
-| **Final Commit** | `4d46d56` |
+| **Final Commit** | `1694b01` |
 
 ### Commits This Sprint
 
 | Hash | Description |
 |---|---|
-| `776ce94` | Marketing — Merchant Presentation v1.0 (EN) |
-| `041ec21` | Marketing — Merchant Presentation v2.0 (EN, redesigned) |
-| `37b104a` | OMOS — CurrentSprint update |
-| `4d46d56` | Marketing — Merchant Presentation v1.0 (TH / ภาษาไทย) |
+| `1694b01` | Marketing — MKTG-002 Merchant Sales Presentation Excellence |
 
 ### Business Objective
 
-Create a professional 13-slide merchant sales presentation with OneMember branding for 20-minute sales meetings. Deliverables: English v2.0 (logo corrected, wireframe-inspired redesign) + full Thai translation. 4 files total: EN PPTX, EN PDF, TH PPTX, TH PDF.
+Create the best merchant sales presentation possible. Objective: persuade a merchant to sign up, not explain the product. Persuasion-first 13-slide structure (problem → cost → solution → ROI → CTA). Full EN + TH PPTX and speaker notes PDFs. Full sales enablement suite: Sales Playbook, Demo Script, FAQ, Objection Handling Guide, ROI Calculator (Excel).
 
 ---
 
-## Previous Sprint (MVP-001)
+## Previous Sprint (MKTG-001)
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MVP-001 |
-| **Title** | Merchant Experience Polish |
+| **Sprint ID** | MKTG-001 |
+| **Title** | Merchant Presentation v2.0 (EN + TH) |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Sprint File** | [Sprints/MVP-001-Merchant-Experience-Polish.md](./Sprints/MVP-001-Merchant-Experience-Polish.md) |
-| **Commit Hash** | `37b7d8c` |
+| **Sprint File** | — (inline PO spec) |
+| **Final Commit** | `4d46d56` |
 
 ---
 
@@ -82,6 +79,7 @@ Create a professional 13-slide merchant sales presentation with OneMember brandi
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
+| MKTG-002 | Merchant Sales Presentation Excellence | ⏳ CTO Review | `1694b01` |
 | MKTG-001 | Merchant Presentation v2.0 (EN + TH) | ⏳ CTO Review | `4d46d56` |
 | MVP-001 | Merchant Experience Polish | ⏳ CTO Review | `37b7d8c` |
 | OMOS-1.1 | Operational Readiness | ✅ Complete | `567939a` |
