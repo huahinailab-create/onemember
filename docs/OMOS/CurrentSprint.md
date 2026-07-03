@@ -15,41 +15,41 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MVP-004 |
-| **Title** | Birthday and Expiry Automation |
-| **Status** | ⏳ Awaiting CTO Review |
-| **Sprint Type** | Feature |
-| **Classification** | Type B — CTO Decision Required |
-| **Sprint File** | [Sprints/MVP-004-Birthday-and-Expiry-Automation.md](./Sprints/MVP-004-Birthday-and-Expiry-Automation.md) |
+| **Sprint ID** | MVP-005 |
+| **Title** | Pilot Merchant Readiness |
+| **Status** | ✅ Complete (Type A — Auto-Approved) |
+| **Sprint Type** | Feature + Documentation |
+| **Classification** | Type A — Autonomous |
+| **Sprint File** | [Sprints/MVP-005-Pilot-Merchant-Readiness.md](./Sprints/MVP-005-Pilot-Merchant-Readiness.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Sonnet 4.6 |
-| **Reviewer** | ChatGPT CTO (AI CTO) |
+| **Reviewer** | Auto-approved |
 | **Started** | 2026-07-03 |
 | **Target Completion** | 2026-07-03 |
 | **Actual Completion** | 2026-07-03 |
-| **Final Commit** | `2c35ce6` |
+| **Final Commit** | `74c6c94` |
 
 ### Commits This Sprint
 
 | Hash | Description |
 |---|---|
-| `2c35ce6` | Sprint MVP-004 — Birthday and Expiry Automation |
+| `74c6c94` | Sprint MVP-005 — Pilot Merchant Readiness |
 
 ### Business Objective
 
-A merchant who has configured birthday bonuses or point expiry in their campaign settings can trust that these rules are being enforced automatically — without manual intervention.
+OneMember is ready to onboard the first 10 pilot merchants with confidence.
 
 ---
 
-## Previous Sprint (MVP-003)
+## Previous Sprint (MVP-004)
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MVP-003 |
-| **Title** | Merchant Acquisition Experience |
-| **Status** | ✅ Complete (Type A — Auto-Approved) |
-| **Sprint File** | [Sprints/MVP-003-Merchant-Acquisition-Experience.md](./Sprints/MVP-003-Merchant-Acquisition-Experience.md) |
-| **Final Commit** | `d73045d` |
+| **Sprint ID** | MVP-004 |
+| **Title** | Birthday and Expiry Automation |
+| **Status** | ✅ CTO Approved — 2026-07-03 |
+| **Sprint File** | [Sprints/MVP-004-Birthday-and-Expiry-Automation.md](./Sprints/MVP-004-Birthday-and-Expiry-Automation.md) |
+| **Final Commit** | `2c35ce6` |
 
 ---
 
@@ -57,23 +57,10 @@ A merchant who has configured birthday bonuses or point expiry in their campaign
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MVP-004 |
-| **Title** | Birthday and Expiry Automation |
-| **Status** | ✅ Ready |
-| **Sprint File** | [Sprints/MVP-004-Birthday-and-Expiry-Automation.md](./Sprints/MVP-004-Birthday-and-Expiry-Automation.md) |
-| **Classification** | Type B — CTO Decision Required after completion |
-| **Priority** | 🟠 High |
-
----
-
-## Previous Sprint
-
-| Field | Value |
-|---|---|
-| **Sprint ID** | OMOS-1.1 |
-| **Title** | Operational Readiness |
-| **Status** | ✅ Complete |
-| **Commit** | `567939a` |
+| **Sprint ID** | TBD |
+| **Title** | Awaiting CTO sprint selection |
+| **Status** | ⬜ No approved sprint queued |
+| **Sprint File** | [Sprints/Backlog.md](./Sprints/Backlog.md) |
 
 ---
 
@@ -81,7 +68,8 @@ A merchant who has configured birthday bonuses or point expiry in their campaign
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
-| MVP-004  | Birthday and Expiry Automation | ⏳ CTO Review | `2c35ce6` |
+| MVP-005  | Pilot Merchant Readiness | ✅ Complete (Type A) | `74c6c94` |
+| MVP-004  | Birthday and Expiry Automation | ✅ CTO Approved | `2c35ce6` |
 | MVP-003  | Merchant Acquisition Experience | ✅ Complete (Type A) | `d73045d` |
 | MVP-002  | Thai Localization Foundation | ✅ CTO Approved | `7e3baf8` |
 | MKTG-002 | Merchant Sales Presentation Excellence | ✅ CTO Approved | `1694b01` |

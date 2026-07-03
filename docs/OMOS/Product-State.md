@@ -24,14 +24,13 @@ This file is read as part of the `Continue OMOS` initialisation sequence (step 2
 
 | Field | Value |
 |---|---|
-| **Application Version** | 0.4.2 |
-| **OMOS Version** | 1.1 |
+| **Application Version** | 0.9.0 |
+| **OMOS Version** | 1.2 |
 | **PHP Version** | 8.3+ (8.5 in production) |
 | **Laravel Version** | 13.17.0 |
-| **Application Version** | 0.5.0 |
-| **Last Code Commit** | `2c35ce6` — Sprint MVP-004 Birthday and Expiry Automation |
-| **Last Code Sprint** | MVP-004 Birthday and Expiry Automation (`2c35ce6`) |
-| **Last OMOS Sprint** | OMOS-1.1 Operational Readiness (`567939a`) |
+| **Last Code Commit** | `74c6c94` — Sprint MVP-005 Pilot Merchant Readiness |
+| **Last Code Sprint** | MVP-005 Pilot Merchant Readiness (`74c6c94`) |
+| **Last OMOS Sprint** | OMOS-1.2 Autonomous Sprint Governance (`b99b1f9`) |
 
 ---
 
@@ -54,22 +53,22 @@ Phase 2 (Customer Wallet) does not begin until Phase 1 exit criteria are met.
 
 ## Current Application Health Score
 
-**86 / 100** — updated after MVP-004 (2026-07-03)
+**88 / 100** — updated after MVP-005 (2026-07-03)
 
 | Category | Score | Notes |
 |---|---|---|
 | Core Functionality | 90/100 | Unchanged |
 | Security | 85/100 | CSP unsafe-inline (documented, necessary) |
-| Testing | 86/100 | 374 tests passing; +14 birthday/expiry automation tests |
+| Testing | 88/100 | 380 tests passing; +6 trial-ending reminder tests |
 | Architecture | 85/100 | LoyaltyProgram/Campaign naming split (ADR-007 pending) |
 | Brand Compliance | 95/100 | ✅ Landing page, guest/wizard layouts, register page all on-brand |
 | Localization | 88/100 | All new strings in EN + TH; welcome.php added |
 | UX Completeness | 75/100 | Landing page rebuilt; onboarding trial flow complete; 3 nav items still coming-soon |
 | Technical Debt | 80/100 | ✅ LoyaltyProgram null-safe fixed; MerchantProfileController legacy remains |
 | Performance | 70/100 | Dashboard N+1 risk, no caching layer |
-| Documentation | 95/100 | OMOS is comprehensive |
+| Documentation | 98/100 | OMOS comprehensive + Pilot Readiness Checklist added |
 
-Next health score update: after MVP-004 completes.
+Next health score update: after next sprint completes.
 
 ---
 
@@ -77,11 +76,11 @@ Next health score update: after MVP-004 completes.
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MVP-004 |
-| **Title** | Birthday and Expiry Automation |
-| **Status** | ⏳ Awaiting CTO Review |
-| **Sprint File** | [Sprints/MVP-004-Birthday-and-Expiry-Automation.md](./Sprints/MVP-004-Birthday-and-Expiry-Automation.md) |
-| **Final Commit** | `2c35ce6` |
+| **Sprint ID** | MVP-005 |
+| **Title** | Pilot Merchant Readiness |
+| **Status** | ✅ Complete (Type A — Auto-Approved) |
+| **Sprint File** | [Sprints/MVP-005-Pilot-Merchant-Readiness.md](./Sprints/MVP-005-Pilot-Merchant-Readiness.md) |
+| **Final Commit** | `74c6c94` |
 
 ---
 
@@ -89,11 +88,11 @@ Next health score update: after MVP-004 completes.
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MVP-002 |
-| **Title** | Birthday and Expiry Automation |
-| **Status** | ⬜ Deferred — awaiting MVP-001 CTO approval |
+| **Sprint ID** | TBD |
+| **Title** | Awaiting CTO sprint selection |
+| **Status** | ⬜ No approved sprint queued |
 | **Sprint File** | [Sprints/Backlog.md](./Sprints/Backlog.md) |
-| **Priority** | High |
+| **Priority** | — |
 
 ---
 
@@ -101,10 +100,10 @@ Next health score update: after MVP-004 completes.
 
 | Field | Value |
 |---|---|
-| **Sprint Reviewed** | AI-OMOS-BOOTSTRAP |
-| **Review Date** | 2026-07-02 |
-| **Verdict** | Approved (implied — PO sent new sprint) |
-| **Notes** | Stop-and-wait governance introduced; "Continue OMOS" workflow established |
+| **Sprint Reviewed** | MVP-004 — Birthday and Expiry Automation |
+| **Review Date** | 2026-07-03 |
+| **Verdict** | ✅ Approved |
+| **Notes** | CTO approved MVP-004, reprioritised roadmap, activated MVP-005 (Pilot Merchant Readiness) in place of CRUD Test Coverage |
 
 ---
 
@@ -136,18 +135,15 @@ Next health score update: after MVP-004 completes.
 
 ## Top Priorities
 
-Based on the AI-03 audit and OMOS sprint backlog:
+Based on current product state and OMOS sprint backlog (all P1 audit items complete):
 
 | # | Priority | Sprint | Description |
 |---|---|---|---|
-| 1 | 🔴 | MVP-001 | Fix `LoyaltyProgram.settings` null-safe pattern (bug risk) |
-| 2 | 🟠 | MVP-001 | Fix brand colours — `--bs-primary` to `#1A2E5A` |
-| 3 | 🟠 | MVP-002 | Wire birthday automation to scheduled command |
-| 4 | 🟠 | MVP-002 | Wire point expiry to scheduled command |
-| 5 | 🟠 | MVP-003 | Build member-facing email notifications |
-| 6 | 🟡 | MVP-004 | Build Counter Mode UI |
-| 7 | 🟡 | MVP-005 | Write missing CRUD test coverage |
-| 8 | 🟡 | MVP-006 | Build win-back campaign dashboard alerts |
+| 1 | 🟠 | MVP-006 | Build member-facing email notifications (points earned, birthday, reward available) |
+| 2 | 🟡 | MVP-007 | Build Counter Mode UI for staff sale recording |
+| 3 | 🟡 | MVP-008 | Win-back campaign dashboard alerts |
+| 4 | 🟡 | MVP-009 | CRUD test coverage (deferred from original backlog) |
+| 5 | 🟡 | MVP-010 | ADR-007 — LoyaltyProgram/Campaign naming decision |
 
 ---
 

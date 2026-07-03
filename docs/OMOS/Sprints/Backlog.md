@@ -5,7 +5,7 @@
 | **Document Owner** | ChatGPT CTO |
 | **Version** | 1.0.0 |
 | **Status** | Active |
-| **Last Updated** | 2026-07-02 |
+| **Last Updated** | 2026-07-03 |
 | **Related Documents** | [README.md](./README.md), [../CurrentSprint.md](../CurrentSprint.md), [../Engineering-Backlog.md](../Engineering-Backlog.md), [../02-Product/Parking-Lot.md](../02-Product/Parking-Lot.md) |
 
 ---
@@ -37,41 +37,7 @@ This is distinct from:
 
 These sprints are required to complete Phase 1 of the OneMember roadmap.
 
-### MVP-001 — Merchant Experience Polish
-
-| Field | Value |
-|---|---|
-| **Priority** | 🟠 High |
-| **Type** | Feature + Bug Fix |
-| **Sprint File** | [MVP-001-Merchant-Experience-Polish.md](./MVP-001-Merchant-Experience-Polish.md) |
-| **Status** | 🔲 Planning |
-| **Depends On** | OMOS-1.1 complete |
-
-Fix brand colour mismatch and LoyaltyProgram nullable JSON risk. Brand compliance and critical bug prevention identified in AI-03 audit.
-
----
-
-### MVP-004 — Birthday and Expiry Automation
-
-| Field | Value |
-|---|---|
-| **Priority** | 🟠 High |
-| **Type** | Feature |
-| **Sprint File** | [MVP-004-Birthday-and-Expiry-Automation.md](./MVP-004-Birthday-and-Expiry-Automation.md) |
-| **Status** | ✅ Ready — CTO Approved 2026-07-03 |
-| **Classification** | Type B |
-
-Wire `birthday_enabled`/`expiration_type` campaign settings to two scheduled Artisan commands. Both transaction types already exist; no schema changes required.
-
-**Key tasks:**
-- `ProcessBirthdayRewards` Artisan command
-- `ProcessPointExpiry` Artisan command
-- Schedule both in `routes/console.php`
-- Tests for both commands
-
----
-
-### MVP-003 — Member Notification Emails
+### MVP-006 — Member Notification Emails
 
 | Field | Value |
 |---|---|
@@ -79,13 +45,13 @@ Wire `birthday_enabled`/`expiration_type` campaign settings to two scheduled Art
 | **Type** | Feature |
 | **Sprint File** | TBD |
 | **Status** | ⬜ Deferred |
-| **Depends On** | MVP-002 complete |
+| **Depends On** | None |
 
-Members currently receive zero emails. Add: points-earned notification, reward-available notification, birthday greeting. All via Events/Listeners (CTO-003).
+Members currently receive zero emails. Add: points-earned notification, reward-available notification, birthday greeting. All via Events/Listeners (CTO-003). Documented as known limitation for pilot merchants.
 
 ---
 
-### MVP-004 — Counter Mode UI
+### MVP-007 — Counter Mode UI
 
 | Field | Value |
 |---|---|
@@ -93,41 +59,41 @@ Members currently receive zero emails. Add: points-earned notification, reward-a
 | **Type** | Feature |
 | **Sprint File** | TBD |
 | **Status** | ⬜ Deferred |
-| **Depends On** | MVP-001 complete |
+| **Depends On** | None |
 
-The Counter Mode toggle exists but no staff-facing UI exists. Build the simplified sale-recording view for staff who need a quick "record purchase" interface without full merchant dashboard access.
+The Counter Mode toggle exists but no staff-facing UI exists. Build the simplified sale-recording view for staff who need a quick "record purchase" interface without full merchant dashboard access. Documented as known limitation for pilot merchants.
 
 ---
 
-### MVP-005 — CRUD Test Coverage
+### MVP-008 — Win-back Campaign Alerts
+
+| Field | Value |
+|---|---|
+| **Priority** | 🟡 Medium |
+| **Type** | Feature |
+| **Sprint File** | TBD |
+| **Status** | ⬜ Deferred |
+| **Depends On** | None |
+
+Dashboard alert and merchant email when a member has not visited in a configurable number of days. Highest merchant retention value after birthday automation.
+
+---
+
+### MVP-009 — CRUD Test Coverage
 
 | Field | Value |
 |---|---|
 | **Priority** | 🟡 Medium |
 | **Type** | Testing |
 | **Sprint File** | TBD |
-| **Status** | ⬜ Deferred |
+| **Status** | ⬜ Engineering Backlog — deferred by CTO 2026-07-03 |
 | **Depends On** | None |
 
-Write missing HTTP tests for: campaign create/update, member create/update, reward create/update, purchase recording, redemption flow, onboarding wizard.
+Write missing HTTP tests for: campaign create/update, member create/update, reward create/update, purchase recording, redemption flow, onboarding wizard. Deprioritised in favour of Pilot Merchant Readiness (MVP-005).
 
 ---
 
-### MVP-006 — Win-back Campaign Alerts
-
-| Field | Value |
-|---|---|
-| **Priority** | 🟡 Medium |
-| **Type** | Feature |
-| **Sprint File** | TBD |
-| **Status** | ⬜ Deferred |
-| **Depends On** | MVP-003 complete |
-
-Dashboard alert and merchant email when a member has not visited in a configurable number of days. Highest merchant retention value after birthday automation.
-
----
-
-### MVP-007 — ADR-007 Naming Decision + LoyaltyProgram Alias
+### MVP-010 — ADR-007 Naming Decision + LoyaltyProgram Alias
 
 | Field | Value |
 |---|---|
