@@ -51,17 +51,17 @@ Fix brand colour mismatch and LoyaltyProgram nullable JSON risk. Brand complianc
 
 ---
 
-### MVP-002 — Birthday and Expiry Automation
+### MVP-004 — Birthday and Expiry Automation
 
 | Field | Value |
 |---|---|
 | **Priority** | 🟠 High |
 | **Type** | Feature |
-| **Sprint File** | TBD |
-| **Status** | ⬜ Deferred |
-| **Depends On** | MVP-001 complete |
+| **Sprint File** | [MVP-004-Birthday-and-Expiry-Automation.md](./MVP-004-Birthday-and-Expiry-Automation.md) |
+| **Status** | ✅ Ready — CTO Approved 2026-07-03 |
+| **Classification** | Type B |
 
-Wire the `BirthdayReward` model and `expiration_type` settings to scheduled Artisan commands. Both are ~80% built. High merchant retention value.
+Wire `birthday_enabled`/`expiration_type` campaign settings to two scheduled Artisan commands. Both transaction types already exist; no schema changes required.
 
 **Key tasks:**
 - `ProcessBirthdayRewards` Artisan command

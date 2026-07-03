@@ -58,9 +58,10 @@ A merchant who visits OneMember for the first time immediately understands its v
 |---|---|
 | **Sprint ID** | MVP-004 |
 | **Title** | Birthday and Expiry Automation |
-| **Status** | ⬜ Awaiting CTO approval |
-| **Sprint File** | [Sprints/Backlog.md](./Sprints/Backlog.md) |
-| **Priority** | High |
+| **Status** | ✅ Ready |
+| **Sprint File** | [Sprints/MVP-004-Birthday-and-Expiry-Automation.md](./Sprints/MVP-004-Birthday-and-Expiry-Automation.md) |
+| **Classification** | Type B — CTO Decision Required after completion |
+| **Priority** | 🟠 High |
 
 ---
 
