@@ -29,8 +29,8 @@ This file is read as part of the `Continue OMOS` initialisation sequence (step 2
 | **PHP Version** | 8.3+ (8.5 in production) |
 | **Laravel Version** | 13.17.0 |
 | **Application Version** | 0.5.0 |
-| **Last Code Commit** | `b99b1f9` — OMOS 1.2 Autonomous Sprint Governance |
-| **Last Code Sprint** | MVP-003 Merchant Acquisition Experience (`d73045d`) |
+| **Last Code Commit** | `2c35ce6` — Sprint MVP-004 Birthday and Expiry Automation |
+| **Last Code Sprint** | MVP-004 Birthday and Expiry Automation (`2c35ce6`) |
 | **Last OMOS Sprint** | OMOS-1.1 Operational Readiness (`567939a`) |
 
 ---
@@ -54,13 +54,13 @@ Phase 2 (Customer Wallet) does not begin until Phase 1 exit criteria are met.
 
 ## Current Application Health Score
 
-**83 / 100** — updated after MVP-003 (2026-07-03)
+**86 / 100** — updated after MVP-004 (2026-07-03)
 
 | Category | Score | Notes |
 |---|---|---|
 | Core Functionality | 90/100 | Unchanged |
 | Security | 85/100 | CSP unsafe-inline (documented, necessary) |
-| Testing | 84/100 | 359 tests passing; +17 new acquisition tests |
+| Testing | 86/100 | 374 tests passing; +14 birthday/expiry automation tests |
 | Architecture | 85/100 | LoyaltyProgram/Campaign naming split (ADR-007 pending) |
 | Brand Compliance | 95/100 | ✅ Landing page, guest/wizard layouts, register page all on-brand |
 | Localization | 88/100 | All new strings in EN + TH; welcome.php added |
@@ -77,11 +77,11 @@ Next health score update: after MVP-004 completes.
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MVP-003 |
-| **Title** | Merchant Acquisition Experience |
-| **Status** | ✅ Complete (Type A — Auto-Approved 2026-07-03) |
-| **Sprint File** | [Sprints/MVP-003-Merchant-Acquisition-Experience.md](./Sprints/MVP-003-Merchant-Acquisition-Experience.md) |
-| **Final Commit** | `d73045d` |
+| **Sprint ID** | MVP-004 |
+| **Title** | Birthday and Expiry Automation |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint File** | [Sprints/MVP-004-Birthday-and-Expiry-Automation.md](./Sprints/MVP-004-Birthday-and-Expiry-Automation.md) |
+| **Final Commit** | `2c35ce6` |
 
 ---
 
@@ -126,8 +126,8 @@ Next health score update: after MVP-004 completes.
 |---|---|---|---|
 | R-001 | `LoyaltyProgram.settings` raises ErrorException on NULL | High | ✅ Fixed — MVP-001 (`37b7d8c`) |
 | R-002 | Brand colours wrong (`#2563eb` shown instead of `#1A2E5A`) | Medium | ✅ Fixed — MVP-001 (`37b7d8c`) |
-| R-003 | Birthday automation built but not running | Medium | 🔲 Scheduled — MVP-002 |
-| R-004 | Point expiry configured but not processed | Medium | 🔲 Scheduled — MVP-002 |
+| R-003 | Birthday automation built but not running | Medium | ✅ Fixed — MVP-004 (`2c35ce6`) |
+| R-004 | Point expiry configured but not processed | Medium | ✅ Fixed — MVP-004 (`2c35ce6`) |
 | R-005 | 3 navigation items lead to coming-soon pages | Low | ⏳ Phase 1 known — merchants notified via UI |
 | R-006 | Stripe webhook signature verification unconfirmed | Medium | 🔲 To be verified in MVP-001 or separately |
 | R-007 | CSP uses `unsafe-inline` (XSS risk if injection occurs) | Low | 📋 Documented — architectural limitation of Alpine.js |

@@ -15,40 +15,41 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MVP-003 |
-| **Title** | Merchant Acquisition Experience |
-| **Status** | ✅ Complete (Type A — Auto-Approved) |
-| **Sprint Type** | Feature + UX |
-| **Sprint File** | [Sprints/MVP-003-Merchant-Acquisition-Experience.md](./Sprints/MVP-003-Merchant-Acquisition-Experience.md) |
+| **Sprint ID** | MVP-004 |
+| **Title** | Birthday and Expiry Automation |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Feature |
+| **Classification** | Type B — CTO Decision Required |
+| **Sprint File** | [Sprints/MVP-004-Birthday-and-Expiry-Automation.md](./Sprints/MVP-004-Birthday-and-Expiry-Automation.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Sonnet 4.6 |
 | **Reviewer** | ChatGPT CTO (AI CTO) |
 | **Started** | 2026-07-03 |
 | **Target Completion** | 2026-07-03 |
 | **Actual Completion** | 2026-07-03 |
-| **Final Commit** | `d73045d` |
+| **Final Commit** | `2c35ce6` |
 
 ### Commits This Sprint
 
 | Hash | Description |
 |---|---|
-| `d73045d` | Sprint MVP-003 — Merchant Acquisition Experience |
+| `2c35ce6` | Sprint MVP-004 — Birthday and Expiry Automation |
 
 ### Business Objective
 
-A merchant who visits OneMember for the first time immediately understands its value, completes onboarding confidently, and is ready to begin a 30-day trial.
+A merchant who has configured birthday bonuses or point expiry in their campaign settings can trust that these rules are being enforced automatically — without manual intervention.
 
 ---
 
-## Previous Sprint (MVP-002)
+## Previous Sprint (MVP-003)
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MVP-002 |
-| **Title** | Thai Localization Foundation |
-| **Status** | ✅ CTO Approved — 2026-07-03 |
-| **Sprint File** | [Sprints/MVP-002-Thai-Localization-Foundation.md](./Sprints/MVP-002-Thai-Localization-Foundation.md) |
-| **Final Commit** | `7e3baf8` |
+| **Sprint ID** | MVP-003 |
+| **Title** | Merchant Acquisition Experience |
+| **Status** | ✅ Complete (Type A — Auto-Approved) |
+| **Sprint File** | [Sprints/MVP-003-Merchant-Acquisition-Experience.md](./Sprints/MVP-003-Merchant-Acquisition-Experience.md) |
+| **Final Commit** | `d73045d` |
 
 ---
 
@@ -80,6 +81,7 @@ A merchant who visits OneMember for the first time immediately understands its v
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
+| MVP-004  | Birthday and Expiry Automation | ⏳ CTO Review | `2c35ce6` |
 | MVP-003  | Merchant Acquisition Experience | ✅ Complete (Type A) | `d73045d` |
 | MVP-002  | Thai Localization Foundation | ✅ CTO Approved | `7e3baf8` |
 | MKTG-002 | Merchant Sales Presentation Excellence | ✅ CTO Approved | `1694b01` |
