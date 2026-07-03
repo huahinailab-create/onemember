@@ -8,6 +8,7 @@ use App\Services\CustomerPortalService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 
 class CustomerPortalController extends Controller
@@ -23,6 +24,7 @@ class CustomerPortalController extends Controller
     public function show(string $publicUuid): mixed
     {
         $member = Member::where('public_uuid', $publicUuid)->firstOrFail();
+        App::setLocale($member->merchant->settings['locale'] ?? 'th');
 
         if (! $this->portalService->isPortalEnabled($member)) {
             return view('portal.disabled', [
@@ -50,6 +52,7 @@ class CustomerPortalController extends Controller
     public function card(string $publicUuid): mixed
     {
         $member = Member::where('public_uuid', $publicUuid)->firstOrFail();
+        App::setLocale($member->merchant->settings['locale'] ?? 'th');
 
         if (! $this->portalService->isPortalEnabled($member)) {
             return view('portal.disabled', [

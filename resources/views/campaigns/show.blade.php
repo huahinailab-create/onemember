@@ -255,20 +255,27 @@
             return {
                 ...data,
                 get expirationText() {
-                    if (this.expirationType === 'never') return 'Points never expire.';
+                    if (this.expirationType === 'never') return this.i18n.points_never_expire;
                     const d = parseInt(this.expirationDuration) || 0;
-                    if (!d) return 'Not configured.';
-                    return 'Points expire after ' + d + ' ' + this.expirationType + '.';
+                    if (!d) return this.i18n.not_configured;
+                    const unit = this.expirationType === 'months'
+                        ? (d === 1 ? this.i18n.month_word  : this.i18n.months_word)
+                        : (d === 1 ? this.i18n.year_word   : this.i18n.years_word);
+                    return this.i18n.expire_after_tpl.replace(':d', d).replace(':unit', unit);
                 },
                 get birthdayText() {
-                    if (!this.birthdayEnabled) return 'No birthday bonus.';
+                    if (!this.birthdayEnabled) return this.i18n.no_birthday_bonus;
                     const p = parseInt(this.birthdayPoints) || 0;
-                    if (!p) return 'Not configured.';
+                    if (!p) return this.i18n.not_configured;
                     const before = parseInt(this.birthdayDaysBefore) || 0;
                     const after  = parseInt(this.birthdayDaysAfter)  || 0;
-                    return p + ' bonus point' + (p === 1 ? '' : 's') + '. Valid '
-                         + before + ' day' + (before === 1 ? '' : 's') + ' before until '
-                         + after  + ' day' + (after  === 1 ? '' : 's') + ' after birthday.';
+                    const pUnit  = p      === 1 ? this.i18n.point_singular : this.i18n.point_plural;
+                    const dayB   = before === 1 ? this.i18n.day_singular   : this.i18n.day_plural;
+                    const dayA   = after  === 1 ? this.i18n.day_singular   : this.i18n.day_plural;
+                    return this.i18n.birthday_bonus_tpl
+                        .replace(':pts', p).replace(':unit', pUnit)
+                        .replace(':before', before).replace(':day_b', dayB)
+                        .replace(':after', after).replace(':day_a', dayA);
                 },
             };
         }
@@ -282,7 +289,7 @@
                     'type'               => $campaign->type->value,
                     'currency'           => $campaign->merchant->currency ?? 'THB',
                     'campaignName'       => $campaign->name,
-                    'campaignStatus'     => $isArchived ? 'Archived' : $campaign->status->label(),
+                    'campaignStatus'     => $isArchived ? __('campaigns.status_archived') : $campaign->status->label(),
                     'spendAmount'        => (int) ($settings['spend_amount']              ?? 100),
                     'pointsAwarded'      => (int) ($settings['points_awarded']             ?? 1),
                     'expirationType'     => $settings['expiration_type']                   ?? 'never',
@@ -293,6 +300,24 @@
                     'birthdayDaysAfter'  => (int) ($settings['birthday_valid_days_after']  ?? 7),
                     'stampsRequired'     => (int) ($settings['stamps_required']            ?? 10),
                     'rewardDescription'  => $settings['reward_description']                ?? '',
+                    'i18n'               => [
+                        'earn_rule_tpl'       => __('campaigns.earn_rule_tpl'),
+                        'point_singular'      => __('campaigns.point_singular'),
+                        'point_plural'        => __('campaigns.point_plural'),
+                        'stamp_singular'      => __('campaigns.stamp_singular'),
+                        'stamp_plural'        => __('campaigns.stamp_plural'),
+                        'day_singular'        => __('campaigns.day_singular'),
+                        'day_plural'          => __('campaigns.day_plural'),
+                        'month_word'          => __('campaigns.month_word'),
+                        'months_word'         => __('campaigns.months_word'),
+                        'year_word'           => __('campaigns.year_word'),
+                        'years_word'          => __('campaigns.years_word'),
+                        'points_never_expire' => __('campaigns.points_never_expire'),
+                        'not_configured'      => __('campaigns.not_configured'),
+                        'expire_after_tpl'    => __('campaigns.expire_after_tpl'),
+                        'no_birthday_bonus'   => __('campaigns.no_birthday_bonus'),
+                        'birthday_bonus_tpl'  => __('campaigns.birthday_bonus_tpl'),
+                    ],
                 ];
             @endphp
             <div class="tab-pane fade show active" id="pane-rules" role="tabpanel"
@@ -439,7 +464,7 @@
                                                    value="{{ old('expiration_duration', $settings['expiration_duration'] ?? '') }}"
                                                    {{ $isArchived ? 'disabled' : '' }}
                                                    placeholder="e.g. 24">
-                                            <span class="input-group-text" x-text="expirationType === 'months' ? 'months' : 'years'"></span>
+                                            <span class="input-group-text" x-text="expirationType === 'months' ? i18n.months_word : i18n.years_word"></span>
                                             @error('expiration_duration')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -637,7 +662,7 @@
 
                                         <dt class="col-5 text-muted fw-normal">{{ __('campaigns.summary_earn_rule') }}</dt>
                                         <dd class="col-7 mb-0">
-                                            <span x-text="'Customers earn ' + pointsAwarded + ' point' + (pointsAwarded === 1 ? '' : 's') + ' for every ' + spendAmount + ' ' + currency + ' spent.'"></span>
+                                            <span x-text="i18n.earn_rule_tpl.replace(':pts', pointsAwarded).replace(':unit', pointsAwarded === 1 ? i18n.point_singular : i18n.point_plural).replace(':spend', spendAmount).replace(':currency', currency)"></span>
                                         </dd>
 
                                         <dt class="col-5 text-muted fw-normal">{{ __('campaigns.summary_point_expiration') }}</dt>
@@ -653,7 +678,7 @@
 
                                         <dt class="col-5 text-muted fw-normal">{{ __('campaigns.summary_stamps_required') }}</dt>
                                         <dd class="col-7 mb-0">
-                                            <span x-text="stampsRequired + ' stamp' + (stampsRequired === 1 ? '' : 's')"></span>
+                                            <span x-text="stampsRequired + ' ' + (stampsRequired === 1 ? i18n.stamp_singular : i18n.stamp_plural)"></span>
                                         </dd>
 
                                         <dt class="col-5 text-muted fw-normal">{{ __('campaigns.summary_reward') }}</dt>

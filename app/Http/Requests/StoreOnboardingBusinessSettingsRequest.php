@@ -21,6 +21,7 @@ class StoreOnboardingBusinessSettingsRequest extends FormRequest
             ])],
             'timezone'    => ['required', 'string', Rule::in(timezone_identifiers_list())],
             'date_format' => ['required', 'string', Rule::in(['DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'])],
+            'locale'      => ['required', 'string', Rule::in(['en', 'th'])],
         ];
     }
 }

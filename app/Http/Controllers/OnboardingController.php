@@ -86,7 +86,7 @@ class OnboardingController extends Controller
                 'status'   => MerchantStatus::Active,
                 'currency' => 'THB',
                 'timezone' => 'Asia/Bangkok',
-                'settings' => ['onboarding_step' => 2],
+                'settings' => ['onboarding_step' => 2, 'locale' => 'th'],
             ]));
         }
 
@@ -116,6 +116,7 @@ class OnboardingController extends Controller
         $settings  = $merchant->settings ?? [];
         $settings['onboarding_step'] = 3;
         $settings['date_format']     = $validated['date_format'];
+        $settings['locale']          = $validated['locale'];
 
         $merchant->update([
             'currency' => $validated['currency'],
@@ -227,18 +228,18 @@ class OnboardingController extends Controller
     {
         if ($type === 'stamps') {
             $campaign = $merchant->loyaltyPrograms()->create([
-                'name'     => 'Stamp Card',
+                'name'     => __('onboarding.starter_stamp_name'),
                 'type'     => LoyaltyProgramType::Stamps,
                 'status'   => CampaignStatus::Active,
                 'settings' => [
                     'stamps_required'    => 10,
-                    'reward_description' => 'Complete your stamp card to claim your reward.',
+                    'reward_description' => __('onboarding.starter_stamp_reward_desc'),
                 ],
             ]);
 
             $campaign->rewards()->create([
                 'merchant_id'        => $merchant->id,
-                'name'               => 'Free Item',
+                'name'               => __('onboarding.starter_stamp_reward_name'),
                 'type'               => RewardType::FreeItem,
                 'status'             => RewardStatus::Active,
                 'points_required'    => null,
@@ -246,7 +247,7 @@ class OnboardingController extends Controller
             ]);
         } else {
             $campaign = $merchant->loyaltyPrograms()->create([
-                'name'     => 'Points Rewards Program',
+                'name'     => __('onboarding.starter_points_name'),
                 'type'     => LoyaltyProgramType::Points,
                 'status'   => CampaignStatus::Active,
                 'settings' => [
@@ -263,7 +264,7 @@ class OnboardingController extends Controller
 
             $campaign->rewards()->create([
                 'merchant_id'        => $merchant->id,
-                'name'               => 'Free Item',
+                'name'               => __('onboarding.starter_points_reward_name'),
                 'type'               => RewardType::Custom,
                 'status'             => RewardStatus::Active,
                 'points_required'    => 500,

@@ -73,4 +73,11 @@ return [
     'add_first_member'     => 'Add First Member',
     'finish_settings_note' => 'You can update your business details any time in',
     'has_campaign_notice'  => "You already have a campaign set up. We won't create a duplicate.",
+
+    // Starter campaign content (used by OnboardingController::createStarterCampaign)
+    'starter_stamp_name'        => 'Stamp Card',
+    'starter_stamp_reward_name' => 'Free Item',
+    'starter_stamp_reward_desc' => 'Complete your stamp card to claim your reward.',
+    'starter_points_name'       => 'Points Rewards Program',
+    'starter_points_reward_name'=> 'Free Item',
 ];

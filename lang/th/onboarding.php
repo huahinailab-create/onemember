@@ -73,4 +73,11 @@ return [
     'add_first_member'     => 'เพิ่มสมาชิกคนแรก',
     'finish_settings_note' => 'คุณสามารถอัปเดตข้อมูลธุรกิจได้ตลอดเวลาใน',
     'has_campaign_notice'  => 'คุณมีแคมเปญที่ตั้งค่าไว้แล้ว เราจะไม่สร้างซ้ำ',
+
+    // Starter campaign content (used by OnboardingController::createStarterCampaign)
+    'starter_stamp_name'        => 'บัตรสะสมแสตมป์',
+    'starter_stamp_reward_name' => 'ของสมนาคุณ',
+    'starter_stamp_reward_desc' => 'สะสมแสตมป์ครบบัตรเพื่อรับของรางวัล',
+    'starter_points_name'       => 'โปรแกรมสะสมคะแนน',
+    'starter_points_reward_name'=> 'ของสมนาคุณ',
 ];

@@ -117,4 +117,22 @@ return [
     'col_quantity'            => 'Quantity',
     'unlimited'               => 'Unlimited',
     'reward_count'            => ':count reward|:count rewards',
+
+    // Alpine.js campaign preview i18n — passed via @json to avoid hardcoded English in JS
+    'earn_rule_tpl'       => 'Customers earn :pts :unit for every :spend :currency spent.',
+    'point_singular'      => 'point',
+    'point_plural'        => 'points',
+    'stamp_singular'      => 'stamp',
+    'stamp_plural'        => 'stamps',
+    'day_singular'        => 'day',
+    'day_plural'          => 'days',
+    'month_word'          => 'month',
+    'months_word'         => 'months',
+    'year_word'           => 'year',
+    'years_word'          => 'years',
+    'points_never_expire' => 'Points never expire.',
+    'not_configured'      => 'Not configured.',
+    'expire_after_tpl'    => 'Points expire after :d :unit.',
+    'no_birthday_bonus'   => 'No birthday bonus.',
+    'birthday_bonus_tpl'  => ':pts bonus :unit. Valid :before :day_b until :after :day_a after birthday.',
 ];

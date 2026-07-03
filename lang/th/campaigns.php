@@ -117,4 +117,22 @@ return [
     'col_quantity'            => 'จำนวน',
     'unlimited'               => 'ไม่จำกัด',
     'reward_count'            => ':count รางวัล',
+
+    // Alpine.js campaign preview i18n — passed via @json to avoid hardcoded English in JS
+    'earn_rule_tpl'       => 'ลูกค้าสะสม :pts :unit ทุกการใช้จ่าย :spend :currency',
+    'point_singular'      => 'คะแนน',
+    'point_plural'        => 'คะแนน',
+    'stamp_singular'      => 'แสตมป์',
+    'stamp_plural'        => 'แสตมป์',
+    'day_singular'        => 'วัน',
+    'day_plural'          => 'วัน',
+    'month_word'          => 'เดือน',
+    'months_word'         => 'เดือน',
+    'year_word'           => 'ปี',
+    'years_word'          => 'ปี',
+    'points_never_expire' => 'คะแนนไม่มีวันหมดอายุ',
+    'not_configured'      => 'ยังไม่ได้ตั้งค่า',
+    'expire_after_tpl'    => 'คะแนนหมดอายุหลัง :d :unit',
+    'no_birthday_bonus'   => 'ไม่มีโบนัสวันเกิด',
+    'birthday_bonus_tpl'  => 'โบนัส :pts :unit ใช้ได้ตั้งแต่ :before :day_b ก่อนจนถึง :after :day_a หลังวันเกิด',
 ];
