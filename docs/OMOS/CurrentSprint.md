@@ -17,7 +17,7 @@
 |---|---|
 | **Sprint ID** | RELEASE-1A |
 | **Title** | OneMember Product Identity |
-| **Status** | ⏳ Awaiting CTO Review |
+| **Status** | ✅ Complete — CTO Approved + PO Approved for Deployment |
 | **Sprint Type** | Design + UX Transformation |
 | **Classification** | Type B — CTO Review Required |
 | **Sprint File** | [Sprints/RELEASE-1A-Product-Identity.md](./Sprints/RELEASE-1A-Product-Identity.md) |
@@ -62,6 +62,7 @@ Transform the OneMember application into a premium SaaS product that fully refle
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
+| RELEASE-1A | OneMember Product Identity | ✅ Deployed | `364b29e` |
 | MVP-005  | Pilot Merchant Readiness | ✅ Complete (Type A) | `74c6c94` |
 | MVP-004  | Birthday and Expiry Automation | ✅ CTO Approved | `2c35ce6` |
 | MVP-003  | Merchant Acquisition Experience | ✅ Complete (Type A) | `d73045d` |

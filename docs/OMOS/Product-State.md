@@ -28,8 +28,8 @@ This file is read as part of the `Continue OMOS` initialisation sequence (step 2
 | **OMOS Version** | 1.2 |
 | **PHP Version** | 8.3+ (8.5 in production) |
 | **Laravel Version** | 13.17.0 |
-| **Last Code Commit** | `74c6c94` — Sprint MVP-005 Pilot Merchant Readiness |
-| **Last Code Sprint** | MVP-005 Pilot Merchant Readiness (`74c6c94`) |
+| **Last Code Commit** | `364b29e` — RELEASE-1A OneMember Product Identity |
+| **Last Code Sprint** | RELEASE-1A OneMember Product Identity (`364b29e`) |
 | **Last OMOS Sprint** | OMOS-1.2 Autonomous Sprint Governance (`b99b1f9`) |
 
 ---
@@ -53,20 +53,20 @@ Phase 2 (Customer Wallet) does not begin until Phase 1 exit criteria are met.
 
 ## Current Application Health Score
 
-**88 / 100** — updated after MVP-005 (2026-07-03)
+**92 / 100** — updated after RELEASE-1A (2026-07-03)
 
 | Category | Score | Notes |
 |---|---|---|
 | Core Functionality | 90/100 | Unchanged |
 | Security | 85/100 | CSP unsafe-inline (documented, necessary) |
-| Testing | 88/100 | 380 tests passing; +6 trial-ending reminder tests |
+| Testing | 88/100 | 380 tests passing |
 | Architecture | 85/100 | LoyaltyProgram/Campaign naming split (ADR-007 pending) |
-| Brand Compliance | 95/100 | ✅ Landing page, guest/wizard layouts, register page all on-brand |
-| Localization | 88/100 | All new strings in EN + TH; welcome.php added |
-| UX Completeness | 75/100 | Landing page rebuilt; onboarding trial flow complete; 3 nav items still coming-soon |
-| Technical Debt | 80/100 | ✅ LoyaltyProgram null-safe fixed; MerchantProfileController legacy remains |
+| Brand Compliance | 100/100 | ✅ RELEASE-1A — complete design system, official logo everywhere, all generic Bootstrap colours removed |
+| Localization | 88/100 | All new strings in EN + TH |
+| UX Completeness | 82/100 | Premium SaaS design system deployed; 3 nav items still coming-soon |
+| Technical Debt | 82/100 | ✅ navigation.blade.php Tailwind removed; MerchantProfileController legacy remains |
 | Performance | 70/100 | Dashboard N+1 risk, no caching layer |
-| Documentation | 98/100 | OMOS comprehensive + Pilot Readiness Checklist added |
+| Documentation | 98/100 | OMOS comprehensive + Pilot Readiness Checklist |
 
 Next health score update: after next sprint completes.
 
@@ -111,11 +111,11 @@ Next health score update: after next sprint completes.
 
 | Field | Value |
 |---|---|
-| **Deployment Date** | Not recorded — pre-OMOS |
-| **Version Deployed** | 0.4.2 (estimated) |
+| **Deployment Date** | 2026-07-03 |
+| **Version Deployed** | 0.9.0 — RELEASE-1A OneMember Product Identity |
 | **Environment** | Production (Laravel Forge + DigitalOcean) |
 | **Status** | ✅ Live |
-| **Next Deployment** | After MVP-001 — pending PO approval |
+| **Next Deployment** | TBD — awaiting next approved sprint |
 
 ---
 
