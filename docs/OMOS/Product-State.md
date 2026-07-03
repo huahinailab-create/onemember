@@ -29,7 +29,7 @@ This file is read as part of the `Continue OMOS` initialisation sequence (step 2
 | **PHP Version** | 8.3+ (8.5 in production) |
 | **Laravel Version** | 13.17.0 |
 | **Application Version** | 0.5.0 |
-| **Last Code Commit** | `d73045d` — Sprint MVP-003 Merchant Acquisition Experience |
+| **Last Code Commit** | `b99b1f9` — OMOS 1.2 Autonomous Sprint Governance |
 | **Last Code Sprint** | MVP-003 Merchant Acquisition Experience (`d73045d`) |
 | **Last OMOS Sprint** | OMOS-1.1 Operational Readiness (`567939a`) |
 
@@ -79,7 +79,7 @@ Next health score update: after MVP-004 completes.
 |---|---|
 | **Sprint ID** | MVP-003 |
 | **Title** | Merchant Acquisition Experience |
-| **Status** | ⏳ Awaiting CTO Review |
+| **Status** | ✅ Complete (Type A — Auto-Approved 2026-07-03) |
 | **Sprint File** | [Sprints/MVP-003-Merchant-Acquisition-Experience.md](./Sprints/MVP-003-Merchant-Acquisition-Experience.md) |
 | **Final Commit** | `d73045d` |
 

@@ -17,7 +17,7 @@
 |---|---|
 | **Sprint ID** | MVP-003 |
 | **Title** | Merchant Acquisition Experience |
-| **Status** | ⏳ Awaiting CTO Review |
+| **Status** | ✅ Complete (Type A — Auto-Approved) |
 | **Sprint Type** | Feature + UX |
 | **Sprint File** | [Sprints/MVP-003-Merchant-Acquisition-Experience.md](./Sprints/MVP-003-Merchant-Acquisition-Experience.md) |
 | **Owner** | Product Owner |
@@ -79,7 +79,7 @@ A merchant who visits OneMember for the first time immediately understands its v
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
-| MVP-003  | Merchant Acquisition Experience | ⏳ CTO Review | `d73045d` |
+| MVP-003  | Merchant Acquisition Experience | ✅ Complete (Type A) | `d73045d` |
 | MVP-002  | Thai Localization Foundation | ✅ CTO Approved | `7e3baf8` |
 | MKTG-002 | Merchant Sales Presentation Excellence | ✅ CTO Approved | `1694b01` |
 | MKTG-001 | Merchant Presentation v2.0 (EN + TH) | ✅ CTO Approved | `4d46d56` |
