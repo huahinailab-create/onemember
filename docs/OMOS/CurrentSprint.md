@@ -15,41 +15,35 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MVP-005 |
-| **Title** | Pilot Merchant Readiness |
-| **Status** | ✅ Complete (Type A — Auto-Approved) |
-| **Sprint Type** | Feature + Documentation |
-| **Classification** | Type A — Autonomous |
-| **Sprint File** | [Sprints/MVP-005-Pilot-Merchant-Readiness.md](./Sprints/MVP-005-Pilot-Merchant-Readiness.md) |
+| **Sprint ID** | RELEASE-1A |
+| **Title** | OneMember Product Identity |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Design + UX Transformation |
+| **Classification** | Type B — CTO Review Required |
+| **Sprint File** | [Sprints/RELEASE-1A-Product-Identity.md](./Sprints/RELEASE-1A-Product-Identity.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Sonnet 4.6 |
-| **Reviewer** | Auto-approved |
+| **Reviewer** | ChatGPT CTO |
 | **Started** | 2026-07-03 |
 | **Target Completion** | 2026-07-03 |
 | **Actual Completion** | 2026-07-03 |
-| **Final Commit** | `74c6c94` |
-
-### Commits This Sprint
-
-| Hash | Description |
-|---|---|
-| `74c6c94` | Sprint MVP-005 — Pilot Merchant Readiness |
+| **Final Commit** | TBD — pending commit |
 
 ### Business Objective
 
-OneMember is ready to onboard the first 10 pilot merchants with confidence.
+Transform the OneMember application into a premium SaaS product that fully reflects the official OneMember brand. No new business features — design and UX transformation only.
 
 ---
 
-## Previous Sprint (MVP-004)
+## Previous Sprint (MVP-005)
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MVP-004 |
-| **Title** | Birthday and Expiry Automation |
-| **Status** | ✅ CTO Approved — 2026-07-03 |
-| **Sprint File** | [Sprints/MVP-004-Birthday-and-Expiry-Automation.md](./Sprints/MVP-004-Birthday-and-Expiry-Automation.md) |
-| **Final Commit** | `2c35ce6` |
+| **Sprint ID** | MVP-005 |
+| **Title** | Pilot Merchant Readiness |
+| **Status** | ✅ Complete (Type A — Auto-Approved) |
+| **Sprint File** | [Sprints/MVP-005-Pilot-Merchant-Readiness.md](./Sprints/MVP-005-Pilot-Merchant-Readiness.md) |
+| **Final Commit** | `74c6c94` |
 
 ---
 

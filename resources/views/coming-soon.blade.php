@@ -8,7 +8,7 @@
 
     <div class="card">
         <div class="card-body text-center py-5">
-            <div class="coming-soon-icon bg-primary bg-opacity-10 mx-auto">
+            <div class="coming-soon-icon mx-auto">
                 <i class="bi {{ $icon ?? 'bi-clock' }} text-primary"></i>
             </div>
             <h5 class="fw-semibold mb-2">{{ $pageTitle }} — Coming Soon</h5>

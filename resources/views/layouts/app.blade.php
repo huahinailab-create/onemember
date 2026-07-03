@@ -46,13 +46,17 @@
                 <img src="{{ $__logo }}" alt="{{ $__branding->displayName() }}"
                      style="height:36px;width:auto;max-width:120px;object-fit:contain;border-radius:4px;">
             @else
-                <i class="bi bi-hexagon-fill text-primary fs-4 flex-shrink-0"></i>
-                <span class="fw-bold fs-5 text-white text-truncate">{{ $__branding->displayName() }}</span>
+                <span class="sidebar-brand-mark">
+                    <span class="brand-one">one</span><span class="brand-member">member</span>
+                </span>
             @endif
         </a>
         @if ($__logo)
             <div class="px-1 mb-4" style="font-size:0.65rem;opacity:0.5;line-height:1;">
-                {{ __('navigation.powered_by') }} {{ config('app.name') }}
+                {{ __('navigation.powered_by') }}
+                <span style="font-family:Arial,sans-serif;font-weight:700;">
+                    <span style="color:#FF1585;">one</span><span style="color:#ffffff;">member</span>
+                </span>
             </div>
         @else
             <div class="mb-3"></div>

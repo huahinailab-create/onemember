@@ -12,32 +12,37 @@
     if (! $showBanner) return;
 
     if ($isExpired) {
-        $bannerClass  = 'alert-secondary';
-        $iconClass    = 'bi-info-circle text-secondary';
+        $bannerStyle  = 'background:#f8f9ff;border:1px solid #cbd5e1;color:#1A1A2E;';
+        $iconClass    = 'bi-info-circle';
+        $iconStyle    = 'color:#1A2E5A;';
         $dismissible  = false;
         $heading      = __('dashboard.trial_expired_heading');
         $body         = __('dashboard.trial_expired_body');
     } elseif ($days <= 1) {
-        $bannerClass  = 'alert-danger';
-        $iconClass    = 'bi-exclamation-octagon-fill text-danger';
+        $bannerStyle  = 'background:#fff0f7;border:1px solid #ffd6eb;color:#1A1A2E;';
+        $iconClass    = 'bi-exclamation-octagon-fill';
+        $iconStyle    = 'color:#FF1585;';
         $dismissible  = true;
         $heading      = __('dashboard.trial_ends_today');
         $body         = __('dashboard.trial_ends_today_body');
     } elseif ($days <= 3) {
-        $bannerClass  = 'alert-warning';
-        $iconClass    = 'bi-exclamation-triangle-fill text-warning';
+        $bannerStyle  = 'background:#fff0f7;border:1px solid #ffd6eb;color:#1A1A2E;';
+        $iconClass    = 'bi-exclamation-triangle-fill';
+        $iconStyle    = 'color:#FF1585;';
         $dismissible  = true;
         $heading      = __('dashboard.trial_days_left', ['days' => $days]);
         $body         = __('dashboard.trial_expiring_soon_body');
     } elseif ($days <= 7) {
-        $bannerClass  = 'alert-warning';
-        $iconClass    = 'bi-clock-fill text-warning';
+        $bannerStyle  = 'background:#fff0f7;border:1px solid #ffd6eb;color:#1A1A2E;';
+        $iconClass    = 'bi-clock-fill';
+        $iconStyle    = 'color:#FF1585;';
         $dismissible  = true;
         $heading      = __('dashboard.trial_ends_in_days', ['days' => $days]);
         $body         = __('dashboard.trial_7day_body');
     } else {
-        $bannerClass  = 'alert-info';
-        $iconClass    = 'bi-info-circle-fill text-info';
+        $bannerStyle  = 'background:#eef2ff;border:1px solid #c7d2fe;color:#1A1A2E;';
+        $iconClass    = 'bi-gift-fill';
+        $iconStyle    = 'color:#1A2E5A;';
         $dismissible  = true;
         $heading      = __('dashboard.trial_ends_in_days', ['days' => $days]);
         $body         = __('dashboard.trial_14day_body');
@@ -52,30 +57,37 @@
     }"
     x-show="!dismissed"
     x-cloak
-    class="alert {{ $bannerClass }} d-flex align-items-start gap-3 alert-dismissible mb-4"
+    class="rounded-3 d-flex align-items-start gap-3 mb-4 p-3"
+    style="{{ $bannerStyle }}"
     role="alert">
-    <i class="bi {{ $iconClass }} fs-5 flex-shrink-0 mt-1"></i>
+    <i class="bi {{ $iconClass }} fs-5 flex-shrink-0 mt-1" style="{{ $iconStyle }}"></i>
     <div class="flex-grow-1">
-        <div class="fw-semibold">{{ $heading }}</div>
-        <div class="small mt-1">{{ $body }}</div>
+        <div class="fw-semibold small">{{ $heading }}</div>
+        <div class="small mt-1 text-muted">{{ $body }}</div>
     </div>
     <div class="d-flex align-items-center gap-2 flex-shrink-0">
-        <button type="button" class="btn btn-sm btn-outline-primary" disabled>
+        <button type="button" class="btn btn-sm btn-primary" disabled>
             {{ __('buttons.upgrade_plan') }}
         </button>
-        <button type="button" class="btn-close" @click="dismiss()" aria-label="{{ __('buttons.dismiss') }}"></button>
+        <button type="button"
+                class="btn-close btn-close-sm"
+                @click="dismiss()"
+                style="font-size:0.75rem;"
+                aria-label="{{ __('buttons.dismiss') }}"></button>
     </div>
 </div>
 @else
 {{-- Expired banner — not dismissible --}}
-<div class="alert {{ $bannerClass }} d-flex align-items-start gap-3 mb-4" role="alert">
-    <i class="bi {{ $iconClass }} fs-5 flex-shrink-0 mt-1"></i>
+<div class="rounded-3 d-flex align-items-start gap-3 mb-4 p-3"
+     style="{{ $bannerStyle }}"
+     role="alert">
+    <i class="bi {{ $iconClass }} fs-5 flex-shrink-0 mt-1" style="{{ $iconStyle }}"></i>
     <div class="flex-grow-1">
-        <div class="fw-semibold">{{ $heading }}</div>
-        <div class="small mt-1">{{ $body }}</div>
+        <div class="fw-semibold small">{{ $heading }}</div>
+        <div class="small mt-1 text-muted">{{ $body }}</div>
     </div>
     <div class="flex-shrink-0">
-        <button type="button" class="btn btn-sm btn-outline-primary" disabled>
+        <button type="button" class="btn btn-sm btn-primary" disabled>
             {{ __('buttons.upgrade_plan') }}
         </button>
     </div>

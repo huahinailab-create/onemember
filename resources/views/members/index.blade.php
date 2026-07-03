@@ -67,7 +67,7 @@
         <div class="card-body p-0">
             @if ($members->isEmpty())
                 <div class="text-center py-5">
-                    <div class="coming-soon-icon bg-primary bg-opacity-10 mx-auto">
+                    <div class="coming-soon-icon mx-auto">
                         <i class="bi bi-people text-primary"></i>
                     </div>
                     @if(request('search_name') || request('search_phone'))

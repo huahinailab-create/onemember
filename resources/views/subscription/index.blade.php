@@ -43,7 +43,7 @@
                                     {{ $plans[$effectivePlan]['name'] ?? ucfirst($effectivePlan) }}
                                 </span>
                                 @if ($merchant->isOnTrial())
-                                    <span class="badge bg-info ms-1">{{ __('subscription.trial_badge') }}</span>
+                                    <span class="badge ms-1" style="background:var(--om-navy);color:#fff;"">{{ __('subscription.trial_badge') }}</span>
                                 @endif
                             </dd>
 
@@ -64,9 +64,9 @@
                                 <dd class="col-7">
                                     @php $days = $merchant->trialDaysRemaining(); @endphp
                                     @if ($days > 7)
-                                        <span class="text-info fw-semibold">{{ trans_choice('subscription.days_count', $days, ['count' => $days]) }}</span>
+                                        <span style="color:var(--om-navy);" class="fw-semibold">{{ trans_choice('subscription.days_count', $days, ['count' => $days]) }}</span>
                                     @elseif ($days > 0)
-                                        <span class="text-warning fw-semibold">{{ trans_choice('subscription.days_count', $days, ['count' => $days]) }}</span>
+                                        <span style="color:var(--om-pink);" class="fw-semibold">{{ trans_choice('subscription.days_count', $days, ['count' => $days]) }}</span>
                                     @else
                                         <span class="text-danger fw-semibold">{{ __('subscription.expires_today') }}</span>
                                     @endif
@@ -75,7 +75,7 @@
                                 <dt class="col-5 text-muted fw-normal">{{ __('subscription.trial_ended') }}</dt>
                                 <dd class="col-7">
                                     {{ $merchant->trial_ends_at?->format('d M Y') ?? '—' }}
-                                    <span class="badge bg-warning text-dark ms-1">{{ __('subscription.ended_badge') }}</span>
+                                    <span class="badge ms-1" style="background:var(--om-pink);color:#fff;">{{ __('subscription.ended_badge') }}</span>
                                 </dd>
                             @endif
 
@@ -89,7 +89,7 @@
 
                             @if ($merchant->cancel_at_period_end && $merchant->subscription_renews_at)
                                 <dt class="col-5 text-muted fw-normal">{{ __('subscription.cancels_on') }}</dt>
-                                <dd class="col-7 text-warning">{{ $merchant->subscription_renews_at->format('d M Y') }}</dd>
+                                <dd class="col-7" style="color:var(--om-pink);">{{ $merchant->subscription_renews_at->format('d M Y') }}</dd>
                             @endif
 
                             @if ($merchant->stripe_subscription_id)
@@ -99,12 +99,12 @@
                         </dl>
 
                         @if ($merchant->isOnTrial())
-                            <div class="alert alert-info mt-3 mb-0 small">
+                            <div class="rounded-3 mt-3 mb-0 p-3 small" style="background:#eef2ff;border:1px solid #c7d2fe;color:var(--om-ink);">
                                 <i class="bi bi-info-circle me-1"></i>
                                 {{ __('subscription.trial_active_notice') }}
                             </div>
                         @elseif ($merchant->isTrialExpired())
-                            <div class="alert alert-secondary mt-3 mb-0 small">
+                            <div class="rounded-3 mt-3 mb-0 p-3 small" style="background:#f8f9ff;border:1px solid #cbd5e1;color:var(--om-ink);">
                                 <i class="bi bi-info-circle me-1"></i>
                                 {{ __('subscription.trial_expired_notice') }}
                             </div>
@@ -141,7 +141,7 @@
                     @endif
                     {{-- Cancellation note --}}
                     @if ($merchant?->cancel_at_period_end && $merchant->subscription_renews_at)
-                        <div class="w-100 small text-warning mt-1">
+                        <div class="w-100 small mt-1" style="color:var(--om-pink);">
                             <i class="bi bi-exclamation-triangle me-1"></i>
                             {{ __('subscription.cancellation_scheduled') }}
                             {{ $merchant->subscription_renews_at->format('d M Y') }}
@@ -195,7 +195,7 @@
                                     <div class="progress-bar {{ $barCl }}" style="width:{{ $pct }}%;"></div>
                                 </div>
                                 @if ($u['level'] === 'warning')
-                                    <div class="small text-warning mt-1">
+                                    <div class="small mt-1" style="color:var(--om-pink);">
                                         <i class="bi bi-exclamation-triangle me-1"></i>
                                         {{ __('subscription.approaching_limit') }}
                                     </div>
@@ -228,7 +228,7 @@
                                             <td class="text-muted ps-0">{{ $label }}</td>
                                             <td class="fw-medium text-end pe-0">
                                                 @if (($planLimits[$key] ?? null) === null)
-                                                    <span class="badge bg-success-subtle text-success">{{ __('subscription.unlimited') }}</span>
+                                                    <span class="badge" style="background:var(--om-icon-bg);color:var(--om-navy);"">{{ __('subscription.unlimited') }}</span>
                                                 @else
                                                     {{ number_format($planLimits[$key]) }}
                                                 @endif
@@ -302,7 +302,7 @@
                                     @php $plan = $plans[$planKey] ?? null; if (!$plan) continue; $val = $plan['limits'][$key] ?? null; @endphp
                                     <td class="text-center {{ $planKey === $effectivePlan ? 'table-primary' : '' }}">
                                         @if ($val === null)
-                                            <i class="bi bi-infinity text-success" title="{{ __('subscription.unlimited') }}"></i>
+                                            <i class="bi bi-infinity" style="color:var(--om-navy);"" title="{{ __('subscription.unlimited') }}"></i>
                                         @else
                                             {{ number_format($val) }}
                                         @endif
@@ -324,7 +324,7 @@
                                     @php $plan = $plans[$planKey] ?? null; if (!$plan) continue; $enabled = $plan['features'][$fKey] ?? false; @endphp
                                     <td class="text-center {{ $planKey === $effectivePlan ? 'table-primary' : '' }}">
                                         @if ($enabled)
-                                            <i class="bi bi-check-circle-fill text-success"></i>
+                                            <i class="bi bi-check-circle-fill" style="color:var(--om-navy);""></i>
                                         @else
                                             <i class="bi bi-dash text-muted"></i>
                                         @endif

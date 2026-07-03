@@ -12,15 +12,15 @@
             <span class="text-muted small">100%</span>
         </div>
         <div class="progress mb-1" style="height:6px;">
-            <div class="progress-bar bg-success" style="width:100%;" role="progressbar"></div>
+            <div class="progress-bar" style="background:var(--om-navy);" style="width:100%;" role="progressbar"></div>
         </div>
     </div>
 
     <div class="card-body p-4 p-md-5 text-center">
 
-        <div class="d-flex align-items-center justify-content-center rounded-circle bg-success bg-opacity-10 mx-auto mb-4"
+        <div class="d-flex align-items-center justify-content-center rounded-circle mx-auto mb-4" style="width:72px;height:72px;background:var(--om-icon-bg);"
              style="width:80px;height:80px;">
-            <i class="bi bi-check-circle-fill text-success" style="font-size:2.5rem;"></i>
+            <i class="bi bi-check-circle-fill" style="font-size:2.5rem;color:var(--om-navy);"></i>
         </div>
 
         <h2 class="fw-bold fs-3 mb-2">{{ __('onboarding.finish_heading') }}</h2>

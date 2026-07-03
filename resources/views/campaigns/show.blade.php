@@ -420,7 +420,7 @@
                                                {{ $isArchived ? 'disabled' : '' }}>
                                         <label class="form-check-label" for="exp_never">
                                             {{ __('campaigns.exp_never') }}
-                                            <span class="badge bg-success ms-1" style="font-size:.65rem;">{{ __('onboarding.recommended') }}</span>
+                                            <span class="badge ms-1" style="font-size:.65rem;background:var(--om-navy);color:#fff;">{{ __('onboarding.recommended') }}</span>
                                         </label>
                                     </div>
 
@@ -472,7 +472,7 @@
                                     </div>
 
                                     <div class="form-text mt-2">
-                                        <i class="bi bi-lightbulb text-warning me-1"></i>
+                                        <i class="bi bi-lightbulb" style="color:var(--om-navy);" me-1"></i>
                                         Customers are more likely to return when points never expire or have a long expiration period such as 2 years.
                                     </div>
                                 </div>
@@ -748,7 +748,7 @@
                 {{-- Rewards list --}}
                 @if ($rewards->isEmpty())
                     <div class="text-center py-5">
-                        <div class="coming-soon-icon bg-primary bg-opacity-10 mx-auto">
+                        <div class="coming-soon-icon mx-auto">
                             <i class="bi bi-gift text-primary"></i>
                         </div>
                         @if (request('reward_search'))
@@ -833,7 +833,7 @@
                 'pane-analytics'    => ['icon' => 'bi-bar-chart-line',    'label' => __('campaigns.tab_analytics')],
             ] as $paneId => $meta)
                 <div class="tab-pane fade text-center py-5" id="{{ $paneId }}" role="tabpanel">
-                    <div class="coming-soon-icon bg-primary bg-opacity-10 mx-auto">
+                    <div class="coming-soon-icon mx-auto">
                         <i class="bi {{ $meta['icon'] }} text-primary"></i>
                     </div>
                     <h6 class="fw-semibold mb-1">{{ $meta['label'] }} — {{ __('buttons.coming_soon') }}</h6>

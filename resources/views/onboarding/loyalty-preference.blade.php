@@ -76,9 +76,9 @@
                            style="width:1.25rem;height:1.25rem;"
                            {{ $selected === 'stamps' ? 'checked' : '' }}
                            onchange="highlightCard(this)">
-                    <div class="d-flex align-items-center justify-content-center rounded-3 bg-success bg-opacity-10 flex-shrink-0"
-                         style="width:48px;height:48px;">
-                        <i class="bi bi-grid-3x3 text-success fs-4"></i>
+                    <div class="d-flex align-items-center justify-content-center rounded-3 flex-shrink-0"
+                         style="width:48px;height:48px;background:var(--om-icon-bg);">
+                        <i class="bi bi-grid-3x3 fs-4" style="color:var(--om-navy);"></i>
                     </div>
                     <div>
                         <div class="fw-semibold fs-5">{{ __('onboarding.loyalty_stamps') }}</div>

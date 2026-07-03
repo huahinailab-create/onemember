@@ -204,7 +204,7 @@
                     <i class="bi bi-qr-code text-primary"></i>
                     <span class="fw-semibold">{{ __('members.portal_card_title') }}</span>
                     @if ($member->portal_enabled)
-                        <span class="badge bg-success ms-auto">{{ __('members.portal_status_enabled') }}</span>
+                        <span class="badge ms-auto" style="background:var(--om-navy);color:#fff;"">{{ __('members.portal_status_enabled') }}</span>
                     @else
                         <span class="badge bg-secondary ms-auto">{{ __('members.portal_status_disabled') }}</span>
                     @endif
@@ -482,7 +482,7 @@
                             The member may need to complete the stamp card first.
                         @endif
                     @else
-                        <span class="text-success fw-medium">
+                        <span style="color:var(--om-navy);" class="fw-medium">
                             {{ $eligibleRewards->count() }} reward{{ $eligibleRewards->count() === 1 ? '' : 's' }} available
                         </span>
                         for this member.
@@ -597,7 +597,7 @@
                 'pane-notes'   => ['icon' => 'bi-journal-text',  'label' => __('members.notes_tab')],
             ] as $paneId => $meta)
                 <div class="tab-pane fade text-center py-5" id="{{ $paneId }}" role="tabpanel">
-                    <div class="coming-soon-icon bg-primary bg-opacity-10 mx-auto">
+                    <div class="coming-soon-icon mx-auto">
                         <i class="bi {{ $meta['icon'] }} text-primary"></i>
                     </div>
                     <h6 class="fw-semibold mb-1">{{ $meta['label'] }} — {{ __('buttons.coming_soon') }}</h6>
@@ -640,7 +640,7 @@
                 {{-- Activity list --}}
                 @if ($transactions->isEmpty())
                     <div class="text-center py-5">
-                        <div class="coming-soon-icon bg-primary bg-opacity-10 mx-auto">
+                        <div class="coming-soon-icon mx-auto">
                             <i class="bi bi-lightning-charge text-primary"></i>
                         </div>
                         <h6 class="fw-semibold mb-1">{{ __('members.no_activity') }}</h6>
@@ -658,11 +658,11 @@
                         @foreach ($transactions as $tx)
                             @php
                                 $txMeta = [
-                                    'earn'     => ['icon' => 'bi-cart-check',        'bg' => 'bg-success',   'text' => 'text-success',  'label' => 'Purchase',          'desc' => 'Purchase recorded'],
-                                    'birthday' => ['icon' => 'bi-gift',              'bg' => 'bg-danger',    'text' => 'text-danger',   'label' => 'Birthday Bonus',     'desc' => 'Birthday bonus awarded'],
-                                    'redeem'   => ['icon' => 'bi-ticket-perforated', 'bg' => 'bg-warning',   'text' => 'text-warning',  'label' => 'Reward Redemption',  'desc' => 'Reward redeemed'],
-                                    'adjust'   => ['icon' => 'bi-pencil-square',     'bg' => 'bg-primary',   'text' => 'text-primary',  'label' => 'Manual Adjustment',  'desc' => 'Points adjusted'],
-                                    'expire'   => ['icon' => 'bi-clock-history',     'bg' => 'bg-secondary', 'text' => 'text-secondary','label' => 'Points Expired',     'desc' => 'Points expired'],
+                                    'earn'     => ['icon' => 'bi-cart-check',        'style' => 'background:var(--om-icon-bg);color:var(--om-navy);',   'label' => 'Purchase',          'desc' => 'Purchase recorded'],
+                                    'birthday' => ['icon' => 'bi-gift',              'style' => 'background:var(--om-icon-pink-bg);color:var(--om-pink);', 'label' => 'Birthday Bonus', 'desc' => 'Birthday bonus awarded'],
+                                    'redeem'   => ['icon' => 'bi-ticket-perforated', 'style' => 'background:var(--om-icon-pink-bg);color:var(--om-pink);', 'label' => 'Reward Redemption', 'desc' => 'Reward redeemed'],
+                                    'adjust'   => ['icon' => 'bi-pencil-square',     'style' => 'background:var(--om-icon-bg);color:var(--om-navy);',   'label' => 'Manual Adjustment',  'desc' => 'Points adjusted'],
+                                    'expire'   => ['icon' => 'bi-clock-history',     'style' => 'background:#f1f4f8;color:#64748b;',                    'label' => 'Points Expired',     'desc' => 'Points expired'],
                                 ];
                                 $m       = $txMeta[$tx->type->value] ?? $txMeta['earn'];
                                 $isStamp = $tx->loyaltyProgram?->type->value === 'stamps';
@@ -674,9 +674,9 @@
 
                                 {{-- Type icon --}}
                                 <div class="flex-shrink-0 mt-1">
-                                    <span class="rounded-circle d-inline-flex align-items-center justify-content-center {{ $m['bg'] }} bg-opacity-10"
-                                          style="width:38px;height:38px;">
-                                        <i class="bi {{ $m['icon'] }} {{ $m['text'] }}"></i>
+                                    <span class="rounded-circle d-inline-flex align-items-center justify-content-center"
+                                          style="width:38px;height:38px;{{ $m['style'] }}">
+                                        <i class="bi {{ $m['icon'] }}"></i>
                                     </span>
                                 </div>
 

@@ -14,56 +14,52 @@
     {{-- ── Section 1: Business Overview ────────────────────── --}}
     <div class="row g-3 mb-4">
         <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card h-100">
+            <div class="card h-100 stat-card">
                 <div class="card-body d-flex align-items-center gap-3">
-                    <div class="d-flex align-items-center justify-content-center rounded-3 bg-primary bg-opacity-10 flex-shrink-0"
-                         style="width:48px;height:48px;">
-                        <i class="bi bi-people text-primary fs-4"></i>
+                    <div class="stat-icon">
+                        <i class="bi bi-people"></i>
                     </div>
                     <div>
-                        <div class="fs-2 fw-bold lh-1">{{ number_format($totalActiveMembers) }}</div>
+                        <div class="fs-2 fw-bold lh-1" style="color:var(--om-ink);">{{ number_format($totalActiveMembers) }}</div>
                         <div class="text-muted small mt-1">{{ __('dashboard.active_members') }}</div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card h-100">
+            <div class="card h-100 stat-card">
                 <div class="card-body d-flex align-items-center gap-3">
-                    <div class="d-flex align-items-center justify-content-center rounded-3 bg-success bg-opacity-10 flex-shrink-0"
-                         style="width:48px;height:48px;">
-                        <i class="bi bi-star text-success fs-4"></i>
+                    <div class="stat-icon">
+                        <i class="bi bi-star"></i>
                     </div>
                     <div>
-                        <div class="fs-2 fw-bold lh-1">{{ number_format($activeCampaignCount) }}</div>
+                        <div class="fs-2 fw-bold lh-1" style="color:var(--om-ink);">{{ number_format($activeCampaignCount) }}</div>
                         <div class="text-muted small mt-1">{{ __('dashboard.active_campaigns') }}</div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card h-100">
+            <div class="card h-100 stat-card stat-card-pink">
                 <div class="card-body d-flex align-items-center gap-3">
-                    <div class="d-flex align-items-center justify-content-center rounded-3 bg-warning bg-opacity-10 flex-shrink-0"
-                         style="width:48px;height:48px;">
-                        <i class="bi bi-gift text-warning fs-4"></i>
+                    <div class="stat-icon stat-icon-pink">
+                        <i class="bi bi-gift"></i>
                     </div>
                     <div>
-                        <div class="fs-2 fw-bold lh-1">{{ number_format($redeemedToday) }}</div>
+                        <div class="fs-2 fw-bold lh-1" style="color:var(--om-ink);">{{ number_format($redeemedToday) }}</div>
                         <div class="text-muted small mt-1">{{ __('dashboard.rewards_redeemed_today') }}</div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card h-100">
+            <div class="card h-100 stat-card stat-card-pink">
                 <div class="card-body d-flex align-items-center gap-3">
-                    <div class="d-flex align-items-center justify-content-center rounded-3 bg-info bg-opacity-10 flex-shrink-0"
-                         style="width:48px;height:48px;">
-                        <i class="bi bi-lightning text-info fs-4"></i>
+                    <div class="stat-icon stat-icon-pink">
+                        <i class="bi bi-lightning"></i>
                     </div>
                     <div>
-                        <div class="fs-2 fw-bold lh-1">{{ number_format($pointsIssuedToday) }}</div>
+                        <div class="fs-2 fw-bold lh-1" style="color:var(--om-ink);">{{ number_format($pointsIssuedToday) }}</div>
                         <div class="text-muted small mt-1">{{ __('dashboard.points_issued_today') }}</div>
                     </div>
                 </div>
@@ -85,21 +81,21 @@
                 </div>
                 <div class="col-6 col-md-3">
                     <a href="{{ route('members') }}"
-                       class="btn btn-outline-success w-100 py-3 d-flex flex-column align-items-center gap-2">
+                       class="btn btn-outline-primary w-100 py-3 d-flex flex-column align-items-center gap-2">
                         <i class="bi bi-bag-check fs-3"></i>
                         <span class="fw-medium">{{ __('dashboard.record_purchase') }}</span>
                     </a>
                 </div>
                 <div class="col-6 col-md-3">
                     <a href="{{ route('members') }}"
-                       class="btn btn-outline-warning w-100 py-3 d-flex flex-column align-items-center gap-2">
+                       class="btn btn-outline-primary w-100 py-3 d-flex flex-column align-items-center gap-2">
                         <i class="bi bi-gift fs-3"></i>
                         <span class="fw-medium">{{ __('dashboard.redeem_reward') }}</span>
                     </a>
                 </div>
                 <div class="col-6 col-md-3">
                     <a href="{{ route('campaigns.create') }}"
-                       class="btn btn-outline-secondary w-100 py-3 d-flex flex-column align-items-center gap-2">
+                       class="btn btn-outline-primary w-100 py-3 d-flex flex-column align-items-center gap-2">
                         <i class="bi bi-star fs-3"></i>
                         <span class="fw-medium">{{ __('dashboard.create_campaign') }}</span>
                     </a>
@@ -358,8 +354,8 @@
                         @foreach ($topMembers as $i => $member)
                             <a href="{{ route('members.show', $member) }}"
                                class="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3 px-3">
-                                <div class="d-flex align-items-center justify-content-center rounded-circle bg-primary bg-opacity-10 text-primary fw-bold flex-shrink-0"
-                                     style="width:32px;height:32px;font-size:0.8rem;">
+                                <div class="d-flex align-items-center justify-content-center rounded-circle fw-bold flex-shrink-0"
+                                     style="width:32px;height:32px;font-size:0.8rem;background:var(--om-icon-bg);color:var(--om-navy);">
                                     {{ $i + 1 }}
                                 </div>
                                 <div class="flex-grow-1 overflow-hidden">
