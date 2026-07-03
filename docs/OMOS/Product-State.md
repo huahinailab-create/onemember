@@ -29,8 +29,8 @@ This file is read as part of the `Continue OMOS` initialisation sequence (step 2
 | **PHP Version** | 8.3+ (8.5 in production) |
 | **Laravel Version** | 13.17.0 |
 | **Application Version** | 0.5.0 |
-| **Last Code Commit** | `7e3baf8` — Sprint MVP-002 Thai Localization Foundation |
-| **Last Code Sprint** | MVP-002 Thai Localization Foundation (`7e3baf8`) |
+| **Last Code Commit** | `d73045d` — Sprint MVP-003 Merchant Acquisition Experience |
+| **Last Code Sprint** | MVP-003 Merchant Acquisition Experience (`d73045d`) |
 | **Last OMOS Sprint** | OMOS-1.1 Operational Readiness (`567939a`) |
 
 ---
@@ -54,22 +54,22 @@ Phase 2 (Customer Wallet) does not begin until Phase 1 exit criteria are met.
 
 ## Current Application Health Score
 
-**80 / 100** — updated after MVP-002 (2026-07-03)
+**83 / 100** — updated after MVP-003 (2026-07-03)
 
 | Category | Score | Notes |
 |---|---|---|
 | Core Functionality | 90/100 | Unchanged |
 | Security | 85/100 | CSP unsafe-inline (documented, necessary) |
-| Testing | 82/100 | +5 new LoyaltyProgram regression tests |
+| Testing | 84/100 | 359 tests passing; +17 new acquisition tests |
 | Architecture | 85/100 | LoyaltyProgram/Campaign naming split (ADR-007 pending) |
-| Brand Compliance | 90/100 | ✅ `--bs-primary` now `#1A2E5A`, sidebar correct, theme-color correct |
-| Localization | 88/100 | Default locale 'th', portal locale, starter campaigns localised, Alpine.js i18n |
-| UX Completeness | 60/100 | 3 nav items lead to coming-soon pages |
+| Brand Compliance | 95/100 | ✅ Landing page, guest/wizard layouts, register page all on-brand |
+| Localization | 88/100 | All new strings in EN + TH; welcome.php added |
+| UX Completeness | 75/100 | Landing page rebuilt; onboarding trial flow complete; 3 nav items still coming-soon |
 | Technical Debt | 80/100 | ✅ LoyaltyProgram null-safe fixed; MerchantProfileController legacy remains |
 | Performance | 70/100 | Dashboard N+1 risk, no caching layer |
 | Documentation | 95/100 | OMOS is comprehensive |
 
-Next health score update: after MVP-003 completes.
+Next health score update: after MVP-004 completes.
 
 ---
 
@@ -77,11 +77,11 @@ Next health score update: after MVP-003 completes.
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MVP-002 |
-| **Title** | Thai Localization Foundation |
+| **Sprint ID** | MVP-003 |
+| **Title** | Merchant Acquisition Experience |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Sprint File** | [Sprints/MVP-002-Thai-Localization-Foundation.md](./Sprints/MVP-002-Thai-Localization-Foundation.md) |
-| **Final Commit** | `7e3baf8` |
+| **Sprint File** | [Sprints/MVP-003-Merchant-Acquisition-Experience.md](./Sprints/MVP-003-Merchant-Acquisition-Experience.md) |
+| **Final Commit** | `d73045d` |
 
 ---
 

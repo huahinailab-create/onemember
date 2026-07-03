@@ -15,40 +15,40 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MVP-002 |
-| **Title** | Thai Localization Foundation |
+| **Sprint ID** | MVP-003 |
+| **Title** | Merchant Acquisition Experience |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Sprint Type** | Feature |
-| **Sprint File** | [Sprints/MVP-002-Thai-Localization-Foundation.md](./Sprints/MVP-002-Thai-Localization-Foundation.md) |
+| **Sprint Type** | Feature + UX |
+| **Sprint File** | [Sprints/MVP-003-Merchant-Acquisition-Experience.md](./Sprints/MVP-003-Merchant-Acquisition-Experience.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Sonnet 4.6 |
 | **Reviewer** | ChatGPT CTO (AI CTO) |
 | **Started** | 2026-07-03 |
 | **Target Completion** | 2026-07-03 |
 | **Actual Completion** | 2026-07-03 |
-| **Final Commit** | `7e3baf8` |
+| **Final Commit** | `d73045d` |
 
 ### Commits This Sprint
 
 | Hash | Description |
 |---|---|
-| `7e3baf8` | Sprint MVP-002 — Thai Localization Foundation |
+| `d73045d` | Sprint MVP-003 — Merchant Acquisition Experience |
 
 ### Business Objective
 
-A Thai merchant should feel that OneMember was built for Thailand, not translated into Thai. Default locale 'th', portal locale from merchant settings, starter campaigns in Thai, Alpine.js i18n.
+A merchant who visits OneMember for the first time immediately understands its value, completes onboarding confidently, and is ready to begin a 30-day trial.
 
 ---
 
-## Previous Sprint (MKTG-002)
+## Previous Sprint (MVP-002)
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MKTG-002 |
-| **Title** | Merchant Sales Presentation Excellence |
+| **Sprint ID** | MVP-002 |
+| **Title** | Thai Localization Foundation |
 | **Status** | ✅ CTO Approved — 2026-07-03 |
-| **Sprint File** | [docs/Marketing/MKTG-002/](../Marketing/MKTG-002/) |
-| **Final Commit** | `1694b01` |
+| **Sprint File** | [Sprints/MVP-002-Thai-Localization-Foundation.md](./Sprints/MVP-002-Thai-Localization-Foundation.md) |
+| **Final Commit** | `7e3baf8` |
 
 ---
 
@@ -56,9 +56,9 @@ A Thai merchant should feel that OneMember was built for Thailand, not translate
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MVP-003 |
+| **Sprint ID** | MVP-004 |
 | **Title** | Birthday and Expiry Automation |
-| **Status** | ⬜ Deferred — awaiting MVP-002 CTO approval |
+| **Status** | ⬜ Awaiting CTO approval |
 | **Sprint File** | [Sprints/Backlog.md](./Sprints/Backlog.md) |
 | **Priority** | High |
 
@@ -79,7 +79,8 @@ A Thai merchant should feel that OneMember was built for Thailand, not translate
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
-| MVP-002  | Thai Localization Foundation | ⏳ CTO Review | `7e3baf8` |
+| MVP-003  | Merchant Acquisition Experience | ⏳ CTO Review | `d73045d` |
+| MVP-002  | Thai Localization Foundation | ✅ CTO Approved | `7e3baf8` |
 | MKTG-002 | Merchant Sales Presentation Excellence | ✅ CTO Approved | `1694b01` |
 | MKTG-001 | Merchant Presentation v2.0 (EN + TH) | ✅ CTO Approved | `4d46d56` |
 | MVP-001 | Merchant Experience Polish | ✅ CTO Approved | `37b7d8c` |
