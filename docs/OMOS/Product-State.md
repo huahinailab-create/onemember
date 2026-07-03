@@ -161,10 +161,15 @@ Based on the AI-03 audit and OMOS sprint backlog:
 | Multi-tenant isolation | ✅ | `abort_unless()` on all resource access |
 | DevTools gated | ✅ | Double gate: env + flag |
 | Stripe billing integrated | ✅ | Subscription, checkout, webhooks |
-| 324 tests passing | ✅ | Full suite green |
+| 380 tests passing | ✅ | Full suite green |
 | Brand colours correct | ✅ | Fixed in MVP-001 (`37b7d8c`) |
 | LoyaltyProgram null-safe | ✅ | Fixed in MVP-001 (`37b7d8c`) |
-| Member notification emails | ❌ | MVP-003 required |
-| Birthday automation live | ❌ | MVP-002 required |
+| Birthday automation live | ✅ | MVP-004 (`2c35ce6`) |
+| Point expiry processing | ✅ | MVP-004 (`2c35ce6`) |
+| Trial-ending reminder emails | ✅ | MVP-005 — non-Stripe trial path covered |
+| Merchant acquisition flow | ✅ | MVP-003 — landing page, onboarding trial badge, finish confirmation |
+| Pilot readiness checklist | ✅ | MVP-005 — `docs/OMOS/Pilot-Readiness-Checklist.md` |
+| Member notification emails | ❌ | Not yet built — documented as known limitation for pilot |
+| Counter Mode UI | ❌ | Not yet built — documented as known limitation for pilot |
 
 **Recommended production readiness gate:** MVP-001 and MVP-002 complete before merchant onboarding begins.

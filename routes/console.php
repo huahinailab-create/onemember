@@ -3,6 +3,7 @@
 use App\Console\Commands\ProcessBirthdayRewards;
 use App\Console\Commands\ProcessExpiredTrials;
 use App\Console\Commands\ProcessPointExpiry;
+use App\Console\Commands\SendTrialEndingReminders;
 use App\Console\Commands\VerifyDatabaseBackup;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
@@ -21,6 +22,9 @@ Schedule::command(ProcessPointExpiry::class)->dailyAt('02:00');
 
 // Award birthday bonus points to members within their birthday window.
 Schedule::command(ProcessBirthdayRewards::class)->dailyAt('08:00');
+
+// Send trial-ending reminder to merchants with ≤ 7 days remaining (non-Stripe trial path).
+Schedule::command(SendTrialEndingReminders::class)->dailyAt('09:00');
 
 // Verify that yesterday's database backup exists. Runs at 03:00, two hours after
 // the backup cron job (02:00 recommended). Logs pass/fail to storage/logs/laravel.log.
