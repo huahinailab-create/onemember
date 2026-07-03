@@ -17,7 +17,7 @@
 |---|---|
 | **Sprint ID** | RELEASE-1B |
 | **Title** | Corporate Website & Corporate Identity |
-| **Status** | 🔄 In Progress |
+| **Status** | ⏳ Awaiting CTO Review |
 | **Sprint Type** | Corporate Website + Identity |
 | **Classification** | Type B — CTO Review Required |
 | **Sprint File** | [Sprints/RELEASE-1B-Corporate-Website.md](./Sprints/RELEASE-1B-Corporate-Website.md) |
@@ -26,8 +26,8 @@
 | **Reviewer** | ChatGPT CTO |
 | **Started** | 2026-07-03 |
 | **Target Completion** | 2026-07-03 |
-| **Actual Completion** | — |
-| **Final Commit** | — |
+| **Actual Completion** | 2026-07-03 |
+| **Final Commit** | `568ff7a` |
 
 ### Business Objective
 
@@ -62,6 +62,7 @@ Establish OneMember's corporate presence at `www.onemember.co`, standardise corp
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
+| RELEASE-1B | Corporate Website & Corporate Identity | ⏳ Awaiting CTO Review | `568ff7a` |
 | RELEASE-1A | OneMember Product Identity | ✅ Deployed | `364b29e` |
 | MVP-005  | Pilot Merchant Readiness | ✅ Complete (Type A) | `74c6c94` |
 | MVP-004  | Birthday and Expiry Automation | ✅ CTO Approved | `2c35ce6` |

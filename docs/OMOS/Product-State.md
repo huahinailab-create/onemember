@@ -24,12 +24,12 @@ This file is read as part of the `Continue OMOS` initialisation sequence (step 2
 
 | Field | Value |
 |---|---|
-| **Application Version** | 0.9.0 |
+| **Application Version** | 0.9.1 |
 | **OMOS Version** | 1.2 |
 | **PHP Version** | 8.3+ (8.5 in production) |
 | **Laravel Version** | 13.17.0 |
-| **Last Code Commit** | `364b29e` — RELEASE-1A OneMember Product Identity |
-| **Last Code Sprint** | RELEASE-1A OneMember Product Identity (`364b29e`) |
+| **Last Code Commit** | `568ff7a` — RELEASE-1B Corporate Website & Corporate Identity |
+| **Last Code Sprint** | RELEASE-1B Corporate Website & Corporate Identity (`568ff7a`) |
 | **Last OMOS Sprint** | OMOS-1.2 Autonomous Sprint Governance (`b99b1f9`) |
 
 ---
@@ -53,7 +53,7 @@ Phase 2 (Customer Wallet) does not begin until Phase 1 exit criteria are met.
 
 ## Current Application Health Score
 
-**92 / 100** — updated after RELEASE-1A (2026-07-03)
+**93 / 100** — updated after RELEASE-1B (2026-07-03)
 
 | Category | Score | Notes |
 |---|---|---|
@@ -61,7 +61,7 @@ Phase 2 (Customer Wallet) does not begin until Phase 1 exit criteria are met.
 | Security | 85/100 | CSP unsafe-inline (documented, necessary) |
 | Testing | 88/100 | 380 tests passing |
 | Architecture | 85/100 | LoyaltyProgram/Campaign naming split (ADR-007 pending) |
-| Brand Compliance | 100/100 | ✅ RELEASE-1A — complete design system, official logo everywhere, all generic Bootstrap colours removed |
+| Brand Compliance | 100/100 | ✅ RELEASE-1B — corporate website, email identity, all onemember.app → onemember.co |
 | Localization | 88/100 | All new strings in EN + TH |
 | UX Completeness | 82/100 | Premium SaaS design system deployed; 3 nav items still coming-soon |
 | Technical Debt | 82/100 | ✅ navigation.blade.php Tailwind removed; MerchantProfileController legacy remains |
@@ -76,11 +76,11 @@ Next health score update: after next sprint completes.
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MVP-005 |
-| **Title** | Pilot Merchant Readiness |
-| **Status** | ✅ Complete (Type A — Auto-Approved) |
-| **Sprint File** | [Sprints/MVP-005-Pilot-Merchant-Readiness.md](./Sprints/MVP-005-Pilot-Merchant-Readiness.md) |
-| **Final Commit** | `74c6c94` |
+| **Sprint ID** | RELEASE-1B |
+| **Title** | Corporate Website & Corporate Identity |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint File** | [Sprints/RELEASE-1B-Corporate-Website.md](./Sprints/RELEASE-1B-Corporate-Website.md) |
+| **Final Commit** | `568ff7a` |
 
 ---
 
