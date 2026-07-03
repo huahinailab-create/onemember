@@ -1,5 +1,20 @@
 <x-guest-layout>
 
+    {{-- Trial value strip --}}
+    <div class="rounded-3 p-3 mb-4" style="background:#fff0f7;border:1px solid #ffd6eb;">
+        <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge fw-semibold px-2 py-1" style="background:#FF1585;font-size:.75rem;">
+                {{ __('auth.trial_badge') }}
+            </span>
+            <span class="fw-semibold small" style="color:#1A2E5A;">{{ __('auth.trial_heading') }}</span>
+        </div>
+        <ul class="list-unstyled mb-0 small" style="color:#1A2E5A;">
+            <li><i class="bi bi-check-circle-fill me-2" style="color:#FF1585;"></i>{{ __('auth.trial_tick_1') }}</li>
+            <li><i class="bi bi-check-circle-fill me-2" style="color:#FF1585;"></i>{{ __('auth.trial_tick_2') }}</li>
+            <li><i class="bi bi-check-circle-fill me-2" style="color:#FF1585;"></i>{{ __('auth.trial_tick_3') }}</li>
+        </ul>
+    </div>
+
     <h5 class="fw-bold mb-4">{{ __('auth.create_account_heading') }}</h5>
 
     <form method="POST" action="{{ route('register') }}">

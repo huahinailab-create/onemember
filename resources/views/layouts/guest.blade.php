@@ -17,9 +17,10 @@
     <div class="w-100" style="max-width: 440px; padding: 1rem;">
 
         <div class="text-center mb-4">
-            <a href="{{ url('/') }}" class="text-decoration-none text-dark">
-                <i class="bi bi-hexagon-fill text-primary" style="font-size: 2.5rem;"></i>
-                <div class="fw-bold fs-4 mt-1">{{ config('app.name') }}</div>
+            <a href="{{ url('/') }}" class="text-decoration-none">
+                <span class="fw-bold fs-4" style="font-family:Arial,sans-serif;">
+                    <span style="color:#FF1585;">one</span><span style="color:#1A2E5A;">member</span>
+                </span>
             </a>
         </div>
 

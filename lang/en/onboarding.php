@@ -74,6 +74,12 @@ return [
     'finish_settings_note' => 'You can update your business details any time in',
     'has_campaign_notice'  => "You already have a campaign set up. We won't create a duplicate.",
 
+    // Trial messaging on onboarding welcome and finish pages
+    'trial_confidence_badge' => '30 days free — no credit card required',
+    'trial_started_heading'  => 'Your 30-day Professional trial has started',
+    'trial_ends_on'          => 'Trial ends on:',
+    'trial_after_note'       => 'After your trial, choose a plan to continue. No charges until then.',
+
     // Starter campaign content (used by OnboardingController::createStarterCampaign)
     'starter_stamp_name'        => 'Stamp Card',
     'starter_stamp_reward_name' => 'Free Item',

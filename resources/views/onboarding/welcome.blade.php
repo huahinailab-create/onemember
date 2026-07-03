@@ -42,15 +42,19 @@
             </div>
         </div>
 
-        <div class="d-grid gap-2">
+        {{-- Trial confidence badge --}}
+        <div class="text-center mb-4 py-2 px-3 rounded-3"
+             style="background:#fff0f7;border:1px solid #ffd6eb;">
+            <i class="bi bi-shield-check me-1" style="color:#FF1585;"></i>
+            <span class="small fw-semibold" style="color:#1A2E5A;">
+                {{ __('onboarding.trial_confidence_badge') }}
+            </span>
+        </div>
+
+        <div class="d-grid">
             <a href="{{ route('onboarding.business-info') }}" class="btn btn-primary btn-lg">
                 {{ __('onboarding.get_started') }}
             </a>
-            <form method="GET" action="{{ route('onboarding.skip') }}">
-                <button type="submit" class="btn btn-link text-muted w-100">
-                    {{ __('onboarding.skip_for_now') }}
-                </button>
-            </form>
         </div>
 
     </div>
@@ -58,5 +62,7 @@
 
 <p class="text-center text-muted small mt-3">
     {{ __('onboarding.already_setup') }} <a href="{{ route('dashboard') }}">{{ __('onboarding.go_to_dashboard') }}</a>
+    &nbsp;·&nbsp;
+    <a href="{{ route('onboarding.skip') }}" class="text-muted">{{ __('onboarding.skip_for_now') }}</a>
 </p>
 @endsection

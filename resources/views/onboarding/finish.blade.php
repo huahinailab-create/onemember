@@ -31,6 +31,26 @@
             {{ __('onboarding.finish_cta') }}
         </p>
 
+        {{-- Trial started panel --}}
+        @if($merchant->trial_ends_at)
+        <div class="rounded-3 p-3 mb-4 text-start"
+             style="background:#fff0f7;border:1px solid #ffd6eb;">
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <i class="bi bi-gift-fill" style="color:#FF1585;"></i>
+                <span class="fw-semibold small" style="color:#1A2E5A;">
+                    {{ __('onboarding.trial_started_heading') }}
+                </span>
+            </div>
+            <p class="mb-1 small" style="color:#1A2E5A;">
+                {{ __('onboarding.trial_ends_on') }}
+                <strong>{{ $merchant->trial_ends_at->translatedFormat('j F Y') }}</strong>
+            </p>
+            <p class="mb-0 text-muted" style="font-size:.8rem;">
+                {{ __('onboarding.trial_after_note') }}
+            </p>
+        </div>
+        @endif
+
         <div class="row g-3 justify-content-center">
             <div class="col-12 col-sm-6">
                 <a href="{{ route('dashboard') }}" class="btn btn-primary btn-lg w-100">

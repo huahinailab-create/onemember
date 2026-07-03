@@ -17,9 +17,10 @@
     <header class="bg-white border-bottom py-3">
         <div class="container" style="max-width:700px;">
             <div class="d-flex align-items-center justify-content-between">
-                <a href="{{ url('/') }}" class="text-decoration-none d-flex align-items-center gap-2">
-                    <i class="bi bi-hexagon-fill text-primary fs-4"></i>
-                    <span class="fw-bold fs-5 text-dark">{{ config('app.name') }}</span>
+                <a href="{{ url('/') }}" class="text-decoration-none">
+                    <span class="fw-bold fs-5" style="font-family:Arial,sans-serif;">
+                        <span style="color:#FF1585;">one</span><span style="color:#1A2E5A;">member</span>
+                    </span>
                 </a>
                 @yield('header-action')
             </div>

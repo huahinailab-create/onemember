@@ -25,4 +25,11 @@ return [
     'log_out'                => 'Log Out',
     'confirm_password_heading' => 'Confirm Password',
     'confirm_password_body'  => 'This is a secure area of the application. Please confirm your password before continuing.',
+
+    // Trial messaging on register page
+    'trial_badge'   => '30 Days Free',
+    'trial_heading' => 'Start your 30-day Professional trial',
+    'trial_tick_1'  => 'Full Professional features — no restrictions',
+    'trial_tick_2'  => 'No credit card required',
+    'trial_tick_3'  => 'Cancel anytime',
 ];

@@ -74,6 +74,12 @@ return [
     'finish_settings_note' => 'คุณสามารถอัปเดตข้อมูลธุรกิจได้ตลอดเวลาใน',
     'has_campaign_notice'  => 'คุณมีแคมเปญที่ตั้งค่าไว้แล้ว เราจะไม่สร้างซ้ำ',
 
+    // Trial messaging on onboarding welcome and finish pages
+    'trial_confidence_badge' => 'ทดลองใช้ฟรี 30 วัน — ไม่ต้องใช้บัตรเครดิต',
+    'trial_started_heading'  => 'เริ่มช่วงทดลองใช้ Professional 30 วันแล้ว',
+    'trial_ends_on'          => 'ทดลองใช้ถึง:',
+    'trial_after_note'       => 'หลังจากช่วงทดลองใช้ เลือกแผนเพื่อดำเนินการต่อ ไม่มีการเรียกเก็บเงินจนกว่านั้น',
+
     // Starter campaign content (used by OnboardingController::createStarterCampaign)
     'starter_stamp_name'        => 'บัตรสะสมแสตมป์',
     'starter_stamp_reward_name' => 'ของสมนาคุณ',

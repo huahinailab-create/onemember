@@ -25,4 +25,11 @@ return [
     'log_out'                => 'ออกจากระบบ',
     'confirm_password_heading' => 'ยืนยันรหัสผ่าน',
     'confirm_password_body'  => 'บริเวณนี้เป็นส่วนที่ต้องการความปลอดภัย กรุณายืนยันรหัสผ่านก่อนดำเนินการต่อ',
+
+    // Trial messaging on register page
+    'trial_badge'   => 'ฟรี 30 วัน',
+    'trial_heading' => 'เริ่มทดลองใช้ Professional 30 วันฟรี',
+    'trial_tick_1'  => 'ฟีเจอร์ Professional ครบครัน — ไม่มีข้อจำกัด',
+    'trial_tick_2'  => 'ไม่ต้องใช้บัตรเครดิต',
+    'trial_tick_3'  => 'ยกเลิกได้ทุกเมื่อ',
 ];
