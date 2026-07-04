@@ -67,8 +67,8 @@ Route::domain(config('domains.corporate'))->group(function () {
 
 // ── app.onemember.co — Merchant application ───────────────────────────────
 Route::domain(config('domains.app'))->group(function () {
-    // Root → corporate website
-    Route::get('/', fn () => redirect()->away('https://' . config('domains.corporate') . '/'));
+    // Root → merchant login
+    Route::get('/', fn () => redirect()->to('/login'));
 
     // Customer self-service portal (public, no auth)
     Route::get('/member/{publicUuid}',        [CustomerPortalController::class, 'show'])->name('portal.show');

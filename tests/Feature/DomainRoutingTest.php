@@ -67,7 +67,15 @@ class DomainRoutingTest extends TestCase
         $response->assertRedirect('https://app.onemember.co/dashboard');
     }
 
-    // 7. App routes are NOT served on corporate domain (404)
+    // 7. app.onemember.co root redirects to merchant login
+    public function test_app_root_redirects_to_login(): void
+    {
+        $response = $this->get('http://app.onemember.co/');
+
+        $response->assertRedirect('http://app.onemember.co/login');
+    }
+
+    // 8. App routes are NOT served on corporate domain (404)
     public function test_app_routes_not_served_on_corporate_domain(): void
     {
         $response = $this->get('http://onemember.co/members');
