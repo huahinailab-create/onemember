@@ -26,7 +26,8 @@
 | **Reviewer** | ChatGPT CTO |
 | **Started** | 2026-07-05 |
 | **Target Completion** | 2026-07-05 |
-| **Last Updated** | 2026-07-05 |
+| **Actual Completion** | 2026-07-05 |
+| **Final Commit** | `ea64eda` |
 
 ### Business Objective
 
@@ -97,7 +98,7 @@ Make the authenticated merchant application at `app.onemember.co` fully mobile-f
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
-| RELEASE-2B | Mobile Merchant Experience | 🔄 In Progress | — |
+| RELEASE-2B | Mobile Merchant Experience | ⏳ Awaiting CTO Review | `ea64eda` |
 | RELEASE-2A | Corporate Website | ⏳ Awaiting CTO Review | `fa69508` |
 | RELEASE-1C | Production Multilingual Architecture (Thai First) | ⏳ Awaiting CTO Review | `87f2a33` |
 | RELEASE-1B | Corporate Website & Corporate Identity | ⏳ Awaiting CTO Review | `568ff7a` |
