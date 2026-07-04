@@ -950,6 +950,25 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-066] RELEASE-2B — Mobile Merchant Experience
+- **Date:** 2026-07-05
+- **Requested by:** CTO
+- **Status:** Approved
+- **Decision:**
+  1. **Overlay sidebar on mobile** (< 768 px) uses CSS `position: fixed; left: calc(-1 * var(--om-sidebar-width))` and slides in to `left: 0` when open. Desktop keeps the inline sticky sidebar. Controlled by Alpine.js `sidebarOpen` state.
+  2. **Close button inside sidebar** is present on mobile only (`d-md-none`), positioned at the top of the sidebar so users can dismiss without reaching outside the drawer.
+  3. **ESC key closes sidebar** on mobile via `@keydown.escape.window` on the root Alpine container.
+  4. **Body scroll lock** applied when mobile sidebar is open: Alpine `x-effect` adds/removes `om-sidebar-open` class on `document.body`; CSS `body.om-sidebar-open { overflow: hidden }`.
+  5. **Language switcher shows icon-only on mobile** (`< 576 px`) to prevent topbar overflow; label text visible from 576 px up.
+  6. **FAB bottom clearance**: `content-area` on mobile gets `padding-bottom: 5rem` so the fixed FAB never overlaps the last row of page content.
+  7. **Responsive tables**: `table-responsive-stack` class stacks rows into labelled card rows at `< 576 px`. All tables that need it must carry this class.
+  8. **Touch targets**: All interactive elements in the merchant app maintain a minimum of 44 × 44 px on mobile via existing CSS rules — no individual overrides per element.
+  9. **No new JS build tooling** introduced; Alpine.js directives used inline in Blade templates to keep the mobile behaviour co-located with markup.
+- **Reason:** The merchant application is used on-counter by merchants on mobile devices. An unusable mobile experience directly reduces the product's primary use case. This sprint formalises the mobile UX as production-grade rather than an afterthought.
+- **Impact:** Modified: `resources/views/layouts/app.blade.php` (close button, ESC, scroll-lock effect), `resources/css/app.css` (scroll lock, FAB padding, lang switcher). New: `tests/Feature/MobileNavTest.php`, `docs/OMOS/Sprints/RELEASE-2B-Mobile-Merchant-Experience.md`.
+
+---
+
 ### [DECISION-065] Domain-Aware Routing — Single App, Two Domains
 - **Date:** 2026-07-04
 - **Requested by:** CTO

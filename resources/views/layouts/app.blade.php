@@ -29,15 +29,29 @@
     $__counterMode = (bool) (Auth::user()?->merchant?->settings['counter_mode'] ?? false);
 @endphp
 
-<div class="d-flex" x-data="{ sidebarOpen: window.innerWidth >= 768 }">
+<div class="d-flex"
+     x-data="{ sidebarOpen: window.innerWidth >= 768 }"
+     x-effect="document.body.classList.toggle('om-sidebar-open', sidebarOpen && window.innerWidth < 768)"
+     @keydown.escape.window="sidebarOpen = false">
 
     {{-- ── Mobile backdrop ──────────────────────────────── --}}
     <div class="sidebar-backdrop d-md-none"
          x-show="sidebarOpen"
+         aria-hidden="true"
          @click="sidebarOpen = false"></div>
 
     {{-- ── Sidebar ───────────────────────────────────────── --}}
-    <nav class="sidebar p-3" :class="{ 'collapsed': !sidebarOpen }" aria-label="{{ __('navigation.main_menu') }}">
+    <nav class="sidebar p-3" :class="{ 'collapsed': !sidebarOpen }"
+         aria-label="{{ __('navigation.main_menu') }}"
+         role="navigation">
+
+        {{-- Mobile close button --}}
+        <div class="d-flex align-items-center justify-content-end d-md-none mb-2">
+            <button type="button"
+                    class="btn-close btn-close-white"
+                    @click="sidebarOpen = false"
+                    aria-label="{{ __('mobile.close_menu') }}"></button>
+        </div>
 
         {{-- Brand --}}
         <a href="{{ route('dashboard') }}"

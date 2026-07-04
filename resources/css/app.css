@@ -684,6 +684,11 @@ body {
     color: #ffffff;
 }
 
+/* ── Body scroll lock when mobile sidebar is open ───────── */
+body.om-sidebar-open {
+    overflow: hidden;
+}
+
 /* ── Mobile — Overlay sidebar ───────────────────────────── */
 @media (max-width: 767.98px) {
     .sidebar {
@@ -745,10 +750,25 @@ body {
 
     .content-area {
         padding: 1rem;
+        /* bottom clearance so FAB never covers the last content row */
+        padding-bottom: 5rem;
     }
 
     .counter-mode-bar {
         padding: 0.625rem 1rem;
+    }
+}
+
+/* ── Language switcher — icon only on small screens ─────── */
+@media (max-width: 575.98px) {
+    .lang-switcher-btn {
+        padding: 0.25rem 0.5rem !important;
+    }
+    .lang-switcher-btn .lang-label {
+        display: none;
+    }
+    .lang-switcher-btn::after {
+        display: none !important;
     }
 }
 

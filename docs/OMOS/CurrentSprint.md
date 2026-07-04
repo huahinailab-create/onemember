@@ -15,23 +15,34 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | RELEASE-2A |
-| **Title** | Corporate Website |
+| **Sprint ID** | RELEASE-2B |
+| **Title** | Mobile Merchant Experience |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Sprint Type** | Marketing / Legal Compliance |
+| **Sprint Type** | UX / Technical |
 | **Classification** | Type B — CTO Review Required |
-| **Sprint File** | [Sprints/RELEASE-2A-Corporate-Website.md](./Sprints/RELEASE-2A-Corporate-Website.md) |
+| **Sprint File** | [Sprints/RELEASE-2B-Mobile-Merchant-Experience.md](./Sprints/RELEASE-2B-Mobile-Merchant-Experience.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Sonnet 4.6 |
 | **Reviewer** | ChatGPT CTO |
-| **Started** | 2026-07-04 |
-| **Target Completion** | 2026-07-04 |
-| **Actual Completion** | 2026-07-04 |
-| **Final Commit** | `fa69508` |
+| **Started** | 2026-07-05 |
+| **Target Completion** | 2026-07-05 |
+| **Last Updated** | 2026-07-05 |
 
 ### Business Objective
 
-Complete the public marketing website for `onemember.co`. Adds the PDPA Privacy Notice page (legal compliance requirement for Thai operations). Formalises the ten-page corporate website as the canonical customer acquisition channel. DECISION-064 recorded.
+Make the authenticated merchant application at `app.onemember.co` fully mobile-first and production-ready. Merchants use the app on-counter on mobile devices. DECISION-066 recorded.
+
+---
+
+## Previous Sprint (RELEASE-2A)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | RELEASE-2A |
+| **Title** | Corporate Website |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint File** | [Sprints/RELEASE-2A-Corporate-Website.md](./Sprints/RELEASE-2A-Corporate-Website.md) |
+| **Final Commit** | `fa69508` |
 
 ---
 
@@ -86,6 +97,7 @@ Complete the public marketing website for `onemember.co`. Adds the PDPA Privacy 
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
+| RELEASE-2B | Mobile Merchant Experience | 🔄 In Progress | — |
 | RELEASE-2A | Corporate Website | ⏳ Awaiting CTO Review | `fa69508` |
 | RELEASE-1C | Production Multilingual Architecture (Thai First) | ⏳ Awaiting CTO Review | `87f2a33` |
 | RELEASE-1B | Corporate Website & Corporate Identity | ⏳ Awaiting CTO Review | `568ff7a` |
