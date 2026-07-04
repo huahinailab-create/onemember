@@ -21,7 +21,22 @@ class StoreOnboardingBusinessSettingsRequest extends FormRequest
             ])],
             'timezone'    => ['required', 'string', Rule::in(timezone_identifiers_list())],
             'date_format' => ['required', 'string', Rule::in(['DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'])],
-            'locale'      => ['required', 'string', Rule::in(['en', 'th'])],
+            'locale'      => ['sometimes', 'string', Rule::in(['en', 'th'])],
+        ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        // Default locale to the current app locale when not submitted
+        if (! $this->has('locale') || ! $this->input('locale')) {
+            $this->merge(['locale' => app()->getLocale() ?: 'th']);
+        }
+    }
+
+    public function messages(): array
+    {
+        return [
+            'locale.in' => __('validation.locale_invalid'),
         ];
     }
 }

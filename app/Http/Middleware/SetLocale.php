@@ -13,10 +13,15 @@ class SetLocale
 
     public function handle(Request $request, Closure $next): Response
     {
+        // Priority: merchant settings (authenticated) → session (all users) → app default
         $locale = null;
 
         if ($request->user()?->merchant?->settings) {
             $locale = $request->user()->merchant->settings['locale'] ?? null;
+        }
+
+        if (! $locale) {
+            $locale = session('locale');
         }
 
         if ($locale && in_array($locale, self::SUPPORTED, true)) {

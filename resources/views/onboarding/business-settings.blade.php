@@ -117,7 +117,7 @@
             </div>
 
             {{-- Date Format --}}
-            <div class="mb-4">
+            <div class="mb-3">
                 <label for="date_format" class="form-label fw-medium">
                     {{ __('settings.date_format') }} <span class="text-danger">*</span>
                 </label>
@@ -135,6 +135,24 @@
                     @endforeach
                 </select>
                 @error('date_format')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            {{-- Interface Language --}}
+            <div class="mb-4">
+                <label for="locale" class="form-label fw-medium">
+                    {{ __('settings.language') }} <span class="text-danger">*</span>
+                </label>
+                @php $currentLocale = old('locale', $merchant?->settings['locale'] ?? app()->getLocale() ?? 'th'); @endphp
+                <select id="locale"
+                        name="locale"
+                        class="form-select @error('locale') is-invalid @enderror"
+                        required>
+                    <option value="th" {{ $currentLocale === 'th' ? 'selected' : '' }}>ภาษาไทย</option>
+                    <option value="en" {{ $currentLocale === 'en' ? 'selected' : '' }}>English</option>
+                </select>
+                @error('locale')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>

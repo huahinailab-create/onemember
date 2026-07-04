@@ -69,6 +69,7 @@
                 </li>
             </ul>
             <div class="d-flex gap-2 align-items-center">
+                <x-language-switcher />
                 @auth
                     <a href="{{ route('dashboard') }}" class="btn btn-sm btn-pink">Go to Dashboard <i class="bi bi-arrow-right ms-1"></i></a>
                 @else

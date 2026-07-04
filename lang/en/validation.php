@@ -152,5 +152,12 @@ return [
         ],
     ],
 
-    'attributes' => [],
+    'locale_invalid' => 'Please select a valid language (English or Thai).',
+
+    'attributes' => [
+        'locale'      => 'language',
+        'date_format' => 'date format',
+        'timezone'    => 'timezone',
+        'currency'    => 'currency',
+    ],
 ];

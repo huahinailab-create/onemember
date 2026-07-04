@@ -210,6 +210,7 @@
                         <span class="d-none d-sm-inline">{{ __('mobile.counter_mode') }}</span>
                     </button>
                 </form>
+                <x-language-switcher />
                 <div class="topbar-user">
                     <i class="bi bi-person-circle text-secondary"></i>
                     <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>

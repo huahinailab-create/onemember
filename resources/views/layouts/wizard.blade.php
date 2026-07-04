@@ -22,7 +22,10 @@
                         <span style="color:#FF1585;">one</span><span style="color:#1A2E5A;">member</span>
                     </span>
                 </a>
-                @yield('header-action')
+                <div class="d-flex align-items-center gap-2">
+                    <x-language-switcher />
+                    @yield('header-action')
+                </div>
             </div>
         </div>
     </header>

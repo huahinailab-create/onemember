@@ -16,11 +16,15 @@ use App\Http\Controllers\MerchantProfileController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CorporateController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 
 // Health check — no auth required, returns JSON for uptime monitors
 Route::get('/up', HealthController::class)->name('health');
+
+// Language switcher — public, no auth required (works for guests + authenticated users)
+Route::post('/locale', [LocaleController::class, 'switch'])->name('locale.switch');
 
 // ── Customer self-service portal (public, no auth) ────────────────────────
 Route::get('/member/{publicUuid}',      [CustomerPortalController::class, 'show'])->name('portal.show');

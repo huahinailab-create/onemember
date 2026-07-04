@@ -30,7 +30,11 @@
             </div>
         </div>
 
-        <p class="text-center text-muted small mt-3">
+        <div class="text-center mt-3">
+            <x-language-switcher />
+        </div>
+
+        <p class="text-center text-muted small mt-2">
             &copy; {{ date('Y') }} {{ config('app.name') }}
         </p>
     </div>

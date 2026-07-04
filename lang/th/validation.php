@@ -152,6 +152,8 @@ return [
         ],
     ],
 
+    'locale_invalid' => 'กรุณาเลือกภาษาที่รองรับ (ภาษาอังกฤษ หรือ ภาษาไทย)',
+
     'attributes' => [
         'name'                 => 'ชื่อ',
         'email'                => 'อีเมล',
@@ -160,5 +162,9 @@ return [
         'birthday'             => 'วันเกิด',
         'campaign_name'        => 'ชื่อแคมเปญ',
         'purchase_amount'      => 'ยอดซื้อ',
+        'locale'               => 'ภาษา',
+        'date_format'          => 'รูปแบบวันที่',
+        'timezone'             => 'เขตเวลา',
+        'currency'             => 'สกุลเงิน',
     ],
 ];
