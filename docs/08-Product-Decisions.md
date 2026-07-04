@@ -933,4 +933,21 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-064] RELEASE-2A — Corporate Website Completion (PDPA Page + Sprint Formalisation)
+- **Date:** 2026-07-04
+- **Requested by:** Product Owner
+- **Status:** Approved
+- **Decision:**
+  1. **RELEASE-2A formalises the corporate website** built in RELEASE-1B and localised in RELEASE-1C as the canonical public-facing marketing website for `onemember.co`.
+  2. **Ten pages are in scope:** Home, Features, Industries, Pricing, About, FAQ, Contact, Privacy Policy, Terms of Service, and the new PDPA Privacy Notice. The first nine already exist; this sprint adds the tenth.
+  3. **PDPA Privacy Notice is a required standalone page** at `/pdpa` (route `corporate.pdpa`). It is a formal disclosure under Thailand's Personal Data Protection Act B.E. 2562 and is distinct from the Privacy Policy. Content covers: data controller identity, categories of data, legal bases, purposes, third-party sharing, retention periods, data subject rights, how to exercise rights, cookies, security measures, international transfers, children's data, and DPO contact.
+  4. **PDPA Notice linked from the footer Legal column** between Privacy Policy and Security & PDPA.
+  5. **All corporate pages use the RELEASE-1C localisation architecture.** Thai is default; English is supported. The PDPA page uses `trans('corporate.pdpa_full_sections')` for section iteration and `__()` for all scalar strings. No hardcoded strings.
+  6. **No new infrastructure, no new database tables, no new middleware.** This is a content and routing sprint only.
+  7. **SEO, Open Graph, and canonical tags** are already implemented in `layouts/corporate.blade.php` from RELEASE-1B. Each page supplies its own `title` and `description` slot values.
+- **Reason:** The PDPA page is a legal compliance requirement for operating in Thailand. RELEASE-2A closes the gap between the corporate website as built and the full scope required before the site goes live at `onemember.co`.
+- **Impact:** New: `resources/views/corporate/pdpa.blade.php`, `lang/en/corporate.php` (pdpa_* keys), `lang/th/corporate.php` (pdpa_* keys). Modified: `app/Http/Controllers/CorporateController.php` (pdpa method), `routes/web.php` (pdpa route), `resources/views/layouts/corporate.blade.php` (footer PDPA link).
+
+---
+
 *New decisions must be appended above this line in the format shown.*

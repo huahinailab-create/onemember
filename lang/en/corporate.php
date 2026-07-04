@@ -765,4 +765,120 @@ return [
         ['Contact', ['Questions about these Terms: hello@onemember.co']],
     ],
 
+    // ── PDPA Privacy Notice ────────────────────────────────────────────────
+    'pdpa_meta_title'         => 'PDPA Privacy Notice — OneMember',
+    'pdpa_meta_desc'          => 'OneMember PDPA Privacy Notice. How we collect, use, and protect personal data under Thailand\'s Personal Data Protection Act B.E. 2562.',
+    'pdpa_h1'                 => 'PDPA Privacy Notice',
+    'pdpa_eyebrow'            => 'Legal',
+    'pdpa_intro'              => 'This notice is issued pursuant to the Personal Data Protection Act B.E. 2562 (2019) ("PDPA") of Thailand. It explains how OneMember Co., Ltd. ("OneMember", "we", "us") collects, uses, discloses, and protects personal data.',
+    'pdpa_last_updated'       => 'Last updated:',
+    'footer_pdpa_notice'      => 'PDPA Notice',
+    'nav_pdpa'                => 'PDPA Notice',
+
+    'pdpa_full_sections' => [
+        ['1. Data Controller', [
+            'OneMember Co., Ltd. is the data controller for personal data collected through the OneMember platform at app.onemember.co.',
+            'Contact: privacy@onemember.co',
+        ], []],
+        ['2. Categories of Personal Data Collected', [], [
+            ['Merchant Data', [
+                'Business name, contact person name, business email address, mobile number',
+                'Business address, business type, business logo',
+                'Billing information (processed securely via Stripe — we do not store card numbers)',
+            ]],
+            ['Member Data (collected on behalf of merchants)', [
+                'Full name, nickname, mobile phone number',
+                'Email address (optional)',
+                'Date of birth (optional, used for birthday rewards)',
+                'Notes (optional, entered by merchant)',
+                'Loyalty points balance and transaction history',
+            ]],
+            ['Technical Data', [
+                'IP address, browser type, device type',
+                'Session data, cookies, access logs',
+                'Feature usage and interaction data (aggregated, non-identifiable)',
+            ]],
+        ]],
+        ['3. Legal Basis for Processing', [], [
+            ['Contractual Necessity', ['Processing merchant account data to provide the OneMember SaaS service under the Terms of Service.']],
+            ['Consent', ['Processing member data requires valid PDPA consent obtained by the merchant at the point of member enrolment. Merchants are responsible for capturing and retaining this consent.']],
+            ['Legitimate Interests', ['Improving platform security, preventing fraud, monitoring system health, and aggregated usage analytics.']],
+            ['Legal Obligation', ['Retaining data required by Thai law, including tax and financial records.']],
+        ]],
+        ['4. Purpose of Processing', [], [
+            ['', [
+                'Providing and operating the OneMember loyalty platform',
+                'Processing loyalty point transactions, stamp campaigns, and reward redemptions',
+                'Sending transactional and account-management emails (email verification, password reset, birthday rewards)',
+                'Billing and subscription management via Stripe',
+                'Security monitoring and fraud prevention',
+                'Improving platform performance and user experience',
+                'Complying with legal obligations under Thai law',
+            ]],
+        ]],
+        ['5. Data Sharing and Disclosure', [
+            'We do not sell personal data. We share data only with the following categories of recipients:',
+        ], [
+            ['', [
+                'Stripe, Inc. — payment processing (PCI-DSS Level 1 certified)',
+                'Amazon Web Services — cloud infrastructure and data hosting in the Asia-Pacific region',
+                'Mailgun / email delivery providers — transactional email delivery',
+                'Government authorities — when required by Thai law or a valid legal order',
+            ]],
+        ]],
+        ['6. Data Retention', [], [
+            ['Merchant Account Data', ['Retained for the duration of the subscription plus 90 days after account closure, then permanently deleted.']],
+            ['Member Data', ['Retained while the merchant account is active. Merchants may delete individual member records at any time. All member data is deleted when the merchant account is permanently closed.']],
+            ['Financial Records', ['Retained for 5 years as required by Thai tax law.']],
+            ['System Logs', ['Retained for 90 days for security and operational purposes.']],
+        ]],
+        ['7. Data Subject Rights (PDPA Chapter 3)', [
+            'If your personal data is held by OneMember, you have the following rights under the PDPA:',
+        ], [
+            ['', [
+                'Right to Access — request a copy of your personal data',
+                'Right to Rectification — request correction of inaccurate data',
+                'Right to Erasure — request deletion of your personal data',
+                'Right to Restriction — request that we stop processing your data',
+                'Right to Data Portability — receive your data in a portable format',
+                'Right to Object — object to processing based on legitimate interests',
+                'Right to Withdraw Consent — withdraw consent at any time (does not affect prior processing)',
+            ]],
+        ]],
+        ['8. Exercising Your Rights', [
+            'To exercise any right under the PDPA, submit a written request to:',
+            'Email: privacy@onemember.co',
+            'We will respond within 30 days as required by the PDPA. We may request verification of identity before processing the request.',
+            'If you are a loyalty member whose data is held by a merchant using OneMember, please contact that merchant directly. The merchant is the data controller for member data collected through their loyalty programme.',
+        ], []],
+        ['9. Cookies and Tracking', [
+            'OneMember uses strictly necessary session cookies to operate the platform (login sessions, CSRF protection, language preference). We do not use advertising tracking cookies or third-party analytics cookies.',
+        ], []],
+        ['10. Data Security', [
+            'We implement appropriate technical and organisational measures to protect personal data against unauthorised access, disclosure, alteration, and destruction. Measures include:',
+        ], [
+            ['', [
+                'TLS encryption for all data in transit',
+                'AES-256 encryption for data at rest',
+                'Access controls — only authorised personnel may access production data',
+                'Regular security audits and vulnerability assessments',
+                'Stripe handles all payment card data under PCI-DSS Level 1',
+            ]],
+        ]],
+        ['11. International Data Transfers', [
+            'OneMember hosts data on Amazon Web Services infrastructure in the Asia-Pacific region (Singapore / Tokyo). Any transfer outside Thailand is conducted with appropriate safeguards in place.',
+        ], []],
+        ['12. Children\'s Data', [
+            'OneMember is not designed for use by persons under 20 years of age. We do not knowingly collect personal data from children. If you believe a child\'s data has been collected, contact privacy@onemember.co immediately.',
+        ], []],
+        ['13. Changes to This Notice', [
+            'We may update this notice from time to time. Significant changes will be communicated via email at least 14 days before they take effect. Continued use of the platform after changes take effect constitutes acceptance of the updated notice.',
+        ], []],
+        ['14. Contact & DPO', [
+            'Data Protection Officer: privacy@onemember.co',
+            'General enquiries: hello@onemember.co',
+            'OneMember Co., Ltd., Bangkok, Thailand',
+        ], []],
+    ],
+
 ];

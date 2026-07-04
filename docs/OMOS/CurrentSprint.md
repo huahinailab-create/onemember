@@ -15,23 +15,35 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | RELEASE-1C |
-| **Title** | Production Multilingual Architecture (Thai First) |
+| **Sprint ID** | RELEASE-2A |
+| **Title** | Corporate Website |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Sprint Type** | i18n / Localization |
+| **Sprint Type** | Marketing / Legal Compliance |
 | **Classification** | Type B — CTO Review Required |
-| **Sprint File** | [Sprints/RELEASE-1C-Multilingual.md](./Sprints/RELEASE-1C-Multilingual.md) |
+| **Sprint File** | [Sprints/RELEASE-2A-Corporate-Website.md](./Sprints/RELEASE-2A-Corporate-Website.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Sonnet 4.6 |
 | **Reviewer** | ChatGPT CTO |
 | **Started** | 2026-07-04 |
 | **Target Completion** | 2026-07-04 |
 | **Actual Completion** | 2026-07-04 |
-| **Final Commit** | `530a600` |
+| **Final Commit** | TBD — pending commit |
 
 ### Business Objective
 
-Establish Thai as the production default language. Language switcher on every page. Current page reloads immediately after language change. Remove all hardcoded user-facing strings from app views. Decision recorded in DECISION-052.
+Complete the public marketing website for `onemember.co`. Adds the PDPA Privacy Notice page (legal compliance requirement for Thai operations). Formalises the ten-page corporate website as the canonical customer acquisition channel. DECISION-064 recorded.
+
+---
+
+## Previous Sprint (RELEASE-1C)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | RELEASE-1C |
+| **Title** | Production Multilingual Architecture (Thai First) |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint File** | [Sprints/RELEASE-1C-Multilingual.md](./Sprints/RELEASE-1C-Multilingual.md) |
+| **Final Commit** | `87f2a33` |
 
 ---
 
@@ -74,7 +86,8 @@ Establish Thai as the production default language. Language switcher on every pa
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
-| RELEASE-1C | Production Multilingual Architecture (Thai First) | ⏳ Awaiting CTO Review | `530a600` |
+| RELEASE-2A | Corporate Website | ⏳ Awaiting CTO Review | TBD |
+| RELEASE-1C | Production Multilingual Architecture (Thai First) | ⏳ Awaiting CTO Review | `87f2a33` |
 | RELEASE-1B | Corporate Website & Corporate Identity | ⏳ Awaiting CTO Review | `568ff7a` |
 | RELEASE-1A | OneMember Product Identity | ✅ Deployed | `364b29e` |
 | MVP-005  | Pilot Merchant Readiness | ✅ Complete (Type A) | `74c6c94` |

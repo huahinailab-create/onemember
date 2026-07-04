@@ -129,6 +129,7 @@
                 <ul class="list-unstyled footer-links">
                     <li><a href="{{ route('corporate.privacy') }}">{{ __('corporate.footer_privacy') }}</a></li>
                     <li><a href="{{ route('corporate.terms') }}">{{ __('corporate.footer_terms') }}</a></li>
+                    <li><a href="{{ route('corporate.pdpa') }}">{{ __('corporate.footer_pdpa_notice') }}</a></li>
                     <li><a href="{{ route('corporate.security') }}">{{ __('corporate.footer_security') }}</a></li>
                 </ul>
             </div>

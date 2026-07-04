@@ -85,4 +85,9 @@ class CorporateController extends Controller
     {
         return view('corporate.terms');
     }
+
+    public function pdpa(): View
+    {
+        return view('corporate.pdpa');
+    }
 }

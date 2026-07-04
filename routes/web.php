@@ -48,6 +48,7 @@ Route::get('/partners',    [CorporateController::class, 'partners'])->name('corp
 Route::get('/demo',        [CorporateController::class, 'demo'])->name('corporate.demo');
 Route::get('/privacy',     [CorporateController::class, 'privacy'])->name('corporate.privacy');
 Route::get('/terms',       [CorporateController::class, 'terms'])->name('corporate.terms');
+Route::get('/pdpa',        [CorporateController::class, 'pdpa'])->name('corporate.pdpa');
 
 // LEGACY: old welcome route redirected to corporate home (kept for backwards-compat during transition)
 Route::get('/welcome', function () {
