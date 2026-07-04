@@ -4,6 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#1A2E5A">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
 
     <title>@yield('title', __('corporate.home_meta_title'))</title>
     <meta name="description" content="@yield('description', __('corporate.home_meta_desc'))">
@@ -12,7 +16,9 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="@yield('og_title', __('corporate.home_meta_title'))">
     <meta property="og:description" content="@yield('og_description', __('corporate.home_meta_desc'))">
-    <meta property="og:image" content="@yield('og_image', asset('images/og-default.png'))">
+    <meta property="og:image" content="@yield('og_image', asset('images/og-default.svg'))">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:site_name" content="OneMember">
 
