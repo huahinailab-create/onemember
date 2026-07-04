@@ -27,7 +27,7 @@
 | **Started** | 2026-07-04 |
 | **Target Completion** | 2026-07-04 |
 | **Actual Completion** | 2026-07-04 |
-| **Final Commit** | TBD |
+| **Final Commit** | `530a600` |
 
 ### Business Objective
 
@@ -74,7 +74,7 @@ Establish Thai as the production default language. Language switcher on every pa
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
-| RELEASE-1C | Production Multilingual Architecture (Thai First) | ⏳ Awaiting CTO Review | TBD |
+| RELEASE-1C | Production Multilingual Architecture (Thai First) | ⏳ Awaiting CTO Review | `530a600` |
 | RELEASE-1B | Corporate Website & Corporate Identity | ⏳ Awaiting CTO Review | `568ff7a` |
 | RELEASE-1A | OneMember Product Identity | ✅ Deployed | `364b29e` |
 | MVP-005  | Pilot Merchant Readiness | ✅ Complete (Type A) | `74c6c94` |
