@@ -651,12 +651,12 @@
                                             {{ $merchant->subscriptionStatus()->label() }}
                                         </span>
                                         @if ($merchant->isOnTrial())
-                                            <span class="text-muted small ms-1">(Professional features active)</span>
+                                            <span class="text-muted small ms-1">{{ __('settings.trial_professional_active') }}</span>
                                         @elseif ($merchant->isTrialExpired())
-                                            <span class="text-muted small ms-1">(Free plan limits apply)</span>
+                                            <span class="text-muted small ms-1">{{ __('settings.trial_free_limits') }}</span>
                                         @endif
                                     @else
-                                        <span class="badge bg-primary">Professional Trial</span>
+                                        <span class="badge bg-primary">{{ __('subscription.trial_badge') }}</span>
                                     @endif
                                 </dd>
 

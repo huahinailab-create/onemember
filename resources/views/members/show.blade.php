@@ -298,20 +298,20 @@
         @php $rs = session('redemption_success'); @endphp
         <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
             <div class="fw-semibold mb-2">
-                <i class="bi bi-check-circle-fill me-2"></i>Reward Redeemed Successfully
+                <i class="bi bi-check-circle-fill me-2"></i>{{ __('members.reward_redeemed_success') }}
             </div>
             <div class="row g-1 small">
                 <div class="col-sm-6">
-                    <span class="fw-medium">Reward:</span>
+                    <span class="fw-medium">{{ __('members.reward_label') }}:</span>
                     {{ $rs['reward_name'] }}
                 </div>
                 <div class="col-sm-6">
-                    <span class="fw-medium">{{ $rs['type'] === 'stamps' ? 'Stamps Used:' : 'Points Used:' }}</span>
+                    <span class="fw-medium">{{ $rs['type'] === 'stamps' ? __('members.stamps_used') : __('members.points_used') }}:</span>
                     {{ number_format($rs['points_used']) }}
                 </div>
                 <div class="col-sm-6">
-                    <span class="fw-medium">Current Balance:</span>
-                    {{ number_format($rs['balance']) }} {{ $rs['type'] === 'stamps' ? 'Stamps' : 'Points' }}
+                    <span class="fw-medium">{{ __('members.current_balance') }}:</span>
+                    {{ number_format($rs['balance']) }} {{ $rs['type'] === 'stamps' ? __('members.stamps_unit') : __('members.points_unit') }}
                 </div>
             </div>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -323,26 +323,24 @@
         @php $ps = session('purchase_success'); @endphp
         <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
             <div class="fw-semibold mb-2">
-                <i class="bi bi-check-circle-fill me-2"></i>Purchase Recorded Successfully
+                <i class="bi bi-check-circle-fill me-2"></i>{{ __('members.purchase_recorded_success') }}
             </div>
             <div class="row g-1 small">
                 <div class="col-sm-6">
-                    <span class="fw-medium">Purchase:</span>
+                    <span class="fw-medium">{{ __('members.purchase_label') }}:</span>
                     {{ number_format($ps['amount'], 2) }} {{ $ps['currency'] }}
                 </div>
                 <div class="col-sm-6">
-                    <span class="fw-medium">Campaign:</span>
+                    <span class="fw-medium">{{ __('members.campaign_label') }}:</span>
                     {{ $ps['campaign_name'] }}
                 </div>
                 <div class="col-sm-6">
-                    <span class="fw-medium">Earned:</span>
-                    {{ $ps['earned'] }} {{ $ps['type'] === 'points'
-                        ? ($ps['earned'] === 1 ? 'Point' : 'Points')
-                        : ($ps['earned'] === 1 ? 'Stamp' : 'Stamps') }}
+                    <span class="fw-medium">{{ __('members.earned_label') }}:</span>
+                    {{ $ps['earned'] }} {{ $ps['type'] === 'points' ? __('members.points_unit') : __('members.stamps_unit') }}
                 </div>
                 <div class="col-sm-6">
-                    <span class="fw-medium">Current Balance:</span>
-                    {{ number_format($ps['balance']) }} {{ $ps['type'] === 'points' ? 'Points' : 'Stamps' }}
+                    <span class="fw-medium">{{ __('members.current_balance') }}:</span>
+                    {{ number_format($ps['balance']) }} {{ $ps['type'] === 'points' ? __('members.points_unit') : __('members.stamps_unit') }}
                 </div>
             </div>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -694,32 +692,32 @@
                                     <div class="d-flex flex-wrap gap-3" style="font-size:.8rem;">
                                         @if ($tx->loyaltyProgram)
                                             <div>
-                                                <div class="text-muted" style="font-size:.7rem;">Campaign</div>
+                                                <div class="text-muted" style="font-size:.7rem;">{{ __('members.campaign_label') }}</div>
                                                 <div>{{ $tx->loyaltyProgram->name }}</div>
                                             </div>
                                         @endif
                                         @if ($tx->invoice_number)
                                             <div>
-                                                <div class="text-muted" style="font-size:.7rem;">Invoice</div>
+                                                <div class="text-muted" style="font-size:.7rem;">{{ __('members.invoice_label') }}</div>
                                                 <div>{{ $tx->invoice_number }}</div>
                                             </div>
                                         @endif
                                         @if ($tx->purchase_amount !== null)
                                             <div>
-                                                <div class="text-muted" style="font-size:.7rem;">Purchase</div>
+                                                <div class="text-muted" style="font-size:.7rem;">{{ __('members.purchase_label') }}</div>
                                                 <div>{{ number_format((float) $tx->purchase_amount, 2) }} {{ $member->merchant->currency ?? 'THB' }}</div>
                                             </div>
                                         @endif
                                         <div>
                                             <div class="text-muted" style="font-size:.7rem;">
-                                                {{ $tx->points >= 0 ? 'Earned' : 'Deducted' }}
+                                                {{ $tx->points >= 0 ? __('members.earned_label') : __('members.deducted_label') }}
                                             </div>
                                             <div class="{{ $m['text'] }} fw-medium">
                                                 {{ $sign }}{{ number_format($pts) }} {{ $pts === 1 ? $unit : $unit . 's' }}
                                             </div>
                                         </div>
                                         <div>
-                                            <div class="text-muted" style="font-size:.7rem;">Balance</div>
+                                            <div class="text-muted" style="font-size:.7rem;">{{ __('members.balance_label') }}</div>
                                             <div>{{ number_format($tx->balance_before) }} → {{ number_format($tx->balance_after) }}</div>
                                         </div>
                                     </div>
@@ -830,7 +828,7 @@
                                         @csrf
                                         <input type="hidden" name="reward_id" value="{{ $reward->id }}">
                                         <button type="submit" class="btn btn-primary btn-sm">
-                                            <i class="bi bi-check-lg me-1"></i>Redeem
+                                            <i class="bi bi-check-lg me-1"></i>{{ __('members.redeem_btn') }}
                                         </button>
                                     </form>
                                 </div>

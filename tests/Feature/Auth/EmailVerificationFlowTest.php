@@ -32,7 +32,7 @@ class EmailVerificationFlowTest extends TestCase
         $response = $this->actingAs($user)->get('/verify-email');
 
         $response->assertOk();
-        $response->assertSee('Verify your email');
+        $response->assertSee(__('auth.verify_email_heading'));
     }
 
     // ── Verification ──────────────────────────────────────────────────────────

@@ -26,6 +26,9 @@ return [
     'confirm_password_heading' => 'Confirm Password',
     'confirm_password_body'  => 'This is a secure area of the application. Please confirm your password before continuing.',
 
+    'verify_email_thanks'    => 'Thanks for signing up! Please verify your email address by clicking the link we sent you. If you didn\'t receive it, we can send another.',
+    'verification_sent'      => 'A new verification link has been sent to your email address.',
+
     // Trial messaging on register page
     'trial_badge'   => '30 Days Free',
     'trial_heading' => 'Start your 30-day Professional trial',

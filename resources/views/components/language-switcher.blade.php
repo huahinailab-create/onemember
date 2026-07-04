@@ -1,8 +1,8 @@
 @props(['dropup' => false])
 @php
-    $current = app()->getLocale();
-    $labels  = ['en' => 'EN', 'th' => 'ไทย'];
-    $other   = $current === 'en' ? 'th' : 'en';
+    $current    = app()->getLocale();
+    $labels     = ['en' => 'English', 'th' => 'ภาษาไทย'];
+    $currentUrl = url()->current();
 @endphp
 
 <div class="dropdown">
@@ -11,13 +11,14 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
             style="font-size:0.8rem;padding:0.25rem 0.625rem;border-color:rgba(26,46,90,0.2);color:#1A2E5A;">
-        <i class="bi bi-translate me-1"></i>{{ $labels[$current] ?? 'EN' }}
+        <i class="bi bi-globe2 me-1"></i>{{ $labels[$current] ?? 'EN' }}
     </button>
-    <ul class="dropdown-menu dropdown-menu-end {{ $dropup ? 'dropup' : '' }}" style="min-width:7rem;">
+    <ul class="dropdown-menu dropdown-menu-end {{ $dropup ? 'dropup' : '' }}" style="min-width:8rem;">
         <li>
             <form method="POST" action="{{ route('locale.switch') }}">
                 @csrf
                 <input type="hidden" name="locale" value="en">
+                <input type="hidden" name="return_url" value="{{ $currentUrl }}">
                 <button type="submit"
                         class="dropdown-item d-flex align-items-center gap-2 {{ $current === 'en' ? 'fw-semibold' : '' }}"
                         style="font-size:0.875rem;">
@@ -30,6 +31,7 @@
             <form method="POST" action="{{ route('locale.switch') }}">
                 @csrf
                 <input type="hidden" name="locale" value="th">
+                <input type="hidden" name="return_url" value="{{ $currentUrl }}">
                 <button type="submit"
                         class="dropdown-item d-flex align-items-center gap-2 {{ $current === 'th' ? 'fw-semibold' : '' }}"
                         style="font-size:0.875rem;">

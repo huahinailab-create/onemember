@@ -15,23 +15,35 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | RELEASE-1B |
-| **Title** | Corporate Website & Corporate Identity |
+| **Sprint ID** | RELEASE-1C |
+| **Title** | Production Multilingual Architecture (Thai First) |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Sprint Type** | Corporate Website + Identity |
+| **Sprint Type** | i18n / Localization |
 | **Classification** | Type B — CTO Review Required |
-| **Sprint File** | [Sprints/RELEASE-1B-Corporate-Website.md](./Sprints/RELEASE-1B-Corporate-Website.md) |
+| **Sprint File** | [Sprints/RELEASE-1C-Multilingual.md](./Sprints/RELEASE-1C-Multilingual.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Sonnet 4.6 |
 | **Reviewer** | ChatGPT CTO |
-| **Started** | 2026-07-03 |
-| **Target Completion** | 2026-07-03 |
-| **Actual Completion** | 2026-07-03 |
-| **Final Commit** | `568ff7a` |
+| **Started** | 2026-07-04 |
+| **Target Completion** | 2026-07-04 |
+| **Actual Completion** | 2026-07-04 |
+| **Final Commit** | TBD |
 
 ### Business Objective
 
-Establish OneMember's corporate presence at `www.onemember.co`, standardise corporate email identity to `@onemember.co`, and align all application references to the `.co` domain.
+Establish Thai as the production default language. Language switcher on every page. Current page reloads immediately after language change. Remove all hardcoded user-facing strings from app views. Decision recorded in DECISION-052.
+
+---
+
+## Previous Sprint (RELEASE-1B)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | RELEASE-1B |
+| **Title** | Corporate Website & Corporate Identity |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint File** | [Sprints/RELEASE-1B-Corporate-Website.md](./Sprints/RELEASE-1B-Corporate-Website.md) |
+| **Final Commit** | `568ff7a` |
 
 ---
 
@@ -62,6 +74,7 @@ Establish OneMember's corporate presence at `www.onemember.co`, standardise corp
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
+| RELEASE-1C | Production Multilingual Architecture (Thai First) | ⏳ Awaiting CTO Review | TBD |
 | RELEASE-1B | Corporate Website & Corporate Identity | ⏳ Awaiting CTO Review | `568ff7a` |
 | RELEASE-1A | OneMember Product Identity | ✅ Deployed | `364b29e` |
 | MVP-005  | Pilot Merchant Readiness | ✅ Complete (Type A) | `74c6c94` |

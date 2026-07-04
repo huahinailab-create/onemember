@@ -10,9 +10,9 @@
     <div class="alert alert-warning d-flex align-items-start gap-2 mb-3" role="alert">
         <i class="bi bi-exclamation-triangle-fill flex-shrink-0 mt-1"></i>
         <div>
-            <span class="fw-medium">You have used {{ $percentage }}% of your {{ $feature }} limit.</span>
+            <span class="fw-medium">{{ __('subscription.warning_pct_msg', ['pct' => $percentage, 'feature' => $feature]) }}</span>
             @if ($limit !== null)
-                <span class="text-muted small d-block mt-1">{{ number_format($used) }} of {{ number_format($limit) }} used.</span>
+                <span class="text-muted small d-block mt-1">{{ __('subscription.warning_count_msg', ['used' => number_format($used), 'limit' => number_format($limit)]) }}</span>
             @endif
         </div>
     </div>
@@ -20,10 +20,10 @@
     <div class="alert alert-info d-flex align-items-start gap-2 mb-3" role="alert">
         <i class="bi bi-info-circle-fill flex-shrink-0 mt-1"></i>
         <div>
-            <div class="fw-medium">You've reached your current plan limit.</div>
-            <p class="mb-2 mt-1 small">Upgrade your subscription to continue growing your business.</p>
+            <div class="fw-medium">{{ __('subscription.plan_limit_reached') }}</div>
+            <p class="mb-2 mt-1 small">{{ __('subscription.upgrade_to_grow') }}</p>
             <button type="button" class="btn btn-sm btn-outline-primary" disabled>
-                <i class="bi bi-arrow-up-circle me-1"></i>Upgrade Plan
+                <i class="bi bi-arrow-up-circle me-1"></i>{{ __('subscription.upgrade_plan') }}
             </button>
         </div>
     </div>

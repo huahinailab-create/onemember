@@ -98,6 +98,24 @@ return [
     'archive_confirm'     => 'คุณแน่ใจหรือไม่ว่าต้องการเก็บถาวร :name?',
     'archive_note'        => 'สมาชิกนี้จะถูกลบออกจากรายการที่ใช้งาน การเก็บถาวรไม่ได้ลบข้อมูลใดๆ',
 
+    // Activity / transaction labels
+    'pts'                       => 'แต้ม',
+    'reward_redeemed_success'   => 'แลกรางวัลสำเร็จ',
+    'purchase_recorded_success' => 'บันทึกการซื้อสำเร็จ',
+    'current_balance'           => 'ยอดคงเหลือ',
+    'reward_label'              => 'รางวัล',
+    'stamps_used'               => 'แสตมป์ที่ใช้',
+    'points_used'               => 'คะแนนที่ใช้',
+    'stamps_unit'               => 'แสตมป์',
+    'points_unit'               => 'คะแนน',
+    'purchase_label'            => 'ยอดซื้อ',
+    'campaign_label'            => 'แคมเปญ',
+    'earned_label'              => 'ได้รับ',
+    'deducted_label'            => 'หัก',
+    'balance_label'             => 'ยอดคงเหลือ',
+    'invoice_label'             => 'ใบแจ้งหนี้',
+    'redeem_btn'                => 'แลก',
+
     // Portal controls
     'portal_card_title'         => 'พอร์ทัลสมาชิก',
     'portal_status_enabled'     => 'พอร์ทัลเปิดใช้งาน',

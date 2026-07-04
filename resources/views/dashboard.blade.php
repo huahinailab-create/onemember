@@ -108,11 +108,11 @@
     @if ($subscriptionUsage)
     <div class="card mb-4">
         <div class="card-header d-flex align-items-center justify-content-between">
-            <span class="fw-semibold">Subscription</span>
+            <span class="fw-semibold">{{ __('dashboard.subscription') }}</span>
             <div class="d-flex align-items-center gap-2">
                 <span class="badge bg-primary">{{ $subscriptionUsage['effective_plan_name'] }}</span>
                 @if ($subscriptionUsage['is_on_trial'])
-                    <span class="badge bg-info text-dark">Trial</span>
+                    <span class="badge bg-info text-dark">{{ __('dashboard.trial') }}</span>
                 @endif
             </div>
         </div>
@@ -124,29 +124,29 @@
                     @if ($subscriptionUsage['is_on_trial'])
                         <div class="d-flex align-items-center gap-2 mb-1">
                             <i class="bi bi-clock text-info"></i>
-                            <span class="fw-medium">{{ $subscriptionUsage['trial_days_remaining'] }} {{ Str::plural('day', $subscriptionUsage['trial_days_remaining']) }} remaining</span>
+                            <span class="fw-medium">{{ trans_choice('dashboard.days_remaining', $subscriptionUsage['trial_days_remaining'], ['days' => $subscriptionUsage['trial_days_remaining']]) }}</span>
                         </div>
                         <p class="text-muted small mb-3">
-                            You're on the Professional trial. All features are unlocked.
+                            {{ __('dashboard.trial_all_features') }}
                         </p>
                     @else
                         <p class="text-muted small mb-3">
-                            Plan: <strong>{{ $subscriptionUsage['effective_plan_name'] }}</strong><br>
-                            Status: <span class="text-capitalize">{{ $subscriptionUsage['subscription_status'] }}</span>
+                            {{ __('dashboard.plan_label') }} <strong>{{ $subscriptionUsage['effective_plan_name'] }}</strong><br>
+                            {{ __('dashboard.status_label') }} <span class="text-capitalize">{{ $subscriptionUsage['subscription_status'] }}</span>
                         </p>
                     @endif
                     <button class="btn btn-sm btn-outline-primary" disabled>
-                        <i class="bi bi-arrow-up-circle me-1"></i>Upgrade Plan
+                        <i class="bi bi-arrow-up-circle me-1"></i>{{ __('dashboard.upgrade_plan') }}
                     </button>
                 </div>
 
                 {{-- Members Usage --}}
                 <div class="col-12 col-md-4">
                     <div class="d-flex justify-content-between align-items-baseline mb-1">
-                        <span class="small fw-medium">Members</span>
+                        <span class="small fw-medium">{{ __('dashboard.members_label') }}</span>
                         <span class="small text-muted">
                             @if ($subscriptionUsage['members']['unlimited'])
-                                {{ number_format($subscriptionUsage['members']['used']) }} / Unlimited
+                                {{ number_format($subscriptionUsage['members']['used']) }} / {{ __('dashboard.unlimited') }}
                             @else
                                 {{ number_format($subscriptionUsage['members']['used']) }} / {{ number_format($subscriptionUsage['members']['limit']) }}
                             @endif
@@ -163,25 +163,25 @@
                                  style="width:{{ $mPct }}%;" aria-valuenow="{{ $mPct }}" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         @if ($mLevel === 'warning')
-                            <div class="text-warning small mt-1">{{ $subscriptionUsage['members']['percentage'] }}% used</div>
+                            <div class="text-warning small mt-1">{{ __('dashboard.pct_used', ['pct' => $subscriptionUsage['members']['percentage']]) }}</div>
                         @elseif ($mLevel === 'limit_reached')
-                            <div class="text-danger small mt-1">Limit reached</div>
+                            <div class="text-danger small mt-1">{{ __('dashboard.limit_reached') }}</div>
                         @endif
                     @else
                         <div class="progress" style="height:6px;">
                             <div class="progress-bar bg-success" role="progressbar" style="width:100%;"></div>
                         </div>
-                        <div class="text-muted small mt-1">Unlimited</div>
+                        <div class="text-muted small mt-1">{{ __('dashboard.unlimited') }}</div>
                     @endif
                 </div>
 
                 {{-- Campaigns Usage --}}
                 <div class="col-12 col-md-4">
                     <div class="d-flex justify-content-between align-items-baseline mb-1">
-                        <span class="small fw-medium">Campaigns</span>
+                        <span class="small fw-medium">{{ __('dashboard.campaigns_label') }}</span>
                         <span class="small text-muted">
                             @if ($subscriptionUsage['campaigns']['unlimited'])
-                                {{ number_format($subscriptionUsage['campaigns']['used']) }} / Unlimited
+                                {{ number_format($subscriptionUsage['campaigns']['used']) }} / {{ __('dashboard.unlimited') }}
                             @else
                                 {{ number_format($subscriptionUsage['campaigns']['used']) }} / {{ number_format($subscriptionUsage['campaigns']['limit']) }}
                             @endif
@@ -198,15 +198,15 @@
                                  style="width:{{ $cPct }}%;" aria-valuenow="{{ $cPct }}" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         @if ($cLevel === 'warning')
-                            <div class="text-warning small mt-1">{{ $subscriptionUsage['campaigns']['percentage'] }}% used</div>
+                            <div class="text-warning small mt-1">{{ __('dashboard.pct_used', ['pct' => $subscriptionUsage['campaigns']['percentage']]) }}</div>
                         @elseif ($cLevel === 'limit_reached')
-                            <div class="text-danger small mt-1">Limit reached</div>
+                            <div class="text-danger small mt-1">{{ __('dashboard.limit_reached') }}</div>
                         @endif
                     @else
                         <div class="progress" style="height:6px;">
                             <div class="progress-bar bg-success" role="progressbar" style="width:100%;"></div>
                         </div>
-                        <div class="text-muted small mt-1">Unlimited</div>
+                        <div class="text-muted small mt-1">{{ __('dashboard.unlimited') }}</div>
                     @endif
                 </div>
 
@@ -361,12 +361,12 @@
                                 <div class="flex-grow-1 overflow-hidden">
                                     <div class="fw-medium text-truncate">{{ $member->name }}</div>
                                     <div class="text-muted small">
-                                        Lifetime: {{ number_format($member->lifetime_points) }} pts
+                                        {{ __('dashboard.lifetime_pts', ['pts' => number_format($member->lifetime_points)]) }}
                                     </div>
                                 </div>
                                 <div class="text-end flex-shrink-0">
                                     <div class="fw-bold text-primary">{{ number_format($member->total_points) }}</div>
-                                    <div class="text-muted" style="font-size:0.7rem;">pts</div>
+                                    <div class="text-muted" style="font-size:0.7rem;">{{ __('members.pts') }}</div>
                                 </div>
                             </a>
                         @endforeach

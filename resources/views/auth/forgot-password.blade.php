@@ -1,8 +1,8 @@
 <x-guest-layout>
 
-    <h5 class="fw-bold mb-2">Forgot your password?</h5>
+    <h5 class="fw-bold mb-2">{{ __('auth.forgot_password_heading') }}</h5>
     <p class="text-muted small mb-4">
-        No problem. Enter your email address and we'll send you a password reset link.
+        {{ __('auth.forgot_description') }}
     </p>
 
     @if (session('status'))
@@ -13,7 +13,7 @@
         @csrf
 
         <div class="mb-4">
-            <label for="email" class="form-label">Email address</label>
+            <label for="email" class="form-label">{{ __('auth.email') }}</label>
             <input id="email" type="email" name="email"
                    class="form-control @error('email') is-invalid @enderror"
                    value="{{ old('email') }}" required autofocus>
@@ -23,11 +23,11 @@
         </div>
 
         <div class="d-grid">
-            <button type="submit" class="btn btn-primary">Send Reset Link</button>
+            <button type="submit" class="btn btn-primary">{{ __('auth.email_reset_link') }}</button>
         </div>
 
         <p class="text-center text-muted small mt-3 mb-0">
-            <a href="{{ route('login') }}" class="text-decoration-none">Back to sign in</a>
+            <a href="{{ route('login') }}" class="text-decoration-none">{{ __('auth.sign_in_link') }}</a>
         </p>
     </form>
 

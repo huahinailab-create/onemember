@@ -912,4 +912,25 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-052] RELEASE-1C — Production Multilingual Architecture (Thai First)
+- **Date:** 2026-07-04
+- **Requested by:** CTO (Executive Order)
+- **Status:** Approved
+- **Decision:**
+  1. **Thai is the default language.** `APP_LOCALE=th` in production. All user-facing strings default to Thai.
+  2. **Two supported languages for V1.0:** Thai (`th`) and English (`en`). Architecture must support adding future languages (`zh`, `ja`, `ko`, `vi`, etc.) by creating `lang/xx/` only — no Blade or controller changes required.
+  3. **Language switcher (`<x-language-switcher />`) is required on every page** — corporate, guest, wizard, and app layouts. Position: top-right. Display: globe icon + current language label + dropdown.
+  4. **Locale switch reloads the current page immediately** — `LocaleController::switch()` persists locale to session (guests) and to `merchant.settings['locale']` (authenticated), then redirects back to the referring URL so the current page reloads in the new language.
+  5. **Locale priority chain:**
+     - Authenticated: merchant settings → session → `APP_LOCALE`
+     - Guests: session → `APP_LOCALE`
+  6. **No user-facing hardcoded strings in Blade templates.** All text must use `__('file.key')`. Blade files must never contain raw English or Thai strings as visible content.
+  7. **Validation messages follow selected language.** Raw attribute names must never appear in validation errors. The `attributes` array in `lang/*/validation.php` covers all form fields.
+  8. **Translation file structure:** `lang/{en,th}/{auth, buttons, campaigns, common, dashboard, members, navigation, onboarding, rewards, settings, subscription, validation}.php`. New language files added by creating `lang/xx/` — no code changes.
+  9. **Onboarding locale safety:** `StoreOnboardingBusinessSettingsRequest` must never fail due to a missing locale field. `prepareForValidation()` defaults locale to `app()->getLocale() ?: 'th'`.
+- **Reason:** Thailand launch requires full Thai-default operation with professional English support. RELEASE-1C is the permanent i18n foundation. All future features build on this architecture.
+- **Impact:** `LocaleController`, `SetLocale` middleware, `<x-language-switcher />` component, all 4 layouts, all auth/onboarding/dashboard/members/campaigns/rewards/settings Blade views, `lang/en/*`, `lang/th/*`, `StoreOnboardingBusinessSettingsRequest`.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

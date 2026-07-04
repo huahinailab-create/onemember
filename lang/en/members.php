@@ -98,6 +98,24 @@ return [
     'archive_confirm'     => 'Are you sure you want to archive :name?',
     'archive_note'        => 'This member will be removed from your active list. Archiving does not delete any data.',
 
+    // Activity / transaction labels
+    'pts'                       => 'pts',
+    'reward_redeemed_success'   => 'Reward Redeemed Successfully',
+    'purchase_recorded_success' => 'Purchase Recorded Successfully',
+    'current_balance'           => 'Current Balance',
+    'reward_label'              => 'Reward',
+    'stamps_used'               => 'Stamps Used',
+    'points_used'               => 'Points Used',
+    'stamps_unit'               => 'Stamp|Stamps',
+    'points_unit'               => 'Point|Points',
+    'purchase_label'            => 'Purchase',
+    'campaign_label'            => 'Campaign',
+    'earned_label'              => 'Earned',
+    'deducted_label'            => 'Deducted',
+    'balance_label'             => 'Balance',
+    'invoice_label'             => 'Invoice',
+    'redeem_btn'                => 'Redeem',
+
     // Portal controls
     'portal_card_title'         => 'Member Portal',
     'portal_status_enabled'     => 'Portal enabled',

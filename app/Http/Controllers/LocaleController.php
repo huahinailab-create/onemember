@@ -14,13 +14,11 @@ class LocaleController extends Controller
         $locale = $request->input('locale');
 
         if (! in_array($locale, self::SUPPORTED, true)) {
-            return back();
+            return redirect()->back(fallback: url('/'));
         }
 
-        // Persist in session for all users (guests + authenticated)
         session(['locale' => $locale]);
 
-        // Persist in merchant settings when logged in
         $merchant = $request->user()?->merchant;
         if ($merchant) {
             $settings           = $merchant->settings ?? [];
@@ -28,6 +26,12 @@ class LocaleController extends Controller
             $merchant->update(['settings' => $settings]);
         }
 
-        return back();
+        // Redirect to the explicit return URL if provided, otherwise back to current page
+        $returnUrl = $request->input('return_url');
+        if ($returnUrl && str_starts_with($returnUrl, url('/'))) {
+            return redirect()->to($returnUrl);
+        }
+
+        return redirect()->back(fallback: url('/'));
     }
 }
