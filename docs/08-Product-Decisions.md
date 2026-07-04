@@ -950,4 +950,26 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+### [DECISION-065] Domain-Aware Routing — Single App, Two Domains
+- **Date:** 2026-07-04
+- **Requested by:** CTO
+- **Status:** Approved
+- **Decision:**
+  1. **One Laravel application, one Forge site** serves both `onemember.co` (corporate) and `app.onemember.co` (merchant application). No second app, no second Forge site, no monorepo split.
+  2. **Three domain groups in `routes/web.php`:**
+     - `www.onemember.co` → 301 redirect to `onemember.co` (canonical)
+     - `onemember.co` → corporate pages only; `/login`, `/register` redirect 301 to `app.onemember.co`; `/dashboard`, `/onboarding` redirect 302 to `app.onemember.co`
+     - `app.onemember.co` → all merchant application routes + Breeze auth routes
+  3. **Domain-agnostic routes** (`/up` health check, `/locale` language switcher) registered before domain groups so they respond on any domain.
+  4. **Config file `config/domains.php`** reads three env vars: `CORPORATE_DOMAIN`, `CORPORATE_WWW_DOMAIN`, `APP_DOMAIN`. Defaults are production values. Never hardcoded.
+  5. **Session cookie uses `SESSION_DOMAIN=.onemember.co`** (dot prefix) to share sessions across all subdomains.
+  6. **Corporate CTAs use absolute URLs** via `$appUrl` View Composer variable (`'https://' . config('domains.app')`). No `route('register')` or `route('login')` calls from corporate views.
+  7. **Language switcher form action is `/locale`** (relative) to avoid cross-domain POST from the corporate domain.
+  8. **Auth routes (`routes/auth.php`) required inside the `app.onemember.co` domain group** so login/register/password-reset pages only exist on the app domain.
+  9. **`phpunit.xml`** sets all three domain env vars for test isolation. `TestCase::setUp()` defaults `HTTP_HOST` to `app.onemember.co` so bare-path test helpers hit the correct domain group.
+- **Reason:** The original routing was path-based with a single domain, creating ambiguity between corporate and merchant application pages. Subdomain separation gives each audience a clean URL namespace, enables proper SEO canonicalization, and prepares for future independent scaling.
+- **Impact:** New: `config/domains.php`, `tests/Feature/DomainRoutingTest.php`. Modified: `routes/web.php` (complete restructure), `app/Providers/AppServiceProvider.php` (View Composer), `resources/views/layouts/corporate.blade.php`, `resources/views/corporate/*.blade.php` (7 files, CTA links), `resources/views/components/language-switcher.blade.php`, `tests/TestCase.php`, `tests/Feature/ExampleTest.php`, `tests/Feature/SecurityHeadersTest.php`, `.env.example`, `phpunit.xml`.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

@@ -133,22 +133,22 @@ class LanguageSwitcherTest extends TestCase
     {
         $response = $this->get(route('login'));
         $response->assertOk();
-        // The switcher renders a form POSTing to /locale
-        $response->assertSee(route('locale.switch'), false);
+        // Switcher uses relative /locale action to avoid cross-domain POST issues
+        $response->assertSee('action="/locale"', false);
     }
 
     public function test_language_switcher_visible_on_register_page(): void
     {
         $response = $this->get(route('register'));
         $response->assertOk();
-        $response->assertSee(route('locale.switch'), false);
+        $response->assertSee('action="/locale"', false);
     }
 
     public function test_language_switcher_visible_on_corporate_home(): void
     {
         $response = $this->get(route('corporate.home'));
         $response->assertOk();
-        $response->assertSee(route('locale.switch'), false);
+        $response->assertSee('action="/locale"', false);
     }
 
     // ── Onboarding business-settings: locale field ───────────────────────────

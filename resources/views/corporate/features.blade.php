@@ -35,7 +35,7 @@
     <div class="container text-center">
         <h2 class="section-heading section-heading-light">{{ __('corporate.features_all_cta') }}</h2>
         <p class="section-sub section-sub-light mx-auto mb-4">{{ __('corporate.features_cta_sub2') }}</p>
-        <a href="{{ route('register') }}" class="btn btn-pink btn-pink-lg">{{ __('corporate.cta_start_trial') }} <i class="bi bi-arrow-right ms-1"></i></a>
+        <a href="{{ $appUrl }}/register" class="btn btn-pink btn-pink-lg">{{ __('corporate.cta_start_trial') }} <i class="bi bi-arrow-right ms-1"></i></a>
     </div>
 </section>
 

@@ -13,44 +13,52 @@ class MerchantAcquisitionTest extends TestCase
     use RefreshDatabase;
 
     // ── AC-1: Landing page ───────────────────────────────
+    // The corporate home is at onemember.co (not app.onemember.co).
+
+    private function corporateHome(): string
+    {
+        return 'http://' . config('domains.corporate') . '/';
+    }
 
     public function test_landing_page_renders_for_guests(): void
     {
-        $response = $this->get(url('/'));
+        $response = $this->get($this->corporateHome());
         $response->assertOk();
     }
 
     public function test_landing_page_shows_brand_logo_text(): void
     {
-        $response = $this->get(url('/'));
+        $response = $this->get($this->corporateHome());
         $response->assertSee('one', false);
         $response->assertSee('member', false);
     }
 
     public function test_landing_page_shows_register_cta_for_guests(): void
     {
-        $response = $this->get(url('/'));
-        $response->assertSee(route('register'), false);
+        $response = $this->get($this->corporateHome());
+        // CTAs link to app.onemember.co/register (absolute, via $appUrl View Composer)
+        $response->assertSee('https://' . config('domains.app') . '/register', false);
     }
 
     public function test_landing_page_shows_dashboard_link_for_authenticated_users(): void
     {
         $user = User::factory()->create();
-        $response = $this->actingAs($user)->get(url('/'));
-        $response->assertSee(route('dashboard'), false);
+        $response = $this->actingAs($user)->get($this->corporateHome());
+        // Nav "Go to Dashboard" links to app.onemember.co/dashboard
+        $response->assertSee('https://' . config('domains.app') . '/dashboard', false);
     }
 
     public function test_landing_page_shows_trial_badge(): void
     {
         App::setLocale('en');
-        $response = $this->get(url('/'));
+        $response = $this->get($this->corporateHome());
         $response->assertSee('30-Day Free Trial', false);
     }
 
     public function test_landing_page_shows_no_credit_card_text(): void
     {
         App::setLocale('en');
-        $response = $this->get(url('/'));
+        $response = $this->get($this->corporateHome());
         $response->assertSee('No credit card required', false);
     }
 

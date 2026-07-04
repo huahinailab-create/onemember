@@ -77,9 +77,9 @@
             <div class="d-flex gap-2 align-items-center">
                 <x-language-switcher />
                 @auth
-                    <a href="{{ route('dashboard') }}" class="btn btn-sm btn-pink">{{ __('corporate.nav_go_dashboard') }} <i class="bi bi-arrow-right ms-1"></i></a>
+                    <a href="{{ $appUrl }}/dashboard" class="btn btn-sm btn-pink">{{ __('corporate.nav_go_dashboard') }} <i class="bi bi-arrow-right ms-1"></i></a>
                 @else
-                    <a href="{{ route('login') }}" class="btn btn-sm btn-outline-navy">{{ __('corporate.nav_sign_in') }}</a>
+                    <a href="{{ $appUrl }}/login" class="btn btn-sm btn-outline-navy">{{ __('corporate.nav_sign_in') }}</a>
                     <a href="{{ route('corporate.demo') }}" class="btn btn-sm btn-pink">{{ __('corporate.nav_book_demo') }}</a>
                 @endauth
             </div>
@@ -146,7 +146,7 @@
                 <p class="small text-muted-light mb-0">© {{ date('Y') }} OneMember Co., Ltd. {{ __('corporate.footer_rights') }} 🇹🇭</p>
             </div>
             <div class="col-md-6 text-md-end">
-                <a href="{{ route('login') }}" class="btn btn-sm btn-outline-light-corp">{{ __('corporate.nav_sign_in') }}</a>
+                <a href="{{ $appUrl }}/login" class="btn btn-sm btn-outline-light-corp">{{ __('corporate.nav_sign_in') }}</a>
             </div>
         </div>
     </div>

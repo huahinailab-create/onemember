@@ -15,7 +15,7 @@
     </button>
     <ul class="dropdown-menu dropdown-menu-end {{ $dropup ? 'dropup' : '' }}" style="min-width:8rem;">
         <li>
-            <form method="POST" action="{{ route('locale.switch') }}">
+            <form method="POST" action="/locale">
                 @csrf
                 <input type="hidden" name="locale" value="en">
                 <input type="hidden" name="return_url" value="{{ $currentUrl }}">
@@ -28,7 +28,7 @@
             </form>
         </li>
         <li>
-            <form method="POST" action="{{ route('locale.switch') }}">
+            <form method="POST" action="/locale">
                 @csrf
                 <input type="hidden" name="locale" value="th">
                 <input type="hidden" name="return_url" value="{{ $currentUrl }}">

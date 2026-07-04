@@ -32,7 +32,7 @@
                     @endforeach
                 </ul>
                 <div class="mt-4">
-                    <a href="{{ route('register') }}" class="btn btn-pink">{{ __('corporate.cta_start_trial') }}</a>
+                    <a href="{{ $appUrl }}/register" class="btn btn-pink">{{ __('corporate.cta_start_trial') }}</a>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -54,7 +54,7 @@
         <p class="section-sub section-sub-light mx-auto mb-4">{{ __('corporate.solutions_cta_sub') }}</p>
         <div class="d-flex flex-wrap justify-content-center gap-3">
             <a href="{{ route('corporate.demo') }}" class="btn btn-pink btn-pink-lg">{{ __('corporate.solutions_cta_demo_btn') }}</a>
-            <a href="{{ route('register') }}" class="btn btn-outline-navy btn-outline-navy-lg" style="border-color:rgba(255,255,255,0.35);color:#fff;">{{ __('corporate.cta_start_trial') }}</a>
+            <a href="{{ $appUrl }}/register" class="btn btn-outline-navy btn-outline-navy-lg" style="border-color:rgba(255,255,255,0.35);color:#fff;">{{ __('corporate.cta_start_trial') }}</a>
         </div>
     </div>
 </section>

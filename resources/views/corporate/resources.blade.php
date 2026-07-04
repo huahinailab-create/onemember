@@ -31,7 +31,7 @@
         </div>
 
         <div class="text-center mt-5">
-            <p class="text-muted">{{ __('corporate.resources_locked') }} <a href="{{ route('register') }}" style="color:#1A2E5A;font-weight:600;">{{ __('corporate.resources_locked_link') }}</a> {{ __('corporate.resources_locked_suffix') }}</p>
+            <p class="text-muted">{{ __('corporate.resources_locked') }} <a href="{{ $appUrl }}/register" style="color:#1A2E5A;font-weight:600;">{{ __('corporate.resources_locked_link') }}</a> {{ __('corporate.resources_locked_suffix') }}</p>
         </div>
     </div>
 </section>

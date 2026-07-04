@@ -18,7 +18,7 @@
                 <h1>{{ __('corporate.home_hero_h1') }} <span class="hero-accent">{{ __('corporate.home_hero_accent') }}</span></h1>
                 <p class="corp-hero-sub">{{ __('corporate.home_hero_sub') }}</p>
                 <div class="d-flex flex-wrap gap-3">
-                    <a href="{{ route('register') }}" class="btn btn-pink btn-pink-lg">{{ __('corporate.cta_start_trial') }} <i class="bi bi-arrow-right ms-1"></i></a>
+                    <a href="{{ $appUrl }}/register" class="btn btn-pink btn-pink-lg">{{ __('corporate.cta_start_trial') }} <i class="bi bi-arrow-right ms-1"></i></a>
                     <a href="{{ route('corporate.demo') }}" class="btn btn-outline-navy btn-outline-navy-lg" style="border-color:rgba(255,255,255,0.4);color:#fff;">{{ __('corporate.nav_book_demo') }}</a>
                 </div>
                 <div class="hero-stats">
@@ -210,7 +210,7 @@
                     <p style="color:rgba(255,255,255,0.82);margin:0;">{{ __('corporate.home_pilot_sub') }}</p>
                 </div>
                 <div class="col-lg-4 text-lg-end">
-                    <a href="{{ route('register') }}" class="btn btn-lg" style="background:#ffffff;color:#FF1585;font-weight:700;border-radius:10px;padding:0.875rem 2rem;">
+                    <a href="{{ $appUrl }}/register" class="btn btn-lg" style="background:#ffffff;color:#FF1585;font-weight:700;border-radius:10px;padding:0.875rem 2rem;">
                         {{ __('corporate.home_pilot_join_btn') }} <i class="bi bi-arrow-right ms-1"></i>
                     </a>
                 </div>
@@ -238,7 +238,7 @@
                         <li><i class="bi bi-check-circle-fill"></i> {{ $f }}</li>
                         @endforeach
                     </ul>
-                    <a href="{{ route('register') }}" class="btn w-100 {{ $p[5] ? 'btn-pink' : 'btn-outline-navy' }}">
+                    <a href="{{ $appUrl }}/register" class="btn w-100 {{ $p[5] ? 'btn-pink' : 'btn-outline-navy' }}">
                         {{ $p[5] ? __('corporate.cta_start_trial') : __('corporate.cta_get_started') }}
                     </a>
                 </div>
@@ -286,7 +286,7 @@
         <h2 class="section-heading section-heading-light">{{ __('corporate.home_cta_h2') }}</h2>
         <p class="section-sub section-sub-light mx-auto mb-4">{{ __('corporate.home_cta_sub') }}</p>
         <div class="d-flex flex-wrap justify-content-center gap-3">
-            <a href="{{ route('register') }}" class="btn btn-pink btn-pink-lg">{{ __('corporate.cta_start_trial') }} <i class="bi bi-arrow-right ms-1"></i></a>
+            <a href="{{ $appUrl }}/register" class="btn btn-pink btn-pink-lg">{{ __('corporate.cta_start_trial') }} <i class="bi bi-arrow-right ms-1"></i></a>
             <a href="{{ route('corporate.contact') }}" class="btn btn-outline-navy btn-outline-navy-lg" style="border-color:rgba(255,255,255,0.35);color:#fff;">{{ __('corporate.home_cta_contact') }}</a>
         </div>
     </div>

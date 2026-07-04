@@ -37,7 +37,7 @@
                         <li class="na"><i class="bi bi-dash"></i> {{ $f }}</li>
                         @endforeach
                     </ul>
-                    <a href="{{ route('register') }}" class="btn btn-outline-navy w-100">{{ __('corporate.pricing_get_started') }}</a>
+                    <a href="{{ $appUrl }}/register" class="btn btn-outline-navy w-100">{{ __('corporate.pricing_get_started') }}</a>
                 </div>
             </div>
 
@@ -71,7 +71,7 @@
                         <li><i class="bi bi-check-circle-fill"></i> {{ $f }}</li>
                         @endforeach
                     </ul>
-                    <a href="{{ route('register') }}" class="btn btn-pink w-100">{{ __('corporate.cta_start_trial') }}</a>
+                    <a href="{{ $appUrl }}/register" class="btn btn-pink w-100">{{ __('corporate.cta_start_trial') }}</a>
                 </div>
             </div>
 
@@ -123,7 +123,7 @@
     <div class="container text-center">
         <h2 class="section-heading section-heading-light">{{ __('corporate.pricing_trial_cta_h2') }}</h2>
         <p class="section-sub section-sub-light mx-auto mb-4">{{ __('corporate.pricing_trial_cta_sub') }}</p>
-        <a href="{{ route('register') }}" class="btn btn-pink btn-pink-lg">{{ __('corporate.pricing_trial_cta_btn') }} <i class="bi bi-arrow-right ms-1"></i></a>
+        <a href="{{ $appUrl }}/register" class="btn btn-pink btn-pink-lg">{{ __('corporate.pricing_trial_cta_btn') }} <i class="bi bi-arrow-right ms-1"></i></a>
     </div>
 </section>
 

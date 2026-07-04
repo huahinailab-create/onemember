@@ -21,7 +21,7 @@ class SecurityHeadersTest extends TestCase
 
     public function test_security_headers_present_on_guest_page(): void
     {
-        $response = $this->get('/');
+        $response = $this->get('http://onemember.co/');
 
         $this->assertSecurityHeaders($response);
     }
@@ -37,7 +37,7 @@ class SecurityHeadersTest extends TestCase
 
     public function test_csp_allows_self_and_bunny_fonts(): void
     {
-        $response = $this->get('/');
+        $response = $this->get('http://onemember.co/');
 
         $csp = $response->headers->get('Content-Security-Policy');
 
@@ -50,7 +50,7 @@ class SecurityHeadersTest extends TestCase
 
     public function test_hsts_not_sent_over_http(): void
     {
-        $response = $this->get('/');
+        $response = $this->get('http://onemember.co/');
 
         $response->assertHeaderMissing('Strict-Transport-Security');
     }

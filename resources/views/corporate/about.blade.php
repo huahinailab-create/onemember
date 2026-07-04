@@ -82,7 +82,7 @@
         <h2 class="section-heading">{{ __('corporate.about_cta_h2') }}</h2>
         <p class="section-sub mx-auto mb-4">{{ __('corporate.about_cta_sub') }}</p>
         <div class="d-flex flex-wrap justify-content-center gap-3">
-            <a href="{{ route('register') }}" class="btn btn-pink btn-pink-lg">{{ __('corporate.cta_start_trial') }}</a>
+            <a href="{{ $appUrl }}/register" class="btn btn-pink btn-pink-lg">{{ __('corporate.cta_start_trial') }}</a>
             <a href="{{ route('corporate.careers') }}" class="btn btn-outline-navy btn-outline-navy-lg">{{ __('corporate.cta_view_careers') }}</a>
             <a href="{{ route('corporate.contact') }}" class="btn btn-outline-navy btn-outline-navy-lg">{{ __('corporate.cta_contact_us') }}</a>
         </div>
