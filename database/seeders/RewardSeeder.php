@@ -17,7 +17,7 @@ class RewardSeeder extends Seeder
             $rewards = [
                 [
                     'name'            => '10% Discount Voucher',
-                    'type'            => RewardType::Discount,
+                    'type'            => RewardType::DiscountPercentage,
                     'points_required' => 200,
                     'value'           => 10.00,
                     'description'     => 'Get 10% off your next purchase.',
@@ -31,7 +31,7 @@ class RewardSeeder extends Seeder
                 ],
                 [
                     'name'            => 'Gift Voucher 200 THB',
-                    'type'            => RewardType::Gift,
+                    'type'            => RewardType::Voucher,
                     'points_required' => 1000,
                     'value'           => 200.00,
                     'description'     => '200 THB gift voucher.',

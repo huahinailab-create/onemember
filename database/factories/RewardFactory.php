@@ -35,7 +35,7 @@ class RewardFactory extends Factory
 
     public function discount(): static
     {
-        return $this->state(['type' => RewardType::Discount]);
+        return $this->state(['type' => RewardType::DiscountPercentage]);
     }
 
     public function freeItem(): static
