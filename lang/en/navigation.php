@@ -14,4 +14,5 @@ return [
     'log_out'      => 'Log Out',
     'send_feedback' => 'Send Feedback',
     'powered_by'    => 'Powered by',
+    'dev_tools'     => 'Dev Tools',
 ];

@@ -69,28 +69,28 @@
         <div class="col-lg-5">
             <div class="card shadow-sm border-info-subtle">
                 <div class="card-body p-4">
-                    <h6 class="fw-semibold mb-3"><i class="bi bi-info-circle text-info me-1"></i>CSV Format Guide</h6>
-                    <p class="small text-muted mb-2">Your CSV should include these columns:</p>
+                    <h6 class="fw-semibold mb-3"><i class="bi bi-info-circle text-info me-1"></i>{{ __('data.import_csv_format_guide') }}</h6>
+                    <p class="small text-muted mb-2">{{ __('data.import_csv_columns_hint') }}</p>
                     <table class="table table-sm small">
                         <thead class="table-light">
                             <tr>
-                                <th>Column</th>
-                                <th>Required</th>
+                                <th>{{ __('data.import_csv_col_column') }}</th>
+                                <th>{{ __('data.import_csv_col_req_header') }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>First Name</td><td><span class="badge bg-danger">Required</span></td></tr>
-                            <tr><td>Last Name</td><td><span class="badge bg-secondary">Optional</span></td></tr>
-                            <tr><td>Phone</td><td><span class="badge bg-danger">Required</span></td></tr>
-                            <tr><td>Email</td><td><span class="badge bg-secondary">Optional</span></td></tr>
-                            <tr><td>Date of Birth</td><td><span class="badge bg-secondary">Optional</span></td></tr>
-                            <tr><td>Notes</td><td><span class="badge bg-secondary">Optional</span></td></tr>
-                            <tr><td>Nickname</td><td><span class="badge bg-secondary">Optional</span></td></tr>
+                            <tr><td>{{ __('data.import_csv_col_first_name') }}</td><td><span class="badge bg-danger">{{ __('data.import_csv_badge_required') }}</span></td></tr>
+                            <tr><td>{{ __('data.import_csv_col_last_name') }}</td><td><span class="badge bg-secondary">{{ __('data.import_csv_badge_optional') }}</span></td></tr>
+                            <tr><td>{{ __('data.import_csv_col_phone') }}</td><td><span class="badge bg-danger">{{ __('data.import_csv_badge_required') }}</span></td></tr>
+                            <tr><td>{{ __('data.import_csv_col_email') }}</td><td><span class="badge bg-secondary">{{ __('data.import_csv_badge_optional') }}</span></td></tr>
+                            <tr><td>{{ __('data.import_csv_col_dob') }}</td><td><span class="badge bg-secondary">{{ __('data.import_csv_badge_optional') }}</span></td></tr>
+                            <tr><td>{{ __('data.import_csv_col_notes') }}</td><td><span class="badge bg-secondary">{{ __('data.import_csv_badge_optional') }}</span></td></tr>
+                            <tr><td>{{ __('data.import_csv_col_nickname') }}</td><td><span class="badge bg-secondary">{{ __('data.import_csv_badge_optional') }}</span></td></tr>
                         </tbody>
                     </table>
                     <p class="small text-muted mb-0">
                         <i class="bi bi-exclamation-triangle text-warning me-1"></i>
-                        Existing members (matched by phone or email) will <strong>not</strong> be overwritten.
+                        {!! __('data.import_csv_no_overwrite') !!}
                     </p>
                 </div>
             </div>

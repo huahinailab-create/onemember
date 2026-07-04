@@ -49,7 +49,7 @@
                                     <td>
                                         <code class="text-dark">{{ $header }}</code>
                                         @if ($detected !== '__skip__')
-                                            <span class="badge bg-info-subtle text-info ms-2 small">auto-detected</span>
+                                            <span class="badge bg-info-subtle text-info ms-2 small">{{ __('data.import_auto_detected') }}</span>
                                         @endif
                                     </td>
                                     <td>

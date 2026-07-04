@@ -175,4 +175,14 @@ If implementation conflicts with any document, Claude must STOP and ask the Prod
 
 ---
 
+## Localisation Standard (RELEASE-1C — enforced from 2026-07-04)
+
+- Every Blade template must use `__()` or `trans()` for all user-facing strings. No hardcoded English or Thai text.
+- Every new feature requires Thai **and** English translations in the appropriate `lang/{en,th}/*.php` file before the PR can merge.
+- Corporate website pages use `lang/{en,th}/corporate.php`. App pages use the relevant domain file (`navigation`, `dashboard`, `members`, `data`, etc.).
+- `trans('file.key')` for array keys iterated with `@foreach`; `__('file.key')` for scalar strings.
+- Language switcher (`<x-language-switcher />`) must appear on every page.
+
+---
+
 *This document becomes mandatory for every future Claude Code session.*

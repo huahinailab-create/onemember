@@ -80,12 +80,12 @@
                 <table class="table table-sm table-hover mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Email</th>
-                            <th>Birthday</th>
-                            <th>Notes</th>
+                            <th>{{ __('data.import_preview_col_hash') }}</th>
+                            <th>{{ __('data.import_preview_col_name') }}</th>
+                            <th>{{ __('data.import_preview_col_phone') }}</th>
+                            <th>{{ __('data.import_preview_col_email') }}</th>
+                            <th>{{ __('data.import_preview_col_birthday') }}</th>
+                            <th>{{ __('data.import_preview_col_notes') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -118,8 +118,8 @@
                 <table class="table table-sm table-hover mb-0">
                     <thead class="table-light sticky-top">
                         <tr>
-                            <th style="width:60px">Row</th>
-                            <th>Issue</th>
+                            <th style="width:60px">{{ __('data.import_errors_col_row') }}</th>
+                            <th>{{ __('data.import_errors_col_issue') }}</th>
                         </tr>
                     </thead>
                     <tbody>

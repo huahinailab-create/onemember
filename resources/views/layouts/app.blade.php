@@ -144,7 +144,7 @@
                 <a href="{{ route('dev.dashboard') }}"
                    class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('dev.*') ? 'active' : '' }}">
                     <i class="bi bi-tools text-warning"></i>
-                    <span class="text-warning">Dev Tools</span>
+                    <span class="text-warning">{{ __('navigation.dev_tools') }}</span>
                 </a>
             </li>
         </ul>
