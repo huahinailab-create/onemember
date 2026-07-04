@@ -27,7 +27,7 @@
 | **Started** | 2026-07-04 |
 | **Target Completion** | 2026-07-04 |
 | **Actual Completion** | 2026-07-04 |
-| **Final Commit** | TBD — pending commit |
+| **Final Commit** | `fa69508` |
 
 ### Business Objective
 
@@ -86,7 +86,7 @@ Complete the public marketing website for `onemember.co`. Adds the PDPA Privacy 
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
-| RELEASE-2A | Corporate Website | ⏳ Awaiting CTO Review | TBD |
+| RELEASE-2A | Corporate Website | ⏳ Awaiting CTO Review | `fa69508` |
 | RELEASE-1C | Production Multilingual Architecture (Thai First) | ⏳ Awaiting CTO Review | `87f2a33` |
 | RELEASE-1B | Corporate Website & Corporate Identity | ⏳ Awaiting CTO Review | `568ff7a` |
 | RELEASE-1A | OneMember Product Identity | ✅ Deployed | `364b29e` |
