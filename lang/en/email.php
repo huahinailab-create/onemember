@@ -92,4 +92,26 @@ return [
     'label_url'          => 'URL',
     'powered_by'         => 'Powered by :app',
 
+
+    // Member notifications (MVP-006)
+    'member_points_earned_subject'  => 'You earned points at :merchant',
+    'member_points_earned_heading'  => 'You Earned Points!',
+    'member_points_earned_body_1'   => 'Hi :name, thank you for your purchase at :merchant.',
+    'member_points_earned_points'   => 'Points earned: +:points',
+    'member_points_earned_balance'  => 'Your new balance: :balance points',
+    'member_points_earned_body_2'   => 'Keep collecting points to unlock rewards. See you again soon!',
+
+    'member_reward_redeemed_subject' => 'Your reward from :merchant',
+    'member_reward_redeemed_heading' => 'Reward Redeemed!',
+    'member_reward_redeemed_body_1'  => 'Hi :name, you redeemed ":reward" at :merchant.',
+    'member_reward_redeemed_points'  => 'Points used: :points',
+    'member_reward_redeemed_balance' => 'Your remaining balance: :balance points',
+    'member_reward_redeemed_body_2'  => 'Enjoy your reward — and thank you for being a loyal member!',
+
+    'member_birthday_subject' => 'Happy Birthday from :merchant!',
+    'member_birthday_heading' => 'Happy Birthday!',
+    'member_birthday_body_1'  => 'Hi :name, everyone at :merchant wishes you a wonderful birthday.',
+    'member_birthday_points'  => 'Birthday bonus: +:points points',
+    'member_birthday_body_2'  => 'Your bonus points have been added to your balance. Treat yourself!',
+
 ];

@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Enums\CampaignStatus;
 use App\Enums\LoyaltyProgramType;
 use App\Enums\TransactionType;
+use App\Events\MemberBirthdayBonusAwarded;
 use App\Models\LoyaltyProgram;
 use App\Models\Member;
 use App\Models\Transaction;
@@ -77,6 +78,8 @@ class ProcessBirthdayRewards extends Command
                     'total_points'     => $balanceAfter,
                     'last_activity_at' => now(),
                 ]);
+
+                MemberBirthdayBonusAwarded::dispatch($member, $bonusPoints);
 
                 $awarded++;
                 $this->line("  Birthday bonus: {$member->name} +{$bonusPoints} pts (merchant {$campaign->merchant_id})");

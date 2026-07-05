@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\MemberStatus;
 use App\Enums\TransactionType;
+use App\Events\MemberPointsEarned;
 use App\Http\Requests\RecordPurchaseRequest;
 use App\Models\LoyaltyProgram;
 use App\Models\Member;
@@ -50,7 +51,7 @@ class PurchaseController extends Controller
         $balanceBefore = $member->total_points;
         $balanceAfter  = $balanceBefore + $earned;
 
-        Transaction::create([
+        $transaction = Transaction::create([
             'merchant_id'        => $merchant->id,
             'member_id'          => $member->id,
             'loyalty_program_id' => $campaign->id,
@@ -75,6 +76,8 @@ class PurchaseController extends Controller
         $member->save();
 
         $analytics->track('purchase_recorded', ['campaign_type' => $campaign->type->value], $request->user()->id, $merchant->id);
+
+        MemberPointsEarned::dispatch($member, $transaction, $campaign);
 
         return redirect()->route('members.show', $member)
                          ->with('purchase_success', [

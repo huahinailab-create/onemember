@@ -1022,4 +1022,19 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-069 — Member Notification Emails (MVP-006)
+
+- **Date:** 2026-07-05
+- **Status:** Approved
+- **Decision:**
+  1. Members now receive three transactional emails: points-earned (after each purchase), reward-redeemed (after each redemption), and birthday greeting (when the birthday bonus is awarded).
+  2. All member emails follow CTO-003: dispatched as events (`MemberPointsEarned`, `MemberRewardRedeemed`, `MemberBirthdayBonusAwarded`), handled by `MemberEmailSubscriber`, queued Mailables — never sent from controllers.
+  3. Emails are sent only when (a) the member has an email address and (b) the merchant has not disabled the `member_notifications` email preference (default: enabled).
+  4. Email locale follows the merchant's saved locale setting (default Thai) via `Mail::locale()`.
+  5. Member emails are branded with the merchant's logo and name, "Powered by OneMember" footer — consistent with the merchant-branding pattern used in trial emails.
+- **Reason:** Members previously received zero emails — a documented pilot limitation. Points/reward/birthday notifications close the loyalty feedback loop and drive repeat visits.
+- **Impact:** New: 3 events, 3 mailables, `app/Listeners/MemberEmailSubscriber.php`, 3 email views, `tests/Feature/MemberNotificationEmailTest.php` (7 tests). Modified: `PurchaseController`, `RedemptionController`, `ProcessBirthdayRewards` (event dispatch), `lang/en/email.php`, `lang/th/email.php`.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

@@ -92,4 +92,26 @@ return [
     'label_url'          => 'URL',
     'powered_by'         => 'ขับเคลื่อนโดย :app',
 
+
+    // Member notifications (MVP-006)
+    'member_points_earned_subject'  => 'คุณได้รับแต้มจาก :merchant',
+    'member_points_earned_heading'  => 'คุณได้รับแต้มแล้ว!',
+    'member_points_earned_body_1'   => 'สวัสดี :name ขอบคุณที่อุดหนุน :merchant',
+    'member_points_earned_points'   => 'แต้มที่ได้รับ: +:points',
+    'member_points_earned_balance'  => 'ยอดแต้มใหม่ของคุณ: :balance แต้ม',
+    'member_points_earned_body_2'   => 'สะสมแต้มต่อเนื่องเพื่อปลดล็อกรางวัล แล้วพบกันใหม่เร็วๆ นี้!',
+
+    'member_reward_redeemed_subject' => 'รางวัลของคุณจาก :merchant',
+    'member_reward_redeemed_heading' => 'แลกรางวัลสำเร็จ!',
+    'member_reward_redeemed_body_1'  => 'สวัสดี :name คุณได้แลกรางวัล ":reward" ที่ :merchant',
+    'member_reward_redeemed_points'  => 'แต้มที่ใช้: :points',
+    'member_reward_redeemed_balance' => 'ยอดแต้มคงเหลือ: :balance แต้ม',
+    'member_reward_redeemed_body_2'  => 'ขอให้เพลิดเพลินกับรางวัล — ขอบคุณที่เป็นสมาชิกที่ภักดี!',
+
+    'member_birthday_subject' => 'สุขสันต์วันเกิดจาก :merchant!',
+    'member_birthday_heading' => 'สุขสันต์วันเกิด!',
+    'member_birthday_body_1'  => 'สวัสดี :name ทุกคนที่ :merchant ขอให้คุณมีวันเกิดที่แสนวิเศษ',
+    'member_birthday_points'  => 'โบนัสวันเกิด: +:points แต้ม',
+    'member_birthday_body_2'  => 'แต้มโบนัสถูกเพิ่มเข้ายอดของคุณแล้ว ให้รางวัลตัวเองได้เลย!',
+
 ];

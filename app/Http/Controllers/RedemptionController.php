@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\MemberStatus;
 use App\Enums\RedemptionStatus;
 use App\Enums\TransactionType;
+use App\Events\MemberRewardRedeemed;
 use App\Http\Requests\RedeemRewardRequest;
 use App\Models\LoyaltyProgram;
 use App\Models\Member;
@@ -90,7 +91,7 @@ class RedemptionController extends Controller
         ]);
 
         // Create the redemption record
-        Redemption::create([
+        $redemption = Redemption::create([
             'merchant_id'    => $merchant->id,
             'member_id'      => $member->id,
             'reward_id'      => $reward->id,
@@ -112,6 +113,8 @@ class RedemptionController extends Controller
         $member->save();
 
         $analytics->track('reward_redeemed', ['campaign_type' => $campaign->type->value], $request->user()->id, $merchant->id);
+
+        MemberRewardRedeemed::dispatch($member, $redemption, $reward);
 
         return redirect()->route('members.show', $member)
                          ->with('redemption_success', [
