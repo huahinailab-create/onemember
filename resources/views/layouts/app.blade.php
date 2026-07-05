@@ -206,6 +206,7 @@
          x-show="sidebarOpen"
          x-cloak
          aria-hidden="true"
+         @touchend.prevent="sidebarOpen = false"
          @click.prevent="sidebarOpen = false"></div>
     {{-- ── /Sidebar ──────────────────────────────────────── --}}
 
