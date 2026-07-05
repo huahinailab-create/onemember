@@ -41,7 +41,7 @@ Items here are reviewed by the AI CTO every sprint cycle and incorporated into s
 | Field | Value |
 |---|---|
 | **Priority** | 🔴 Critical |
-| **Scheduled Sprint** | MVP-001 |
+| **Scheduled Sprint** | ✅ Resolved — CTO-008 accessor present in `LoyaltyProgram::settings()` (verified ENG-001, 2026-07-05) |
 | **Source** | AI-03 Audit H-005 |
 
 `LoyaltyProgram.settings` uses `'settings' => 'array'` in `$casts`. If the DB column is NULL, accessing `$campaign->settings['key']` raises `ErrorException`. This is the same class of bug as BUG-002 (which fixed `Merchant.settings`).
@@ -55,7 +55,7 @@ Items here are reviewed by the AI CTO every sprint cycle and incorporated into s
 | Field | Value |
 |---|---|
 | **Priority** | 🟡 Medium |
-| **Scheduled Sprint** | MVP-007 (planned) |
+| **Scheduled Sprint** | ✅ Resolved — ADR-007 written, Campaign alias added (MVP-010, commit `0c48fb3`) |
 | **Source** | AI-03 Audit H-002 |
 
 The model is `LoyaltyProgram` / table is `loyalty_programs`, but all routes use `campaigns.*`, controllers use `$campaign`, and UI says "Campaigns". This split is intentional but undocumented as an ADR.
@@ -107,7 +107,7 @@ The model is `LoyaltyProgram` / table is `loyalty_programs`, but all routes use 
 | Field | Value |
 |---|---|
 | **Priority** | 🟠 High |
-| **Scheduled Sprint** | MVP-001 or separately |
+| **Scheduled Sprint** | ✅ Resolved — signature verified via `Webhook::constructEvent`; invalid-signature test in `StripeBillingTest` (verified ENG-001, 2026-07-05) |
 | **Source** | AI-03 Audit SEC-005 |
 
 `SubscriptionController::webhook()` must verify the `Stripe-Signature` header using `\Stripe\Webhook::constructEvent()`. This must be confirmed before any production billing goes live. Add a test asserting that requests with invalid signatures are rejected.
@@ -178,7 +178,7 @@ Dashboard executes 8+ queries per page load (member count, campaign count, trans
 | Field | Value |
 |---|---|
 | **Priority** | 🟡 Medium |
-| **Scheduled Sprint** | MVP-005 |
+| **Scheduled Sprint** | ✅ Resolved — `CrudCoverageTest` (MVP-009, commit `f7a49d7`) |
 | **Source** | AI-03 Audit — Missing tests |
 
 No Feature tests for: campaign create, campaign update, campaign configure, campaign pause, campaign archive. These are core merchant actions with no test coverage.
@@ -190,7 +190,7 @@ No Feature tests for: campaign create, campaign update, campaign configure, camp
 | Field | Value |
 |---|---|
 | **Priority** | 🟡 Medium |
-| **Scheduled Sprint** | MVP-005 |
+| **Scheduled Sprint** | ✅ Resolved — `CrudCoverageTest` (MVP-009, commit `f7a49d7`) |
 | **Source** | AI-03 Audit — Missing tests |
 
 No Feature tests for: member create, member update, member archive, purchase recording, redemption recording.
@@ -202,7 +202,7 @@ No Feature tests for: member create, member update, member archive, purchase rec
 | Field | Value |
 |---|---|
 | **Priority** | 🟡 Medium |
-| **Scheduled Sprint** | MVP-005 |
+| **Scheduled Sprint** | ✅ Resolved — `CrudCoverageTest` (MVP-009, commit `f7a49d7`) |
 | **Source** | AI-03 Audit — Missing tests |
 
 No Feature tests for: reward create, reward update, reward archive.
@@ -214,7 +214,7 @@ No Feature tests for: reward create, reward update, reward archive.
 | Field | Value |
 |---|---|
 | **Priority** | 🟡 Medium |
-| **Scheduled Sprint** | MVP-005 |
+| **Scheduled Sprint** | ✅ Resolved — `CrudCoverageTest` (MVP-009, commit `f7a49d7`) |
 | **Source** | AI-03 Audit — Missing tests |
 
 No Feature tests for the 5-step onboarding wizard. New merchant registration flow is completely untested beyond auth tests.
@@ -226,7 +226,7 @@ No Feature tests for the 5-step onboarding wizard. New merchant registration flo
 | Field | Value |
 |---|---|
 | **Priority** | 🟡 Medium |
-| **Scheduled Sprint** | MVP-005 |
+| **Scheduled Sprint** | ✅ Resolved — `ProcessExpiredTrialsTest` (ENG-001, 2026-07-05) |
 | **Source** | AI-03 Audit M-008 |
 
 `ProcessExpiredTrials` Artisan command has no tests. This is production code that runs on a schedule.
@@ -238,7 +238,7 @@ No Feature tests for the 5-step onboarding wizard. New merchant registration flo
 | Field | Value |
 |---|---|
 | **Priority** | 🟢 Low |
-| **Scheduled Sprint** | Before Thai merchant launch |
+| **Scheduled Sprint** | ✅ Resolved — `TranslationCompletenessTest` guards en/th key parity (ENG-001, 2026-07-05); fixed 7 missing en validation attributes |
 | **Source** | AI-03 Audit L-004 |
 
 No test verifies that every English key in `lang/en/` has a corresponding Thai key in `lang/th/`. Missing Thai keys silently fall back to English. Add a test that compares both language file key sets.

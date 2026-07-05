@@ -99,7 +99,8 @@ Make the authenticated merchant application at `app.onemember.co` fully mobile-f
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
-| RELEASE-4A | Campaign Analytics Dashboard | ⏳ Awaiting CTO Review | `0b043d6` |
+| ENG-001  | Engineering Backlog Clearance | ✅ Complete (Type A) | `c77c22c` |
+| RELEASE-4A | Campaign Analytics Dashboard | ⏳ Awaiting CTO Review | `bdb0cfb` |
 | MVP-010  | ADR-007 Naming Decision + Campaign Alias | ✅ Complete (Type A) | `0c48fb3` |
 | MVP-009  | CRUD Test Coverage | ✅ Complete (Type A) | `f7a49d7` |
 | MVP-008  | Win-back Campaign Alerts | ⏳ Awaiting CTO Review | `91c19f2` |

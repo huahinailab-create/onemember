@@ -155,9 +155,16 @@ return [
     'locale_invalid' => 'Please select a valid language (English or Thai).',
 
     'attributes' => [
-        'locale'      => 'language',
-        'date_format' => 'date format',
-        'timezone'    => 'timezone',
-        'currency'    => 'currency',
+        'name'            => 'name',
+        'email'           => 'email',
+        'password'        => 'password',
+        'phone'           => 'phone',
+        'birthday'        => 'date of birth',
+        'campaign_name'   => 'campaign name',
+        'purchase_amount' => 'purchase amount',
+        'locale'          => 'language',
+        'date_format'     => 'date format',
+        'timezone'        => 'timezone',
+        'currency'        => 'currency',
     ],
 ];
