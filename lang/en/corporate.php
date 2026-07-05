@@ -49,7 +49,7 @@ return [
     // ── Home ──────────────────────────────────────────────────────────────────
     'home_meta_title'         => 'OneMember — Loyalty Platform for Thai SMEs',
     'home_meta_desc'          => 'OneMember helps Thai small businesses build customer loyalty with points, stamps, and rewards. Trusted by merchants across Thailand. Start your free trial today.',
-    'home_eyebrow'            => 'Built for Thailand',
+    'home_eyebrow'            => 'THAILAND',
     'home_hero_h1'            => 'Turn Every Purchase Into a',
     'home_hero_accent'        => 'Loyal Customer',
     'home_hero_sub'           => 'OneMember gives Thai small businesses a complete loyalty platform — points, stamps, rewards, birthday automation, and member insights — all in one simple dashboard.',
