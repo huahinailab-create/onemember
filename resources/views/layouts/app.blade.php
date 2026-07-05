@@ -44,7 +44,8 @@
         <div class="d-flex align-items-center justify-content-end d-md-none mb-2">
             <button type="button"
                     class="sidebar-close-btn"
-                    @click.prevent.stop="sidebarOpen = false"
+                    @touchend.prevent.stop="sidebarOpen = false"
+                    @click.stop="sidebarOpen = false"
                     aria-label="{{ __('mobile.close_menu') }}">
                 <i class="bi bi-x-lg" aria-hidden="true"></i>
             </button>

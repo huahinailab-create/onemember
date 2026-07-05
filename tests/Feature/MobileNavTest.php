@@ -63,9 +63,11 @@ class MobileNavTest extends TestCase
         $response = $this->actingAs($user)->get(route('dashboard'));
 
         $response->assertOk();
-        // @click.prevent.stop ensures no ancestor element intercepts the tap
+        // @touchend fires before iOS scroll-intent detection cancels the click.
+        // @click.stop is kept as fallback for mouse/non-touch browsers.
         $response->assertSee('sidebar-close-btn', false);
-        $response->assertSee('@click.prevent.stop="sidebarOpen = false"', false);
+        $response->assertSee('@touchend.prevent.stop="sidebarOpen = false"', false);
+        $response->assertSee('@click.stop="sidebarOpen = false"', false);
     }
 
     public function test_nav_links_close_sidebar_on_click(): void
