@@ -37,5 +37,13 @@ class AppServiceProvider extends ServiceProvider
         View::composer(['corporate.*', 'layouts.corporate'], function ($view) {
             $view->with('appUrl', 'https://' . config('domains.app'));
         });
+
+        // TD-003: branding is composed here instead of instantiating the
+        // service inside Blade views (keeps views container-free).
+        View::composer(['layouts.app', 'settings.index'], function ($view) {
+            $view->with('merchantBranding', new \App\Services\MerchantBrandingService(
+                \Illuminate\Support\Facades\Auth::user()?->merchant
+            ));
+        });
     }
 }

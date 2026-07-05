@@ -24,8 +24,7 @@
 <body>
 
 @php
-    $__branding    = new \App\Services\MerchantBrandingService(Auth::user()?->merchant);
-    $__logo        = $__branding->logo();
+    $__logo        = $merchantBranding->logo();
     $__counterMode = (bool) (Auth::user()?->merchant?->settings['counter_mode'] ?? false);
 @endphp
 

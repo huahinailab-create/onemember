@@ -70,10 +70,7 @@
                         </div>
                     @endif
 
-                    @php
-                        
-                        $branding = new \App\Services\MerchantBrandingService($merchant);
-                    @endphp
+                    @php $branding = $merchantBranding; @endphp
                     <form method="POST" action="{{ route('settings.profile.update') }}"
                           enctype="multipart/form-data"
                           x-data="{
