@@ -3,9 +3,9 @@
 | Field | Value |
 |---|---|
 | **Document Owner** | Product Owner |
-| **Version** | 0.1.0 |
-| **Status** | Draft |
-| **Last Updated** | 2026-07-02 |
+| **Version** | 1.0.0 |
+| **Status** | Review — full design package delivered (PH2-000) |
+| **Last Updated** | 2026-07-05 |
 | **Related Documents** | [Product-Bible.md](./Product-Bible.md), [Enterprise-Bridge.md](./Enterprise-Bridge.md), [Commerce.md](./Commerce.md) |
 
 ---
@@ -18,8 +18,8 @@ Describes the customer-facing universal loyalty wallet: join-by-QR, cross-brand 
 
 ## Content
 
-> **This document is a placeholder for Sprint AI-02A.**
-> Detailed content will be written in Sprint AI-02B.
+> **The complete Phase 2 design package now lives in [Customer-Wallet/](./Customer-Wallet/README.md)** (PH2-000, 2026-07-05): functional + technical specs, database, API, security, PDPA consent model, Apple/Google Wallet designs, identity & QR flows, diagrams, wireframes, risks, and [ADR-008 (Proposed)](../12-ADR/ADR-008-Phase-2-Customer-Wallet-Architecture.md).
+> Implementation is gated on ADR-008 approval and business decisions BD-01…BD-10.
 
 Customer Wallet will cover:
 - Universal QR scan → join flow

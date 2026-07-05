@@ -16,23 +16,23 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | RELEASE-3A |
-| **Title** | Platform Admin Foundation |
-| **Status** | ⏳ Awaiting CTO Review |
-| **Sprint Type** | UX / Technical |
-| **Classification** | Type B — CTO Review Required |
-| **Sprint File** | [Sprints/RELEASE-3A-Platform-Admin-Foundation.md](./Sprints/RELEASE-3A-Platform-Admin-Foundation.md) |
+| **Sprint ID** | PH2-000 |
+| **Title** | Customer Wallet Design Package |
+| **Status** | ⏳ Awaiting CEO Approval (Type C — phase change) |
+| **Sprint Type** | Design / Documentation (no application code) |
+| **Classification** | Type C — CEO Approval Required (phase change, pricing, legal, vendor) |
+| **Sprint File** | [Sprints/PH2-000-Customer-Wallet-Design.md](./Sprints/PH2-000-Customer-Wallet-Design.md) |
 | **Owner** | Product Owner |
-| **Developer** | Claude Sonnet 4.6 |
-| **Reviewer** | ChatGPT CTO |
+| **Developer** | Claude Fable 5 |
+| **Reviewer** | Product Owner (CEO) |
 | **Started** | 2026-07-05 |
 | **Target Completion** | 2026-07-05 |
 | **Actual Completion** | 2026-07-05 |
-| **Final Commit** | `ea64eda` |
+| **Final Commit** | pending |
 
 ### Business Objective
 
-Make the authenticated merchant application at `app.onemember.co` fully mobile-first and production-ready. Merchants use the app on-counter on mobile devices. DECISION-066 recorded.
+Design Phase 2 (Customer Wallet) completely before implementation: 11-document design package + ADR-008 (Proposed). Implementation gated on ADR-008 approval and business decisions BD-01…BD-10 — see [Customer-Wallet/README.md](./02-Product/Customer-Wallet/README.md).
 
 ---
 
@@ -99,6 +99,7 @@ Make the authenticated merchant application at `app.onemember.co` fully mobile-f
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
+| PH2-000  | Customer Wallet Design Package | ⏳ Awaiting CEO Approval | pending |
 | ENG-001  | Engineering Backlog Clearance | ✅ Complete (Type A) | `2afb644` |
 | RELEASE-4A | Campaign Analytics Dashboard | ⏳ Awaiting CTO Review | `bdb0cfb` |
 | MVP-010  | ADR-007 Naming Decision + Campaign Alias | ✅ Complete (Type A) | `0c48fb3` |

@@ -114,6 +114,7 @@ docs/OMOS/
 ├── 00-Executive/              ← Vision, Mission, North Star, Principles
 ├── 01-Company/                ← Culture, team, hiring, values in practice
 ├── 02-Product/                ← Product Bible, feature specs, UX principles
+│   └── Customer-Wallet/       ← Phase 2 design package (PH2-000)
 ├── 03-Business/               ← Business model, pricing, partnerships
 ├── 04-Technology/             ← Technology choices, integrations, third parties
 ├── 05-Engineering/            ← Coding standards, PR process, testing philosophy
