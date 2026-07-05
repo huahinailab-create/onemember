@@ -13,6 +13,7 @@ use App\Events\SubscriptionRenewed;
 use App\Events\PaymentFailed;
 use App\Events\TrialEnding;
 use App\Events\TrialStarted;
+use App\Events\WinbackAlertReady;
 use App\Mail\EmailVerifiedEmail;
 use App\Mail\FeedbackReceivedEmail;
 use App\Mail\PasswordChangedEmail;
@@ -23,6 +24,7 @@ use App\Mail\SubscriptionRenewedEmail;
 use App\Mail\TrialEndingReminderEmail;
 use App\Mail\TrialStartedEmail;
 use App\Mail\WelcomeEmail;
+use App\Mail\WinbackAlertEmail;
 use App\Services\EmailLogger;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Events\Verified;
@@ -108,6 +110,19 @@ class EmailEventSubscriber
         $this->send($user->email, new PaymentFailedEmail($merchant, $event->invoiceId, $event->amountDue), 'PaymentFailedEmail', $merchant->id);
     }
 
+    public function handleWinbackAlertReady(WinbackAlertReady $event): void
+    {
+        $merchant = $event->merchant;
+        if (! $merchant->wantsEmail('winback_alerts')) {
+            return;
+        }
+        $user = $merchant->owner;
+        if (! $user) {
+            return;
+        }
+        $this->send($user->email, new WinbackAlertEmail($merchant, $event->members, $event->days), 'WinbackAlertEmail', $merchant->id);
+    }
+
     public function handlePasswordChanged(PasswordChanged $event): void
     {
         $user = $event->user;
@@ -139,6 +154,7 @@ class EmailEventSubscriber
         $events->listen(SubscriptionRenewed::class,  [static::class, 'handleSubscriptionRenewed']);
         $events->listen(SubscriptionCancelled::class,[static::class, 'handleSubscriptionCancelled']);
         $events->listen(PaymentFailed::class,        [static::class, 'handlePaymentFailed']);
+        $events->listen(WinbackAlertReady::class,    [static::class, 'handleWinbackAlertReady']);
         $events->listen(PasswordChanged::class,      [static::class, 'handlePasswordChanged']);
         $events->listen(FeedbackSubmitted::class,    [static::class, 'handleFeedbackSubmitted']);
     }

@@ -84,6 +84,7 @@ class SettingsController extends Controller
         $settings['default_expiration_type']     = $validated['default_expiration_type'];
         $settings['default_expiration_duration'] = $validated['default_expiration_duration'] ?? null;
         $settings['default_birthday_enabled']    = $validated['default_birthday_enabled'];
+        $settings['winback_days']                = (int) ($validated['winback_days'] ?? 0);
         $settings['locale']                      = $validated['locale'];
         $settings['email_notifications']         = [
             'product_updates'        => $validated['email_product_updates'],

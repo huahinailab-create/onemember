@@ -563,6 +563,23 @@
                                 </div>
                             </div>
 
+                            {{-- Win-back Alerts --}}
+                            <div class="col-12">
+                                <label for="winback_days" class="form-label fw-medium">{{ __('settings.winback_days') }}</label>
+                                <div class="text-muted small mb-2">{{ __('settings.winback_days_hint') }}</div>
+                                <input type="number"
+                                       id="winback_days"
+                                       name="winback_days"
+                                       class="form-control @error('winback_days') is-invalid @enderror"
+                                       style="max-width:160px;"
+                                       min="0"
+                                       max="365"
+                                       value="{{ old('winback_days', $merchant?->settings['winback_days'] ?? 30) }}">
+                                @error('winback_days')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                         </div>
 
                         {{-- Email Notifications --}}

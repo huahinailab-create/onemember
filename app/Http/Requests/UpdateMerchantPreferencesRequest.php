@@ -36,6 +36,7 @@ class UpdateMerchantPreferencesRequest extends FormRequest
                 Rule::requiredIf(fn () => in_array($this->input('default_expiration_type'), ['months', 'years'])),
             ],
             'default_birthday_enabled'   => ['required', 'boolean'],
+            'winback_days'               => ['nullable', 'integer', 'min:0', 'max:365'],
             'locale'                     => ['required', 'string', Rule::in(['en', 'th'])],
             'email_product_updates'       => ['required', 'boolean'],
             'email_tips'                  => ['required', 'boolean'],
@@ -49,6 +50,7 @@ class UpdateMerchantPreferencesRequest extends FormRequest
             'default_expiration_type'     => 'points expiration',
             'default_expiration_duration' => 'expiration duration',
             'default_birthday_enabled'    => 'birthday reward default',
+            'winback_days'                => 'win-back alert days',
         ];
     }
 }

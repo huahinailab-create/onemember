@@ -4,6 +4,7 @@ use App\Console\Commands\ProcessBirthdayRewards;
 use App\Console\Commands\ProcessExpiredTrials;
 use App\Console\Commands\ProcessPointExpiry;
 use App\Console\Commands\SendTrialEndingReminders;
+use App\Console\Commands\SendWinbackAlerts;
 use App\Console\Commands\VerifyDatabaseBackup;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
@@ -30,3 +31,6 @@ Schedule::command(SendTrialEndingReminders::class)->dailyAt('09:00');
 // the backup cron job (02:00 recommended). Logs pass/fail to storage/logs/laravel.log.
 // Set BACKUP_PATH in .env to match your mysqldump output directory.
 Schedule::command(VerifyDatabaseBackup::class)->dailyAt('03:00');
+
+// Alert merchants about members who crossed their win-back inactivity threshold.
+Schedule::command(SendWinbackAlerts::class)->dailyAt('09:30');

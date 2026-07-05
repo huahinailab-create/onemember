@@ -56,4 +56,10 @@ return [
     'trial_ends_in_days'     => 'ช่วงทดลองใช้ Professional ของคุณจะสิ้นสุดใน :days วัน',
     'trial_7day_body'        => 'อัปเกรดก่อนที่ช่วงทดลองใช้จะสิ้นสุด เพื่อไม่ให้บริการหยุดชะงัก',
     'trial_14day_body'       => 'ชอบ OneMember ไหม? อัปเกรดเพื่อรักษาการเข้าถึงฟีเจอร์ Professional ทั้งหมด',
+
+    // Win-back alert (MVP-008)
+    'winback_alert_title' => 'สมาชิก :count คนต้องการการดึงกลับ',
+    'winback_alert_body'  => 'พวกเขาไม่ได้มาใช้บริการเกิน :days วันแล้ว ติดต่อก่อนที่จะห่างหายไป',
+    'winback_alert_cta'   => 'ดูสมาชิก',
+
 ];

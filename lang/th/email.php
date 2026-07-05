@@ -114,4 +114,15 @@ return [
     'member_birthday_points'  => 'โบนัสวันเกิด: +:points แต้ม',
     'member_birthday_body_2'  => 'แต้มโบนัสถูกเพิ่มเข้ายอดของคุณแล้ว ให้รางวัลตัวเองได้เลย!',
 
+
+    // Win-back alerts (MVP-008)
+    'winback_subject'        => 'สมาชิก :count คนอาจต้องการการดึงกลับ',
+    'winback_heading'        => 'สมาชิกที่กำลังห่างหาย',
+    'winback_body_1'         => 'สวัสดี :name สมาชิก :count คนไม่ได้มาใช้บริการใน :days วันที่ผ่านมา:',
+    'winback_col_member'     => 'สมาชิก',
+    'winback_col_phone'      => 'เบอร์โทร',
+    'winback_col_last_visit' => 'มาครั้งล่าสุด',
+    'winback_body_2'         => 'ข้อความทักทายหรือโบนัสเล็กๆ สามารถดึงพวกเขากลับมาได้',
+    'winback_cta'            => 'ดูสมาชิก',
+
 ];

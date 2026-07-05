@@ -56,4 +56,10 @@ return [
     'trial_ends_in_days'     => 'Your Professional Trial ends in :days days.',
     'trial_7day_body'        => 'Upgrade before your trial ends to avoid any interruption to your loyalty programme.',
     'trial_14day_body'       => 'Enjoying OneMember? Upgrade to keep access to all Professional features.',
+
+    // Win-back alert (MVP-008)
+    'winback_alert_title' => ':count member needs a win-back nudge|:count members need a win-back nudge',
+    'winback_alert_body'  => 'They have not visited in over :days days. Reach out before they drift away.',
+    'winback_alert_cta'   => 'View Members',
+
 ];

@@ -215,6 +215,20 @@
     </div>
     @endif
 
+    {{-- ── Win-back alert (MVP-008) ──────────────────────────── --}}
+    @if (($winbackCount ?? 0) > 0)
+        <div class="alert alert-warning d-flex align-items-center gap-3 mb-4" role="alert">
+            <i class="bi bi-person-dash fs-4"></i>
+            <div class="flex-grow-1">
+                <strong>{{ trans_choice('dashboard.winback_alert_title', $winbackCount, ['count' => $winbackCount]) }}</strong>
+                <div class="small">{{ __('dashboard.winback_alert_body', ['days' => $winbackDays]) }}</div>
+            </div>
+            <a href="{{ route('members') }}" class="btn btn-sm btn-outline-dark text-nowrap">
+                {{ __('dashboard.winback_alert_cta') }}
+            </a>
+        </div>
+    @endif
+
     {{-- ── Section 2c: Business Insights ─────────────────────── --}}
     <div class="card mb-4">
         <div class="card-header d-flex align-items-center justify-content-between">

@@ -114,4 +114,15 @@ return [
     'member_birthday_points'  => 'Birthday bonus: +:points points',
     'member_birthday_body_2'  => 'Your bonus points have been added to your balance. Treat yourself!',
 
+
+    // Win-back alerts (MVP-008)
+    'winback_subject'        => ':count member(s) may need a win-back nudge',
+    'winback_heading'        => 'Members Slipping Away',
+    'winback_body_1'         => 'Hi :name, :count member(s) have not visited in :days days:',
+    'winback_col_member'     => 'Member',
+    'winback_col_phone'      => 'Phone',
+    'winback_col_last_visit' => 'Last Visit',
+    'winback_body_2'         => 'A friendly message or a small bonus offer can bring them back.',
+    'winback_cta'            => 'View Members',
+
 ];

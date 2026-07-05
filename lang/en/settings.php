@@ -88,4 +88,6 @@ return [
     'line_url'                     => 'LINE Official Account',
     'save_profile'                 => 'Save Profile',
     'cancel'                       => 'Cancel',
+    'winback_days'      => 'Win-back Alert (days)',
+    'winback_days_hint' => 'Email me when a member has not visited for this many days. Set 0 to switch off.',
 ];

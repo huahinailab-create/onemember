@@ -1051,4 +1051,18 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-071 — Win-back Campaign Alerts (MVP-008)
+
+- **Date:** 2026-07-05
+- **Status:** Approved
+- **Decision:**
+  1. Merchants set a win-back threshold (`winback_days`, 0–365, default 30, 0 = off) in Settings → Preferences.
+  2. A daily command (`loyalty:send-winback-alerts`, 09:30) finds active members whose `last_activity_at` crossed the threshold within the past day and dispatches `WinbackAlertReady`; `EmailEventSubscriber` queues one digest email per merchant (CTO-003). The moving one-day window makes each member reported exactly once — no extra state table.
+  3. Merchant email preference category `winback_alerts` (default on) controls the email.
+  4. The merchant dashboard shows a warning banner with the count of all members currently past the threshold, linking to the member list. The existing 45-day intelligence insight is unchanged.
+- **Reason:** Highest merchant retention value after birthday automation (backlog priority). Merchants have no visibility into slipping members.
+- **Impact:** New: `app/Events/WinbackAlertReady.php`, `app/Mail/WinbackAlertEmail.php`, `app/Console/Commands/SendWinbackAlerts.php`, `resources/views/emails/winback-alert.blade.php`, `tests/Feature/WinbackAlertTest.php` (8 tests). Modified: `EmailEventSubscriber`, `SettingsController`, `UpdateMerchantPreferencesRequest`, `DashboardController`, `resources/views/dashboard.blade.php`, `resources/views/settings/index.blade.php`, `routes/console.php`, lang files (email/settings/dashboard × en/th).
+
+---
+
 *New decisions must be appended above this line in the format shown.*
