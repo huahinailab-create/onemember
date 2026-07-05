@@ -221,11 +221,17 @@
                     <hr class="my-1">
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="text-muted">Database</span>
-                        <span class="badge bg-success">Healthy</span>
+                        <span class="badge"
+                              style="background:{{ ['ok'=>'#059669','warn'=>'#D97706','error'=>'#DC2626'][$health['database']['status']] ?? '#9CA3AF' }};color:#fff;font-size:0.7rem;">
+                            {{ $health['database']['label'] }}
+                        </span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
-                        <span class="text-muted">Queue</span>
-                        <span class="badge bg-success">OK</span>
+                        <span class="text-muted">Email</span>
+                        <span class="badge"
+                              style="background:{{ ['ok'=>'#059669','warn'=>'#D97706','error'=>'#DC2626'][$health['email']['status']] ?? '#9CA3AF' }};color:#fff;font-size:0.7rem;">
+                            {{ $health['email']['label'] }}
+                        </span>
                     </div>
                 </div>
             </div>
@@ -281,6 +287,129 @@
                         @endforelse
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+
+    {{-- ── Activation Funnel + Platform Health ───────────────────────────── --}}
+    <div class="row g-3 mb-4">
+
+        {{-- Activation Funnel --}}
+        <div class="col-md-7">
+            <div class="stat-card card p-3 h-100">
+                <h6 class="fw-600 mb-1" style="color:#1A2E5A;font-size:0.85rem;font-weight:600;">
+                    <i class="bi bi-funnel me-2" style="color:#FF1585;"></i>Merchant Activation Funnel
+                </h6>
+                <p class="text-muted mb-3" style="font-size:0.75rem;">
+                    Tracks how merchants progress from registration to first paid conversion.
+                </p>
+                @php
+                    $maxCount = $funnel[0]['count'] ?: 1;
+                @endphp
+                <div class="d-flex flex-column gap-2">
+                    @foreach($funnel as $i => $stage)
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                                      style="width:20px;height:20px;background:#EEF2FF;color:#4F46E5;font-size:0.65rem;font-weight:700;">
+                                    {{ $i + 1 }}
+                                </span>
+                                <span style="font-size:0.82rem;font-weight:500;color:#1A2E5A;">
+                                    {{ $stage['label'] }}
+                                </span>
+                            </div>
+                            <div class="d-flex align-items-center gap-3 flex-shrink-0">
+                                @if($i > 0 && $stage['pct_of_prev'] !== null)
+                                <span class="text-muted" style="font-size:0.72rem;">
+                                    {{ $stage['pct_of_prev'] }}% from prev
+                                </span>
+                                @endif
+                                <span style="font-size:0.85rem;font-weight:700;color:#1A2E5A;min-width:3rem;text-align:right;">
+                                    {{ number_format($stage['count']) }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="progress" style="height:6px;border-radius:3px;background:#F0F0F4;">
+                            <div class="progress-bar"
+                                 style="width:{{ $stage['pct_of_total'] }}%;background:{{ $i === 5 ? '#FF1585' : '#1A2E5A' }};border-radius:3px;"
+                                 role="progressbar"
+                                 aria-valuenow="{{ $stage['pct_of_total'] }}"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100">
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                @if($funnel[0]['count'] > 0)
+                <div class="mt-3 pt-2 border-top d-flex gap-3" style="font-size:0.75rem;color:#6c757d;">
+                    <span>
+                        Overall conversion:
+                        <strong style="color:#FF1585;">{{ $funnel[5]['pct_of_total'] }}%</strong>
+                        registered → paid
+                    </span>
+                </div>
+                @endif
+            </div>
+        </div>
+
+        {{-- Platform Health --}}
+        <div class="col-md-5">
+            <div class="stat-card card p-3 h-100">
+                <h6 class="fw-600 mb-3" style="color:#1A2E5A;font-size:0.85rem;font-weight:600;">
+                    <i class="bi bi-heart-pulse me-2" style="color:#FF1585;"></i>Platform Health
+                </h6>
+                @php
+                    $statusColor = ['ok' => '#059669', 'warn' => '#D97706', 'error' => '#DC2626', 'unknown' => '#9CA3AF'];
+                    $statusIcon  = ['ok' => 'bi-check-circle-fill', 'warn' => 'bi-exclamation-triangle-fill', 'error' => 'bi-x-circle-fill', 'unknown' => 'bi-dash-circle'];
+                    $rows = [
+                        ['key' => 'database',  'name' => 'Database'],
+                        ['key' => 'email',     'name' => 'Email Service'],
+                        ['key' => 'queue',     'name' => 'Queue'],
+                        ['key' => 'storage',   'name' => 'Storage'],
+                        ['key' => 'scheduler', 'name' => 'Scheduler'],
+                        ['key' => 'backup',    'name' => 'Last Backup'],
+                    ];
+                @endphp
+                <div class="d-flex flex-column gap-2">
+                    @foreach($rows as $row)
+                    @php $h = $health[$row['key']]; $s = $h['status']; @endphp
+                    <div class="d-flex align-items-center justify-content-between py-1 border-bottom border-light">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi {{ $statusIcon[$s] ?? 'bi-dash-circle' }}"
+                               style="color:{{ $statusColor[$s] ?? '#9CA3AF' }};font-size:0.85rem;"></i>
+                            <span style="font-size:0.82rem;font-weight:500;color:#1A2E5A;">{{ $row['name'] }}</span>
+                            @if(! empty($h['note']))
+                            <i class="bi bi-info-circle text-muted" style="font-size:0.7rem;"
+                               title="{{ $h['detail'] ?? '' }}"></i>
+                            @endif
+                        </div>
+                        <div class="text-end">
+                            <span style="font-size:0.8rem;font-weight:600;color:{{ $statusColor[$s] ?? '#9CA3AF' }};">
+                                {{ $h['label'] }}
+                            </span>
+                            @if(! empty($h['detail']))
+                            <div class="text-muted" style="font-size:0.7rem;">{{ $h['detail'] }}</div>
+                            @endif
+                        </div>
+                    </div>
+                    @endforeach
+
+                    {{-- App version --}}
+                    <div class="d-flex align-items-center justify-content-between py-1">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-code-square" style="color:#9CA3AF;font-size:0.85rem;"></i>
+                            <span style="font-size:0.82rem;font-weight:500;color:#1A2E5A;">App Version</span>
+                        </div>
+                        <div class="text-end">
+                            <span style="font-size:0.8rem;font-weight:600;color:#1A2E5A;">
+                                v{{ $health['version']['label'] }}
+                            </span>
+                            <div class="text-muted" style="font-size:0.7rem;">{{ $health['version']['detail'] }}</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -220,7 +220,84 @@ class AdminTest extends TestCase
         $response->assertSee('7', false);
     }
 
-    // ── 7. is_admin flag ─────────────────────────────────────────────────────
+    // ── 7. Platform health widget ─────────────────────────────────────────────
+
+    public function test_dashboard_shows_platform_health_section(): void
+    {
+        $response = $this->actingAs($this->adminUser())
+            ->get('http://app.onemember.co/admin/dashboard');
+
+        $response->assertOk();
+        $response->assertSee('Platform Health', false);
+        $response->assertSee('Database', false);
+        $response->assertSee('Email Service', false);
+        $response->assertSee('Queue', false);
+        $response->assertSee('Storage', false);
+        $response->assertSee('App Version', false);
+    }
+
+    public function test_dashboard_shows_scheduler_and_backup_placeholders(): void
+    {
+        $response = $this->actingAs($this->adminUser())
+            ->get('http://app.onemember.co/admin/dashboard');
+
+        $response->assertOk();
+        $response->assertSee('Scheduler', false);
+        $response->assertSee('Last Backup', false);
+    }
+
+    public function test_dashboard_shows_app_version(): void
+    {
+        $response = $this->actingAs($this->adminUser())
+            ->get('http://app.onemember.co/admin/dashboard');
+
+        $response->assertOk();
+        // App version rendered (config app.version defaults to '1.0')
+        $response->assertSee('v', false);
+    }
+
+    // ── 8. Activation funnel widget ───────────────────────────────────────────
+
+    public function test_dashboard_shows_activation_funnel_section(): void
+    {
+        $response = $this->actingAs($this->adminUser())
+            ->get('http://app.onemember.co/admin/dashboard');
+
+        $response->assertOk();
+        $response->assertSee('Activation Funnel', false);
+        $response->assertSee('Registered', false);
+        $response->assertSee('Completed onboarding', false);
+        $response->assertSee('Created first campaign', false);
+        $response->assertSee('Added first member', false);
+        $response->assertSee('First transaction', false);
+        $response->assertSee('Converted to paid', false);
+    }
+
+    public function test_activation_funnel_counts_onboarded_merchants(): void
+    {
+        Merchant::factory()->count(2)->create(['onboarding_completed_at' => now()]);
+        Merchant::factory()->count(1)->create(['onboarding_completed_at' => null]);
+
+        $response = $this->actingAs($this->adminUser())
+            ->get('http://app.onemember.co/admin/dashboard');
+
+        $response->assertOk();
+        // 3 registered, 2 onboarded — both counts visible in the funnel
+        $response->assertSee('Completed onboarding', false);
+    }
+
+    public function test_activation_funnel_overall_conversion_shown_when_merchants_exist(): void
+    {
+        Merchant::factory()->count(2)->create();
+
+        $response = $this->actingAs($this->adminUser())
+            ->get('http://app.onemember.co/admin/dashboard');
+
+        $response->assertOk();
+        $response->assertSee('Overall conversion', false);
+    }
+
+    // ── 9. is_admin flag ─────────────────────────────────────────────────────
 
     public function test_is_admin_defaults_to_false_for_new_users(): void
     {
