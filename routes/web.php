@@ -158,6 +158,7 @@ Route::domain(config('domains.app'))->group(function () {
         Route::get('/campaigns/create',       [CampaignController::class, 'create'])->name('campaigns.create');
         Route::post('/campaigns',             [CampaignController::class, 'store'])->name('campaigns.store');
         Route::get('/campaigns/{campaign}',   [CampaignController::class, 'show'])->name('campaigns.show');
+        Route::get('/campaigns/{campaign}/analytics', [CampaignController::class, 'analytics'])->name('campaigns.analytics');
         Route::put('/campaigns/{campaign}',   [CampaignController::class, 'update'])->name('campaigns.update');
         Route::put('/campaigns/{campaign}/configure',  [CampaignController::class, 'configure'])->name('campaigns.configure');
         Route::patch('/campaigns/{campaign}/pause',    [CampaignController::class, 'pause'])->name('campaigns.pause');

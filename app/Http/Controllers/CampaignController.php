@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Enums\CampaignStatus;
+use App\Enums\TransactionType;
 use App\Http\Requests\ConfigureCampaignRequest;
 use App\Http\Requests\StoreCampaignRequest;
 use App\Http\Requests\UpdateCampaignRequest;
 use App\Models\LoyaltyProgram;
 use App\Models\Reward;
+use App\Models\Transaction;
 use App\Services\AnalyticsService;
 use App\Services\SubscriptionService;
 use Illuminate\Http\Request;
@@ -98,6 +100,56 @@ class CampaignController extends Controller
         $rewards = $rewardsQuery->orderBy('created_at', 'desc')->get();
 
         return view('campaigns.show', compact('campaign', 'rewards', 'rewardFilter'));
+    }
+
+    public function analytics(Request $request, LoyaltyProgram $campaign)
+    {
+        abort_unless($campaign->merchant_id === $request->user()->merchant?->id, 403);
+        $campaign->loadMissing('merchant');
+
+        $base = Transaction::where('loyalty_program_id', $campaign->id);
+
+        // ── Campaign breakdown ───────────────────────────────────────────
+        $pointsIssued   = (int) (clone $base)->whereIn('type', [TransactionType::Earn, TransactionType::Birthday])->sum('points');
+        $pointsRedeemed = (int) abs((clone $base)->where('type', TransactionType::Redeem)->sum('points'));
+        $pointsExpired  = (int) abs((clone $base)->where('type', TransactionType::Expire)->sum('points'));
+        $purchaseCount  = (int) (clone $base)->where('type', TransactionType::Earn)->count();
+        $purchaseTotal  = (float) (clone $base)->where('type', TransactionType::Earn)->sum('purchase_amount');
+
+        // ── Member engagement ────────────────────────────────────────────
+        $participatingMembers = (clone $base)->distinct('member_id')->count('member_id');
+        $activeLast30         = (clone $base)->where('created_at', '>=', now()->subDays(30))
+                                             ->distinct('member_id')->count('member_id');
+        $topMembers = (clone $base)->whereIn('type', [TransactionType::Earn, TransactionType::Birthday])
+            ->selectRaw('member_id, SUM(points) as points_earned, COUNT(*) as visit_count')
+            ->groupBy('member_id')
+            ->orderByDesc('points_earned')
+            ->take(5)
+            ->with('member')
+            ->get();
+
+        // ── 30-day activity trend (daily earn counts) ────────────────────
+        $trendRaw = (clone $base)->where('created_at', '>=', now()->subDays(29)->startOfDay())
+            ->selectRaw("DATE(created_at) as day, COUNT(*) as tx_count")
+            ->groupBy('day')
+            ->pluck('tx_count', 'day');
+        $trend = collect(range(29, 0))->map(function ($daysAgo) use ($trendRaw) {
+            $day = now()->subDays($daysAgo)->format('Y-m-d');
+            return ['day' => $day, 'count' => (int) ($trendRaw[$day] ?? 0)];
+        });
+
+        // ── Reward performance ───────────────────────────────────────────
+        $rewardPerformance = Reward::withTrashed()
+            ->where('loyalty_program_id', $campaign->id)
+            ->withCount('redemptions')
+            ->orderByDesc('redemptions_count')
+            ->get();
+
+        return view('campaigns.analytics', compact(
+            'campaign', 'pointsIssued', 'pointsRedeemed', 'pointsExpired',
+            'purchaseCount', 'purchaseTotal', 'participatingMembers',
+            'activeLast30', 'topMembers', 'trend', 'rewardPerformance',
+        ));
     }
 
     public function configure(ConfigureCampaignRequest $request, LoyaltyProgram $campaign)

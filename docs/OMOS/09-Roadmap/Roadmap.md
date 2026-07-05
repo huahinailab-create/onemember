@@ -50,6 +50,12 @@ When these documents conflict, this document takes precedence as the more recent
 | Merchant Intelligence (AI health score) | Sprint 6.7 | `73e1af2` |
 | BUG: Email verification stale-tab fix | BUG-001 | `a26e761` |
 | BUG: Dashboard broken links | BUG-002 | `056495f` |
+| Birthday bonus + automated notification | MVP-004 / MVP-006 | `5d44d3d` |
+| Point expiry (scheduled) | MVP-004 | `2c35ce6` |
+| Member notifications (points, rewards, birthday) | MVP-006 | `5d44d3d` |
+| Staff-facing sale entry (Counter Mode UI) | MVP-007 | `d6b34fb` |
+| Win-back campaign alerts | MVP-008 | `91c19f2` |
+| Campaign analytics dashboard | RELEASE-4A | — |
 
 ### In Progress 🔄
 
@@ -61,14 +67,10 @@ When these documents conflict, this document takes precedence as the more recent
 
 | Feature | Priority | Notes |
 |---|---|---|
-| Birthday bonus + automated notification | High | Auto-detect, award, email |
-| Point expiry (scheduled) | High | Configurable per programme |
-| Campaign analytics dashboard | High | Per-campaign breakdown |
 | Receipt QR purchase linking | Medium | Scan receipt to claim points |
 | PromptPay integration | Medium | Thailand-first payment |
 | POS-Lite | Medium | Staff-facing sale entry |
 | Merchant-defined point value | Low | Points = monetary discount |
-| Member notifications (points earned, expiry) | High | Email + future SMS |
 
 ---
 

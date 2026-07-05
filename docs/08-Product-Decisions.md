@@ -1075,4 +1075,18 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-073 — Campaign Analytics Dashboard (RELEASE-4A)
+
+- **Date:** 2026-07-05
+- **Status:** Approved
+- **Decision:**
+  1. Per-campaign analytics live at `/campaigns/{campaign}/analytics` — a read-only page, merchant-scoped like every campaign route.
+  2. Metrics are computed live from the `transactions` and `redemptions` tables (no pre-aggregation tables). At current data volumes this is well within budget; PERF-001-style caching is the designated follow-up once merchants exceed ~1,000 members.
+  3. The 30-day trend chart is pure CSS bars — no JavaScript chart library is introduced (consistent with the admin activation-funnel widget and ADR-005 minimalism).
+  4. Archived rewards are included in reward performance so historical redemptions remain visible.
+- **Reason:** Roadmap Phase 1 High item. Merchants need per-campaign visibility to decide what to promote; the platform already stores every data point needed.
+- **Impact:** New: `resources/views/campaigns/analytics.blade.php`, `tests/Feature/CampaignAnalyticsTest.php` (6 tests), `docs/OMOS/Sprints/RELEASE-4A-Campaign-Analytics.md`. Modified: `CampaignController` (analytics action), `routes/web.php`, `resources/views/campaigns/show.blade.php` (header link), `lang/en/campaigns.php`, `lang/th/campaigns.php`.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

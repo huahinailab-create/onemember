@@ -24,6 +24,9 @@
             </h1>
         </div>
         <div class="d-flex gap-2 flex-wrap page-header-actions">
+            <a href="{{ route('campaigns.analytics', $campaign) }}" class="btn btn-outline-primary">
+                <i class="bi bi-graph-up me-1"></i>{{ __('campaigns.analytics_link') }}
+            </a>
             @if ($isArchived)
                 <button type="button" class="btn btn-outline-success disabled" title="{{ __('buttons.coming_soon') }}">
                     <i class="bi bi-arrow-counterclockwise me-1"></i>{{ __('campaigns.restore_campaign') }}
