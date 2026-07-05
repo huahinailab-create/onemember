@@ -36,6 +36,8 @@ Items here are reviewed by the AI CTO every sprint cycle and incorporated into s
 
 ## Scale (added by SCALE-000, 2026-07-05)
 
+**2026-07-05 (FINAL sprint):** B-02/B-04 indexes shipped (`33cdbb8` — partial-unique deviated to plain index, not portable to MySQL 8; uniqueness remains validation-enforced), B-05 command batching shipped (`397adcc`). Redis (B-01) and object storage (B-06) remain infrastructure tasks gated on BD-13; codebase is config-ready.
+
 Pre-launch and Year-1 scale work is tracked in the [Scalability Review](10-Architecture/Scalability-Review-2026-07.md) bottleneck register (B-01…B-15) and the [SCALE-001 spec](Sprints/SCALE-001-Prelaunch-Hardening.md). PERF-001/PERF-002/SEC-003 below are absorbed into its Year-1 tier.
 
 ---
@@ -75,7 +77,7 @@ The model is `LoyaltyProgram` / table is `loyalty_programs`, but all routes use 
 | Field | Value |
 |---|---|
 | **Priority** | 🟢 Low |
-| **Scheduled Sprint** | Deferred |
+| **Scheduled Sprint** | ✅ Resolved — View Composer in AppServiceProvider (FINAL-003, 2026-07-05, `7412c7a`) |
 | **Source** | AI-03 Audit TD-005 |
 
 `new \App\Services\MerchantBrandingService(...)` in a Blade view bypasses the DI container. Should be moved to a View Composer registered in `AppServiceProvider`.
@@ -87,7 +89,7 @@ The model is `LoyaltyProgram` / table is `loyalty_programs`, but all routes use 
 | Field | Value |
 |---|---|
 | **Priority** | 🟢 Low |
-| **Scheduled Sprint** | Deferred |
+| **Scheduled Sprint** | ✅ Resolved — dead controller/view/PUT route removed, GET redirect kept (FINAL-005, 2026-07-05, `bd6ca99`) |
 | **Source** | AI-03 Audit L-002 |
 
 `MerchantProfileController::update()` is a legacy redirect endpoint. Should be removed after confirming no external links use it.
@@ -99,7 +101,7 @@ The model is `LoyaltyProgram` / table is `loyalty_programs`, but all routes use 
 | Field | Value |
 |---|---|
 | **Priority** | 🟢 Low |
-| **Scheduled Sprint** | Deferred — before regional expansion |
+| **Scheduled Sprint** | ✅ Resolved — config('app.default_currency') everywhere (FINAL-004, 2026-07-05, `d937843`) |
 | **Source** | AI-03 Audit TD-002 |
 
 `$merchant->currency ?? 'THB'` appears in 6+ view files. Should be `config('app.default_currency', 'THB')` or a merchant default set in the DB. Acceptable for now as Thailand-first, but must be resolved before Malaysia expansion.

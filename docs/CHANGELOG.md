@@ -1,3 +1,15 @@
+## 2026-07-05 — FINAL engineering hardening (Fable close-out)
+
+- perf: lazyById streaming in birthday/expiry commands (B-05)
+- perf: five SCALE-001 indexes — members phone/activity/postal, transactions program/date + merchant/date (B-02/B-04)
+- refactor: merchant branding via View Composer (TD-003)
+- refactor: currency fallback centralised to app.default_currency (TD-005)
+- cleanup: dead MerchantProfileController/view/PUT route removed (TD-004)
+- prep: .env.example documents the Redis production switch (ADR-009); no infra change
+- audit: full code review found no N+1s, no missing tenant scoping, no unescaped user output; login/OTP-style rate limits verified
+
+Suite: 521 tests / 1,060 assertions green after every commit.
+
 # Changelog
 
 All notable changes to this project are documented here.

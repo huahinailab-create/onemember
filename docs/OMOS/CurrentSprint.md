@@ -16,9 +16,9 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | VISION-001 |
-| **Title** | Version 2.0 Vision & Master Roadmap (2026–2030) |
-| **Status** | ⏳ Awaiting PO Ratification (DR-01…DR-30 register) |
+| **Sprint ID** | FINAL-001…006 |
+| **Title** | Final Engineering Hardening (code review, tech debt, SCALE-001 code items) |
+| **Status** | ✅ Complete (Type A items only — no business decisions touched) |
 | **Sprint Type** | Design / Documentation (no application code) |
 | **Classification** | Type C — CEO Approval Required (phase change, pricing, legal, vendor) |
 | **Sprint File** | [09-Roadmap/Version-2.0-Vision-and-Master-Roadmap-2026-2030.md](./09-Roadmap/Version-2.0-Vision-and-Master-Roadmap-2026-2030.md) |
@@ -99,6 +99,7 @@ Deliver the official 2026–2030 strategic blueprint: vision, phased evolution, 
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
+| FINAL-001…006 | Final Engineering Hardening | ✅ Complete (Type A) | pending |
 | VISION-001 | Version 2.0 Vision & Master Roadmap 2026–2030 | ⏳ Awaiting PO Ratification | `7749e13` |
 | SCALE-000 | Scalability Review & Phase 2 Blueprint | ⏳ Awaiting Ratification | `d14bd0a` |
 | PH2-000  | Customer Wallet Design Package | ⏳ Awaiting CEO Approval | `912b551` |
