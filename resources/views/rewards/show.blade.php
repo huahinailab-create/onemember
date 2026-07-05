@@ -24,7 +24,7 @@
                 @endif
             </h1>
         </div>
-        <div class="d-flex gap-2 flex-shrink-0">
+        <div class="d-flex gap-2 flex-wrap page-header-actions">
             @if ($isArchived)
                 <span class="btn btn-outline-secondary disabled">
                     <i class="bi bi-lock me-1"></i>{{ __('rewards.status_archived') }}

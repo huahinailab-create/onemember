@@ -5,7 +5,7 @@
     @php $isArchived = $campaign->trashed(); @endphp
 
     {{-- Page Header --}}
-    <div class="page-header d-flex align-items-start justify-content-between gap-3">
+    <div class="page-header d-flex align-items-start justify-content-between gap-3 flex-wrap">
         <div>
             <div class="mb-1">
                 <a href="{{ route('campaigns.index') }}" class="text-decoration-none text-muted small">
@@ -23,7 +23,7 @@
                 @endif
             </h1>
         </div>
-        <div class="d-flex gap-2 flex-shrink-0">
+        <div class="d-flex gap-2 flex-wrap page-header-actions">
             @if ($isArchived)
                 <button type="button" class="btn btn-outline-success disabled" title="{{ __('buttons.coming_soon') }}">
                     <i class="bi bi-arrow-counterclockwise me-1"></i>{{ __('campaigns.restore_campaign') }}
@@ -706,39 +706,41 @@
             <div class="tab-pane fade" id="pane-rewards" role="tabpanel">
 
                 {{-- Rewards toolbar --}}
-                <div class="p-3 border-bottom d-flex align-items-center justify-content-between gap-3 flex-wrap">
-                    <div class="btn-group btn-group-sm" role="group" aria-label="Reward filter">
-                        @foreach (['active' => __('campaigns.filter_active'), 'draft' => __('campaigns.filter_draft'), 'archived' => __('campaigns.filter_archived'), 'all' => __('campaigns.filter_all')] as $val => $lbl)
-                            <a href="{{ route('campaigns.show', $campaign) . '?' . http_build_query(['reward_filter' => $val, 'active_tab' => 'rewards'] + request()->only(['reward_search'])) }}"
-                               class="btn {{ $rewardFilter === $val ? 'btn-primary' : 'btn-outline-secondary' }}">
-                                {{ $lbl }}
-                            </a>
-                        @endforeach
+                <div class="p-3 border-bottom d-flex flex-column flex-sm-row align-items-sm-center gap-2 flex-wrap">
+                    <div class="filter-scroll flex-shrink-0">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Reward filter">
+                            @foreach (['active' => __('campaigns.filter_active'), 'draft' => __('campaigns.filter_draft'), 'archived' => __('campaigns.filter_archived'), 'all' => __('campaigns.filter_all')] as $val => $lbl)
+                                <a href="{{ route('campaigns.show', $campaign) . '?' . http_build_query(['reward_filter' => $val, 'active_tab' => 'rewards'] + request()->only(['reward_search'])) }}"
+                                   class="btn {{ $rewardFilter === $val ? 'btn-primary' : 'btn-outline-secondary' }}">
+                                    {{ $lbl }}
+                                </a>
+                            @endforeach
+                        </div>
                     </div>
 
-                    <div class="d-flex gap-2 align-items-center">
+                    <div class="d-flex gap-2 align-items-center flex-wrap ms-sm-auto">
                         <form method="GET" action="{{ route('campaigns.show', $campaign) }}"
-                              class="d-flex gap-2 align-items-center">
+                              class="d-flex gap-2 align-items-center flex-grow-1">
                             <input type="hidden" name="reward_filter" value="{{ $rewardFilter }}">
                             <input type="hidden" name="active_tab" value="rewards">
                             <input type="text"
                                    name="reward_search"
-                                   class="form-control form-control-sm"
+                                   class="form-control form-control-sm reward-search-input"
                                    placeholder="{{ __('campaigns.search_rewards_ph') }}"
                                    value="{{ request('reward_search') }}"
-                                   style="width:180px;">
-                            <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                   style="min-width:0;">
+                            <button type="submit" class="btn btn-sm btn-outline-secondary flex-shrink-0">
                                 <i class="bi bi-search"></i>
                             </button>
                             @if (request('reward_search'))
                                 <a href="{{ route('campaigns.show', $campaign) . '?' . http_build_query(['reward_filter' => $rewardFilter, 'active_tab' => 'rewards']) }}"
-                                   class="btn btn-sm btn-outline-secondary">{{ __('buttons.clear') }}</a>
+                                   class="btn btn-sm btn-outline-secondary flex-shrink-0">{{ __('buttons.clear') }}</a>
                             @endif
                         </form>
 
                         @unless ($isArchived)
                             <a href="{{ route('campaigns.rewards.create', $campaign) }}"
-                               class="btn btn-sm btn-primary">
+                               class="btn btn-sm btn-primary flex-shrink-0">
                                 <i class="bi bi-plus-lg me-1"></i>{{ __('buttons.add_reward') }}
                             </a>
                         @endunless
@@ -772,11 +774,11 @@
                             <thead class="table-light">
                                 <tr>
                                     <th class="ps-4">{{ __('campaigns.col_reward_name') }}</th>
-                                    <th>{{ __('campaigns.col_reward_type') }}</th>
+                                    <th class="d-none d-sm-table-cell">{{ __('campaigns.col_reward_type') }}</th>
                                     @if ($campaign->type->value === 'points')
-                                        <th class="text-end">{{ __('campaigns.col_points_required') }}</th>
+                                        <th class="text-end d-none d-sm-table-cell">{{ __('campaigns.col_points_required') }}</th>
                                     @endif
-                                    <th class="text-end">{{ __('campaigns.col_quantity') }}</th>
+                                    <th class="text-end d-none d-sm-table-cell">{{ __('campaigns.col_quantity') }}</th>
                                     <th>{{ __('campaigns.col_status') }}</th>
                                     <th class="text-end pe-4">{{ __('campaigns.col_actions') }}</th>
                                 </tr>
@@ -790,13 +792,13 @@
                                                 {{ $reward->name }}
                                             </a>
                                         </td>
-                                        <td>{{ $reward->type->label() }}</td>
+                                        <td class="d-none d-sm-table-cell">{{ $reward->type->label() }}</td>
                                         @if ($campaign->type->value === 'points')
-                                            <td class="text-end">
+                                            <td class="text-end d-none d-sm-table-cell">
                                                 {{ $reward->points_required ? number_format($reward->points_required) . ' pts' : '—' }}
                                             </td>
                                         @endif
-                                        <td class="text-end">
+                                        <td class="text-end d-none d-sm-table-cell">
                                             {{ $reward->quantity_available === null ? __('campaigns.unlimited') : number_format($reward->quantity_available) }}
                                         </td>
                                         <td>

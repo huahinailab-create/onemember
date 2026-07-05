@@ -8,13 +8,13 @@
             <h1>{{ __('campaigns.title') }}</h1>
             <p>{{ __('campaigns.subtitle') }}</p>
         </div>
-        <a href="{{ route('campaigns.create') }}" class="btn btn-primary">
+        <a href="{{ route('campaigns.create') }}" class="btn btn-primary flex-shrink-0">
             <i class="bi bi-plus-lg me-1"></i> {{ __('campaigns.create_campaign') }}
         </a>
     </div>
 
     {{-- Filter Tabs --}}
-    <div class="mb-3">
+    <div class="mb-3 filter-scroll">
         <div class="btn-group btn-group-sm" role="group" aria-label="Campaign filter">
             @foreach ([
                 'active'   => __('campaigns.filter_active'),
@@ -83,7 +83,33 @@
                     @endif
                 </div>
             @else
-                <div class="table-responsive">
+                {{-- Mobile card list (xs) --}}
+                <div class="d-sm-none">
+                    @foreach ($campaigns as $campaign)
+                        <a href="{{ route('campaigns.show', $campaign) }}"
+                           class="d-flex align-items-center gap-3 px-3 py-3 border-bottom text-decoration-none {{ $campaign->trashed() ? 'text-muted' : '' }}">
+                            <div class="d-flex align-items-center justify-content-center rounded-circle flex-shrink-0"
+                                 style="width:40px;height:40px;background:var(--om-icon-bg);color:var(--om-navy);font-size:1.1rem;">
+                                <i class="bi {{ $campaign->type->icon() }}"></i>
+                            </div>
+                            <div class="flex-grow-1 overflow-hidden">
+                                <div class="fw-semibold text-truncate" style="color:var(--om-ink);">{{ $campaign->name }}</div>
+                                <div class="text-muted small">{{ $campaign->type->label() }}</div>
+                            </div>
+                            <div class="flex-shrink-0 text-end">
+                                @if ($campaign->trashed())
+                                    <span class="badge bg-danger" style="font-size:.65rem;">{{ __('campaigns.status_archived') }}</span>
+                                @else
+                                    <span class="{{ $campaign->status->badgeClass() }}" style="font-size:.65rem;">{{ $campaign->status->label() }}</span>
+                                @endif
+                                <div class="text-muted mt-1" style="font-size:.7rem;">{{ $campaign->updated_at->format('d M Y') }}</div>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+
+                {{-- Desktop table (sm+) --}}
+                <div class="table-responsive d-none d-sm-block">
                     <table class="table table-hover align-middle mb-0">
                         <thead class="table-light">
                             <tr>

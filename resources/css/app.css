@@ -689,6 +689,71 @@ body.om-sidebar-open {
     overflow: hidden;
 }
 
+/* ── Nav tabs — scrollable on mobile ────────────────────── */
+@media (max-width: 767.98px) {
+    .nav-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .nav-tabs::-webkit-scrollbar {
+        display: none;
+    }
+    .nav-tabs .nav-link {
+        white-space: nowrap;
+    }
+}
+
+/* ── Page header — wrap actions below title on xs ────────── */
+@media (max-width: 575.98px) {
+    .page-header.d-flex {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+    .page-header-actions {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    /* Soften px-4 padding on tables inside cards */
+    .card .ps-4 { padding-left: 0.75rem !important; }
+    .card .pe-4 { padding-right: 0.75rem !important; }
+    .card .px-4 { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
+}
+
+/* ── Filter button groups — scrollable on xs ─────────────── */
+.filter-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px; /* prevent clipped focus ring */
+}
+.filter-scroll::-webkit-scrollbar {
+    display: none;
+}
+.filter-scroll .btn-group {
+    flex-shrink: 0;
+}
+
+/* ── Reward / campaign toolbar — stack on xs ─────────────── */
+@media (max-width: 575.98px) {
+    .toolbar-responsive {
+        flex-direction: column;
+        align-items: stretch !important;
+    }
+    .toolbar-responsive > * {
+        width: 100%;
+    }
+    .toolbar-responsive .d-flex {
+        flex-wrap: wrap;
+    }
+    .reward-search-input {
+        width: 100% !important;
+        min-width: 0;
+    }
+}
+
 /* ── Mobile — Overlay sidebar ───────────────────────────── */
 @media (max-width: 767.98px) {
     .sidebar {

@@ -8,13 +8,13 @@
             <h1>{{ __('members.title') }}</h1>
             <p>{{ __('members.subtitle') }}</p>
         </div>
-        <a href="{{ route('members.create') }}" class="btn btn-primary">
+        <a href="{{ route('members.create') }}" class="btn btn-primary flex-shrink-0">
             <i class="bi bi-person-plus me-1"></i> {{ __('members.add_member') }}
         </a>
     </div>
 
     {{-- Filter Tabs --}}
-    <div class="mb-3">
+    <div class="mb-3 filter-scroll">
         <div class="btn-group btn-group-sm" role="group" aria-label="Member filter">
             @foreach (['active' => __('members.filter_active'), 'archived' => __('members.filter_archived'), 'all' => __('members.filter_all')] as $value => $label)
                 <a href="{{ route('members', array_merge(request()->except(['filter', 'page']), ['filter' => $value])) }}"
@@ -88,7 +88,35 @@
                     @endif
                 </div>
             @else
-                <div class="table-responsive">
+                {{-- ── Mobile card list (xs only) ── --}}
+                <div class="d-sm-none">
+                    @foreach ($members as $member)
+                        <a href="{{ route('members.show', $member) }}"
+                           class="d-flex align-items-center gap-3 px-3 py-3 border-bottom text-decoration-none {{ $member->trashed() ? 'text-muted' : '' }}">
+                            <div class="d-flex align-items-center justify-content-center rounded-circle flex-shrink-0 fw-bold"
+                                 style="width:40px;height:40px;font-size:0.875rem;background:var(--om-icon-bg);color:var(--om-navy);">
+                                {{ strtoupper(mb_substr($member->name, 0, 1)) }}
+                            </div>
+                            <div class="flex-grow-1 overflow-hidden">
+                                <div class="fw-semibold text-truncate" style="color:var(--om-ink);">{{ $member->name }}</div>
+                                <div class="text-muted small text-truncate">{{ $member->phone ?? '—' }}</div>
+                            </div>
+                            <div class="text-end flex-shrink-0">
+                                <div class="fw-bold small" style="color:var(--om-navy);">{{ number_format($member->total_points) }}</div>
+                                <div class="mt-1">
+                                    @if ($member->trashed())
+                                        <span class="badge bg-danger" style="font-size:.65rem;">{{ __('members.status_archived') }}</span>
+                                    @else
+                                        <span class="{{ $member->status->badgeClass() }}" style="font-size:.65rem;">{{ $member->status->label() }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+
+                {{-- ── Desktop table (sm+) ── --}}
+                <div class="table-responsive d-none d-sm-block">
                     <table class="table table-hover align-middle mb-0">
                         <thead class="table-light">
                             <tr>

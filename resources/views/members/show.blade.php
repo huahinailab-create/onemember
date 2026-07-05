@@ -5,7 +5,7 @@
     @php $isArchived = $member->trashed(); @endphp
 
     {{-- Page Header --}}
-    <div class="page-header d-flex align-items-start justify-content-between gap-3">
+    <div class="page-header d-flex align-items-start justify-content-between gap-3 flex-wrap">
         <div>
             <div class="mb-1">
                 <a href="{{ route('members') }}" class="text-decoration-none text-muted small">
@@ -23,7 +23,7 @@
                 @endif
             </h1>
         </div>
-        <div class="d-flex gap-2 flex-shrink-0">
+        <div class="d-flex gap-2 flex-wrap page-header-actions">
             @if ($isArchived)
                 <button type="button" class="btn btn-outline-success disabled" title="{{ __('buttons.coming_soon') }}">
                     <i class="bi bi-arrow-counterclockwise me-1"></i>{{ __('members.restore_member') }}
@@ -614,7 +614,7 @@
                 </div>
 
                 {{-- Filter buttons --}}
-                <div class="p-3 border-bottom d-flex align-items-center gap-2 flex-wrap">
+                <div class="p-3 border-bottom filter-scroll">
                     @php
                         $filterOptions = [
                             'all'         => __('members.activity_all'),

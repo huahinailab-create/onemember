@@ -289,11 +289,11 @@
                             <table class="table table-hover align-middle mb-0">
                                 <thead class="table-light">
                                     <tr>
-                                                        <th class="ps-3">{{ __('dashboard.member_col') }}</th>
+                                        <th class="ps-3">{{ __('dashboard.member_col') }}</th>
                                         <th>{{ __('dashboard.type_col') }}</th>
-                                        <th>{{ __('dashboard.campaign_col') }}</th>
+                                        <th class="d-none d-sm-table-cell">{{ __('dashboard.campaign_col') }}</th>
                                         <th class="text-end">{{ __('dashboard.points_col') }}</th>
-                                        <th class="text-end pe-3">{{ __('dashboard.date_time_col') }}</th>
+                                        <th class="text-end pe-3 d-none d-sm-table-cell">{{ __('dashboard.date_time_col') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -314,13 +314,13 @@
                                                     {{ $activity->type->label() }}
                                                 </span>
                                             </td>
-                                            <td class="text-muted small">
+                                            <td class="text-muted small d-none d-sm-table-cell">
                                                 {{ $activity->loyaltyProgram?->name ?? '—' }}
                                             </td>
                                             <td class="text-end fw-medium {{ $activity->points >= 0 ? 'text-success' : 'text-danger' }}">
                                                 {{ $activity->points >= 0 ? '+' : '' }}{{ number_format($activity->points) }}
                                             </td>
-                                            <td class="text-end pe-3 text-muted small">
+                                            <td class="text-end pe-3 text-muted small d-none d-sm-table-cell">
                                                 {{ $activity->created_at->format('d M Y, H:i') }}
                                             </td>
                                         </tr>
@@ -402,9 +402,9 @@
                         <thead class="table-light">
                             <tr>
                                 <th class="ps-3">{{ __('dashboard.campaign_name_col') }}</th>
-                                <th>{{ __('dashboard.type_col2') }}</th>
+                                <th class="d-none d-sm-table-cell">{{ __('dashboard.type_col2') }}</th>
                                 <th>{{ __('dashboard.status_col') }}</th>
-                                <th>{{ __('dashboard.rewards_col') }}</th>
+                                <th class="d-none d-sm-table-cell">{{ __('dashboard.rewards_col') }}</th>
                                 <th class="pe-3"></th>
                             </tr>
                         </thead>
@@ -412,7 +412,7 @@
                             @foreach ($activeCampaigns as $campaign)
                                 <tr>
                                     <td class="ps-3 fw-medium">{{ $campaign->name }}</td>
-                                    <td>
+                                    <td class="d-none d-sm-table-cell">
                                         <span class="badge bg-secondary">
                                             {{ $campaign->type->label() }}
                                         </span>
@@ -422,7 +422,7 @@
                                             {{ $campaign->status->label() }}
                                         </span>
                                     </td>
-                                    <td class="text-muted">{{ $campaign->rewards_count }}</td>
+                                    <td class="text-muted d-none d-sm-table-cell">{{ $campaign->rewards_count }}</td>
                                     <td class="text-end pe-3">
                                         <a href="{{ route('campaigns.show', $campaign) }}"
                                            class="btn btn-outline-secondary btn-sm">
