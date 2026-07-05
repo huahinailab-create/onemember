@@ -14,7 +14,6 @@ use App\Http\Controllers\RewardController;
 use App\Http\Controllers\CounterModeController;
 use App\Http\Controllers\CustomerPortalController;
 use App\Http\Controllers\DataManagementController;
-use App\Http\Controllers\MerchantProfileController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CorporateController;
 use App\Http\Controllers\FeedbackController;
@@ -140,8 +139,9 @@ Route::domain(config('domains.app'))->group(function () {
         Route::post('/settings/data/import/members/execute', [DataManagementController::class, 'importExecute'])->name('data.import.execute');
         Route::get('/settings/data/export/{type}',           [DataManagementController::class, 'export'])->name('data.export');
 
+        // Legacy URL kept as a redirect for old bookmarks (TD-004: dead
+        // controller/view/PUT endpoint removed 2026-07-05).
         Route::get('/merchant/profile', fn () => redirect()->route('settings'))->name('merchant.profile.edit');
-        Route::put('/merchant/profile', [MerchantProfileController::class, 'update'])->name('merchant.profile.update');
 
         Route::get('/members',              [MemberController::class, 'index'])->name('members');
         Route::get('/members/create',       [MemberController::class, 'create'])->name('members.create');
