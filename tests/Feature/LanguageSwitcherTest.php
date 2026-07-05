@@ -253,4 +253,31 @@ class LanguageSwitcherTest extends TestCase
             );
         }
     }
+
+    // ── Mobile dropdown positioning regression (iPhone Safari) ────────────────
+    //
+    // Bootstrap's Popper-based dropdown positioning could open the language
+    // menu off the left edge of the viewport on iOS Safari. The fix disables
+    // Popper for this dropdown (data-bs-display="static") and lets plain CSS
+    // (.lang-switcher-menu, scoped in resources/css/app.css) keep the menu
+    // right-aligned with the toggle button inside the viewport below 768px.
+    // These assertions guard the markup contract the CSS fix depends on —
+    // removing either attribute silently reintroduces the bug.
+
+    public function test_language_switcher_disables_popper_for_static_css_positioning(): void
+    {
+        $response = $this->get(route('corporate.home'));
+
+        $response->assertOk();
+        $response->assertSee('data-bs-display="static"', false);
+    }
+
+    public function test_language_switcher_menu_has_mobile_positioning_class(): void
+    {
+        $response = $this->get(route('corporate.home'));
+
+        $response->assertOk();
+        $response->assertSee('lang-switcher-wrap', false);
+        $response->assertSee('lang-switcher-menu', false);
+    }
 }

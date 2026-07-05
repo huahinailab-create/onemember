@@ -5,15 +5,16 @@
     $currentUrl = url()->current();
 @endphp
 
-<div class="dropdown">
+<div class="dropdown lang-switcher-wrap">
     <button class="btn btn-sm btn-outline-secondary dropdown-toggle lang-switcher-btn"
             type="button"
             data-bs-toggle="dropdown"
+            data-bs-display="static"
             aria-expanded="false"
             style="font-size:0.8rem;padding:0.25rem 0.625rem;border-color:rgba(26,46,90,0.2);color:#1A2E5A;">
         <span class="me-1" aria-hidden="true">🌐</span><span class="lang-label">{{ $labels[$current] ?? 'EN' }}</span>
     </button>
-    <ul class="dropdown-menu dropdown-menu-end {{ $dropup ? 'dropup' : '' }}" style="min-width:8rem;">
+    <ul class="dropdown-menu dropdown-menu-end lang-switcher-menu {{ $dropup ? 'dropup' : '' }}" style="min-width:8rem;">
         <li>
             <form method="POST" action="/locale">
                 @csrf

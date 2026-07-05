@@ -878,6 +878,32 @@ body.om-sidebar-open {
     }
 }
 
+/* ── Language switcher — keep dropdown menu inside the viewport on mobile.
+   The toggle uses data-bs-display="static" (see component) so Bootstrap
+   never hands positioning to Popper; the menu is placed with plain CSS
+   only, which is what actually fixes the iPhone Safari bug where Popper's
+   collision-boundary calculation opened the menu off the left edge of the
+   screen. Desktop is untouched — this block only applies below 768px. ── */
+@media (max-width: 767.98px) {
+    .lang-switcher-wrap {
+        position: relative;
+    }
+    .lang-switcher-menu {
+        position: absolute !important;
+        top: 100% !important;
+        right: 0 !important;
+        left: auto !important;
+        margin-left: 0 !important;
+        /* Never wider than the viewport minus a small safety gutter, and
+           never wider than the wrapper needs — right:0 keeps the globe
+           button aligned with the nav while the menu grows leftward only. */
+        max-width: calc(100vw - 1.5rem);
+        z-index: 1065; /* above the merchant mobile sidebar (1055) and its
+                           backdrop (1050), and above the corporate mobile
+                           nav collapse */
+    }
+}
+
 /* ── Responsive tables ───────────────────────────────────── */
 @media (max-width: 575.98px) {
     .table-responsive-stack thead {

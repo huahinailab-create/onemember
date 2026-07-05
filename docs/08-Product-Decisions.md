@@ -1089,4 +1089,14 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-074 — Language Switcher Mobile Dropdown Fix
+
+- **Date:** 2026-07-06
+- **Status:** Approved
+- **Decision:** Fixed a mobile-only bug where the language switcher dropdown could render outside the left edge of the viewport on iPhone Safari, making some options unreachable. Root cause: Bootstrap's Popper-based dynamic positioning miscalculated the collision boundary inside the mobile nav's stacking context. Fix: the toggle now sets `data-bs-display="static"`, which disables Popper entirely for this dropdown and lets Bootstrap's plain-CSS `.dropdown-menu-end` positioning take over deterministically across all browsers. A scoped mobile-only CSS block (`@media max-width: 767.98px`) on the new `.lang-switcher-menu`/`.lang-switcher-wrap` classes forces `right:0; left:auto`, caps the menu width to the viewport, and raises `z-index` to 1065 so it renders above the merchant mobile sidebar (1055) and its backdrop (1050), and above the corporate mobile nav collapse. Desktop is unaffected — verified visually (button-aligned, `z-index:1000`, unchanged position) and the override only applies below 768px.
+- **Reason:** Reported production bug — the dropdown was unusable on iPhone Safari, a primary merchant/customer device in Thailand.
+- **Impact:** Modified: `resources/views/components/language-switcher.blade.php` (added `data-bs-display="static"`, `.lang-switcher-wrap`/`.lang-switcher-menu` classes — no translation or functional change), `resources/css/app.css` (new mobile-scoped block). New: 2 regression tests in `tests/Feature/LanguageSwitcherTest.php` asserting the markup contract the CSS fix depends on. No routes, migrations, or business logic touched.
+
+---
+
 *New decisions must be appended above this line in the format shown.*
