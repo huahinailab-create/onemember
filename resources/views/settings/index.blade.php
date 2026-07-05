@@ -432,7 +432,7 @@
                                         class="form-select @error('currency') is-invalid @enderror" required>
                                     @foreach ($currencies as $code => $label)
                                         <option value="{{ $code }}"
-                                            {{ old('currency', $merchant?->currency ?? 'THB') === $code ? 'selected' : '' }}>
+                                            {{ old('currency', $merchant?->currency ?? config('app.default_currency')) === $code ? 'selected' : '' }}>
                                             {{ $label }}
                                         </option>
                                     @endforeach

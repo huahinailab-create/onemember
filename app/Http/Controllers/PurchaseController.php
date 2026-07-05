@@ -90,7 +90,7 @@ class PurchaseController extends Controller
                              'earned'        => $earned,
                              'type'          => $campaign->type->value,
                              'balance'       => $balanceAfter,
-                             'currency'      => $merchant->currency ?? 'THB',
+                             'currency'      => $merchant->currency ?? config('app.default_currency'),
                              'member_name'   => $member->name,
                          ]);
     }

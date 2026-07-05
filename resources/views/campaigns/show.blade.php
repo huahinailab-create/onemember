@@ -290,7 +290,7 @@
             @php
                 $campaignConfigData = [
                     'type'               => $campaign->type->value,
-                    'currency'           => $campaign->merchant->currency ?? 'THB',
+                    'currency'           => $campaign->merchant->currency ?? config('app.default_currency'),
                     'campaignName'       => $campaign->name,
                     'campaignStatus'     => $isArchived ? __('campaigns.status_archived') : $campaign->status->label(),
                     'spendAmount'        => (int) ($settings['spend_amount']              ?? 100),
@@ -376,7 +376,7 @@
                                                        value="{{ old('spend_amount', $settings['spend_amount'] ?? 100) }}"
                                                        {{ $isArchived ? 'disabled' : '' }}
                                                        required>
-                                                <span class="input-group-text">{{ $campaign->merchant->currency ?? 'THB' }}</span>
+                                                <span class="input-group-text">{{ $campaign->merchant->currency ?? config('app.default_currency') }}</span>
                                                 @error('spend_amount')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror

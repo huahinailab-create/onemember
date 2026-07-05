@@ -15,6 +15,10 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    // TD-005: single source for the currency fallback shown when a merchant
+    // has no currency set. Must become per-market before regional expansion.
+    'default_currency' => env('APP_DEFAULT_CURRENCY', 'THB'),
+
     'version' => env('APP_VERSION', '1.0'),
 
     /*

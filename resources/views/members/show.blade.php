@@ -418,7 +418,7 @@
                                        value="{{ old('purchase_amount') }}"
                                        placeholder="e.g. 550"
                                        required>
-                                <span class="input-group-text">{{ $member->merchant->currency ?? 'THB' }}</span>
+                                <span class="input-group-text">{{ $member->merchant->currency ?? config('app.default_currency') }}</span>
                                 @error('purchase_amount')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -725,7 +725,7 @@
                                         @if ($tx->purchase_amount !== null)
                                             <div>
                                                 <div class="text-muted" style="font-size:.7rem;">{{ __('members.purchase_label') }}</div>
-                                                <div>{{ number_format((float) $tx->purchase_amount, 2) }} {{ $member->merchant->currency ?? 'THB' }}</div>
+                                                <div>{{ number_format((float) $tx->purchase_amount, 2) }} {{ $member->merchant->currency ?? config('app.default_currency') }}</div>
                                             </div>
                                         @endif
                                         <div>
