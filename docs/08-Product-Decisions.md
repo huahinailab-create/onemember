@@ -1037,4 +1037,18 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-070 — Counter Mode UI (MVP-007)
+
+- **Date:** 2026-07-05
+- **Status:** Approved
+- **Decision:**
+  1. Counter Mode gains a dedicated staff screen at `/counter` (app domain, authenticated). It is reachable from the existing counter-mode bar's "Find Member" button.
+  2. The screen is search-first: one large input matching phone, name, or member code (active members of the current merchant only, max 10 results), with an inline purchase-amount form per result.
+  3. Purchases posted from the counter include `return_to=counter`; `PurchaseController` redirects back to `/counter` with the success flash so staff never leave the screen.
+  4. If Counter Mode is disabled in merchant settings, `/counter` redirects to the dashboard with a notice — no separate staff auth is introduced in this sprint (staff share the merchant login, per current product model).
+- **Reason:** The Counter Mode toggle existed with no dedicated UI — a documented pilot limitation. Staff need a fast record-purchase flow without navigating the full dashboard.
+- **Impact:** New: `resources/views/counter/index.blade.php`, `tests/Feature/CounterModeTest.php` (7 tests). Modified: `app/Http/Controllers/CounterModeController.php` (index action), `app/Http/Controllers/PurchaseController.php` (return_to redirect + member_name flash), `routes/web.php` (GET /counter), `resources/views/layouts/app.blade.php` (bar link), `lang/en/mobile.php`, `lang/th/mobile.php`.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

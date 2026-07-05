@@ -238,7 +238,7 @@
                     <i class="bi bi-shop me-1"></i>{{ __('mobile.counter_mode_active') }}
                 </span>
                 <div class="counter-mode-actions ms-auto">
-                    <a href="{{ route('members') }}?search_focus=1"
+                    <a href="{{ route('counter') }}"
                        class="btn btn-sm btn-light d-flex align-items-center gap-1">
                         <i class="bi bi-search"></i>
                         <span>{{ __('mobile.counter_find_member') }}</span>

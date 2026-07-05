@@ -132,6 +132,7 @@ Route::domain(config('domains.app'))->group(function () {
         Route::put('/settings/preferences',  [SettingsController::class, 'updatePreferences'])->name('settings.preferences.update');
 
         Route::put('/settings/counter-mode', [CounterModeController::class, 'toggle'])->name('counter-mode.toggle');
+        Route::get('/counter',               [CounterModeController::class, 'index'])->name('counter');
 
         Route::get('/settings/data/import/members',          [DataManagementController::class, 'importForm'])->name('data.import.form');
         Route::post('/settings/data/import/members/upload',  [DataManagementController::class, 'importUpload'])->name('data.import.upload');

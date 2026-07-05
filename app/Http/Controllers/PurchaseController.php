@@ -79,14 +79,19 @@ class PurchaseController extends Controller
 
         MemberPointsEarned::dispatch($member, $transaction, $campaign);
 
-        return redirect()->route('members.show', $member)
-                         ->with('purchase_success', [
+        // Counter Mode posts with return_to=counter to stay on the counter screen
+        $route = $request->input('return_to') === 'counter'
+            ? redirect()->route('counter')
+            : redirect()->route('members.show', $member);
+
+        return $route->with('purchase_success', [
                              'amount'        => $purchaseAmount,
                              'campaign_name' => $campaign->name,
                              'earned'        => $earned,
                              'type'          => $campaign->type->value,
                              'balance'       => $balanceAfter,
                              'currency'      => $merchant->currency ?? 'THB',
+                             'member_name'   => $member->name,
                          ]);
     }
 }
