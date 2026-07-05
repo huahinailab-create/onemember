@@ -7,6 +7,8 @@
 
 ---
 
+> **2026-07-05:** These ideas have been triaged into the official [Version 2.0 Vision & Master Roadmap (2026–2030)](OMOS/09-Roadmap/Version-2.0-Vision-and-Master-Roadmap-2026-2030.md) — see its §15 priorities and §14 decision register.
+
 ## Purpose
 
 This document captures post-V1.0 product ideas for future planning. None of these features should be built until V1.0 is commercially launched and generating revenue. Ideas are organised by theme, not priority.

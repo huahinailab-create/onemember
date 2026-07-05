@@ -16,23 +16,23 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | SCALE-000 |
-| **Title** | Scalability Review & Phase 2 Implementation Blueprint |
-| **Status** | ⏳ Awaiting PO/CTO Ratification (ADR-009 + BD-11…BD-18) |
+| **Sprint ID** | VISION-001 |
+| **Title** | Version 2.0 Vision & Master Roadmap (2026–2030) |
+| **Status** | ⏳ Awaiting PO Ratification (DR-01…DR-30 register) |
 | **Sprint Type** | Design / Documentation (no application code) |
 | **Classification** | Type C — CEO Approval Required (phase change, pricing, legal, vendor) |
-| **Sprint File** | [Sprints/SCALE-000-Scalability-Review.md](./Sprints/SCALE-000-Scalability-Review.md) |
+| **Sprint File** | [09-Roadmap/Version-2.0-Vision-and-Master-Roadmap-2026-2030.md](./09-Roadmap/Version-2.0-Vision-and-Master-Roadmap-2026-2030.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Fable 5 |
 | **Reviewer** | Product Owner (CEO) |
 | **Started** | 2026-07-05 |
 | **Target Completion** | 2026-07-05 |
 | **Actual Completion** | 2026-07-05 |
-| **Final Commit** | `d14bd0a` |
+| **Final Commit** | pending |
 
 ### Business Objective
 
-Certify the architecture for 100k merchants / 1M members / 100M transactions, register every bottleneck with a tiered fix plan (ADR-009 proposed), and deliver implementation-ready specs for SCALE-001 and PH2-001A–F so development can proceed sprint by sprint. Docs only — no code.
+Deliver the official 2026–2030 strategic blueprint: vision, phased evolution, wallet/merchant/AI/integration/enterprise/mobile/revenue/expansion strategy, risks, five-year milestones, decision register (DR-01…DR-30), priorities, and never-become list. Docs only — no code.
 
 ---
 
@@ -99,6 +99,7 @@ Certify the architecture for 100k merchants / 1M members / 100M transactions, re
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
+| VISION-001 | Version 2.0 Vision & Master Roadmap 2026–2030 | ⏳ Awaiting PO Ratification | pending |
 | SCALE-000 | Scalability Review & Phase 2 Blueprint | ⏳ Awaiting Ratification | `d14bd0a` |
 | PH2-000  | Customer Wallet Design Package | ⏳ Awaiting CEO Approval | `912b551` |
 | ENG-001  | Engineering Backlog Clearance | ✅ Complete (Type A) | `2afb644` |

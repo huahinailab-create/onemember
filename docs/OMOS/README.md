@@ -123,6 +123,7 @@ docs/OMOS/
 ├── 07-Brand/                  ← Visual identity, voice, design system
 ├── 08-Security/               ← Security policy, threat model, compliance
 ├── 09-Roadmap/                ← Strategic roadmap (phases), NOT sprint specs
+│   └── Version-2.0-Vision-and-Master-Roadmap-2026-2030.md ← 5-year blueprint
 ├── 10-Architecture/           ← System architecture, data models, integrations
 ├── 11-Standards/              ← All coding, API, DB, UI, testing standards
 ├── 12-ADR/                    ← Architecture Decision Records

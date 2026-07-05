@@ -20,6 +20,8 @@ The roadmap is not a fixed schedule. It is a prioritised sequence of outcomes. T
 
 ## Relationship to Other Documents
 
+- **[Version-2.0-Vision-and-Master-Roadmap-2026-2030.md](./Version-2.0-Vision-and-Master-Roadmap-2026-2030.md)** — the strategic 5-year blueprint (VISION-001, 2026-07-05). This operational roadmap covers near-term sprints; the Master Roadmap covers phases, milestones, and strategy through 2030.
+
 - `roadmap/` folder — High-level phase descriptions and the master vision narrative (created in Sprint AI-01). Those documents inform this one.
 - This document (`docs/OMOS/09-Roadmap/Roadmap.md`) — The detailed, maintained roadmap that is updated after every sprint.
 - `backlog/` — The raw backlog from which roadmap items are drawn.

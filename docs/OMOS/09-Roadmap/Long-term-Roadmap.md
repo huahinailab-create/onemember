@@ -10,6 +10,8 @@
 
 ---
 
+> **2026-07-05:** The detailed year-by-year strategy through 2030, including AI, integrations, enterprise, mobile, revenue, and expansion plans, is in [Version-2.0-Vision-and-Master-Roadmap-2026-2030.md](./Version-2.0-Vision-and-Master-Roadmap-2026-2030.md). This document remains the phase narrative; the Master Roadmap operationalises it.
+
 ## Purpose
 
 This document describes OneMember's long-term platform evolution — the phases, the modules, and the strategic logic connecting them. It is the narrative version of the product roadmap.
