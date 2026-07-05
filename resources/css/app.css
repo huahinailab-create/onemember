@@ -769,16 +769,39 @@ body.om-sidebar-open {
         -webkit-overflow-scrolling: touch;
     }
 
-    /* Ensure close button meets 44px touch target on real devices */
+    /* Sidebar close button — plain button, no Bootstrap btn-close inheritance.
+       position:relative + z-index:1060 ensures it sits above the sidebar (1055)
+       and backdrop (1050) stacking contexts. pointer-events:auto is explicit so
+       no ancestor rule can accidentally disable it. touch-action:manipulation
+       tells iOS Safari to treat the first touch as a tap immediately. */
     .sidebar-close-btn {
-        min-width: 44px;
-        min-height: 44px;
-        display: flex !important;
+        position: relative;
+        z-index: 1060;
+        display: flex;
         align-items: center;
         justify-content: center;
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0;
+        border: none;
+        border-radius: 8px;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.25rem;
         cursor: pointer;
-        -webkit-tap-highlight-color: transparent;
+        pointer-events: auto;
         touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+
+    .sidebar-close-btn:hover,
+    .sidebar-close-btn:active {
+        background: rgba(255, 255, 255, 0.15);
+        color: #fff;
     }
 
     .sidebar:not(.collapsed) {

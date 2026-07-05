@@ -34,23 +34,20 @@
      x-effect="document.body.classList.toggle('om-sidebar-open', sidebarOpen && window.innerWidth < 768)"
      @keydown.escape.window="sidebarOpen = false">
 
-    {{-- ── Mobile backdrop ──────────────────────────────── --}}
-    <div class="sidebar-backdrop d-md-none"
-         x-show="sidebarOpen"
-         aria-hidden="true"
-         @click="sidebarOpen = false"></div>
-
     {{-- ── Sidebar ───────────────────────────────────────── --}}
     <nav class="sidebar p-3" :class="{ 'collapsed': !sidebarOpen }"
          aria-label="{{ __('navigation.main_menu') }}"
          role="navigation">
 
-        {{-- Mobile close button --}}
+        {{-- Mobile close button: plain <button> so Bootstrap's btn-close
+             width/height overrides cannot shrink the tap target below 44px --}}
         <div class="d-flex align-items-center justify-content-end d-md-none mb-2">
             <button type="button"
-                    class="btn-close btn-close-white sidebar-close-btn"
-                    @click.stop="sidebarOpen = false"
-                    aria-label="{{ __('mobile.close_menu') }}"></button>
+                    class="sidebar-close-btn"
+                    @click.prevent.stop="sidebarOpen = false"
+                    aria-label="{{ __('mobile.close_menu') }}">
+                <i class="bi bi-x-lg" aria-hidden="true"></i>
+            </button>
         </div>
 
         {{-- Brand --}}
@@ -201,6 +198,14 @@
         </div>
 
     </nav>
+
+    {{-- ── Mobile backdrop — rendered AFTER sidebar in DOM so iOS Safari
+         hit-testing does not route taps to it ahead of the sidebar ──── --}}
+    <div class="sidebar-backdrop d-md-none"
+         x-show="sidebarOpen"
+         x-cloak
+         aria-hidden="true"
+         @click.prevent="sidebarOpen = false"></div>
     {{-- ── /Sidebar ──────────────────────────────────────── --}}
 
     {{-- ── Main area ─────────────────────────────────────── --}}

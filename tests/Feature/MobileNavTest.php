@@ -50,7 +50,10 @@ class MobileNavTest extends TestCase
         $response = $this->actingAs($user)->get(route('dashboard'));
 
         $response->assertOk();
-        $response->assertSee('btn-close-white', false);
+        // Plain button with sidebar-close-btn class (not Bootstrap btn-close,
+        // which has a tiny 1em tap target that fails on real mobile devices)
+        $response->assertSee('sidebar-close-btn', false);
+        $response->assertSee('bi-x-lg', false);
     }
 
     public function test_sidebar_close_button_wired_to_alpine_state(): void
@@ -60,9 +63,9 @@ class MobileNavTest extends TestCase
         $response = $this->actingAs($user)->get(route('dashboard'));
 
         $response->assertOk();
-        // Close button must set sidebarOpen = false (not just any @click)
+        // @click.prevent.stop ensures no ancestor element intercepts the tap
         $response->assertSee('sidebar-close-btn', false);
-        $response->assertSee('@click.stop="sidebarOpen = false"', false);
+        $response->assertSee('@click.prevent.stop="sidebarOpen = false"', false);
     }
 
     public function test_nav_links_close_sidebar_on_click(): void
