@@ -38,9 +38,10 @@ class ProcessBirthdayRewards extends Command
             $daysBefore   = (int) ($campaign->settings['birthday_valid_days_before'] ?? 0);
             $daysAfter    = (int) ($campaign->settings['birthday_valid_days_after']  ?? 0);
 
+            // lazyById keeps memory flat regardless of member count (B-05)
             $members = Member::where('merchant_id', $campaign->merchant_id)
                 ->whereNotNull('birthday')
-                ->get();
+                ->lazyById(1000);
 
             foreach ($members as $member) {
                 if (! $this->isInBirthdayWindow($member, $daysBefore, $daysAfter)) {

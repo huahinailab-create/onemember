@@ -39,10 +39,11 @@ class ProcessPointExpiry extends Command
                 ? now()->subMonths($duration)
                 : now()->subYears($duration);
 
+            // lazyById keeps memory flat regardless of member count (B-05)
             $members = Member::where('merchant_id', $campaign->merchant_id)
                 ->where('total_points', '>', 0)
                 ->where('last_activity_at', '<', $cutoff)
-                ->get();
+                ->lazyById(1000);
 
             foreach ($members as $member) {
                 // Idempotency: skip if an Expire transaction was already created today
