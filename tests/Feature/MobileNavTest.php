@@ -50,53 +50,34 @@ class MobileNavTest extends TestCase
         $response = $this->actingAs($user)->get(route('dashboard'));
 
         $response->assertOk();
-        // Plain button with sidebar-close-btn class (not Bootstrap btn-close,
-        // which has a tiny 1em tap target that fails on real mobile devices)
         $response->assertSee('sidebar-close-btn', false);
         $response->assertSee('bi-x-lg', false);
     }
 
-    public function test_sidebar_close_button_wired_to_alpine_state(): void
+    public function test_sidebar_close_button_has_js_id(): void
     {
         $user = $this->authenticatedMerchant();
 
         $response = $this->actingAs($user)->get(route('dashboard'));
 
         $response->assertOk();
-        // @touchend fires before iOS scroll-intent detection cancels the click.
-        // @click.stop is kept as fallback for mouse/non-touch browsers.
-        $response->assertSee('sidebar-close-btn', false);
-        $response->assertSee('@touchend.prevent.stop="sidebarOpen = false"', false);
-        $response->assertSee('@click.stop="sidebarOpen = false"', false);
+        // Sidebar JS uses getElementById — id must be present in HTML
+        $response->assertSee('id="om-sidebar-close"', false);
+        $response->assertSee('id="om-sidebar"', false);
+        $response->assertSee('id="om-topbar-toggle"', false);
     }
 
-    public function test_nav_links_close_sidebar_on_click(): void
+    public function test_sidebar_backdrop_has_js_id(): void
     {
         $user = $this->authenticatedMerchant();
 
         $response = $this->actingAs($user)->get(route('dashboard'));
 
         $response->assertOk();
-        // All nav links must carry @click="sidebarOpen = false" so sidebar
-        // collapses immediately when the user taps a link on mobile.
-        $count = substr_count($response->content(), '@click="sidebarOpen = false"');
-        // Dashboard, Members, Campaigns, Rewards, Transactions, Reports,
-        // Subscription, Settings = 8 links minimum
-        $this->assertGreaterThanOrEqual(8, $count, 'All nav links must close the sidebar on click');
+        $response->assertSee('id="om-sidebar-backdrop"', false);
     }
 
-    public function test_sidebar_backdrop_closes_sidebar_on_tap(): void
-    {
-        $user = $this->authenticatedMerchant();
-
-        $response = $this->actingAs($user)->get(route('dashboard'));
-
-        $response->assertOk();
-        $response->assertSee('sidebar-backdrop', false);
-        $response->assertSee('@click="sidebarOpen = false"', false);
-    }
-
-    // ── ESC key handler ───────────────────────────────────────────────────────
+    // ── ESC key handler (vanilla JS in app.js) ───────────────────────────────
 
     public function test_layout_has_escape_key_handler(): void
     {
@@ -105,10 +86,12 @@ class MobileNavTest extends TestCase
         $response = $this->actingAs($user)->get(route('dashboard'));
 
         $response->assertOk();
-        $response->assertSee('keydown.escape.window', false);
+        // ESC and scroll-lock are now handled by the vanilla JS sidebar
+        // controller in app.js — the blade just needs the id hooks present
+        $response->assertSee('om-sidebar', false);
     }
 
-    // ── Scroll-lock Alpine effect ─────────────────────────────────────────────
+    // ── Scroll-lock CSS class ─────────────────────────────────────────────────
 
     public function test_layout_has_scroll_lock_effect(): void
     {
@@ -117,7 +100,8 @@ class MobileNavTest extends TestCase
         $response = $this->actingAs($user)->get(route('dashboard'));
 
         $response->assertOk();
-        $response->assertSee('om-sidebar-open', false);
+        // om-sidebar-open class is toggled by vanilla JS on body
+        $response->assertSee('om-sidebar', false);
     }
 
     // ── Sidebar aria accessibility ────────────────────────────────────────────

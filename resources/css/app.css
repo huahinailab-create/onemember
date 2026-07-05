@@ -815,10 +815,15 @@ body.om-sidebar-open {
     }
 
     .sidebar-backdrop {
+        display: none;
         position: fixed;
         inset: 0;
         z-index: 1050;
         background: rgba(0, 0, 0, 0.5);
+    }
+
+    .sidebar-backdrop.is-open {
+        display: block;
     }
 
     .sidebar .nav-link {
