@@ -44,7 +44,7 @@ These sprints are required to complete Phase 1 of the OneMember roadmap.
 | **Priority** | 🟠 High |
 | **Type** | Feature |
 | **Sprint File** | TBD |
-| **Status** | ⬜ Deferred |
+| **Status** | ✅ Complete 2026-07-05 — commit `5d44d3d` |
 | **Depends On** | None |
 
 Members currently receive zero emails. Add: points-earned notification, reward-available notification, birthday greeting. All via Events/Listeners (CTO-003). Documented as known limitation for pilot merchants.
@@ -58,7 +58,7 @@ Members currently receive zero emails. Add: points-earned notification, reward-a
 | **Priority** | 🟡 Medium |
 | **Type** | Feature |
 | **Sprint File** | TBD |
-| **Status** | ⬜ Deferred |
+| **Status** | ✅ Complete 2026-07-05 — commit `d6b34fb` |
 | **Depends On** | None |
 
 The Counter Mode toggle exists but no staff-facing UI exists. Build the simplified sale-recording view for staff who need a quick "record purchase" interface without full merchant dashboard access. Documented as known limitation for pilot merchants.
@@ -72,7 +72,7 @@ The Counter Mode toggle exists but no staff-facing UI exists. Build the simplifi
 | **Priority** | 🟡 Medium |
 | **Type** | Feature |
 | **Sprint File** | TBD |
-| **Status** | ⬜ Deferred |
+| **Status** | ✅ Complete 2026-07-05 — commit `91c19f2` |
 | **Depends On** | None |
 
 Dashboard alert and merchant email when a member has not visited in a configurable number of days. Highest merchant retention value after birthday automation.
@@ -86,7 +86,7 @@ Dashboard alert and merchant email when a member has not visited in a configurab
 | **Priority** | 🟡 Medium |
 | **Type** | Testing |
 | **Sprint File** | TBD |
-| **Status** | ⬜ Engineering Backlog — deferred by CTO 2026-07-03 |
+| **Status** | ✅ Complete 2026-07-05 — commit `f7a49d7` |
 | **Depends On** | None |
 
 Write missing HTTP tests for: campaign create/update, member create/update, reward create/update, purchase recording, redemption flow, onboarding wizard. Deprioritised in favour of Pilot Merchant Readiness (MVP-005).
@@ -100,7 +100,7 @@ Write missing HTTP tests for: campaign create/update, member create/update, rewa
 | **Priority** | 🟡 Medium |
 | **Type** | Documentation + Architecture |
 | **Sprint File** | TBD |
-| **Status** | ⬜ Deferred |
+| **Status** | ✅ Complete 2026-07-05 — commit `0c48fb3` (ADR-007) |
 | **Depends On** | None |
 
 Document the LoyaltyProgram/Campaign naming split in ADR-007. Consider adding a `Campaign` type alias or accessor for developer ergonomics. Prevents future confusion as the codebase grows.
