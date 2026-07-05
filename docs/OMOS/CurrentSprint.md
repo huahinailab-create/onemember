@@ -16,23 +16,23 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | PH2-000 |
-| **Title** | Customer Wallet Design Package |
-| **Status** | ⏳ Awaiting CEO Approval (Type C — phase change) |
+| **Sprint ID** | SCALE-000 |
+| **Title** | Scalability Review & Phase 2 Implementation Blueprint |
+| **Status** | ⏳ Awaiting PO/CTO Ratification (ADR-009 + BD-11…BD-18) |
 | **Sprint Type** | Design / Documentation (no application code) |
 | **Classification** | Type C — CEO Approval Required (phase change, pricing, legal, vendor) |
-| **Sprint File** | [Sprints/PH2-000-Customer-Wallet-Design.md](./Sprints/PH2-000-Customer-Wallet-Design.md) |
+| **Sprint File** | [Sprints/SCALE-000-Scalability-Review.md](./Sprints/SCALE-000-Scalability-Review.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Fable 5 |
 | **Reviewer** | Product Owner (CEO) |
 | **Started** | 2026-07-05 |
 | **Target Completion** | 2026-07-05 |
 | **Actual Completion** | 2026-07-05 |
-| **Final Commit** | `912b551` |
+| **Final Commit** | pending |
 
 ### Business Objective
 
-Design Phase 2 (Customer Wallet) completely before implementation: 11-document design package + ADR-008 (Proposed). Implementation gated on ADR-008 approval and business decisions BD-01…BD-10 — see [Customer-Wallet/README.md](./02-Product/Customer-Wallet/README.md).
+Certify the architecture for 100k merchants / 1M members / 100M transactions, register every bottleneck with a tiered fix plan (ADR-009 proposed), and deliver implementation-ready specs for SCALE-001 and PH2-001A–F so development can proceed sprint by sprint. Docs only — no code.
 
 ---
 
@@ -99,6 +99,7 @@ Design Phase 2 (Customer Wallet) completely before implementation: 11-document d
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
+| SCALE-000 | Scalability Review & Phase 2 Blueprint | ⏳ Awaiting Ratification | pending |
 | PH2-000  | Customer Wallet Design Package | ⏳ Awaiting CEO Approval | `912b551` |
 | ENG-001  | Engineering Backlog Clearance | ✅ Complete (Type A) | `2afb644` |
 | RELEASE-4A | Campaign Analytics Dashboard | ⏳ Awaiting CTO Review | `bdb0cfb` |

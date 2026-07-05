@@ -28,6 +28,8 @@ When these documents conflict, this document takes precedence as the more recent
 
 ---
 
+> **2026-07-05:** PH2-000 design package approved as Phase 2 foundation; implementation specs PH2-001A–F and SCALE-001 are written and gated on decisions BD-01…BD-18 (see [Bible-Gap-Review](../02-Product/Bible-Gap-Review-2026-07.md) §4 and [Customer-Wallet package](../02-Product/Customer-Wallet/README.md)). Scale readiness: [Scalability-Review-2026-07](../10-Architecture/Scalability-Review-2026-07.md).
+
 ## Current Phase: Phase 1 — Merchant Foundation
 
 **Goal:** Every small business in Thailand can run a professional loyalty programme.

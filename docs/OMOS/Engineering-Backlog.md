@@ -34,6 +34,12 @@ Items here are reviewed by the AI CTO every sprint cycle and incorporated into s
 
 ---
 
+## Scale (added by SCALE-000, 2026-07-05)
+
+Pre-launch and Year-1 scale work is tracked in the [Scalability Review](10-Architecture/Scalability-Review-2026-07.md) bottleneck register (B-01…B-15) and the [SCALE-001 spec](Sprints/SCALE-001-Prelaunch-Hardening.md). PERF-001/PERF-002/SEC-003 below are absorbed into its Year-1 tier.
+
+---
+
 ## Technical Debt
 
 ### TD-001 — LoyaltyProgram Nullable JSON (CTO-008)

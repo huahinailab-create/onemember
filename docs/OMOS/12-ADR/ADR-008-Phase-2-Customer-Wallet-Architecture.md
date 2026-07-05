@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| **Status** | **Proposed** — awaiting Product Owner approval (phase-change decision) |
+| **Status** | **Accepted as foundation** (Product Owner, 2026-07-05) — business decisions BD-01…BD-10 remain individually open and gate implementation |
 | **Date** | 2026-07-05 |
 | **Author** | Claude Fable 5 (design sprint PH2-000) |
 | **Supersedes** | None |
