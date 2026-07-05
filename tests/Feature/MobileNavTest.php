@@ -53,6 +53,44 @@ class MobileNavTest extends TestCase
         $response->assertSee('btn-close-white', false);
     }
 
+    public function test_sidebar_close_button_wired_to_alpine_state(): void
+    {
+        $user = $this->authenticatedMerchant();
+
+        $response = $this->actingAs($user)->get(route('dashboard'));
+
+        $response->assertOk();
+        // Close button must set sidebarOpen = false (not just any @click)
+        $response->assertSee('sidebar-close-btn', false);
+        $response->assertSee('@click.stop="sidebarOpen = false"', false);
+    }
+
+    public function test_nav_links_close_sidebar_on_click(): void
+    {
+        $user = $this->authenticatedMerchant();
+
+        $response = $this->actingAs($user)->get(route('dashboard'));
+
+        $response->assertOk();
+        // All nav links must carry @click="sidebarOpen = false" so sidebar
+        // collapses immediately when the user taps a link on mobile.
+        $count = substr_count($response->content(), '@click="sidebarOpen = false"');
+        // Dashboard, Members, Campaigns, Rewards, Transactions, Reports,
+        // Subscription, Settings = 8 links minimum
+        $this->assertGreaterThanOrEqual(8, $count, 'All nav links must close the sidebar on click');
+    }
+
+    public function test_sidebar_backdrop_closes_sidebar_on_tap(): void
+    {
+        $user = $this->authenticatedMerchant();
+
+        $response = $this->actingAs($user)->get(route('dashboard'));
+
+        $response->assertOk();
+        $response->assertSee('sidebar-backdrop', false);
+        $response->assertSee('@click="sidebarOpen = false"', false);
+    }
+
     // ── ESC key handler ───────────────────────────────────────────────────────
 
     public function test_layout_has_escape_key_handler(): void

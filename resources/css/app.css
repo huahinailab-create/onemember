@@ -766,6 +766,19 @@ body.om-sidebar-open {
         padding: 1rem !important;
         transition: left 0.25s ease;
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Ensure close button meets 44px touch target on real devices */
+    .sidebar-close-btn {
+        min-width: 44px;
+        min-height: 44px;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
     }
 
     .sidebar:not(.collapsed) {
