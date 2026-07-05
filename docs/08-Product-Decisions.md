@@ -1006,4 +1006,20 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-068 — OneMember Platform Admin (RELEASE-3A)
+
+- **Date:** 2026-07-05
+- **Status:** Approved
+- **Decision:**
+  1. **Admin area is separate from the merchant portal** and lives at `/admin` on `app.onemember.co`. It will move to `admin.onemember.co` in a future sprint once domain routing is extended.
+  2. **Admin flag is a boolean on the users table** (`is_admin BOOLEAN DEFAULT FALSE`). No separate admins table — OneMember staff register as normal users and are promoted via Artisan tinker. This keeps the auth system unified and avoids a second session mechanism.
+  3. **EnsureUserIsAdmin middleware** aborts 403 for any non-admin user (including merchants and unauthenticated requests that pass the `auth` middleware). The middleware stack is: `auth → verified → admin`.
+  4. **No admin UI for self-promotion** — the first admin must be created via `php artisan tinker` running `User::where('email', '...')->update(['is_admin' => true])`. This is intentional: preventing privilege escalation from within the app.
+  5. **Admin views are English-only** for this sprint. Translation keys are not required in admin Blade files — Thai SME merchants do not access the admin area.
+  6. **Admin layout is desktop-first** — a fixed left sidebar (240px) on `md+`, no sidebar on mobile. Tablet is usable. The merchant mobile app is completely unaffected.
+- **Reason:** OneMember needs internal visibility into platform health without exposing merchant data to other merchants. The `/admin` path is the simplest safe implementation that can be promoted to a subdomain later without code changes (only route group domain config changes).
+- **Impact:** New: `database/migrations/2026_07_05_000001_add_is_admin_to_users_table.php`, `app/Http/Middleware/EnsureUserIsAdmin.php`, `app/View/Components/AdminLayout.php`, `app/Http/Controllers/Admin/DashboardController.php`, `app/Http/Controllers/Admin/MerchantController.php`, `resources/views/layouts/admin.blade.php`, `resources/views/admin/dashboard.blade.php`, `resources/views/admin/merchants/index.blade.php`, `resources/views/admin/merchants/show.blade.php`, `tests/Feature/AdminTest.php` (21 tests). Modified: `app/Models/User.php` (is_admin cast + fillable), `database/factories/UserFactory.php` (is_admin default), `bootstrap/app.php` (admin middleware alias), `routes/web.php` (admin route group).
+
+---
+
 *New decisions must be appended above this line in the format shown.*

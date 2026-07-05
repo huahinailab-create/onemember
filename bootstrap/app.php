@@ -23,6 +23,10 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\SetLocale::class,
         ]);
 
+        $middleware->alias([
+            'admin' => \App\Http\Middleware\EnsureUserIsAdmin::class,
+        ]);
+
         // Stripe webhooks carry their own signature verification; CSRF would reject them
         $middleware->validateCsrfTokens(except: [
             'stripe/webhook',

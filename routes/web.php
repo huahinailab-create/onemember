@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\MerchantController as AdminMerchantController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\HealthController;
 use App\Http\Controllers\SubscriptionController;
@@ -67,6 +69,17 @@ Route::domain(config('domains.corporate'))->group(function () {
 
 // ── app.onemember.co — Merchant application ───────────────────────────────
 Route::domain(config('domains.app'))->group(function () {
+    // ── Platform Admin (/admin) — OneMember internal only ────────────────────
+    Route::middleware(['auth', 'verified', 'admin'])
+        ->prefix('admin')
+        ->name('admin.')
+        ->group(function () {
+            Route::redirect('/', '/admin/dashboard');
+            Route::get('/dashboard',              [AdminDashboardController::class, 'index'])->name('dashboard');
+            Route::get('/merchants',              [AdminMerchantController::class,  'index'])->name('merchants.index');
+            Route::get('/merchants/{merchant}',   [AdminMerchantController::class,  'show'])->name('merchants.show');
+        });
+
     // Root → merchant login
     Route::get('/', fn () => redirect()->to('/login'));
 
