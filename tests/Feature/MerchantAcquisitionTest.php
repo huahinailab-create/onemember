@@ -50,15 +50,13 @@ class MerchantAcquisitionTest extends TestCase
 
     public function test_landing_page_shows_trial_badge(): void
     {
-        App::setLocale('en');
-        $response = $this->get($this->corporateHome());
+        $response = $this->withSession(['locale' => 'en'])->get($this->corporateHome());
         $response->assertSee('30-Day Free Trial', false);
     }
 
     public function test_landing_page_shows_no_credit_card_text(): void
     {
-        App::setLocale('en');
-        $response = $this->get($this->corporateHome());
+        $response = $this->withSession(['locale' => 'en'])->get($this->corporateHome());
         $response->assertSee('No credit card required', false);
     }
 

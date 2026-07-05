@@ -16,9 +16,11 @@ class SetLocale
     {
         // Priority chain:
         // 1. Merchant settings (authenticated, explicit user choice)
-        // 2. Session (explicit user choice for guests or authenticated before merchant loads)
-        // 3. Browser Accept-Language header (first visit only — not stored in session)
-        // 4. APP_LOCALE / default (th)
+        // 2. Session (explicit user switch via /locale endpoint)
+        // 3. Hard default: Thai (onemember.co is a Thai-first corporate site)
+        //
+        // Browser Accept-Language detection is intentionally omitted — a Thai SME
+        // may use an English-language OS/browser and should still see Thai by default.
 
         $locale = null;
 
@@ -32,36 +34,11 @@ class SetLocale
             $locale = session('locale');
         }
 
-        // 3. Browser language detection (first visit — session not yet set)
-        if (! $locale && ! session()->has('locale')) {
-            $locale = $this->detectFromBrowser($request);
-        }
-
-        if ($locale && in_array($locale, self::SUPPORTED, true)) {
-            App::setLocale($locale);
-        }
+        // Always set an explicit locale — never fall through to config('app.locale')
+        // which can differ between environments. Thai is the hard default.
+        App::setLocale(in_array($locale, self::SUPPORTED, true) ? $locale : self::DEFAULT);
 
         return $next($request);
     }
 
-    private function detectFromBrowser(Request $request): ?string
-    {
-        $acceptLanguage = $request->header('Accept-Language', '');
-        if (! $acceptLanguage) {
-            return null;
-        }
-
-        // Parse Accept-Language header (e.g. "th-TH,th;q=0.9,en;q=0.8")
-        $parts = explode(',', $acceptLanguage);
-        foreach ($parts as $part) {
-            $lang = strtolower(trim(explode(';', $part)[0]));
-            // Match on 2-char prefix
-            $prefix = substr($lang, 0, 2);
-            if (in_array($prefix, self::SUPPORTED, true)) {
-                return $prefix;
-            }
-        }
-
-        return null;
-    }
 }

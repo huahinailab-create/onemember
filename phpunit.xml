@@ -20,6 +20,7 @@
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="APP_URL" value="http://app.onemember.co"/>
+        <env name="APP_LOCALE" value="th"/>
         <env name="CORPORATE_DOMAIN" value="onemember.co"/>
         <env name="CORPORATE_WWW_DOMAIN" value="www.onemember.co"/>
         <env name="APP_DOMAIN" value="app.onemember.co"/>

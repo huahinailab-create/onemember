@@ -26,9 +26,18 @@ class LocaleController extends Controller
             $merchant->update(['settings' => $settings]);
         }
 
-        // Redirect to the explicit return URL if provided, otherwise back to current page
-        $returnUrl = $request->input('return_url');
-        if ($returnUrl && str_starts_with($returnUrl, url('/'))) {
+        // Redirect to the explicit return URL if it belongs to a known domain
+        $returnUrl  = $request->input('return_url');
+        $allowedPrefixes = [
+            'https://' . config('domains.app'),
+            'http://'  . config('domains.app'),
+            'https://' . config('domains.corporate'),
+            'http://'  . config('domains.corporate'),
+        ];
+        $allowed = $returnUrl && collect($allowedPrefixes)->contains(
+            fn ($prefix) => str_starts_with($returnUrl, $prefix)
+        );
+        if ($allowed) {
             return redirect()->to($returnUrl);
         }
 

@@ -102,6 +102,7 @@ class DataImportExportTest extends TestCase
 
     public function test_validation_requires_first_name(): void
     {
+        \Illuminate\Support\Facades\App::setLocale('en');
         [$user, $merchant] = $this->actingAsMerchant();
         $service = new ImportService();
 
@@ -440,7 +441,7 @@ class DataImportExportTest extends TestCase
             'phone'       => '0812345678',
         ]);
 
-        $response = $this->actingAs($user)->get(route('data.export', 'members'));
+        $response = $this->actingAs($user)->withSession(['locale' => 'en'])->get(route('data.export', 'members'));
 
         $response->assertOk();
         $response->assertHeader('content-type', 'text/csv; charset=UTF-8');

@@ -6,7 +6,7 @@
 | **Version** | Live |
 | **OMOS Version** | 1.1 |
 | **Status** | Active |
-| **Last Updated** | 2026-07-03 |
+| **Last Updated** | 2026-07-05 |
 | **Related Documents** | [EXECUTE.md](./EXECUTE.md), [Product-State.md](./Product-State.md), [Sprints/README.md](./Sprints/README.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md) |
 
 ---
@@ -15,12 +15,12 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | RELEASE-2B |
-| **Title** | Mobile Merchant Experience |
+| **Sprint ID** | RELEASE-2C |
+| **Title** | Thai Corporate Website Localization |
 | **Status** | ⏳ Awaiting CTO Review |
 | **Sprint Type** | UX / Technical |
 | **Classification** | Type B — CTO Review Required |
-| **Sprint File** | [Sprints/RELEASE-2B-Mobile-Merchant-Experience.md](./Sprints/RELEASE-2B-Mobile-Merchant-Experience.md) |
+| **Sprint File** | [Sprints/RELEASE-2C-Thai-Corporate-Localization.md](./Sprints/RELEASE-2C-Thai-Corporate-Localization.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Sonnet 4.6 |
 | **Reviewer** | ChatGPT CTO |

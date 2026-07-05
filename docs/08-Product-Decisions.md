@@ -991,4 +991,19 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-067 — Thai-First Corporate Localization (RELEASE-2C)
+
+- **Date:** 2026-07-05
+- **Status:** Approved
+- **Decision:**
+  1. **`onemember.co` defaults to Thai** with no browser-language sniffing. The locale priority chain is: (1) authenticated merchant's saved locale, (2) explicit session choice via `/locale`, (3) hard default 'th'. Browser Accept-Language detection is intentionally omitted — Thai SME merchants may run English-language OS/browsers.
+  2. **Language switcher** uses globe emoji (`🌐`) prefix with full language names: "🌐 English" / "🌐 ภาษาไทย". No flag icons per accessibility and political-neutrality guidelines.
+  3. **Translation keys** live in `lang/en/corporate.php` and `lang/th/corporate.php` (880+ keys each). All corporate Blade views use `__('corporate.*')` — no hardcoded text.
+  4. **`/locale` POST route** validates the return URL against a whitelist of known app/corporate domains (`config('domains.app')` and `config('domains.corporate')`), not just against `url('/')`, to support cross-domain locale switching from the corporate site.
+  5. **SEO:** Each language has localized `<title>`, meta description, og:title, and og:description rendered from translation keys.
+- **Reason:** OneMember serves Thai SMEs. The corporate website is the acquisition surface for that audience. Thai-first reduces friction for the primary customer segment; English is a secondary option for international partners and investors.
+- **Impact:** Modified: `app/Http/Middleware/SetLocale.php` (removed browser detection, added hard Thai default), `app/Http/Controllers/LocaleController.php` (domain-whitelist redirect validation), `resources/views/components/language-switcher.blade.php` (globe emoji). Test fixes: `tests/Feature/MerchantAcquisitionTest.php`, `tests/Feature/DataImportExportTest.php` (explicit locale in tests that depend on English text). New: `tests/Feature/CorporateLocalizationTest.php` (21 tests).
+
+---
+
 *New decisions must be appended above this line in the format shown.*
