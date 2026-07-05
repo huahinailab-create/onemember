@@ -30,11 +30,12 @@ class ImportService
         'gender'        => ['gender', 'sex', 'เพศ'],
         'notes'         => ['notes', 'note', 'comment', 'remarks', 'remark', 'memo', 'หมายเหตุ', 'โน้ต'],
         'nickname'      => ['nickname', 'nick', 'nick name', 'ชื่อเล่น'],
+        'postal_code'   => ['postal code', 'postal_code', 'zip', 'zip code', 'zipcode', 'postcode', 'post code', 'รหัสไปรษณีย์'],
         'tags'          => ['tags', 'tag', 'labels', 'label', 'แท็ก'],
     ];
 
     // DB-writable fields (gender/tags are accepted but not stored)
-    const WRITABLE_FIELDS = ['first_name', 'last_name', 'phone', 'email', 'date_of_birth', 'notes', 'nickname'];
+    const WRITABLE_FIELDS = ['first_name', 'last_name', 'phone', 'email', 'date_of_birth', 'notes', 'nickname', 'postal_code'];
 
     // -----------------------------------------------------------------------
     // File storage
@@ -262,13 +263,14 @@ class ImportService
             }
 
             $valid[] = [
-                'row'      => $rowNum,
-                'name'     => $name,
-                'phone'    => $phone,
-                'email'    => $email ?: null,
-                'birthday' => $birthday,
-                'notes'    => trim($rowData['notes'] ?? '') ?: null,
-                'nickname' => trim($rowData['nickname'] ?? '') ?: null,
+                'row'         => $rowNum,
+                'name'        => $name,
+                'phone'       => $phone,
+                'email'       => $email ?: null,
+                'birthday'    => $birthday,
+                'notes'       => trim($rowData['notes'] ?? '') ?: null,
+                'nickname'    => trim($rowData['nickname'] ?? '') ?: null,
+                'postal_code' => trim($rowData['postal_code'] ?? '') ?: null,
             ];
         }
 
@@ -305,6 +307,7 @@ class ImportService
                         'birthday'    => $rowData['birthday'],
                         'notes'       => $rowData['notes'],
                         'nickname'    => $rowData['nickname'],
+                        'postal_code' => $rowData['postal_code'] ?? null,
                         'status'      => \App\Enums\MemberStatus::Active,
                     ]);
                 });

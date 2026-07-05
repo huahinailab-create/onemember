@@ -12,6 +12,8 @@ return [
     'date_of_birth'       => 'วันเกิด',
     'nickname'            => 'ชื่อเล่น',
     'email'               => 'อีเมล',
+    'postal_code'         => 'รหัสไปรษณีย์',
+    'postal_code_hint'    => 'ใช้สำหรับวิเคราะห์การตลาดเชิงพื้นที่',
     'notes'               => 'หมายเหตุ',
     'notes_hint'          => 'ไม่เกิน 500 ตัวอักษร',
     'points_balance'      => 'ยอดคะแนน',

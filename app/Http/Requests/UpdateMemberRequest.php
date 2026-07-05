@@ -30,8 +30,9 @@ class UpdateMemberRequest extends FormRequest
             ],
             'birthday' => ['required', 'date'],
             'nickname' => ['nullable', 'string', 'max:50'],
-            'email'    => ['nullable', 'email', 'max:255'],
-            'notes'    => ['nullable', 'string', 'max:500'],
+            'email'       => ['nullable', 'email', 'max:255'],
+            'postal_code' => ['nullable', 'string', 'max:20'],
+            'notes'       => ['nullable', 'string', 'max:500'],
         ];
     }
 
@@ -42,8 +43,9 @@ class UpdateMemberRequest extends FormRequest
             'phone'    => 'Mobile Number',
             'birthday' => 'Date of Birth',
             'nickname' => 'Nickname',
-            'email'    => 'Email',
-            'notes'    => 'Notes',
+            'email'       => 'Email',
+            'postal_code' => 'Postal Code',
+            'notes'       => 'Notes',
         ];
     }
 }

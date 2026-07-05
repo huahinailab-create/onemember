@@ -145,6 +145,23 @@
                             @enderror
                         </div>
 
+                        {{-- Postal Code --}}
+                        <div class="mb-3">
+                            <label for="postal_code" class="form-label form-label-sm">{{ __('members.postal_code') }}</label>
+                            <input type="text"
+                                   inputmode="numeric"
+                                   id="postal_code"
+                                   name="postal_code"
+                                   class="form-control form-control-sm @error('postal_code') is-invalid @enderror"
+                                   value="{{ old('postal_code', $member->postal_code) }}"
+                                   maxlength="20"
+                                   placeholder="e.g. 10110"
+                                   {{ $isArchived ? 'disabled' : '' }}>
+                            @error('postal_code')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                         {{-- Notes --}}
                         <div class="mb-3">
                             <label for="notes" class="form-label form-label-sm">{{ __('members.notes') }}</label>
@@ -556,6 +573,9 @@
                             —
                         @endif
                     </dd>
+
+                    <dt class="col-sm-3 text-muted fw-normal">{{ __('members.postal_code') }}</dt>
+                    <dd class="col-sm-9 mb-0">{{ $member->postal_code ?? '—' }}</dd>
 
                     <dt class="col-sm-3 text-muted fw-normal">{{ __('members.birthday') }}</dt>
                     <dd class="col-sm-9 mb-0">

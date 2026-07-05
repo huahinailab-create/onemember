@@ -12,6 +12,8 @@ return [
     'date_of_birth'       => 'Date of Birth',
     'nickname'            => 'Nickname',
     'email'               => 'Email',
+    'postal_code'         => 'Postal Code',
+    'postal_code_hint'    => 'Used for geographic marketing insights.',
     'notes'               => 'Notes',
     'notes_hint'          => 'Maximum 500 characters.',
     'points_balance'      => 'Points Balance',

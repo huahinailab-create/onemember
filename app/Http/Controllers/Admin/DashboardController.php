@@ -76,6 +76,14 @@ class DashboardController extends Controller
         // ── Activation funnel ────────────────────────────────────────────────
         $funnel = $this->buildActivationFunnel();
 
+        // ── Geographic: top postal codes ─────────────────────────────────────
+        $topPostalCodes = Member::whereNotNull('postal_code')
+            ->selectRaw('postal_code, COUNT(*) as member_count')
+            ->groupBy('postal_code')
+            ->orderByDesc('member_count')
+            ->take(10)
+            ->get();
+
         return view('admin.dashboard', compact(
             'totalMerchants', 'activeMerchants', 'inactiveMerchants',
             'trialMerchants', 'paidMerchants', 'freeMerchants',
@@ -87,7 +95,7 @@ class DashboardController extends Controller
             'newMembersToday', 'newMembersThisWeek', 'newMembersThisMonth',
             'topByMembers', 'topByTransactions',
             'zeroMembers', 'notOnboarded', 'trialEndingSoon',
-            'health', 'funnel',
+            'health', 'funnel', 'topPostalCodes',
         ));
     }
 

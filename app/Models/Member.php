@@ -20,6 +20,7 @@ class Member extends Model
         'nickname',
         'notes',
         'email',
+        'postal_code',
         'phone',
         'member_code',
         'public_uuid',

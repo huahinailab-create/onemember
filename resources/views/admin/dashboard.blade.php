@@ -469,4 +469,47 @@
         </div>
     </div>
 
+    {{-- Geographic Analytics: Top Postal Codes --}}
+    <div class="card mb-4">
+        <div class="card-header fw-semibold d-flex align-items-center gap-2">
+            <i class="bi bi-geo-alt" style="color:#FF1585;"></i> Top Postal Codes by Member Count
+        </div>
+        <div class="card-body p-0">
+            @if($topPostalCodes->isEmpty())
+                <div class="text-muted text-center py-4" style="font-size:0.85rem;">
+                    No postal code data yet. Members will appear here once they provide their postal code.
+                </div>
+            @else
+                @php $maxPostal = $topPostalCodes->first()->member_count ?: 1; @endphp
+                <table class="table table-sm mb-0">
+                    <thead>
+                        <tr style="font-size:0.78rem;color:#6B7280;">
+                            <th class="ps-3">#</th>
+                            <th>Postal Code</th>
+                            <th>Members</th>
+                            <th class="pe-3" style="width:40%;">Distribution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($topPostalCodes as $i => $row)
+                        <tr style="font-size:0.85rem;">
+                            <td class="ps-3 text-muted">{{ $i + 1 }}</td>
+                            <td class="fw-medium font-monospace">{{ $row->postal_code }}</td>
+                            <td>{{ number_format($row->member_count) }}</td>
+                            <td class="pe-3">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div style="flex:1;height:6px;background:#F0F0F4;border-radius:3px;overflow:hidden;">
+                                        <div style="width:{{ round($row->member_count / $maxPostal * 100) }}%;height:100%;background:#FF1585;border-radius:3px;"></div>
+                                    </div>
+                                    <span class="text-muted" style="font-size:0.75rem;min-width:2rem;">{{ round($row->member_count / $maxPostal * 100) }}%</span>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
+        </div>
+    </div>
+
 </x-admin-layout>

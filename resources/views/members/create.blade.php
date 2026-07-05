@@ -124,6 +124,23 @@
                             @enderror
                         </div>
 
+                        {{-- Postal Code --}}
+                        <div class="mb-3">
+                            <label for="postal_code" class="form-label">{{ __('members.postal_code') }}</label>
+                            <input type="text"
+                                   inputmode="numeric"
+                                   id="postal_code"
+                                   name="postal_code"
+                                   class="form-control @error('postal_code') is-invalid @enderror"
+                                   value="{{ old('postal_code') }}"
+                                   maxlength="20"
+                                   placeholder="e.g. 10110">
+                            @error('postal_code')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <div class="form-text">{{ __('members.postal_code_hint') }}</div>
+                        </div>
+
                         {{-- Notes --}}
                         <div class="mb-4">
                             <label for="notes" class="form-label">{{ __('members.notes') }}</label>
