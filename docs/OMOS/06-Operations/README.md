@@ -33,3 +33,9 @@ When populating this folder, consider:
 - What does the Claude Developer need to implement correctly?
 
 Add a document here only if it serves at least one of those three purposes.
+
+---
+
+## Operations Manual
+
+The complete, self-sufficient manual for operating OneMember in production — deployment, DR, monitoring, Redis, workers, scheduler, daily/weekly/monthly ops, backups, restore, security, incidents, scaling, go-live, onboarding, standards, and release/production checklists — is **[Operations-Manual.md](./Operations-Manual.md)** (added 2026-07-05).

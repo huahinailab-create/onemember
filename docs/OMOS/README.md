@@ -119,6 +119,7 @@ docs/OMOS/
 ├── 04-Technology/             ← Technology choices, integrations, third parties
 ├── 05-Engineering/            ← Coding standards, PR process, testing philosophy
 ├── 06-Operations/             ← Deployment, monitoring, incident response, SLAs
+│   └── Operations-Manual.md   ← START HERE to operate production (complete manual)
 ├── 07-Brand/                  ← Visual identity, voice, design system
 ├── 08-Security/               ← Security policy, threat model, compliance
 ├── 09-Roadmap/                ← Strategic roadmap (phases), NOT sprint specs
