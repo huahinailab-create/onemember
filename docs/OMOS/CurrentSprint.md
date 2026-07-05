@@ -99,7 +99,7 @@ Deliver the official 2026–2030 strategic blueprint: vision, phased evolution, 
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
-| FINAL-001…006 | Final Engineering Hardening | ✅ Complete (Type A) | pending |
+| FINAL-001…006 | Final Engineering Hardening | ✅ Complete (Type A) | `82e0599` |
 | VISION-001 | Version 2.0 Vision & Master Roadmap 2026–2030 | ⏳ Awaiting PO Ratification | `7749e13` |
 | SCALE-000 | Scalability Review & Phase 2 Blueprint | ⏳ Awaiting Ratification | `d14bd0a` |
 | PH2-000  | Customer Wallet Design Package | ⏳ Awaiting CEO Approval | `912b551` |
