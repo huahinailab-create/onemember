@@ -17,6 +17,13 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        // ADR-007: "Campaign" is the product-layer name for LoyaltyProgram.
+        // The alias lets new code use the product vocabulary without a
+        // schema migration. Both names resolve to the same class.
+        if (! class_exists(\App\Models\Campaign::class, false)) {
+            class_alias(\App\Models\LoyaltyProgram::class, \App\Models\Campaign::class);
+        }
+
         Password::defaults(function () {
             return Password::min(12)
                 ->mixedCase()

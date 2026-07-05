@@ -1065,4 +1065,14 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-072 — LoyaltyProgram/Campaign Naming Split (MVP-010, ADR-007)
+
+- **Date:** 2026-07-05
+- **Status:** Approved
+- **Decision:** The persistence layer keeps `LoyaltyProgram` (table `loyalty_programs`, FK `loyalty_program_id`); the product layer keeps `Campaign` (routes, controllers, views, translations). A `class_alias` registers `App\Models\Campaign` → `App\Models\LoyaltyProgram` so new code can use the product vocabulary. Renaming the table would require a new ADR + CEO decision. Full rationale: `docs/OMOS/12-ADR/ADR-007-LoyaltyProgram-Campaign-Naming.md`.
+- **Reason:** The dual naming was undocumented and repeatedly mistaken for a bug. Documenting the boundary and providing the alias removes ambiguity with zero migration risk.
+- **Impact:** New: ADR-007, `tests/Unit/CampaignAliasTest.php`. Modified: `app/Providers/AppServiceProvider.php` (class alias).
+
+---
+
 *New decisions must be appended above this line in the format shown.*
