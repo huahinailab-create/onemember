@@ -12,7 +12,14 @@
         <header class="storefront-header">
             <div class="storefront-brand">{{ $merchant->name }}</div>
             <div class="storefront-type">{{ __('commerce.order_confirmation_title') }}</div>
+            <div class="storefront-contact">
+                <span><i class="bi bi-person me-1"></i>{{ __('commerce.order_thanks', ['name' => $order->customer_name]) }}</span>
+            </div>
         </header>
+
+        <p class="text-center text-muted mb-0 mt-2" style="font-size:0.78rem;">
+            <i class="bi bi-bookmark me-1"></i>{{ __('commerce.order_save_hint') }}
+        </p>
 
         <section class="storefront-catalogue">
             <div class="d-flex justify-content-between align-items-center mb-2">

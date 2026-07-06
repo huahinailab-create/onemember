@@ -2165,3 +2165,14 @@ body.om-sidebar-open {
     height: 100%;
     border-radius: 3px;
 }
+
+/* ── BETA-003: join landing contact line ── */
+.launch-landing-contact {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.8rem;
+    color: #8a90a5;
+    margin-top: 0.25rem;
+}

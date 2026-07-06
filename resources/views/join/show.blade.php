@@ -10,6 +10,12 @@
     <main class="launch-landing">
         <div class="launch-landing-card">
             <div class="launch-landing-brand">{{ $merchant->name }}</div>
+            @if ($merchant->phone || $merchant->city)
+                <div class="launch-landing-contact">
+                    @if ($merchant->phone)<span><i class="bi bi-telephone me-1"></i>{{ $merchant->phone }}</span>@endif
+                    @if ($merchant->city)<span><i class="bi bi-geo-alt me-1"></i>{{ $merchant->city }}</span>@endif
+                </div>
+            @endif
 
             <h1 class="launch-landing-headline">{{ __('launch.campaign_headline') }}</h1>
             <p class="launch-landing-offer">{{ __('launch.offer_' . $offer) }}</p>

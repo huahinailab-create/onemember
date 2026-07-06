@@ -100,4 +100,6 @@ return [
     'order_invalid_transition' => 'That status change is not allowed.',
     'order_status_updated'   => 'Order updated.',
     'order_marked_paid'      => 'Payment confirmed.',
+    'order_thanks'    => 'Thank you, :name!',
+    'order_save_hint' => 'Save this page — it is your order reference and shows live status updates.',
 ];
