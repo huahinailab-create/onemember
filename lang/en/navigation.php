@@ -17,4 +17,5 @@ return [
     'dev_tools'     => 'Dev Tools',
     'launch_kit'   => 'Launch Kit',
     'apps'         => 'Apps',
+    'commerce'     => 'Commerce',
 ];

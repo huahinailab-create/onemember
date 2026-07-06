@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\MerchantController as AdminMerchantController;
 use App\Http\Controllers\AppsController;
+use App\Http\Controllers\Commerce\CommerceSettingsController;
+use App\Http\Controllers\Commerce\ProductController as CommerceProductController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\HealthController;
 use App\Http\Controllers\Identity\IdentityCardController;
@@ -144,6 +146,18 @@ Route::domain(config('domains.app'))->group(function () {
 
         Route::put('/settings/counter-mode', [CounterModeController::class, 'toggle'])->name('counter-mode.toggle');
         Route::get('/counter',               [CounterModeController::class, 'index'])->name('counter');
+
+        // Commerce App (APP-001) — routes exist only for merchants who installed it
+        Route::middleware('app.installed:commerce')->prefix('commerce')->name('commerce.')->group(function () {
+            Route::get('/products',                    [CommerceProductController::class, 'index'])->name('products.index');
+            Route::get('/products/create',             [CommerceProductController::class, 'create'])->name('products.create');
+            Route::post('/products',                   [CommerceProductController::class, 'store'])->name('products.store');
+            Route::get('/products/{product}/edit',     [CommerceProductController::class, 'edit'])->name('products.edit');
+            Route::put('/products/{product}',          [CommerceProductController::class, 'update'])->name('products.update');
+            Route::delete('/products/{product}',       [CommerceProductController::class, 'archive'])->name('products.archive');
+            Route::get('/settings',                    [CommerceSettingsController::class, 'edit'])->name('settings');
+            Route::put('/settings',                    [CommerceSettingsController::class, 'update'])->name('settings.update');
+        });
 
         Route::get('/apps',            [AppsController::class, 'index'])->name('apps.index');
         Route::post('/apps/install',   [AppsController::class, 'install'])->name('apps.install');

@@ -127,6 +127,16 @@
                     <span>{{ __('navigation.launch_kit') }}</span>
                 </a>
             </li>
+            @if (Auth::user()?->merchant?->hasApp('commerce'))
+            <li class="nav-item">
+                <a href="{{ route('commerce.products.index') }}"
+                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('commerce.*') ? 'active' : '' }}"
+                   >
+                    <i class="bi bi-shop"></i>
+                    <span>{{ __('navigation.commerce') }}</span>
+                </a>
+            </li>
+            @endif
             <li class="nav-item">
                 <a href="{{ route('apps.index') }}"
                    class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('apps.*') ? 'active' : '' }}"

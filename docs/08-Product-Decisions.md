@@ -1190,4 +1190,13 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-083 — APP-001: Commerce App MVP (Catalogue + Fulfillment)
+
+- **Date:** 2026-07-06
+- **Status:** Approved (48-Hour Core Completion directive; first real App on the CORE-002 framework)
+- **Decision:** The Commerce App (install-gated, `app.installed:commerce`) delivers: merchant-owned products (`products`: name/description/price/stock/status, soft-deleted; `stock_qty` null = untracked inventory), free-typed find-or-create categories (`product_categories`), and merchant-controlled fulfillment settings in merchant settings JSON (`commerce` key): pickup, own delivery with **merchant-defined radius and fee** (ADR-011 restaurant rule), shipping with fee, and free-text payment instructions. **No payment gateway anywhere** — the settings screen states OneMember never receives, holds, or transfers money. Product images deferred (next iteration). Sidebar shows Commerce only when installed.
+- **Impact:** New: 2 migrations, Product/ProductCategory models + factory, Commerce\ProductController + CommerceSettingsController, 3 views, `lang/{en,th}/commerce.php`, `CommerceAppTest` (10 tests). Modified: routes (gated group), sidebar, navigation lang.
+
+---
+
 *New decisions must be appended above this line in the format shown.*
