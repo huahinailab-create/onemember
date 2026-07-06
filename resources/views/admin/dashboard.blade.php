@@ -294,6 +294,35 @@
     {{-- ── Activation Funnel + Platform Health ───────────────────────────── --}}
     <div class="row g-3 mb-4">
 
+        {{-- ADMIN-001: Merchant Health & Follow-up --}}
+        <div class="col-12">
+            <div class="stat-card card p-3 mb-1">
+                <h6 class="fw-600 mb-1" style="color:#1A2E5A;font-size:0.85rem;font-weight:600;">
+                    <i class="bi bi-clipboard2-pulse me-2" style="color:#FF1585;"></i>Merchant Health & Follow-up
+                </h6>
+                <p class="text-muted mb-3" style="font-size:0.75rem;">
+                    Merchants who may need attention. Click a signal to see the list.
+                </p>
+                <div class="row g-2">
+                    @foreach ($merchantHealth as $signal)
+                        @php
+                            // Signals that map to a merchant-list filter (trial_ending / extended use ?trial=)
+                            $link = in_array($signal['key'], ['trial_ending', 'extended'])
+                                ? route('admin.merchants.index', ['trial' => $signal['key'] === 'trial_ending' ? 'ending_soon' : 'extended'])
+                                : route('admin.merchants.index', ['health' => $signal['key']]);
+                        @endphp
+                        <div class="col-6 col-md-3">
+                            <a href="{{ $link }}" class="d-block p-2 rounded text-decoration-none"
+                               style="background:{{ $signal['count'] > 0 ? '#FFF7ED' : '#F0FDF4' }};border:1px solid #f1f4f8;">
+                                <div class="fw-700" style="font-size:1.4rem;color:{{ $signal['count'] > 0 ? '#EA580C' : '#059669' }};">{{ number_format($signal['count']) }}</div>
+                                <div class="text-muted" style="font-size:0.72rem;">{{ __($signal['label_key']) }}</div>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
         {{-- Activation Funnel --}}
         <div class="col-md-7">
             <div class="stat-card card p-3 h-100">

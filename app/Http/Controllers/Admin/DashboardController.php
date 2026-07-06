@@ -76,6 +76,9 @@ class DashboardController extends Controller
         // ── Activation funnel ────────────────────────────────────────────────
         $funnel = $this->buildActivationFunnel();
 
+        // ── ADMIN-001: merchant health / follow-up signals ───────────────────
+        $merchantHealth = app(\App\Services\MerchantHealthService::class)->signals();
+
         // ── Geographic: top postal codes ─────────────────────────────────────
         $topPostalCodes = Member::whereNotNull('postal_code')
             ->selectRaw('postal_code, COUNT(*) as member_count')
@@ -95,7 +98,7 @@ class DashboardController extends Controller
             'newMembersToday', 'newMembersThisWeek', 'newMembersThisMonth',
             'topByMembers', 'topByTransactions',
             'zeroMembers', 'notOnboarded', 'trialEndingSoon',
-            'health', 'funnel', 'topPostalCodes',
+            'health', 'funnel', 'topPostalCodes', 'merchantHealth',
         ));
     }
 

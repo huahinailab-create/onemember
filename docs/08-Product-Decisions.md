@@ -1253,4 +1253,13 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-090 — ADMIN-001: Merchant Health & Follow-up Dashboard
+
+- **Date:** 2026-07-06
+- **Status:** Approved (PHASE-A)
+- **Decision:** The Platform Admin dashboard gains a Merchant Health & Follow-up widget (`MerchantHealthService`) with counts for eight success signals: no campaign, no reward, no members, no transactions, trial ending ≤7d, trial extended, high usage but unpaid (≥20 members on trial/expired), and inactive (has members, no transaction in 30 days). Each count links to the matching merchant-list cohort via existing `?trial=` / new `?health=` filters. Admin-only, read-only, no schema change.
+- **Impact:** New: `MerchantHealthService`, `lang/{en,th}/admin_health.php`, `MerchantHealthTest` (6 tests). Modified: Admin DashboardController (signals) + dashboard view (widget), Admin MerchantController (health cohort filters).
+
+---
+
 *New decisions must be appended above this line in the format shown.*

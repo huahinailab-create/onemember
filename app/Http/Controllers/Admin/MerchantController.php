@@ -62,6 +62,19 @@ class MerchantController extends Controller
             }
         }
 
+        // ADMIN-001 health cohort filters (from the admin dashboard widget)
+        if ($health = $request->input('health')) {
+            match ($health) {
+                'no_campaign'     => $query->doesntHave('loyaltyPrograms'),
+                'no_reward'       => $query->doesntHave('rewards'),
+                'no_members'      => $query->doesntHave('members'),
+                'no_transactions' => $query->doesntHave('transactions'),
+                'high_unpaid'     => $query->whereIn('subscription_status', [SubscriptionStatus::Trial, SubscriptionStatus::Expired])->has('members', '>=', 20),
+                'inactive'        => $query->has('members')->whereDoesntHave('transactions', fn ($q) => $q->where('created_at', '>=', now()->subDays(30))),
+                default           => null,
+            };
+        }
+
         $merchants = $query->latest()->paginate(25)->withQueryString();
 
         return view('admin.merchants.index', [
