@@ -54,16 +54,39 @@ The Bible's flywheel ("More customers scan QR → join wallet → consumers choo
 
 Merchants already hold Members created in Phase 1 (manual entry/CSV). Bringing them into the wallet:
 
-### Customer-initiated (primary, BD-05)
+### Customer-initiated (primary — BD-05 decided, ADR-010)
 ```
 Customer joins via QR → phone OTP-verified
  → WalletLinkService finds Member(s) at this merchant with matching phone
- → exactly 1 active match  → "We found your existing membership (125 แต้ม). Claim it?"
-       → claim → linked_via=claim_existing → history + balance appear instantly
- → 2+ matches (E-02)       → link most recently active; flag duplicates to merchant
+ → exactly 1 active match  → "We found your existing membership (125 แต้ม).
+                              Connect it to your OneMember account?" [consent — optional]
+       → consent given  → claim → linked_via=claim_existing → history + balance appear
+       → consent declined → fresh join proceeds WITHOUT touching the old record
+ → 2+ matches (E-02)       → offer most recently active for consented claim; flag others
  → 0 matches               → fresh Member created
 ```
-Phone ownership is proven by OTP, so auto-offer is safe (BD-05 recommendation).
+**ADR-010 rule:** OTP proves phone ownership, but connecting an existing record and
+surfacing its loyalty data always requires explicit, clear, optional customer consent —
+never automatic.
+
+### Merchant scan-to-join (§4b — added by ADR-010, PO-approved)
+
+A customer shows their **OneMember Card** (wallet QR — secure token/OneMember ID only,
+never raw personal data) at any merchant, including one they have never joined:
+
+```
+Staff scans customer's OneMember Card (Counter Mode or member search)
+ → token resolves to a OneMember identity (never exposes profile data yet)
+ → customer not a member here → customer's own device/screen shows:
+      "Join {merchant}? Share profile per your consent choices." [consent]
+ → consent given → Member record created from consented profile fields
+      (no re-typing) → linked_via=scan_to_join
+ → consent declined → nothing is created; merchant learns nothing
+```
+
+Properties: the merchant never sees wallet data before consent; enrolment without
+re-entering information; provenance recorded. Requires a `scan_to_join` value in the
+`linked_via` enum (Doc 03) and a consent prompt surface on the customer side.
 
 ### Merchant-initiated invites (secondary)
 - Merchant members list → "Invite to Wallet" (per member or bulk for members with phone numbers).
@@ -81,3 +104,11 @@ Phone ownership is proven by OTP, so auto-offer is safe (BD-05 recommendation).
 - Customer unlink (DELETE membership): link soft-closed (`unlinked_at`), consents auto-withdrawn, Member record untouched, passes revoked.
 - Re-join later: new link row (fresh provenance), history preserved because history lives on the Member.
 - Merchant archives Member: card goes read-only "archived" (E-03); link stays for history until customer unlinks.
+
+## 6. Merchant Access Follows Subscription (ADR-010)
+
+Merchants can read member/customer data inside OneMember **only while their account
+and subscription are active**. On expiry/suspension, merchant-side access to member
+data is disabled until restored. The customer's own wallet view of that membership is
+unaffected (their card remains, marked appropriately). Enforcement joins consent as a
+gate in the merchant-side read paths (PH2-001B/C specs updated accordingly).

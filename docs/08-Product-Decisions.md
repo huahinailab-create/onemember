@@ -1114,4 +1114,24 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-076 — Custodian Model: Identity, Consent & Data Access (GOV-001)
+
+- **Date:** 2026-07-06
+- **Status:** Approved (Product Owner)
+- **Decision:** OneMember does not own customers — it is the trusted custodian of customer identity, consent, loyalty access, and engagement tools. One mobile phone = one global OneMember identity; duplicates prohibited. Connecting existing merchant Member records to a OneMember identity, and transferring loyalty data into the Wallet, requires explicit, clear, optional customer consent (supersedes the PH2-000 auto-link recommendation, BD-05). Each merchant keeps its own loyalty rules; points are never combined/converted/merged across merchants absent a future approved rule. Customer QR (OneMember Card / OneMember ID) contains only a secure token or ID — never raw personal data. Scan-to-join: a merchant may scan the customer's OneMember Card to enrol them without re-entry, subject to consent. Merchant access to member data requires an active account and subscription (disabled on lapse until restored). Merchant-to-merchant sharing never happens automatically. Full record: `docs/OMOS/12-ADR/ADR-010-Custodian-Identity-Consent.md`.
+- **Reason:** The defining trust question of Phase 2, answered before implementation. Resolves BD-02 (identity anchor), BD-04 product scope (Apple/Google Wallet approved in Phase 2), and BD-05.
+- **Impact:** Product Bible v1.0.0 (foundational + identity + privacy sections), Customer-Wallet package README (BD register) and Doc 08 (consented claim, scan-to-join §4b, subscription-gated access §6), Glossary (6 new terms), ADR-010.
+
+---
+
+## DECISION-077 — Commerce Principles & Phase Re-Sequencing (GOV-001)
+
+- **Date:** 2026-07-06
+- **Status:** Approved (Product Owner)
+- **Decision:** Commerce is Phase 4, not Phase 2/3. Phase 3 = merchant growth tools (AI marketing, advanced CRM, referrals, campaign automation); Phase 4 = Merchant Storefront (catalogues, ordering, pickup, merchant delivery, shipping, QR payment display, merchant-controlled fulfillment). The merchant is always seller of record and issues the invoice/receipt; payment goes directly customer→merchant; OneMember never receives, holds, settles, transfers, or escrows money and charges no GP/commission/marketplace/transaction fees — revenue is subscription tiers plus future approved platform services; merchants keep 100% of each sale. Merchants handle refunds, service, tax, and fulfillment; restaurants define their own delivery radius/rules. OneMember must never become Grab, Lazada, Shopee, or a commission marketplace. Full record: `docs/OMOS/12-ADR/ADR-011-Commerce-Principles-Phase-4.md`.
+- **Reason:** Fixes the commercial model and sequencing before any commerce-adjacent decision can drift toward marketplace economics; keeps OneMember outside payment-licensing scope.
+- **Impact:** Product Bible v1.0.0 (commerce principles + roadmap positioning), Commerce.md v1.0.0 (full principles document), Long-term-Roadmap + Roadmap.md + Master Roadmap v1.1.0 (supersession banners), ADR-011. Open: DR-31 (regional expansion placement), Phase 4 planning items listed in Commerce.md.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

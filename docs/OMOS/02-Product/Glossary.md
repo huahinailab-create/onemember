@@ -86,6 +86,28 @@ The date after which unused Points are no longer valid. Configured per Campaign 
 
 ---
 
+## Identity & Custodianship (added 2026-07-06, ADR-010)
+
+### Custodian
+OneMember's role with respect to customer data: it holds identity, consent, and loyalty access **in trust**. OneMember does not own customers; customers control their identity, merchants own their business relationships.
+
+### OneMember Identity
+The single global customer identity, anchored to **one verified mobile phone number** (one phone = one identity; duplicates prohibited). Implemented in Phase 2 as the `customers` record.
+
+### OneMember Card / OneMember ID
+The customer's portable membership credential shown at any merchant. Its QR encodes **only a secure token or OneMember ID — never raw personal data**.
+
+### Scan-to-Join
+The Phase 2 flow in which a merchant scans a customer's OneMember Card to enrol them as a Member without re-entering information, **subject to the customer's explicit consent** at that moment.
+
+### Consent (per merchant, per data type)
+The customer's explicit, optional, clearly-worded permission for a specific merchant to receive a specific category of their data (profile, birthday, marketing, analytics). Never assumed, never pre-ticked, never merchant-to-merchant.
+
+### Merchant Storefront
+The Phase 4 commerce capability: merchants list products/services and take orders inside OneMember while remaining the **seller of record** — payment flows directly customer→merchant, OneMember takes no commission and never holds funds.
+
+---
+
 ## Platform Modules
 
 ### Customer Wallet

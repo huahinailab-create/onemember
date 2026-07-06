@@ -6,7 +6,7 @@
 | **Date** | 2026-07-05 |
 | **Author** | Claude Fable 5 (design sprint PH2-000) |
 | **Supersedes** | None |
-| **Superseded by** | None |
+| **Superseded by** | None — linking/consent semantics refined by [ADR-010](./ADR-010-Custodian-Identity-Consent.md) (2026-07-06): consent-gated claim supersedes auto-link, scan-to-join added, subscription-gated merchant access |
 | **Related Documents** | [Customer Wallet Design Package](../02-Product/Customer-Wallet/README.md), [Long-term-Roadmap.md](../../09-Roadmap/Long-term-Roadmap.md), [ADR-004](./ADR-004-Laravel-Architecture.md), [ADR-005](./ADR-005-Bootstrap-5-Standard.md) |
 
 ---

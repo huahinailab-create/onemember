@@ -16,23 +16,23 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | RELEASE-5A |
-| **Title** | Merchant Launch Kit & Onboarding Assets |
-| **Status** | ⏳ Awaiting CTO Review (Type B — new public route) |
+| **Sprint ID** | GOV-001 |
+| **Title** | Foundational Principles Consolidation (Custodian Model) |
+| **Status** | ✅ Complete — records PO decisions of 2026-07-06 |
 | **Sprint Type** | Design / Documentation (no application code) |
 | **Classification** | Type C — CEO Approval Required (phase change, pricing, legal, vendor) |
-| **Sprint File** | [Sprints/RELEASE-5A-Merchant-Launch-Kit.md](./Sprints/RELEASE-5A-Merchant-Launch-Kit.md) |
+| **Sprint File** | [Sprints/GOV-001-Custodian-Principles-Consolidation.md](./Sprints/GOV-001-Custodian-Principles-Consolidation.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Fable 5 |
 | **Reviewer** | Product Owner (CEO) |
 | **Started** | 2026-07-05 |
 | **Target Completion** | 2026-07-05 |
 | **Actual Completion** | 2026-07-05 |
-| **Final Commit** | `f6e5f55` |
+| **Final Commit** | HEAD (docs-only commit, see git log: GOV-001) |
 
 ### Business Objective
 
-A merchant can sign up, finish onboarding, and immediately print the materials needed to start collecting members at the counter: join QR poster, counter sign, staff quick-start guide, talking script, and configurable "Join the OneMember Family" campaign copy. DECISION-075.
+Consolidate the Product Owner's foundational decisions — custodian principle, identity/consent model, commerce principles, phase re-sequencing — into the Product Bible v1.0.0, ADR-010/011, Commerce.md, the wallet design package, the Glossary, and the decision register (DECISION-076/077). Docs only.
 
 ---
 
@@ -99,6 +99,7 @@ A merchant can sign up, finish onboarding, and immediately print the materials n
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
+| GOV-001 | Foundational Principles Consolidation (Custodian Model) | ✅ Complete | HEAD (docs-only) |
 | RELEASE-5A | Merchant Launch Kit & Onboarding Assets | ⏳ Awaiting CTO Review | `f6e5f55` |
 | FINAL-001…006 | Final Engineering Hardening | ✅ Complete (Type A) | `82e0599` |
 | VISION-001 | Version 2.0 Vision & Master Roadmap 2026–2030 | ⏳ Awaiting PO Ratification | `7749e13` |

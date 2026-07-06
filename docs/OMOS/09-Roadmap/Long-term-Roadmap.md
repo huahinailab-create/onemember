@@ -10,6 +10,8 @@
 
 ---
 
+> **⚠️ 2026-07-06 (ADR-011 — approved):** The Product Owner has re-sequenced the phases in this document: **Phase 3 is now Merchant Growth Tools** (AI marketing, advanced CRM, referrals, campaign automation) and **Phase 4 is Merchant Storefront / Commerce** (catalogues, ordering, pickup, merchant delivery, shipping, QR payment display, merchant-controlled fulfillment — no commissions, no money through OneMember, merchant is always seller of record; see [ADR-011](../12-ADR/ADR-011-Commerce-Principles-Phase-4.md) and [Commerce.md](../02-Product/Commerce.md)). POS Lite and Inventory move with commerce to Phase 4. **Regional expansion timing is now an open decision (DR-31)** — the Phase 3/4 narratives below predate this re-sequencing and are retained for historical context only. The authoritative phase list is the [Product Bible — Roadmap Positioning](../02-Product/Product-Bible.md).
+
 > **2026-07-05:** The detailed year-by-year strategy through 2030, including AI, integrations, enterprise, mobile, revenue, and expansion plans, is in [Version-2.0-Vision-and-Master-Roadmap-2026-2030.md](./Version-2.0-Vision-and-Master-Roadmap-2026-2030.md). This document remains the phase narrative; the Master Roadmap operationalises it.
 
 ## Purpose

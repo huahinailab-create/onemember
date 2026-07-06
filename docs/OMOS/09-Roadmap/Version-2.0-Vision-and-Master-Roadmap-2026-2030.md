@@ -3,11 +3,13 @@
 | Field | Value |
 |---|---|
 | **Document Owner** | Product Owner |
-| **Version** | 1.0.0 |
+| **Version** | 1.1.0 |
 | **Status** | Review — strategic proposals require Product Owner ratification (§14) |
-| **Last Updated** | 2026-07-05 |
+| **Last Updated** | 2026-07-06 |
 | **Author** | Claude Fable 5 (sprint VISION-001) |
 | **Related Documents** | [Product-Bible.md](../02-Product/Product-Bible.md) · [Long-term-Roadmap.md](./Long-term-Roadmap.md) · [Roadmap.md](./Roadmap.md) · [Customer-Wallet package](../02-Product/Customer-Wallet/README.md) · [Scalability-Review-2026-07](../10-Architecture/Scalability-Review-2026-07.md) · [Operations-Manual](../06-Operations/Operations-Manual.md) · [14-Version-2.0-Ideas](../../14-Version-2.0-Ideas.md) · [Bible-Gap-Review](../02-Product/Bible-Gap-Review-2026-07.md) |
+
+> **⚠️ 2026-07-06 amendment (GOV-001, PO-approved):** the custodian principle, identity/consent model, and commerce principles are now settled in the [Product Bible v1.0.0](../02-Product/Product-Bible.md), [ADR-010](../12-ADR/ADR-010-Custodian-Identity-Consent.md), and [ADR-011](../12-ADR/ADR-011-Commerce-Principles-Phase-4.md). Where this document differs, those govern. Key changes: **Phase 3 = growth tools, Phase 4 = Merchant Storefront/commerce** (was reversed in §2); "PromptPay checkout" is re-scoped to **QR payment display** of the merchant's own payment identity — no money ever flows through OneMember, no commission economics; Apple/Google Wallet passes are approved Phase 2 scope (BD-04 product decision made); regional expansion timing is an open decision (**DR-31**). §13 milestone years for commerce/regional are indicative pending DR-31.
 
 **Reading rule:** Everything here is a blueprint, not a commitment. Items marked **[DR-n]** require a Product Owner decision recorded in the Decision Register (§14) before any spec is written. Nothing in this document overrides the Product Bible; where this document proposes going beyond the Bible, it says so explicitly.
 
@@ -43,8 +45,9 @@ Sequencing is capacity-realistic (small team + AI development system). Dates are
 |---|---|---|---|
 | **Phase 1 close-out** | 2026 H2 | SCALE-001 hardening, pilot → paying merchants, DOC-001/002/003 debt | ADR-009 + BD-13 |
 | **Phase 2 — Customer Wallet** | 2026 H2 – 2027 | PH2-001A→F (specs exist), LINE OA (PH2-002), tiers (PL-001), Enterprise Bridge v1 (PH2-003) | BD-01…BD-10 |
-| **Phase 3 — Commerce Network** | 2028 – 2029 H1 | Product/menu listing, ordering, PromptPay checkout, POS Lite, inventory, multi-location (PL-002) | Wallet ≥ 100k MAU + DR-10 |
-| **Phase 4 — Regional OS** | 2029 – 2030 | Malaysia → Vietnam → Singapore, native apps, accounting/procurement, advanced AI | Phase 3 economics proven + DR-20 |
+| **Phase 3 — Merchant Growth Tools** | 2028 | AI marketing, advanced CRM, referrals, campaign automation (ADR-011 re-sequencing) | Wallet adoption proven + DR-10 |
+| **Phase 4 — Merchant Storefront / Commerce** | 2029 – 2030 | Product catalogues, ordering, pickup/merchant delivery/shipping, QR payment display, merchant-controlled fulfillment, POS Lite, inventory, multi-location (PL-002). No commissions; payment direct customer→merchant (ADR-011) | Phase 3 economics proven + Phase 4 planning gate |
+| **Regional expansion** | TBD — **DR-31** | Malaysia → Vietnam → Singapore, native apps, accounting/procurement (previously "Phase 4"; placement now an open PO decision) | DR-20 + DR-31 |
 | **Beyond 2030** | — | Platform maturity: public API ecosystem, enterprise white-label at scale | — |
 
 Rule carried from OMOS: each phase gate is an ADR + CEO decision; phases never start on enthusiasm alone (the Phase-2 gate discipline stays).
@@ -58,7 +61,7 @@ Authoritative design: [PH2-000 package](../02-Product/Customer-Wallet/README.md)
 - **Universal OneMember ID** — one OTP-verified phone identity linking many per-merchant memberships; merchants keep sovereignty of their Member records (link, don't merge).
 - **Digital membership card** — every membership a branded card: balance, progress, history, member QR; PWA first, installable day one.
 - **Cross-merchant experience** — one wallet, one QR, every OneMember shop; discovery only via opt-in directory; **no cross-merchant data leakage, ever**.
-- **Apple Wallet / Google Wallet** — designed (package Doc 07), gated on BD-04 (Bible amendment + accounts). Strategic value: the pass surface is retention real estate on the lock screen.
+- **Apple Wallet / Google Wallet** — designed (package Doc 07); **approved Phase 2 scope (PO, 2026-07-06)** — accounts/certificates budget still needs CEO sign-off. Strategic value: the pass surface is retention real estate on the lock screen.
 - **QR identity** — signed universal join QRs on every counter; rotating member QRs at presentation; the QR *is* the brand ritual ("scan, earn, return").
 - **Privacy-first design** — per-merchant, per-data-type, versioned consent; PDPA as feature, not compliance chore. Marketing position: "the loyalty app that doesn't spy on you." (DR-03: whether to lead marketing with privacy.)
 
@@ -269,6 +272,7 @@ Carried open: **BD-01…BD-18** (PH2-000 + SCALE-000 registers). New strategic d
 | DR-24 | Data residency stance per market | §11 |
 | DR-25 | Annual integration budget/cap | §12 |
 | DR-30 | All pricing evolutions (umbrella — every §10 change is individually CEO-approved) | §10 |
+| DR-31 | **Regional expansion placement** — commerce now occupies Phase 4 (ADR-011); decide where Malaysia/Vietnam/Singapore, native apps, and accounting/procurement sit (Phase 5? interleaved?) and their entry gates | §2, §11 |
 
 ## 15. Recommended Priorities
 

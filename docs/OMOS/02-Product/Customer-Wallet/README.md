@@ -35,17 +35,19 @@ Plus: [ADR-008 — Phase 2 Customer Wallet Architecture](../../12-ADR/ADR-008-Ph
 
 ---
 
-## ⛔ Open Business Decisions (must be resolved before implementation)
+## ⛔ Business Decisions register
+
+> **2026-07-06 (GOV-001):** the Product Owner's custodian/identity decisions ([ADR-010](../../12-ADR/ADR-010-Custodian-Identity-Consent.md)) resolved BD-02, BD-04 (product side), and BD-05, and added: token-only customer QR (binding), merchant **scan-to-join** flow (Doc 08 §4b), subscription-gated merchant data access, and a no-cross-merchant-point-merging rule. The custodian framing in the [Product Bible](../Product-Bible.md) now governs this package; where this package's wording differs, the Bible wins.
 
 Per EXECUTE.md, none of these are assumed. Each needs a Product Owner decision recorded in `docs/08-Product-Decisions.md` (and CEO-Decisions.md where marked).
 
 | ID | Decision Needed | Options / Recommendation | Blocking |
 |---|---|---|---|
 | **BD-01** | **Start Phase 2 before Phase 1 exit criteria are met?** Long-term-Roadmap requires 1,000+ paying merchants and 50,000+ members. Current numbers are below this. | (a) Wait for criteria; (b) approve early start with revised criteria. CEO decision. | Everything |
-| **BD-02** | **Customer authentication method.** | (a) Phone + SMS OTP (recommended — matches Thai consumer behaviour, no password support burden; requires SMS provider budget ~0.3–0.6 THB/OTP); (b) email + password; (c) LINE Login only. | Identity, DB, API |
+| **BD-02** | ~~Customer authentication method.~~ **✅ DECIDED (PO, 2026-07-06, ADR-010):** one mobile phone number = one global OneMember identity; duplicates prohibited. OTP mechanics/vendor remain with BD-09. | Identity, DB, API |
 | **BD-03** | **Wallet pricing.** Is the wallet free for consumers and included in all merchant plans, or a paid merchant add-on? | Recommendation: free for consumers, included for all plans (network effects are the point). CEO decision — pricing. | GTM, feature gates |
-| **BD-04** | **Apple/Google Wallet are not in the Product Bible.** Amend the Bible to include native wallet passes as a Phase 2 deliverable? Requires Apple Developer Program (USD 99/yr), pass-type certificate, and a Google Wallet API issuer account. | Approve Bible amendment + budget, or defer passes to Phase 2.1. | Doc 07 |
-| **BD-05** | **Member deduplication rule.** When a wallet customer's phone matches an existing Member's phone at a merchant, auto-link, or require merchant/customer confirmation? | Recommendation: auto-link after customer verifies that phone via OTP (they proved ownership); notify merchant. | Identity flow |
+| **BD-04** | ~~Apple/Google Wallet Bible amendment.~~ **✅ DECIDED (PO, 2026-07-06):** Apple Wallet + Google Wallet are approved Phase 2 deliverables (Bible Roadmap Positioning). Accounts/certificates budget still needs CEO sign-off before PH2-001E. | Doc 07 |
+| **BD-05** | ~~Member deduplication rule.~~ **✅ DECIDED (PO, 2026-07-06, ADR-010):** linking existing Member records and transferring loyalty data into the Wallet requires **explicit, clear, optional customer consent** — the earlier auto-link recommendation is superseded. | Identity flow |
 | **BD-06** | **Merchant opt-out.** Can a merchant opt out of wallet discovery (their programme invisible in the wallet directory) while still using Phase 1 features? | Recommendation: yes — `wallet_visible` merchant setting, default on. | Consent model |
 | **BD-07** | **Consent copy + PDPA legal review.** Consent text (Thai + English) must be reviewed by Thai counsel before launch. | Engage counsel; budget item. CEO decision. | Launch gate |
 | **BD-08** | **Notification channel priority.** Web push + email at launch, or hold for LINE OA integration (PH2-002)? | Recommendation: email at launch (infrastructure exists), web push Phase 2.1, LINE when PH2-002 is specced. | Scope |
