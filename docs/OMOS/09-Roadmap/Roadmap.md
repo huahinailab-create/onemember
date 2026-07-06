@@ -62,7 +62,8 @@ When these documents conflict, this document takes precedence as the more recent
 | Staff-facing sale entry (Counter Mode UI) | MVP-007 | `d6b34fb` |
 | Win-back campaign alerts | MVP-008 | `91c19f2` |
 | Campaign analytics dashboard | RELEASE-4A | `bdb0cfb` |
-| Merchant Launch Kit & onboarding assets | RELEASE-5A | — |
+| Merchant Launch Kit & onboarding assets | RELEASE-5A | `f6e5f55` |
+| OneMember Identity Platform (Phase 2 foundation) | PH2-001A | — |
 
 ### In Progress 🔄
 

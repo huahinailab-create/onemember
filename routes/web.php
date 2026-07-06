@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\MerchantController as AdminMerchantController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\HealthController;
+use App\Http\Controllers\Identity\IdentityCardController;
+use App\Http\Controllers\Identity\MemberIdentityController;
 use App\Http\Controllers\JoinLandingController;
 use App\Http\Controllers\LaunchKitController;
 use App\Http\Controllers\SubscriptionController;
@@ -88,6 +90,9 @@ Route::domain(config('domains.app'))->group(function () {
     // no data collection. QR posters printed from the Launch Kit point here.
     Route::get('/join/{slug}', [JoinLandingController::class, 'show'])->name('join.show');
 
+    // OneMember Card (PH2-001A) — public by unguessable uuid; QR is token-only
+    Route::get('/omid/{publicUuid}', [IdentityCardController::class, 'show'])->name('identity.card');
+
     // Customer self-service portal (public, no auth)
     Route::get('/member/{publicUuid}',        [CustomerPortalController::class, 'show'])->name('portal.show');
     Route::get('/member/{publicUuid}/card',   [CustomerPortalController::class, 'card'])->name('portal.card');
@@ -157,6 +162,9 @@ Route::domain(config('domains.app'))->group(function () {
         Route::get('/members',              [MemberController::class, 'index'])->name('members');
         Route::get('/members/create',       [MemberController::class, 'create'])->name('members.create');
         Route::post('/members',             [MemberController::class, 'store'])->name('members.store');
+        Route::get('/members/onemember/add',      [MemberIdentityController::class, 'addForm'])->name('members.identity.add');
+        Route::post('/members/onemember/resolve', [MemberIdentityController::class, 'resolve'])->name('members.identity.resolve');
+        Route::post('/members/onemember/join',    [MemberIdentityController::class, 'join'])->name('members.identity.join');
         Route::get('/members/{member}',     [MemberController::class, 'show'])->name('members.show');
         Route::put('/members/{member}',     [MemberController::class, 'update'])->name('members.update');
         Route::delete('/members/{member}',  [MemberController::class, 'archive'])->name('members.archive');

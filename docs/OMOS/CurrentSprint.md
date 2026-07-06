@@ -16,23 +16,23 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | GOV-001 |
-| **Title** | Foundational Principles Consolidation (Custodian Model) |
-| **Status** | ✅ Complete — records PO decisions of 2026-07-06 |
+| **Sprint ID** | PH2-001A |
+| **Title** | OneMember Identity Platform |
+| **Status** | ⏳ Awaiting CTO Review (Type B — new tables, new public route) |
 | **Sprint Type** | Design / Documentation (no application code) |
 | **Classification** | Type C — CEO Approval Required (phase change, pricing, legal, vendor) |
-| **Sprint File** | [Sprints/GOV-001-Custodian-Principles-Consolidation.md](./Sprints/GOV-001-Custodian-Principles-Consolidation.md) |
+| **Sprint File** | [Sprints/PH2-001A-Wallet-Foundation.md](./Sprints/PH2-001A-Wallet-Foundation.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Fable 5 |
 | **Reviewer** | Product Owner (CEO) |
 | **Started** | 2026-07-05 |
 | **Target Completion** | 2026-07-05 |
 | **Actual Completion** | 2026-07-05 |
-| **Final Commit** | HEAD (docs-only commit, see git log: GOV-001) |
+| **Final Commit** | see git log: PH2-001A |
 
 ### Business Objective
 
-Consolidate the Product Owner's foundational decisions — custodian principle, identity/consent model, commerce principles, phase re-sequencing — into the Product Bible v1.0.0, ADR-010/011, Commerce.md, the wallet design package, the Glossary, and the decision register (DECISION-076/077). Docs only.
+Build the permanent OneMember Identity system: one phone = one global identity with a permanent OneMember ID, token-only QR card, and consent-gated merchant scan-to-join — identity shared, loyalty never merged (ADR-010). DECISION-078.
 
 ---
 
@@ -99,6 +99,7 @@ Consolidate the Product Owner's foundational decisions — custodian principle, 
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
+| PH2-001A | OneMember Identity Platform | ⏳ Awaiting CTO Review | see git log |
 | GOV-001 | Foundational Principles Consolidation (Custodian Model) | ✅ Complete | HEAD (docs-only) |
 | RELEASE-5A | Merchant Launch Kit & Onboarding Assets | ⏳ Awaiting CTO Review | `f6e5f55` |
 | FINAL-001…006 | Final Engineering Hardening | ✅ Complete (Type A) | `82e0599` |

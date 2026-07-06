@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| **Status** | 🔲 Planning — blocked by BD-01, BD-02, BD-09; design: [Package Docs 02/03/05](../02-Product/Customer-Wallet/README.md) |
+| **Status** | ✅ Implemented 2026-07-06 as the **OneMember Identity Platform** (PO-directed re-scope: identity + card + scan-to-join delivered; wallet domain + OTP auth deferred — see delivery note below) |
 | **Classification** | Type B |
 | **Complexity** | Large (auth surface) |
 | **Dependencies** | ADR-008 Approved; SCALE-001 (rate-limiter + Redis infra); SMS provider contract (BD-09) |
@@ -33,3 +33,13 @@ Migrations 1–2 of design Doc 03: `customers`, `customer_otps`. Additive only.
 2. No `users`-table involvement; guards fully isolated (test-proven).
 3. `FEATURE_WALLET=false` hides the entire surface.
 4. OTP abuse limits per Design Doc 04 §4 enforced and tested.
+
+---
+
+## Delivery Note (2026-07-06)
+
+Implemented per the Product Owner's PH2-001A directive as the **Identity Platform** rather than the wallet-domain/OTP scope above:
+
+**Delivered:** `customers` (global identity, one phone = one identity, OM-XXXX-XXXX OneMember ID), `customer_member_links`, append-only `consents` ledger, `IdentityService` (find-or-create on member registration, HMAC-signed token-only QR, consent-gated scan-to-join with duplicate-membership prevention and existing-member connect), public OneMember Card (`/omid/{uuid}`), merchant "Add Existing OneMember Member" workflow with customer consent screen (field-level approval), audit logging on every identity event, TH/EN localization, `FEATURE_IDENTITY` flag, 23 tests. Commit: see CHANGELOG / git log (PH2-001A).
+
+**Deferred (unchanged blockers):** wallet domain group + customer OTP auth/session (BD-09 SMS vendor), wallet dashboard (PH2-001D), passes (PH2-001E — BD-04 budget). Consent screen currently runs on the merchant device with the customer present (counter reality); it moves to the customer's own device when wallet auth ships.

@@ -123,7 +123,7 @@ For detailed module specifications, see the individual documents in `docs/OMOS/0
 | Module | Phase | Document |
 |---|---|---|
 | Merchant Platform | Phase 1 — Live | [Merchant-Platform.md](./Merchant-Platform.md) |
-| Customer Wallet | Phase 2 — Designed (PH2-000) | [Customer-Wallet.md](./Customer-Wallet.md) → [design package](./Customer-Wallet/README.md) |
+| Customer Wallet | Phase 2 — Identity Platform live (PH2-001A); wallet UX designed (PH2-000) | [Customer-Wallet.md](./Customer-Wallet.md) → [design package](./Customer-Wallet/README.md) |
 | Enterprise Bridge | Phase 2+ — Planned | [Enterprise-Bridge.md](./Enterprise-Bridge.md) |
 | Growth Tools (AI marketing, CRM, referrals, automation) | Phase 3 — Planned | [AI-Features.md](./AI-Features.md), [Analytics.md](./Analytics.md) |
 | Merchant Storefront / Commerce | **Phase 4** — Principles approved | [Commerce.md](./Commerce.md) |

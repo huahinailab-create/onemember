@@ -77,6 +77,12 @@ class Member extends Model
         return $this->hasMany(Redemption::class);
     }
 
+    /** Live link to a global OneMember Identity, if any (PH2-001A). */
+    public function identityLink(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(CustomerMemberLink::class)->whereNull('unlinked_at');
+    }
+
     public function isBirthdayMonth(): bool
     {
         return $this->birthday && $this->birthday->month === now()->month;

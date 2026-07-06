@@ -123,7 +123,14 @@ class MemberController extends Controller
             ]);
         }
 
-        $merchant->members()->create($request->validated());
+        $member = $merchant->members()->create($request->validated());
+
+        // PH2-001A: registering a member creates (or reuses) the customer's
+        // global OneMember Identity. No profile data flows to any other
+        // merchant through this link (ADR-010).
+        if (config('features.identity')) {
+            app(\App\Services\IdentityService::class)->ensureIdentityForMember($member);
+        }
 
         $analytics->track('member_created', [], $request->user()->id, $merchant?->id);
 

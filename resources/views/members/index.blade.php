@@ -8,9 +8,16 @@
             <h1>{{ __('members.title') }}</h1>
             <p>{{ __('members.subtitle') }}</p>
         </div>
-        <a href="{{ route('members.create') }}" class="btn btn-primary flex-shrink-0">
-            <i class="bi bi-person-plus me-1"></i> {{ __('members.add_member') }}
-        </a>
+        <div class="d-flex gap-2 flex-shrink-0 flex-wrap">
+            @if (config('features.identity'))
+                <a href="{{ route('members.identity.add') }}" class="btn btn-outline-primary">
+                    <i class="bi bi-qr-code-scan me-1"></i> {{ __('identity.add_button') }}
+                </a>
+            @endif
+            <a href="{{ route('members.create') }}" class="btn btn-primary">
+                <i class="bi bi-person-plus me-1"></i> {{ __('members.add_member') }}
+            </a>
+        </div>
     </div>
 
     {{-- Filter Tabs --}}

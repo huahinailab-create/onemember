@@ -1134,4 +1134,22 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-078 — OneMember Identity Platform Implementation (PH2-001A)
+
+- **Date:** 2026-07-06
+- **Status:** Approved (Product Owner directive)
+- **Decision:**
+  1. The permanent identity layer ships now, ahead of wallet auth: `customers` (one phone = one identity), `customer_member_links`, and the append-only `consents` ledger — exactly the ADR-008/ADR-010 shapes, zero Phase 1 schema changes.
+  2. **OneMember ID** format: `OM-XXXX-XXXX` (Crockford-style alphabet, no ambiguous characters), permanent, unique, displayed on the OneMember Card.
+  3. **Card QR** payload is `OM2:{onemember_id}:{hmac16}` — a signed token, no personal data (ADR-010). Forged/tampered payloads resolve to nothing.
+  4. **Registration creates identity:** a member registered with a phone gets a find-or-create global identity + link (`linked_via=registration`). Profile fields seed the identity only on first creation; later registrations never overwrite it. No data flows between merchants through this link.
+  5. **Scan-to-join:** merchant scans the card → consent screen (masked hints only) → customer approves per field (name mandatory, phone/email/birthday/postal optional) → member created from approved fields only, or an existing same-phone member at that merchant is connected instead of duplicated. Grants AND refusals are recorded in the append-only ledger (version v1-2026-07).
+  6. Every identity event (`identity.created`, `identity.linked`, `identity.scan_join` with approved-field list) is written to the existing audit_logs table.
+  7. Gated by `FEATURE_IDENTITY` (default on; env-off dark-ships the entire surface including registration-time identity creation).
+  8. Consent screen runs on the merchant device with the customer present (counter reality) until wallet auth (BD-09) gives customers their own authenticated surface.
+- **Reason:** Product Owner directive 2026-07-06 — the identity system is the foundation every future capability uses; wallet UX can follow.
+- **Impact:** New: 3 migrations, `Customer`/`CustomerMemberLink`/`Consent` models, `IdentityService`, `Identity\MemberIdentityController`, `Identity\IdentityCardController`, 3 views + card CSS, `config/features.php`, `CustomerFactory`, `lang/{en,th}/identity.php`, `tests/Feature/IdentityPlatformTest.php` (23 tests). Modified: `MemberController@store` (identity hook), `Member` model (identityLink relation), members index (Add Existing OneMember Member button), `routes/web.php` (3 merchant routes + public /omid/{uuid}).
+
+---
+
 *New decisions must be appended above this line in the format shown.*
