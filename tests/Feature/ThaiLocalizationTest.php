@@ -70,6 +70,8 @@ class ThaiLocalizationTest extends TestCase
             'currency'    => 'THB',
             'timezone'    => 'Asia/Bangkok',
             'date_format' => 'DD/MM/YYYY',
+            'country'     => 'TH',
+            'terms'       => 1,
             'locale'      => 'en',
         ]);
 
@@ -86,6 +88,8 @@ class ThaiLocalizationTest extends TestCase
             'currency'    => 'THB',
             'timezone'    => 'Asia/Bangkok',
             'date_format' => 'DD/MM/YYYY',
+            'country'     => 'TH',
+            'terms'       => 1,
             'locale'      => 'th',
         ]);
 
@@ -102,6 +106,8 @@ class ThaiLocalizationTest extends TestCase
             'currency'    => 'THB',
             'timezone'    => 'Asia/Bangkok',
             'date_format' => 'DD/MM/YYYY',
+            'country'     => 'TH',
+            'terms'       => 1,
             'locale'      => 'ja',
         ]);
 

@@ -394,6 +394,7 @@ class EmailInfrastructureTest extends TestCase
         $merchant = $user->merchant;
 
         $this->actingAs($user)->put(route('settings.preferences.update'), [
+            'country'     => 'TH',
             'currency'                    => 'THB',
             'timezone'                    => 'Asia/Bangkok',
             'date_format'                 => 'DD/MM/YYYY',

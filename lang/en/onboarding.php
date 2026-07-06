@@ -87,4 +87,11 @@ return [
     'starter_points_name'       => 'Points Rewards Program',
     'starter_points_reward_name'=> 'Free Item',
     'open_launch_kit' => 'Open Launch Kit',
+    'country'          => 'Country',
+    'country_hint'     => 'Determines which local features and payment displays become available.',
+    'terms_label'      => 'I accept the',
+    'terms_link'       => 'Terms of Service',
+    'privacy_link'     => 'Privacy Policy',
+    'terms_scope'      => 'Covers subscription, payment, trial, free-plan limits, upgrades, acceptable use and merchant responsibilities.',
+    'terms_draft_note' => 'draft pending legal review',
 ];

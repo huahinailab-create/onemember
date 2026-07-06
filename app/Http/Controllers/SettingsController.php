@@ -95,6 +95,7 @@ class SettingsController extends Controller
         $merchant->update([
             'currency' => $validated['currency'],
             'timezone' => $validated['timezone'],
+            'country'  => $validated['country'],
             'settings' => $settings,
         ]);
 

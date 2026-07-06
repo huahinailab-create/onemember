@@ -178,6 +178,8 @@ class LanguageSwitcherTest extends TestCase
             'currency'    => 'THB',
             'timezone'    => 'Asia/Bangkok',
             'date_format' => 'DD/MM/YYYY',
+            'country'     => 'TH',
+            'terms'       => 1,
             // locale intentionally omitted — request must fill a default
         ]);
 
@@ -196,6 +198,8 @@ class LanguageSwitcherTest extends TestCase
             'currency'    => 'THB',
             'timezone'    => 'Asia/Bangkok',
             'date_format' => 'DD/MM/YYYY',
+            'country'     => 'TH',
+            'terms'       => 1,
             'locale'      => 'en',
         ]);
 
@@ -214,6 +218,8 @@ class LanguageSwitcherTest extends TestCase
             'currency'    => 'THB',
             'timezone'    => 'Asia/Bangkok',
             'date_format' => 'DD/MM/YYYY',
+            'country'     => 'TH',
+            'terms'       => 1,
             'locale'      => 'th',
         ]);
 
@@ -235,6 +241,8 @@ class LanguageSwitcherTest extends TestCase
             'currency'    => 'THB',
             'timezone'    => 'Asia/Bangkok',
             'date_format' => 'DD/MM/YYYY',
+            'country'     => 'TH',
+            'terms'       => 1,
             'locale'      => 'invalid',
         ]);
 

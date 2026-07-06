@@ -37,6 +37,7 @@ class UpdateMerchantPreferencesRequest extends FormRequest
             ],
             'default_birthday_enabled'   => ['required', 'boolean'],
             'winback_days'               => ['nullable', 'integer', 'min:0', 'max:365'],
+            'country'                    => ['required', 'string', \Illuminate\Validation\Rule::in(array_keys(config('countries.list')))],
             'locale'                     => ['required', 'string', Rule::in(['en', 'th'])],
             'email_product_updates'       => ['required', 'boolean'],
             'email_tips'                  => ['required', 'boolean'],

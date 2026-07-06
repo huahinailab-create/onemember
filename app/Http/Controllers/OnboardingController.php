@@ -121,7 +121,19 @@ class OnboardingController extends Controller
         $merchant->update([
             'currency' => $validated['currency'],
             'timezone' => $validated['timezone'],
+            'country'  => $validated['country'],
             'settings' => $settings,
+        ]);
+
+        // CORE-001: versioned, append-only terms acceptance (wording is
+        // draft pending legal review — DR-33).
+        \App\Models\TermsAcceptance::create([
+            'user_id'     => $request->user()->id,
+            'merchant_id' => $merchant->id,
+            'document'    => 'merchant-terms-bundle',
+            'version'     => config('countries.terms_version'),
+            'ip_address'  => $request->ip(),
+            'accepted_at' => now(),
         ]);
 
         return redirect()->route('onboarding.loyalty');

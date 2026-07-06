@@ -22,6 +22,8 @@ class StoreOnboardingBusinessSettingsRequest extends FormRequest
             'timezone'    => ['required', 'string', Rule::in(timezone_identifiers_list())],
             'date_format' => ['required', 'string', Rule::in(['DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'])],
             'locale'      => ['sometimes', 'string', Rule::in(['en', 'th'])],
+            'country'     => ['required', 'string', Rule::in(array_keys(config('countries.list')))],
+            'terms'       => ['accepted'],
         ];
     }
 

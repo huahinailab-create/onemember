@@ -134,6 +134,7 @@ class WinbackAlertTest extends TestCase
             'email_tips'                  => 1,
             'email_feature_announcements' => 1,
             'winback_days'                => 45,
+            'country'                     => 'TH',
         ])->assertRedirect();
 
         $this->assertSame(45, $this->merchant->fresh()->settings['winback_days']);

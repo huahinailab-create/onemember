@@ -423,6 +423,23 @@
 
                         <div class="row g-4">
 
+                            {{-- Country (CORE-001) --}}
+                            <div class="col-md-4">
+                                <label for="country" class="form-label fw-medium">
+                                    {{ __('onboarding.country') }} <span class="text-danger">*</span>
+                                </label>
+                                <select id="country" name="country"
+                                        class="form-select @error('country') is-invalid @enderror" required>
+                                    @foreach (config('countries.list') as $code => $label)
+                                        <option value="{{ $code }}"
+                                            {{ old('country', $merchant?->country ?? config('countries.default')) === $code ? 'selected' : '' }}>
+                                            {{ $label }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('country')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+
                             {{-- Currency --}}
                             <div class="col-md-4">
                                 <label for="currency" class="form-label fw-medium">

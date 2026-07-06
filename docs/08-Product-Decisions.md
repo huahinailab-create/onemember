@@ -1172,4 +1172,13 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-081 — CORE-001: Global Onboarding, Terms Acceptance, Free-100 Plan
+
+- **Date:** 2026-07-06
+- **Status:** Approved (48-Hour Core Completion directive)
+- **Decision:** Onboarding collects country (ISO-3166 alpha-2 from `config/countries.php`, 22 launch countries, default TH), currency, timezone, and language, plus **required acceptance of the merchant terms bundle** (subscription/payment/trial/free-limits/upgrades/privacy/acceptable-use/responsibilities), recorded append-only in `terms_acceptances` with version `v1-draft-2026-07` and IP. All legal wording is draft pending legal review (DR-33). Country is also editable in Settings → Preferences. Free plan = **100 members** (resolves the free-tier portion of DR-32; paid-tier detail still open). Country choice is the hook for Country Extension availability (ADR-012).
+- **Impact:** New: `terms_acceptances` migration + `TermsAcceptance` model (append-only), `config/countries.php`, `tests/Feature/GlobalOnboardingTest.php` (8 tests). Modified: onboarding business-settings request/controller/view, settings preferences request/controller/view, `config/subscriptions.php` comment, onboarding lang en/th, 4 existing test payloads (new required fields).
+
+---
+
 *New decisions must be appended above this line in the format shown.*

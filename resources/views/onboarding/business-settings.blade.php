@@ -75,6 +75,28 @@
             @csrf
 
             {{-- Currency --}}
+            {{-- Country (CORE-001 — drives extensions + defaults) --}}
+            <div class="mb-3">
+                <label for="country" class="form-label fw-medium">
+                    {{ __('onboarding.country') }} <span class="text-danger">*</span>
+                </label>
+                <select id="country"
+                        name="country"
+                        class="form-select @error('country') is-invalid @enderror"
+                        required>
+                    @foreach (config('countries.list') as $code => $label)
+                        <option value="{{ $code }}"
+                            {{ old('country', $merchant?->country ?? config('countries.default')) === $code ? 'selected' : '' }}>
+                            {{ $label }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('country')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+                <div class="form-text">{{ __('onboarding.country_hint') }}</div>
+            </div>
+
             <div class="mb-3">
                 <label for="currency" class="form-label fw-medium">
                     {{ __('settings.currency') }} <span class="text-danger">*</span>
@@ -158,6 +180,23 @@
             </div>
 
             <div class="d-grid">
+                {{-- Terms acceptance (CORE-001 — wording draft pending legal review, DR-33) --}}
+                <div class="form-check mb-3 text-start">
+                    <input class="form-check-input @error('terms') is-invalid @enderror"
+                           type="checkbox" id="terms" name="terms" value="1" required
+                           {{ old('terms') ? 'checked' : '' }}>
+                    <label class="form-check-label small" for="terms">
+                        {{ __('onboarding.terms_label') }}
+                        <a href="{{ 'https://' . config('domains.corporate') . '/terms' }}" target="_blank" rel="noopener">{{ __('onboarding.terms_link') }}</a>
+                        ·
+                        <a href="{{ 'https://' . config('domains.corporate') . '/privacy' }}" target="_blank" rel="noopener">{{ __('onboarding.privacy_link') }}</a>
+                    </label>
+                    <div class="form-text">{{ __('onboarding.terms_scope') }} <em>({{ __('onboarding.terms_draft_note') }})</em></div>
+                    @error('terms')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 <button type="submit" class="btn btn-primary btn-lg">
                     {{ __('onboarding.save_and_continue') }} <i class="bi bi-arrow-right ms-1"></i>
                 </button>

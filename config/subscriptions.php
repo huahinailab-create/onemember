@@ -59,7 +59,7 @@ return [
 
             // PLACEHOLDER limits — finalise after beta (DECISION-013)
             'limits' => [
-                'members'              => 100,  // PLACEHOLDER
+                'members'              => 100,  // PO-confirmed (DECISION-081): free plan = 100 members
                 'campaigns'            => 1,    // PLACEHOLDER
                 'rewards_per_campaign' => 3,    // PLACEHOLDER
                 'staff_users'          => 0,    // PLACEHOLDER
