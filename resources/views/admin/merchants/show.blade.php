@@ -126,6 +126,68 @@
         </div>
     </div>
 
+    {{-- TRIAL-001: Trial extension (admin) --}}
+    <div class="card mb-4">
+        <div class="card-header fw-semibold"><i class="bi bi-hourglass-split me-2"></i>Trial Extension</div>
+        <div class="card-body">
+            @if (session('success'))
+                <div class="alert alert-success py-2">{{ session('success') }}</div>
+            @endif
+            @if ($errors->any())
+                <div class="alert alert-danger py-2">{{ $errors->first() }}</div>
+            @endif
+
+            <form method="POST" action="{{ route('admin.merchants.extend-trial', $merchant) }}" class="row g-2 align-items-end">
+                @csrf
+                <div class="col-auto">
+                    <label class="form-label form-label-sm mb-1">Extend by</label>
+                    <select name="preset" class="form-select form-select-sm" id="trial-preset" style="width:auto;">
+                        <option value="30">+30 days</option>
+                        <option value="60">+60 days</option>
+                        <option value="custom">Custom…</option>
+                    </select>
+                </div>
+                <div class="col-auto" id="trial-custom-wrap" style="display:none;">
+                    <label class="form-label form-label-sm mb-1">Days</label>
+                    <input type="number" name="custom_days" min="1" max="365" class="form-control form-control-sm" style="width:100px;">
+                </div>
+                <div class="col">
+                    <label class="form-label form-label-sm mb-1">Reason <span class="text-danger">*</span></label>
+                    <input type="text" name="reason" maxlength="255" required class="form-control form-control-sm"
+                           placeholder="e.g. pilot merchant, onboarding delay">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-sm btn-primary">Extend trial</button>
+                </div>
+            </form>
+
+            @if ($merchant->trialExtensions->isNotEmpty())
+                <table class="table table-sm mt-3 mb-0">
+                    <thead><tr style="font-size:0.75rem;color:#6B7280;">
+                        <th>When</th><th>Days</th><th>New end</th><th>Reason</th><th>By</th>
+                    </tr></thead>
+                    <tbody>
+                        @foreach ($merchant->trialExtensions as $ext)
+                            <tr style="font-size:0.82rem;">
+                                <td>{{ $ext->created_at->format('d M Y H:i') }}</td>
+                                <td>+{{ $ext->days }}</td>
+                                <td>{{ $ext->new_trial_ends_at->format('d M Y') }}</td>
+                                <td>{{ $ext->reason }}</td>
+                                <td>{{ $ext->admin?->name ?? '—' }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('trial-preset')?.addEventListener('change', function () {
+            document.getElementById('trial-custom-wrap').style.display = this.value === 'custom' ? '' : 'none';
+        });
+    </script>
+
     {{-- Counts row --}}
     <div class="row g-3 mb-4">
         @foreach([

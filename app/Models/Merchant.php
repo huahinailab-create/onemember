@@ -200,6 +200,11 @@ class Merchant extends Model
         return in_array($key, $this->installedApps(), true);
     }
 
+    public function trialExtensions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(TrialExtension::class)->latest('created_at');
+    }
+
     public function wantsEmail(string $category): bool
     {
         if (in_array($category, ['billing', 'security_alerts'])) {

@@ -49,6 +49,19 @@ class MerchantController extends Controller
             $query->whereDate('created_at', '<=', $to);
         }
 
+        // TRIAL-001 lifecycle filters
+        if ($trial = $request->input('trial')) {
+            if ($trial === 'ending_soon') {
+                $query->where('subscription_status', SubscriptionStatus::Trial)
+                      ->whereNotNull('trial_ends_at')
+                      ->whereBetween('trial_ends_at', [now(), now()->addDays(7)]);
+            } elseif ($trial === 'expired') {
+                $query->where('subscription_status', SubscriptionStatus::Expired);
+            } elseif ($trial === 'extended') {
+                $query->whereHas('trialExtensions');
+            }
+        }
+
         $merchants = $query->latest()->paginate(25)->withQueryString();
 
         return view('admin.merchants.index', [
@@ -62,7 +75,7 @@ class MerchantController extends Controller
     public function show(Merchant $merchant): View
     {
         $merchant->loadCount(['members', 'transactions', 'redemptions']);
-        $merchant->load('owner');
+        $merchant->load(['owner', 'trialExtensions.admin']);
 
         $activeMembers   = $merchant->members()->where('status', 'active')->count();
         $campaignCount   = $merchant->loyaltyPrograms()->count();

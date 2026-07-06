@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\MerchantController as AdminMerchantController;
+use App\Http\Controllers\Admin\TrialExtensionController as AdminTrialExtensionController;
 use App\Http\Controllers\AppsController;
 use App\Http\Controllers\Commerce\CommerceSettingsController;
 use App\Http\Controllers\Commerce\ProductController as CommerceProductController;
@@ -87,6 +88,7 @@ Route::domain(config('domains.app'))->group(function () {
             Route::get('/dashboard',              [AdminDashboardController::class, 'index'])->name('dashboard');
             Route::get('/merchants',              [AdminMerchantController::class,  'index'])->name('merchants.index');
             Route::get('/merchants/{merchant}',   [AdminMerchantController::class,  'show'])->name('merchants.show');
+            Route::post('/merchants/{merchant}/extend-trial', [AdminTrialExtensionController::class, 'store'])->name('merchants.extend-trial');
         });
 
     // Root → merchant login

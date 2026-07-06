@@ -1226,4 +1226,13 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-087 — TRIAL-001: Admin Trial Extension
+
+- **Date:** 2026-07-06
+- **Status:** Approved (PHASE-A launch readiness)
+- **Decision:** Platform admins can extend a merchant's trial by +30, +60, or a custom number of days (1–365) with a **required reason**. Extensions never shorten an active trial (extend from the later of now/current end) and reactivate an expired trial from now. Each extension is recorded in an append-only `trial_extensions` history (days, previous/new end, admin user, reason) shown on the admin merchant detail page, and written to `audit_logs` (`trial.extended`). Merchant list gains a Trial filter: ending-soon (≤7d), extended, expired. Admin-only (existing `admin` middleware); no pricing numbers changed.
+- **Impact:** New: `trial_extensions` migration, `TrialExtension` model, `Admin\TrialExtensionController`, `TrialExtensionTest` (9 tests), `lang/{en,th}/admin.php`. Modified: Merchant model (relation), admin merchant show (extension form + history), admin index (trial filter), routes.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

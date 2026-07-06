@@ -47,6 +47,16 @@
                 </select>
             </div>
 
+            <div class="col-6 col-md-2">
+                <label class="form-label fw-500 mb-1" style="font-size:0.78rem;color:#1A2E5A;font-weight:500;">Trial</label>
+                <select name="trial" class="form-select form-select-sm">
+                    <option value="">All</option>
+                    <option value="ending_soon" {{ request('trial') === 'ending_soon' ? 'selected' : '' }}>Ending soon (≤7d)</option>
+                    <option value="extended" {{ request('trial') === 'extended' ? 'selected' : '' }}>Extended</option>
+                    <option value="expired" {{ request('trial') === 'expired' ? 'selected' : '' }}>Expired</option>
+                </select>
+            </div>
+
             <div class="col-6 col-md-1">
                 <label class="form-label fw-500 mb-1" style="font-size:0.78rem;color:#1A2E5A;font-weight:500;">From</label>
                 <input type="date" name="from" value="{{ request('from') }}" class="form-control form-control-sm">
@@ -62,7 +72,7 @@
                         style="background:#1A2E5A;color:#fff;font-weight:500;">
                     Filter
                 </button>
-                @if(request()->hasAny(['search','plan','status','subscription_status','from','to']))
+                @if(request()->hasAny(['search','plan','status','subscription_status','trial','from','to']))
                 <a href="{{ route('admin.merchants.index') }}" class="btn btn-sm btn-outline-secondary">Clear</a>
                 @endif
             </div>
