@@ -16,23 +16,23 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | FINAL-001…006 |
-| **Title** | Final Engineering Hardening (code review, tech debt, SCALE-001 code items) |
-| **Status** | ✅ Complete (Type A items only — no business decisions touched) |
+| **Sprint ID** | RELEASE-5A |
+| **Title** | Merchant Launch Kit & Onboarding Assets |
+| **Status** | ⏳ Awaiting CTO Review (Type B — new public route) |
 | **Sprint Type** | Design / Documentation (no application code) |
 | **Classification** | Type C — CEO Approval Required (phase change, pricing, legal, vendor) |
-| **Sprint File** | [09-Roadmap/Version-2.0-Vision-and-Master-Roadmap-2026-2030.md](./09-Roadmap/Version-2.0-Vision-and-Master-Roadmap-2026-2030.md) |
+| **Sprint File** | [Sprints/RELEASE-5A-Merchant-Launch-Kit.md](./Sprints/RELEASE-5A-Merchant-Launch-Kit.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Fable 5 |
 | **Reviewer** | Product Owner (CEO) |
 | **Started** | 2026-07-05 |
 | **Target Completion** | 2026-07-05 |
 | **Actual Completion** | 2026-07-05 |
-| **Final Commit** | `7749e13` |
+| **Final Commit** | `1da0d69` |
 
 ### Business Objective
 
-Deliver the official 2026–2030 strategic blueprint: vision, phased evolution, wallet/merchant/AI/integration/enterprise/mobile/revenue/expansion strategy, risks, five-year milestones, decision register (DR-01…DR-30), priorities, and never-become list. Docs only — no code.
+A merchant can sign up, finish onboarding, and immediately print the materials needed to start collecting members at the counter: join QR poster, counter sign, staff quick-start guide, talking script, and configurable "Join the OneMember Family" campaign copy. DECISION-075.
 
 ---
 
@@ -99,6 +99,7 @@ Deliver the official 2026–2030 strategic blueprint: vision, phased evolution, 
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
+| RELEASE-5A | Merchant Launch Kit & Onboarding Assets | ⏳ Awaiting CTO Review | `1da0d69` |
 | FINAL-001…006 | Final Engineering Hardening | ✅ Complete (Type A) | `82e0599` |
 | VISION-001 | Version 2.0 Vision & Master Roadmap 2026–2030 | ⏳ Awaiting PO Ratification | `7749e13` |
 | SCALE-000 | Scalability Review & Phase 2 Blueprint | ⏳ Awaiting Ratification | `d14bd0a` |

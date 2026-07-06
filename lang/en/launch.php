@@ -1,0 +1,70 @@
+<?php
+
+return [
+    // Launch Kit page
+    'title'             => 'Launch Kit',
+    'subtitle'          => 'Everything you need to start collecting members at the counter.',
+    'nav_label'         => 'Launch Kit',
+    'join_link_heading' => 'Your Join Link & QR',
+    'join_link_hint'    => 'Customers scan this QR to see your programme page, then your staff sign them up in seconds.',
+    'copy_link'         => 'Copy link',
+    'link_copied'       => 'Copied!',
+    'assets_heading'    => 'Printable Assets',
+    'asset_poster'         => 'A4 Poster',
+    'asset_poster_desc'    => 'Hang it where customers queue.',
+    'asset_counter_card'   => 'Counter Sign',
+    'asset_counter_desc'   => 'A6 card for the till, facing the customer.',
+    'asset_staff_guide'    => 'Staff Quick-Start Guide',
+    'asset_staff_desc'     => 'One page that teaches any staff member the flow.',
+    'open_print'        => 'Open & Print',
+    'print_hint'        => 'Each asset opens as a print-ready page — use your browser\'s Print button (Ctrl/Cmd+P).',
+    'offer_heading'     => 'Join Offer',
+    'offer_hint'        => 'Pick the welcome offer shown on your poster and counter sign.',
+    'script_heading'    => 'Customer Talking Script',
+    'script_hint'       => 'What staff say at the counter — keep it to one breath.',
+
+    // Campaign copy — "Join the OneMember Family"
+    'campaign_headline' => 'Join the OneMember Family.',
+    'offer_coffee'      => 'Coffee\'s on us.',
+    'offer_dessert'     => 'Dessert\'s on us.',
+    'offer_discount'    => 'Enjoy a discount on your next visit.',
+    'offer_gift'        => 'A welcome gift is waiting for you.',
+    'offer_label_coffee'   => 'Free coffee',
+    'offer_label_dessert'  => 'Free dessert',
+    'offer_label_discount' => 'Service discount',
+    'offer_label_gift'     => 'Welcome gift',
+
+    // Poster / counter sign
+    'poster_scan'       => 'Scan to join — it takes 30 seconds',
+    'poster_earn'       => 'Earn points every visit. Redeem real rewards.',
+    'poster_ask'        => 'Ask our staff to sign you up today',
+    'poster_powered'    => 'Powered by OneMember',
+
+    // Public join landing
+    'landing_welcome'    => 'Welcome to :merchant',
+    'landing_body'       => 'We reward every visit. Join our loyalty programme and start earning today.',
+    'landing_how_title'  => 'How to join',
+    'landing_how_1'      => 'Show this screen to our staff',
+    'landing_how_2'      => 'They\'ll sign you up with just your name and phone number',
+    'landing_how_3'      => 'Start earning points immediately — including today\'s visit',
+    'landing_privacy'    => 'Your details stay with :merchant and are used only for your rewards.',
+
+    // Staff quick-start guide
+    'guide_title'        => 'Staff Quick-Start Guide',
+    'guide_intro'        => 'The five moves you need. Everything happens at :url',
+    'guide_step_search'  => 'Find a member',
+    'guide_step_search_how' => 'Members page → search by phone number (fastest) or name.',
+    'guide_step_add'     => 'Add a new member',
+    'guide_step_add_how' => 'Members → Add Member → name, phone, birthday. 30 seconds.',
+    'guide_step_purchase' => 'Record a purchase',
+    'guide_step_purchase_how' => 'Open the member → Record Purchase → enter the amount. Points are automatic.',
+    'guide_step_redeem'  => 'Redeem a reward',
+    'guide_step_redeem_how' => 'Open the member → Redeem Reward → pick the reward. The balance updates itself.',
+    'guide_step_counter' => 'Use Counter Mode',
+    'guide_step_counter_how' => 'Toggle "Counter" in the top bar → one search box, one amount field. Built for rush hour.',
+    'guide_say_title'    => 'What to say to customers',
+    'guide_say_1'        => '"Are you a member yet? Sign-up is free and today\'s purchase already counts."',
+    'guide_say_2'        => '"May I have your phone number to add your points?"',
+    'guide_say_3'        => '"You\'re :points points away from your next reward!"',
+    'guide_counter_qr'   => 'Scan to open the counter screen',
+];

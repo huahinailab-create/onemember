@@ -86,4 +86,5 @@ return [
     'starter_stamp_reward_desc' => 'สะสมแสตมป์ครบบัตรเพื่อรับของรางวัล',
     'starter_points_name'       => 'โปรแกรมสะสมคะแนน',
     'starter_points_reward_name'=> 'ของสมนาคุณ',
+    'open_launch_kit' => 'เปิดชุดเปิดตัวร้าน',
 ];

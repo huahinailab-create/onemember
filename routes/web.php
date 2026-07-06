@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\MerchantController as AdminMerchantController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\HealthController;
+use App\Http\Controllers\JoinLandingController;
+use App\Http\Controllers\LaunchKitController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MemberController;
@@ -82,6 +84,10 @@ Route::domain(config('domains.app'))->group(function () {
     // Root → merchant login
     Route::get('/', fn () => redirect()->to('/login'));
 
+    // Public per-merchant join landing (RELEASE-5A) — information only,
+    // no data collection. QR posters printed from the Launch Kit point here.
+    Route::get('/join/{slug}', [JoinLandingController::class, 'show'])->name('join.show');
+
     // Customer self-service portal (public, no auth)
     Route::get('/member/{publicUuid}',        [CustomerPortalController::class, 'show'])->name('portal.show');
     Route::get('/member/{publicUuid}/card',   [CustomerPortalController::class, 'card'])->name('portal.card');
@@ -132,6 +138,11 @@ Route::domain(config('domains.app'))->group(function () {
 
         Route::put('/settings/counter-mode', [CounterModeController::class, 'toggle'])->name('counter-mode.toggle');
         Route::get('/counter',               [CounterModeController::class, 'index'])->name('counter');
+
+        Route::get('/launch-kit',              [LaunchKitController::class, 'index'])->name('launch-kit');
+        Route::get('/launch-kit/poster',       [LaunchKitController::class, 'poster'])->name('launch-kit.poster');
+        Route::get('/launch-kit/counter-card', [LaunchKitController::class, 'counterCard'])->name('launch-kit.counter-card');
+        Route::get('/launch-kit/staff-guide',  [LaunchKitController::class, 'staffGuide'])->name('launch-kit.staff-guide');
 
         Route::get('/settings/data/import/members',          [DataManagementController::class, 'importForm'])->name('data.import.form');
         Route::post('/settings/data/import/members/upload',  [DataManagementController::class, 'importUpload'])->name('data.import.upload');

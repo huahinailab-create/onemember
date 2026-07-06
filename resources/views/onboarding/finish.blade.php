@@ -52,8 +52,13 @@
         @endif
 
         <div class="row g-3 justify-content-center">
+            <div class="col-12">
+                <a href="{{ route('launch-kit') }}" class="btn btn-primary btn-lg w-100">
+                    <i class="bi bi-rocket-takeoff me-2"></i>{{ __('onboarding.open_launch_kit') }}
+                </a>
+            </div>
             <div class="col-12 col-sm-6">
-                <a href="{{ route('dashboard') }}" class="btn btn-primary btn-lg w-100">
+                <a href="{{ route('dashboard') }}" class="btn btn-outline-primary btn-lg w-100">
                     <i class="bi bi-speedometer2 me-2"></i>{{ __('onboarding.go_to_dashboard') }}
                 </a>
             </div>

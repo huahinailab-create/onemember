@@ -86,4 +86,5 @@ return [
     'starter_stamp_reward_desc' => 'Complete your stamp card to claim your reward.',
     'starter_points_name'       => 'Points Rewards Program',
     'starter_points_reward_name'=> 'Free Item',
+    'open_launch_kit' => 'Open Launch Kit',
 ];

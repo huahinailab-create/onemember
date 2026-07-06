@@ -1099,4 +1099,19 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-075 — Merchant Launch Kit & Public Join Landing (RELEASE-5A)
+
+- **Date:** 2026-07-06
+- **Status:** Approved
+- **Decision:**
+  1. Every merchant gets a Launch Kit at `/launch-kit`: join QR + link, printable A4 poster, A6 counter sign, and staff quick-start guide (Blade + print CSS, browser print — no PDF dependency), plus a customer talking script.
+  2. The poster QR points to a **public, information-only** landing page `/join/{merchant-slug}` (active merchants only). It collects no data and creates no records — customers are directed to staff, who enrol them through existing member flows. This deliberately is **not** the Phase 2 wallet join flow; when PH2-001B ships, the same URL surface can upgrade to the wallet join without reprinting posters.
+  3. Campaign copy is "Join the OneMember Family." with a configurable welcome offer (coffee default, dessert, discount, gift) selected via validated query parameter; each offer is a pair of lang keys, so new offers are translation-only changes.
+  4. QR generation reuses `CustomerPortalService::qrCodeSvg()` (simple-qrcode) — no new provider.
+  5. Onboarding finish screen leads with "Open Launch Kit"; the merchant sidebar gains a Launch Kit item.
+- **Reason:** Merchants completed onboarding with no physical/actionable next step; the kit turns activation intent into counter-ready materials the same day. The public slug URL also future-proofs printed QRs for Phase 2.
+- **Impact:** New: `LaunchKitController`, `JoinLandingController`, 5 launch-kit/join views + print layout, `lang/{en,th}/launch.php`, launch/print/landing CSS in `app.css`, `tests/Feature/LaunchKitTest.php` (18 tests), sprint doc RELEASE-5A. Modified: `routes/web.php` (4 auth routes + 1 public route), `layouts/app.blade.php` (sidebar + latent `$__branding` alt fix), `onboarding/finish.blade.php`, `lang/{en,th}/navigation.php`, `lang/{en,th}/onboarding.php`.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

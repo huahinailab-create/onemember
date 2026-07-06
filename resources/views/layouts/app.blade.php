@@ -49,7 +49,7 @@
         <a href="{{ route('dashboard') }}"
            class="d-flex align-items-center gap-2 text-decoration-none text-white px-1 mb-1">
             @if ($__logo)
-                <img src="{{ $__logo }}" alt="{{ $__branding->displayName() }}"
+                <img src="{{ $__logo }}" alt="{{ $merchantBranding->displayName() }}"
                      style="height:36px;width:auto;max-width:120px;object-fit:contain;border-radius:4px;">
             @else
                 <span class="sidebar-brand-mark">
@@ -117,6 +117,14 @@
                    >
                     <i class="bi bi-bar-chart-line"></i>
                     <span>{{ __('navigation.reports') }}</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('launch-kit') }}"
+                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('launch-kit*') ? 'active' : '' }}"
+                   >
+                    <i class="bi bi-rocket-takeoff"></i>
+                    <span>{{ __('navigation.launch_kit') }}</span>
                 </a>
             </li>
         </ul>

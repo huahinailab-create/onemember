@@ -15,4 +15,5 @@ return [
     'send_feedback' => 'Send Feedback',
     'powered_by'    => 'Powered by',
     'dev_tools'     => 'Dev Tools',
+    'launch_kit'   => 'Launch Kit',
 ];

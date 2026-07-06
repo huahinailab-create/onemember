@@ -59,7 +59,8 @@ When these documents conflict, this document takes precedence as the more recent
 | Member notifications (points, rewards, birthday) | MVP-006 | `5d44d3d` |
 | Staff-facing sale entry (Counter Mode UI) | MVP-007 | `d6b34fb` |
 | Win-back campaign alerts | MVP-008 | `91c19f2` |
-| Campaign analytics dashboard | RELEASE-4A | — |
+| Campaign analytics dashboard | RELEASE-4A | `bdb0cfb` |
+| Merchant Launch Kit & onboarding assets | RELEASE-5A | — |
 
 ### In Progress 🔄
 
