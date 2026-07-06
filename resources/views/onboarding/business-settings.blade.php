@@ -180,6 +180,13 @@
             </div>
 
             <div class="d-grid">
+                {{-- Merchant Agreement summary (BILLING-001) --}}
+                <div class="card bg-light border-0 mb-3">
+                    <div class="card-body py-3">
+                        @include('legal.merchant-agreement')
+                    </div>
+                </div>
+
                 {{-- Terms acceptance (CORE-001 — wording draft pending legal review, DR-33) --}}
                 <div class="form-check mb-3 text-start">
                     <input class="form-check-input @error('terms') is-invalid @enderror"

@@ -1235,4 +1235,13 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-088 — BILLING-001: Terms & Payment Agreement Foundation
+
+- **Date:** 2026-07-06
+- **Status:** Approved (PHASE-A; extends CORE-001/DECISION-081)
+- **Decision:** A versioned Merchant Agreement summary (partial `legal/merchant-agreement.blade.php`, version from `config('countries.terms_version')`) enumerates the required clauses — subscription basis, trial→Free-on-expiry, Free = 100 members, paid upgrade for higher limits/features/automation/API/Apps, merchant responsibility (products/prices/rules/service/inventory/fulfilment/taxes/invoices), **OneMember is never merchant of record**, **OneMember never receives/holds/settles/transfers/escrows customer funds**, acceptable use, privacy. Shown at the onboarding acceptance step (above the existing required checkbox) and on the public terms page. All wording carries a **Draft** badge and "draft pending legal review" note (DR-33). The version displayed always equals the version recorded in `terms_acceptances` (CORE-001). No pricing numbers changed (Free = 100 confirmed).
+- **Impact:** New: `legal/merchant-agreement.blade.php`, `lang/{en,th}/legal.php`, `MerchantAgreementTest` (4 tests). Modified: onboarding business-settings view, corporate terms view.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

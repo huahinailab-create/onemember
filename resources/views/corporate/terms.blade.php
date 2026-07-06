@@ -34,6 +34,10 @@
             @endforeach
         </div>
 
+        <div class="mt-5 pt-4 border-top">
+            @include('legal.merchant-agreement')
+        </div>
+
         <div class="text-center mt-5 pt-4 border-top">
             <h3 class="fw-bold mb-3">{{ __('corporate.terms_questions_h2') }}</h3>
             <a href="{{ route('corporate.contact') }}" class="btn btn-pink btn-pink-lg">{{ __('corporate.terms_questions_btn') }}</a>
