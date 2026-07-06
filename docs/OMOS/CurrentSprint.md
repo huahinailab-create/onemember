@@ -28,7 +28,7 @@
 | **Started** | 2026-07-05 |
 | **Target Completion** | 2026-07-05 |
 | **Actual Completion** | 2026-07-05 |
-| **Final Commit** | `1da0d69` |
+| **Final Commit** | `f6e5f55` |
 
 ### Business Objective
 
@@ -99,7 +99,7 @@ A merchant can sign up, finish onboarding, and immediately print the materials n
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
-| RELEASE-5A | Merchant Launch Kit & Onboarding Assets | ⏳ Awaiting CTO Review | `1da0d69` |
+| RELEASE-5A | Merchant Launch Kit & Onboarding Assets | ⏳ Awaiting CTO Review | `f6e5f55` |
 | FINAL-001…006 | Final Engineering Hardening | ✅ Complete (Type A) | `82e0599` |
 | VISION-001 | Version 2.0 Vision & Master Roadmap 2026–2030 | ⏳ Awaiting PO Ratification | `7749e13` |
 | SCALE-000 | Scalability Review & Phase 2 Blueprint | ⏳ Awaiting Ratification | `d14bd0a` |
