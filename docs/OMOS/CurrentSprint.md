@@ -5,14 +5,36 @@
 | **Document Owner** | ChatGPT CTO |
 | **Version** | Live |
 | **OMOS Version** | 1.1 |
-| **Status** | ✅ Complete — 697 tests green, 1 bug fixed |
-| **Last Updated** | 2026-07-05 |
+| **Status** | ✅ Complete — 701 tests green |
+| **Last Updated** | 2026-07-07 |
 
 | **Related Documents** | [EXECUTE.md](./EXECUTE.md), [Product-State.md](./Product-State.md), [Sprints/README.md](./Sprints/README.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md) |
 
 ---
 
 ## Current Sprint
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | MORNING-001 |
+| **Title** | Fable Maximum Sprint — Private Beta Readiness |
+| **Status** | ✅ Complete — 701 tests green, 0 bugs found in journey/mobile/first-use audits |
+| **Sprint Type** | QA / Polish / Demo tooling (no new architecture) |
+| **Classification** | Type A — tests, polish, tooling, docs |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-07 |
+| **Actual Completion** | 2026-07-07 |
+| **Commits** | cd0145e (DEPLOY-001), b9674c1 (BETA-001), 1b003c7 (BETA-003), d6801ed (BETA-005) + docs |
+
+### Business Objective
+
+Make OneMember private-beta ready: verified deploy path (Forge script with post-deploy route checks), the full merchant journey pinned as one sequential test (no bugs found), mobile audit clean at all four widths, customer-facing polish (join landing contact, order receipt hint), first-use guidance confirmed complete, and `onemember:demo-seed` for founder demos (production-gated). Deployment itself awaits founder action on the server (paste deploy script, verify .env, deploy).
+
+---
+
+## Previous Sprint (OVERNIGHT-001)
 
 | Field | Value |
 |---|---|
