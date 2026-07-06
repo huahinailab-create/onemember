@@ -265,6 +265,9 @@ Authoritative: [06-Coding-Standards](../../06-Coding-Standards.md) + `11-Standar
 
 ## 20. Production Checklist (steady-state audit — run monthly)
 
+> **Automated pre-check (OPS-001):** run `php artisan onemember:go-live-check` or open `/admin/go-live` for an instant pass/fail on app key, debug, mail, queue, storage link, backup path, terms version, admin user, plans, scheduler, and feature flags. Critical failures block go-live; warnings are advisory.
+
+
 - [ ] §4 monitors all green and actually alerting (test one)
 - [ ] §7 all scheduled jobs ran in the last 24 h (`schedule:list` vs logs)
 - [ ] §11 yesterday's backup verified; §12 drill within last quarter

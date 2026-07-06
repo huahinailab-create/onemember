@@ -1271,4 +1271,13 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-092 — OPS-001: Go-Live Readiness Checklist
+
+- **Date:** 2026-07-06
+- **Status:** Approved (PHASE-A)
+- **Decision:** A `GoLiveChecklistService` runs 12 config/local-state readiness checks (app key set, debug off, env, mail configured, queue async, storage linked, backup path, terms version, admin exists, plans exist, scheduler documented, feature flags visible) with per-check critical/warn severity and an overall ready flag (no critical failures). Surfaced two ways, no external services: `php artisan onemember:go-live-check` (table + exit code) and an admin page at `/admin/go-live` (admin-only, sidebar link).
+- **Impact:** New: `GoLiveChecklistService`, `Console\Commands\GoLiveCheck`, `Admin\GoLiveController`, `admin/go-live` view, `GoLiveChecklistTest` (8 tests). Modified: admin routes + admin layout nav.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

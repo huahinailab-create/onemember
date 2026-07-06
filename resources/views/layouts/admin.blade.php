@@ -113,6 +113,10 @@
                class="nav-link {{ request()->routeIs('admin.merchants.*') ? 'active' : '' }}">
                 <i class="bi bi-shop me-2"></i>Merchants
             </a>
+            <a href="{{ route('admin.go-live') }}"
+               class="nav-link {{ request()->routeIs('admin.go-live') ? 'active' : '' }}">
+                <i class="bi bi-rocket-takeoff me-2"></i>Go-Live
+            </a>
         </nav>
 
         {{-- Spacer --}}

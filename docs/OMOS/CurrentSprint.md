@@ -16,9 +16,9 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | CORE-SPRINT-48H (CORE-001/002 + APP-001/002/003) |
-| **Title** | 48-Hour Core Completion Sprint |
-| **Status** | ⏳ Awaiting CTO Review (Type B — new tables, public routes, App framework) |
+| **Sprint ID** | PHASE-A (TRIAL/BILLING/LAUNCH/ADMIN/UX/OPS-001) |
+| **Title** | Launch Readiness Sprint |
+| **Status** | ⏳ Awaiting CTO Review — private-beta readiness |
 | **Sprint Type** | Design / Documentation (no application code) |
 | **Classification** | Type C — CEO Approval Required (phase change, pricing, legal, vendor) |
 | **Sprint File** | [Sprints/CORE-SPRINT-48H.md](./Sprints/CORE-SPRINT-48H.md) |
@@ -32,7 +32,7 @@
 
 ### Business Objective
 
-Prepare OneMember Core for public launch: global onboarding with terms acceptance, free-100 plan, the OneMember Apps framework, and the Commerce App (catalogue, public storefront, basic orders with direct merchant payment). DECISION-081…085. 608 tests green.
+Get OneMember to private-beta readiness: admin trial extension, versioned merchant agreement, merchant success checklist, admin merchant-health dashboard, design-system polish pass, and an automated go-live readiness checklist (command + admin page). DECISION-087…092. 655 tests green.
 
 ---
 
@@ -101,6 +101,7 @@ Prepare OneMember Core for public launch: global onboarding with terms acceptanc
 |---|---|---|---|
 | DOMAIN-001 | Definitive Domain Model | ✅ Complete | docs-only |
 | PLATFORM-001 | OneMember Design System | ✅ Complete (Type A) | HEAD |
+| PHASE-A (6 sub-sprints) | Launch Readiness — trial ext, terms, checklist, health, UX, go-live | ⏳ Awaiting CTO Review | HEAD |
 | APP-003 | Basic Orders (direct payment) | ⏳ Awaiting CTO Review | HEAD |
 | APP-002 | Public Merchant Storefront | ⏳ Awaiting CTO Review | `cae9be0` |
 | APP-001 | Commerce App MVP | ⏳ Awaiting CTO Review | `fd2ab30` |
