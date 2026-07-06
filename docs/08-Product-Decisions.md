@@ -1208,4 +1208,13 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-085 — APP-003: Basic Orders (Direct-Payment Model)
+
+- **Date:** 2026-07-06
+- **Status:** Approved (48-Hour Core Completion directive)
+- **Decision:** Storefront gains guest ordering: quantity-per-product form → server-side price/total computation from the merchant's catalogue (client prices never trusted), fulfillment fee snapshot, tracked stock decremented at placement and restored on cancellation (row-locked). Order lifecycle placed→accepted→ready→completed|cancelled with enforced transitions, every change audited. **Payment is direct customer→merchant (ADR-011):** the confirmation page shows the merchant's own uploaded payment-QR image and instructions; `payment_status` is the merchant's MANUAL "payment received" confirmation — OneMember stores no payment entity, processes nothing, and this is not a country-specific integration (any QR image works). Orders do not award loyalty points yet (mechanics remain a Commerce.md open item). Public order endpoint rate-limited.
+- **Impact:** New: orders + order_items migration, Order/OrderItem models, Commerce\PublicOrderController + OrderController, storefront order form + confirmation view, merchant orders view, ~50 lang keys (en/th), `OrdersTest` (12 tests). Modified: CommerceSettingsController (+payment QR upload), commerce settings/products views, routes, CSS.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

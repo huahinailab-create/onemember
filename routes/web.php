@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\MerchantController as AdminMerchantController;
 use App\Http\Controllers\AppsController;
 use App\Http\Controllers\Commerce\CommerceSettingsController;
 use App\Http\Controllers\Commerce\ProductController as CommerceProductController;
+use App\Http\Controllers\Commerce\OrderController as CommerceOrderController;
+use App\Http\Controllers\Commerce\PublicOrderController;
 use App\Http\Controllers\Commerce\StorefrontController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\HealthController;
@@ -99,6 +101,9 @@ Route::domain(config('domains.app'))->group(function () {
 
     // Public Merchant Storefront (APP-002) — exists only while Commerce App installed
     Route::get('/store/{slug}', [StorefrontController::class, 'show'])->name('storefront.show');
+    Route::post('/store/{slug}/order', [PublicOrderController::class, 'store'])
+        ->middleware('throttle:20,10')->name('storefront.order.store');
+    Route::get('/store/{slug}/order/{orderUuid}', [PublicOrderController::class, 'show'])->name('storefront.order.show');
 
     // Customer self-service portal (public, no auth)
     Route::get('/member/{publicUuid}',        [CustomerPortalController::class, 'show'])->name('portal.show');
@@ -159,6 +164,9 @@ Route::domain(config('domains.app'))->group(function () {
             Route::get('/products/{product}/edit',     [CommerceProductController::class, 'edit'])->name('products.edit');
             Route::put('/products/{product}',          [CommerceProductController::class, 'update'])->name('products.update');
             Route::delete('/products/{product}',       [CommerceProductController::class, 'archive'])->name('products.archive');
+            Route::get('/orders',                      [CommerceOrderController::class, 'index'])->name('orders.index');
+            Route::put('/orders/{order}/status',       [CommerceOrderController::class, 'updateStatus'])->name('orders.status');
+            Route::put('/orders/{order}/paid',         [CommerceOrderController::class, 'markPaid'])->name('orders.paid');
             Route::get('/settings',                    [CommerceSettingsController::class, 'edit'])->name('settings');
             Route::put('/settings',                    [CommerceSettingsController::class, 'update'])->name('settings.update');
         });

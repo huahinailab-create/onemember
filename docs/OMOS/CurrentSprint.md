@@ -16,12 +16,12 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | GLOBAL-001 |
-| **Title** | Global Platform Repositioning (Core / Apps / Country Extensions) |
-| **Status** | ✅ Complete — records PO strategic directive of 2026-07-06 |
+| **Sprint ID** | CORE-SPRINT-48H (CORE-001/002 + APP-001/002/003) |
+| **Title** | 48-Hour Core Completion Sprint |
+| **Status** | ⏳ Awaiting CTO Review (Type B — new tables, public routes, App framework) |
 | **Sprint Type** | Design / Documentation (no application code) |
 | **Classification** | Type C — CEO Approval Required (phase change, pricing, legal, vendor) |
-| **Sprint File** | [00-Executive/Global-Platform-Repositioning.md](./00-Executive/Global-Platform-Repositioning.md) |
+| **Sprint File** | [Sprints/CORE-SPRINT-48H.md](./Sprints/CORE-SPRINT-48H.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Fable 5 |
 | **Reviewer** | Product Owner (CEO) |
@@ -32,7 +32,7 @@
 
 ### Business Objective
 
-Reposition OneMember as a global merchant membership platform with a three-layer architecture: lightweight global Core, installable OneMember Apps (Commerce is an App), Country Extensions. DR-31 resolved; DR-32/33/34 opened. DECISION-079. Docs only.
+Prepare OneMember Core for public launch: global onboarding with terms acceptance, free-100 plan, the OneMember Apps framework, and the Commerce App (catalogue, public storefront, basic orders with direct merchant payment). DECISION-081…085. 608 tests green.
 
 ---
 
@@ -100,6 +100,11 @@ Reposition OneMember as a global merchant membership platform with a three-layer
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
 | DOMAIN-001 | Definitive Domain Model | ✅ Complete | docs-only |
+| APP-003 | Basic Orders (direct payment) | ⏳ Awaiting CTO Review | HEAD |
+| APP-002 | Public Merchant Storefront | ⏳ Awaiting CTO Review | `cae9be0` |
+| APP-001 | Commerce App MVP | ⏳ Awaiting CTO Review | `fd2ab30` |
+| CORE-002 | Apps Framework | ⏳ Awaiting CTO Review | `0e44384` |
+| CORE-001 | Global Onboarding + Terms + Free-100 | ⏳ Awaiting CTO Review | `bc53edb` |
 | GLOBAL-001 | Global Platform Repositioning | ✅ Complete | docs-only |
 | PH2-001A | OneMember Identity Platform | ⏳ Awaiting CTO Review | see git log |
 | GOV-001 | Foundational Principles Consolidation (Custodian Model) | ✅ Complete | HEAD (docs-only) |

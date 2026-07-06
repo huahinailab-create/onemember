@@ -65,7 +65,10 @@ When these documents conflict, this document takes precedence as the more recent
 | Win-back campaign alerts | MVP-008 | `91c19f2` |
 | Campaign analytics dashboard | RELEASE-4A | `bdb0cfb` |
 | Merchant Launch Kit & onboarding assets | RELEASE-5A | `f6e5f55` |
-| OneMember Identity Platform (Phase 2 foundation) | PH2-001A | — |
+| OneMember Identity Platform (Phase 2 foundation) | PH2-001A | `3412a06` |
+| Global onboarding + terms + free-100 plan | CORE-001 | `bc53edb` |
+| OneMember Apps framework | CORE-002 | `0e44384` |
+| Commerce App MVP (catalogue, storefront, orders) | APP-001/002/003 | — |
 
 ### In Progress 🔄
 

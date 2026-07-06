@@ -2137,3 +2137,18 @@ body.om-sidebar-open {
     color: #8a90a5;
     margin-top: 1.25rem;
 }
+
+/* ── Storefront ordering (APP-003) ── */
+.storefront-qty {
+    width: 64px;
+    margin-top: 0.25rem;
+    margin-left: auto;
+    text-align: center;
+}
+
+.commerce-payment-qr-preview {
+    max-width: 220px;
+    max-height: 220px;
+    border-radius: 10px;
+    border: 1px solid #edf0f5;
+}

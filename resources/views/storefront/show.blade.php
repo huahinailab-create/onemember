@@ -56,6 +56,15 @@
             </section>
         @endif
 
+        @php
+            $fulfillmentOptions = array_keys(array_filter([
+                'pickup'   => (bool) ($commerce['pickup_enabled'] ?? false),
+                'delivery' => (bool) ($commerce['delivery_enabled'] ?? false),
+                'shipping' => (bool) ($commerce['shipping_enabled'] ?? false),
+            ]));
+            $orderingEnabled = $fulfillmentOptions !== [] && $products->isNotEmpty();
+        @endphp
+
         {{-- Product listing --}}
         <section class="storefront-catalogue">
             <div class="storefront-section-title"><i class="bi bi-shop me-2"></i>{{ __('commerce.store_products_title') }}</div>
@@ -79,9 +88,16 @@
                                         <span class="badge bg-secondary">{{ __('commerce.stock_out') }}</span>
                                     @endunless
                                 </div>
-                                <div class="storefront-product-price">
-                                    {{ number_format($product->price, 2) }}
-                                    <span class="storefront-currency">{{ $merchant->currency ?? config('app.default_currency') }}</span>
+                                <div class="text-end">
+                                    <div class="storefront-product-price">
+                                        {{ number_format($product->price, 2) }}
+                                        <span class="storefront-currency">{{ $merchant->currency ?? config('app.default_currency') }}</span>
+                                    </div>
+                                    @if ($orderingEnabled && $product->isAvailable())
+                                        <input type="number" name="qty[{{ $product->id }}]" min="0" max="99" step="1"
+                                               class="form-control form-control-sm storefront-qty" placeholder="0"
+                                               form="storefront-order-form" inputmode="numeric">
+                                    @endif
                                 </div>
                             </li>
                         @endforeach
@@ -89,6 +105,54 @@
                 @endforeach
             @endif
         </section>
+
+        {{-- Order form (APP-003) — order goes to the merchant, payment direct --}}
+        @if ($orderingEnabled)
+            <section class="storefront-catalogue">
+                <div class="storefront-section-title"><i class="bi bi-bag-check me-2"></i>{{ __('commerce.order_title') }}</div>
+
+                @if ($errors->any())
+                    <div class="alert alert-danger py-2">{{ $errors->first() }}</div>
+                @endif
+
+                <form id="storefront-order-form" method="POST" action="{{ route('storefront.order.store', $merchant->slug) }}">
+                    @csrf
+                    <div class="mb-2">
+                        <label class="form-label form-label-sm" for="customer_name">{{ __('commerce.order_name') }} *</label>
+                        <input type="text" id="customer_name" name="customer_name" required maxlength="150"
+                               class="form-control" value="{{ old('customer_name') }}">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label form-label-sm" for="customer_phone">{{ __('commerce.order_phone') }} *</label>
+                        <input type="tel" id="customer_phone" name="customer_phone" required maxlength="30"
+                               class="form-control" value="{{ old('customer_phone') }}">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label form-label-sm" for="fulfillment_type">{{ __('commerce.order_fulfillment') }} *</label>
+                        <select id="fulfillment_type" name="fulfillment_type" class="form-select" required>
+                            @foreach ($fulfillmentOptions as $option)
+                                <option value="{{ $option }}" {{ old('fulfillment_type') === $option ? 'selected' : '' }}>
+                                    {{ __('commerce.' . ($option === 'delivery' ? 'delivery_label' : ($option === 'shipping' ? 'shipping_label' : 'pickup_label'))) }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label form-label-sm" for="address">{{ __('commerce.order_address') }}</label>
+                        <textarea id="address" name="address" rows="2" maxlength="500" class="form-control"
+                                  placeholder="{{ __('commerce.order_address_hint') }}">{{ old('address') }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label form-label-sm" for="notes">{{ __('commerce.order_notes') }}</label>
+                        <input type="text" id="notes" name="notes" maxlength="500" class="form-control" value="{{ old('notes') }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-bag-check me-1"></i>{{ __('commerce.order_submit') }}
+                    </button>
+                    <p class="text-muted mt-2 mb-0" style="font-size:0.72rem;">{{ __('commerce.order_direct_note', ['merchant' => $merchant->name]) }}</p>
+                </form>
+            </section>
+        @endif
 
         <footer class="storefront-footer">
             <div>{{ __('commerce.store_seller_note', ['merchant' => $merchant->name]) }}</div>

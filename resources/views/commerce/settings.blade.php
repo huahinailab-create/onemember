@@ -11,7 +11,7 @@
         <div class="col-12 col-lg-7">
             <div class="card">
                 <div class="card-body">
-                    <form method="POST" action="{{ route('commerce.settings.update') }}">
+                    <form method="POST" action="{{ route('commerce.settings.update') }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -70,6 +70,21 @@
                                       placeholder="{{ __('commerce.payment_instructions_ph') }}">{{ old('payment_instructions', $commerce['payment_instructions'] ?? '') }}</textarea>
                             @error('payment_instructions')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             <div class="form-text">{{ __('commerce.payment_note') }}</div>
+                        </div>
+
+                        {{-- Merchant's own payment QR image (displayed to customers; ADR-011) --}}
+                        <div class="mb-4">
+                            <label for="payment_qr" class="form-label fw-medium">{{ __('commerce.payment_qr') }}</label>
+                            @if (!empty($commerce['payment_qr_path']))
+                                <div class="mb-2">
+                                    <img src="{{ Storage::disk('public')->url($commerce['payment_qr_path']) }}"
+                                         alt="{{ __('commerce.payment_qr') }}" class="commerce-payment-qr-preview">
+                                </div>
+                            @endif
+                            <input type="file" id="payment_qr" name="payment_qr" accept="image/*"
+                                   class="form-control @error('payment_qr') is-invalid @enderror">
+                            @error('payment_qr')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            <div class="form-text">{{ __('commerce.payment_qr_hint') }}</div>
                         </div>
 
                         <button type="submit" class="btn btn-primary">

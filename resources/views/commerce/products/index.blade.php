@@ -8,6 +8,9 @@
             <p>{{ __('commerce.products_subtitle') }}</p>
         </div>
         <div class="d-flex gap-2">
+            <a href="{{ route('commerce.orders.index') }}" class="btn btn-outline-primary">
+                <i class="bi bi-receipt me-1"></i>{{ __('commerce.orders_button') }}
+            </a>
             <a href="{{ route('commerce.settings') }}" class="btn btn-outline-secondary">
                 <i class="bi bi-truck me-1"></i>{{ __('commerce.fulfillment_button') }}
             </a>
