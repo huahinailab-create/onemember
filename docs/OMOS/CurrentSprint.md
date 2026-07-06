@@ -99,6 +99,7 @@ Reposition OneMember as a global merchant membership platform with a three-layer
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
+| DOMAIN-001 | Definitive Domain Model | ✅ Complete | docs-only |
 | GLOBAL-001 | Global Platform Repositioning | ✅ Complete | docs-only |
 | PH2-001A | OneMember Identity Platform | ⏳ Awaiting CTO Review | see git log |
 | GOV-001 | Foundational Principles Consolidation (Custodian Model) | ✅ Complete | HEAD (docs-only) |

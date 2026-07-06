@@ -126,6 +126,7 @@ docs/OMOS/
 ├── 09-Roadmap/                ← Strategic roadmap (phases), NOT sprint specs
 │   └── Version-2.0-Vision-and-Master-Roadmap-2026-2030.md ← 5-year blueprint
 ├── 10-Architecture/           ← System architecture, data models, integrations
+│   └── Domain-Model.md        ← THE master entity blueprint (DOMAIN-001)
 ├── 11-Standards/              ← All coding, API, DB, UI, testing standards
 ├── 12-ADR/                    ← Architecture Decision Records
 ├── 13-RFC/                    ← Requests for Comment (proposals in review)

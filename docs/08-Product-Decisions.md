@@ -1162,4 +1162,14 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-080 — Domain Model Adopted as Master Blueprint (DOMAIN-001)
+
+- **Date:** 2026-07-06
+- **Status:** Approved (documentation of existing decisions; no new business rules invented)
+- **Decision:** `docs/OMOS/10-Architecture/Domain-Model.md` v1.0.0 is the authoritative entity blueprint. Every future model, migration, and API must conform to its ownership, permission, consent, audit, deletion, and archival rules, which consolidate ADR-010/011/012 and Bible v2.0.0. Future entities (Order, Product, Storefront, AI Content) are constrained by their documented shapes before any implementation.
+- **Open decision surfaced:** **DR-35** — member-data disposition when a merchant permanently leaves the platform (return/export/erasure protocol) must be decided before GA.
+- **Impact:** New: Domain-Model.md (17 entities × 10 dimensions, ER/relationship/event/lifecycle diagrams, ownership/permission/consent matrices, extension points, Bible cross-reference index). Modified: OMOS README map, CurrentSprint.
+
+---
+
 *New decisions must be appended above this line in the format shown.*
