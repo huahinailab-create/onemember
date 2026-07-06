@@ -101,6 +101,7 @@ Get OneMember to private-beta readiness: admin trial extension, versioned mercha
 |---|---|---|---|
 | DOMAIN-001 | Definitive Domain Model | ✅ Complete | docs-only |
 | PLATFORM-001 | OneMember Design System | ✅ Complete (Type A) | HEAD |
+| ADMIN-002 | OneMember Control Room | ⏳ Awaiting CTO Review | HEAD |
 | PHASE-A (6 sub-sprints) | Launch Readiness — trial ext, terms, checklist, health, UX, go-live | ⏳ Awaiting CTO Review | HEAD |
 | APP-003 | Basic Orders (direct payment) | ⏳ Awaiting CTO Review | HEAD |
 | APP-002 | Public Merchant Storefront | ⏳ Awaiting CTO Review | `cae9be0` |

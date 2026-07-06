@@ -1280,4 +1280,13 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-093 — ADMIN-002: OneMember Control Room
+
+- **Date:** 2026-07-06
+- **Status:** Approved
+- **Decision:** Admin-only Control Room at `/admin/control-room` (`ControlRoomService`) gives the operator a production health snapshot plus an external-service dependency register. **Internal section** (16 checks): application, version, environment, debug, database, queue driver, failed jobs count, scheduler, mail driver, Resend domain, storage link, disk usage, backup path, last backup file, SSL/domain notes, last deploy/git commit — plus feature flags and surfaced config warnings. **External section** (DigitalOcean, Laravel Forge, Resend, GitHub, Cloudflare, Stripe, Sentry, PostHog): Phase 1 detects local config presence only — **no external API calls**; rows without a credential are "Manual check", rows with config are "Healthy (verify)". Each row carries service, purpose, status, required action, and notes. Four status levels: healthy / warning / critical / manual. Design-system styled, never exposed to merchants (behind the `admin` middleware).
+- **Impact:** New: `ControlRoomService`, `Admin\ControlRoomController`, `admin/control-room` view, `ControlRoomTest` (14 tests). Modified: admin routes + admin layout nav.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

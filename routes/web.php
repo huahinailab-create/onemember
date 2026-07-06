@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\ControlRoomController as AdminControlRoomController;
 use App\Http\Controllers\Admin\GoLiveController as AdminGoLiveController;
 use App\Http\Controllers\Admin\MerchantController as AdminMerchantController;
 use App\Http\Controllers\Admin\TrialExtensionController as AdminTrialExtensionController;
@@ -88,6 +89,7 @@ Route::domain(config('domains.app'))->group(function () {
             Route::redirect('/', '/admin/dashboard');
             Route::get('/dashboard',              [AdminDashboardController::class, 'index'])->name('dashboard');
             Route::get('/go-live',                [AdminGoLiveController::class, 'index'])->name('go-live');
+            Route::get('/control-room',           [AdminControlRoomController::class, 'index'])->name('control-room');
             Route::get('/merchants',              [AdminMerchantController::class,  'index'])->name('merchants.index');
             Route::get('/merchants/{merchant}',   [AdminMerchantController::class,  'show'])->name('merchants.show');
             Route::post('/merchants/{merchant}/extend-trial', [AdminTrialExtensionController::class, 'store'])->name('merchants.extend-trial');
