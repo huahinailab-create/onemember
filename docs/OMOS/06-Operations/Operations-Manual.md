@@ -60,6 +60,26 @@ tail -n 50 storage/logs/laravel.log | grep -i error || echo log-clean
 ```
 Rollback: `git checkout <previous-tag>` + `composer install` + caches + `php artisan migrate:rollback --step=N` **only** for this release's migrations (check `php artisan migrate:status` first).
 
+### 1a. "New route / admin page not visible after deploy" (deployment gotcha)
+
+All routes live in domain groups (`Route::domain(config('domains.app'))…`) and production runs `route:cache` + `config:cache`. A new page (e.g. `/admin/control-room`) can appear missing after deploy for one of these reasons — check in order:
+
+1. **Stale route cache.** The deploy must rebuild caches *after* the new code is the `current` release. Correct order (Forge deploy script, after `git pull`/symlink):
+   ```bash
+   php artisan optimize:clear      # drop old route/config/view caches FIRST
+   php artisan config:cache
+   php artisan route:cache
+   php artisan view:cache
+   php artisan event:cache
+   ```
+   If `optimize:clear` is skipped, an old cache from the previous release can persist and hide new routes.
+2. **Opcache holding old files.** Reload PHP-FPM so opcache picks up new code: `sudo systemctl reload php8.3-fpm` (Forge does this automatically on deploy; a manual `artisan` run outside deploy does not).
+3. **Wrong `APP_DOMAIN`.** Domain-group routes only match the configured host. If `APP_DOMAIN` is unset/misspelt on the server, `/admin/*` 404s. Verify: `php artisan tinker --execute="echo config('domains.app');"` → must be `app.onemember.co`. After any `.env` change: `config:clear` then `config:cache`.
+4. **Verify the route actually shipped:** `php artisan route:list | grep control-room` (should print the route). CI guards this via `DeploymentIntegrityTest` — a missing critical route fails the build before deploy.
+
+**One-liner post-deploy check:** `php artisan route:list | grep -E "control-room|go-live" && curl -fsS https://app.onemember.co/up`.
+
+
 ## 2. New Server Setup
 
 Order matters. Full package lists in doc 17 §1–2.
