@@ -5,7 +5,7 @@
 | **Document Owner** | ChatGPT CTO |
 | **Version** | Live |
 | **OMOS Version** | 1.1 |
-| **Status** | Active |
+| **Status** | ✅ Complete — 697 tests green, 1 bug fixed |
 | **Last Updated** | 2026-07-05 |
 
 | **Related Documents** | [EXECUTE.md](./EXECUTE.md), [Product-State.md](./Product-State.md), [Sprints/README.md](./Sprints/README.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md) |
@@ -16,23 +16,23 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | PHASE-A (TRIAL/BILLING/LAUNCH/ADMIN/UX/OPS-001) |
-| **Title** | Launch Readiness Sprint |
-| **Status** | ⏳ Awaiting CTO Review — private-beta readiness |
-| **Sprint Type** | Design / Documentation (no application code) |
-| **Classification** | Type C — CEO Approval Required (phase change, pricing, legal, vendor) |
-| **Sprint File** | [Sprints/CORE-SPRINT-48H.md](./Sprints/CORE-SPRINT-48H.md) |
+| **Sprint ID** | OVERNIGHT-001 |
+| **Title** | Private Beta Stabilization & Bug Hunt |
+| **Status** | ✅ Complete — 697 tests green, 1 bug fixed |
+| **Sprint Type** | Stabilization / QA (no new features) |
+| **Classification** | Type A — bug fixes, tests, docs |
+| **Sprint File** | [Sprints/OVERNIGHT-001-Private-Beta-Stabilization.md](./Sprints/OVERNIGHT-001-Private-Beta-Stabilization.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Fable 5 |
-| **Reviewer** | Product Owner (CEO) |
-| **Started** | 2026-07-05 |
-| **Target Completion** | 2026-07-05 |
-| **Actual Completion** | 2026-07-05 |
-| **Final Commit** | docs-only, see git log: GLOBAL-001 |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-07 |
+| **Target Completion** | 2026-07-07 |
+| **Actual Completion** | 2026-07-07 |
+| **Final Commit** | see git log: OVERNIGHT-001 P6 |
 
 ### Business Objective
 
-Get OneMember to private-beta readiness: admin trial extension, versioned merchant agreement, merchant success checklist, admin merchant-health dashboard, design-system polish pass, and an automated go-live readiness checklist (command + admin page). DECISION-087…092. 655 tests green.
+Private beta stabilization & bug hunt: deployment verification (route-integrity guard + deploy-troubleshooting docs), end-to-end smoke suite, broken-link audit (none found), mobile table-overflow fix, and safe error-state regression tests. One bug fixed (products table overflow at 375px); no other defects found. 697 tests green.
 
 ---
 
