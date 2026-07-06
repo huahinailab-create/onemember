@@ -16,6 +16,8 @@ class LaunchKitController extends Controller
     {
         [$merchant, $offer] = $this->merchantAndOffer($request);
 
+        app(\App\Services\LaunchChecklistService::class)->markFlag($merchant, 'launch_kit_opened');
+
         return view('launch-kit.index', [
             'merchant'   => $merchant,
             'offer'      => $offer,

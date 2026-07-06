@@ -229,6 +229,32 @@
         </div>
     @endif
 
+    {{-- ── Launch checklist (LAUNCH-001) — hidden once complete ── --}}
+    @if (($launchChecklist ?? null) && $launchChecklist['percent'] < 100)
+        <div class="card mb-4">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <span class="fw-semibold"><i class="bi bi-rocket-takeoff me-2 text-primary"></i>{{ __('launch_check.title') }}</span>
+                <span class="badge bg-primary">{{ $launchChecklist['done'] }}/{{ $launchChecklist['total'] }} · {{ $launchChecklist['percent'] }}%</span>
+            </div>
+            <div class="card-body">
+                <x-ui.progress-bar :percent="$launchChecklist['percent']" color="pink" height="8px" class="mb-3" />
+                <ul class="list-unstyled mb-0">
+                    @foreach ($launchChecklist['items'] as $item)
+                        <li class="d-flex align-items-center gap-2 py-1">
+                            @if ($item['done'])
+                                <i class="bi bi-check-circle-fill text-success"></i>
+                                <span class="text-muted text-decoration-line-through">{{ __($item['label_key']) }}</span>
+                            @else
+                                <i class="bi bi-circle text-muted"></i>
+                                <a href="{{ $item['url'] }}" class="text-decoration-none">{{ __($item['label_key']) }}</a>
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    @endif
+
     {{-- ── Section 2c: Business Insights ─────────────────────── --}}
     <div class="card mb-4">
         <div class="card-header d-flex align-items-center justify-content-between">

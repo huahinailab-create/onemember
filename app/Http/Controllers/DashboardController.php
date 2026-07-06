@@ -43,6 +43,7 @@ class DashboardController extends Controller
                 'insights'            => [],
                 'healthScore'         => ['score' => 0, 'label' => 'new_business', 'label_text' => __('intelligence.health_new_business'), 'explanation' => __('intelligence.health_new_business_explanation'), 'badge_class' => 'bg-secondary'],
                 'opportunities'       => [],
+                'launchChecklist'     => null,
                 'winbackCount'        => 0,
                 'winbackDays'         => 0,
             ]);
@@ -98,6 +99,9 @@ class DashboardController extends Controller
         $healthScore  = $intelligence->getHealthScore($merchant);
         $opportunities = $intelligence->getOpportunities($merchant);
 
+        // LAUNCH-001 merchant success checklist
+        $launchChecklist = app(\App\Services\LaunchChecklistService::class)->for($merchant);
+
         // Win-back alert (MVP-008): members inactive past the configured threshold
         $winbackDays  = (int) ($merchant->settings['winback_days'] ?? 0);
         $winbackCount = $winbackDays > 0
@@ -125,6 +129,7 @@ class DashboardController extends Controller
             'opportunities',
             'winbackCount',
             'winbackDays',
+            'launchChecklist',
         ));
     }
 }

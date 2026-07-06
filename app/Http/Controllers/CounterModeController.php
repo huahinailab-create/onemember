@@ -21,6 +21,8 @@ class CounterModeController extends Controller
                 ->with('error', __('mobile.counter_disabled_notice'));
         }
 
+        app(\App\Services\LaunchChecklistService::class)->markFlag($merchant, 'counter_tried');
+
         $query   = trim((string) $request->query('q', ''));
         $members = null;
 

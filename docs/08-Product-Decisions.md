@@ -1244,4 +1244,13 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-089 — LAUNCH-001: Merchant Success Checklist
+
+- **Date:** 2026-07-06
+- **Status:** Approved (PHASE-A)
+- **Decision:** A dashboard success checklist (`LaunchChecklistService`) shows merchants their path to launch: business profile complete, first campaign, first reward, first member (all computed from data), launch kit opened, counter mode tried, and — only if Commerce is installed — storefront reviewed (these three tracked as `launch_flags` in merchant settings, set when the merchant visits each page). Renders a progress percentage via `x-ui.progress-bar` and auto-hides at 100%. Read-only, no schema change.
+- **Impact:** New: `LaunchChecklistService`, `lang/{en,th}/launch_check.php`, `LaunchChecklistTest` (7 tests). Modified: DashboardController (pass checklist), dashboard view (widget), LaunchKitController / CounterModeController / Commerce ProductController (mark flags on visit).
+
+---
+
 *New decisions must be appended above this line in the format shown.*

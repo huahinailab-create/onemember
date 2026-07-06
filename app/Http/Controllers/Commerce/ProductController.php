@@ -15,6 +15,8 @@ class ProductController extends Controller
     {
         $merchant = $request->user()->merchant;
 
+        app(\App\Services\LaunchChecklistService::class)->markFlag($merchant, 'storefront_reviewed');
+
         $products = Product::where('merchant_id', $merchant->id)
             ->with('category')
             ->orderBy('name')
