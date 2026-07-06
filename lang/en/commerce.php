@@ -43,4 +43,14 @@ return [
     'payment_instructions_ph' => 'e.g. Bank transfer to KBank 123-4-56789-0, or scan my payment QR at pickup.',
     'payment_note'            => 'Customers always pay you directly. OneMember never receives, holds, or transfers money.',
     'settings_saved'          => 'Fulfillment settings saved.',
+
+    // Public storefront (APP-002)
+    'store_meta'           => 'Menu, products and member rewards at :merchant.',
+    'km'                   => 'km',
+    'store_loyalty_title'  => 'Member Rewards',
+    'store_loyalty_line'   => 'Earn points on every purchase at :merchant and redeem real rewards.',
+    'store_join_cta'       => 'Become a member — free',
+    'store_products_title' => 'Products & Menu',
+    'store_no_products'    => 'The catalogue is being prepared. Check back soon!',
+    'store_seller_note'    => 'All products are sold and fulfilled by :merchant, who handles payment, receipts and customer service directly.',
 ];

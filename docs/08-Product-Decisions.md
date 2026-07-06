@@ -1199,4 +1199,13 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-084 — APP-002: Public Merchant Storefront
+
+- **Date:** 2026-07-06
+- **Status:** Approved (48-Hour Core Completion directive)
+- **Decision:** Public storefront at `/store/{slug}` exists only while the merchant is active AND has the Commerce App installed (404 otherwise — App uninstall removes the public surface). Shows: business profile, fulfillment badges (incl. merchant-defined delivery radius), product listing grouped by category (hidden products excluded; out-of-stock flagged), loyalty programme summary with top rewards and a join-page CTA, and a footer stating the merchant is the seller who handles payment/receipts/service directly (ADR-011). Language follows the merchant's configured locale, never the browser (GLOBAL-001).
+- **Impact:** New: `Commerce\StorefrontController`, `storefront/show` view + CSS, storefront lang keys (en/th), `StorefrontTest` (6 tests). Modified: routes (public /store/{slug}).
+
+---
+
 *New decisions must be appended above this line in the format shown.*

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\MerchantController as AdminMerchantController;
 use App\Http\Controllers\AppsController;
 use App\Http\Controllers\Commerce\CommerceSettingsController;
 use App\Http\Controllers\Commerce\ProductController as CommerceProductController;
+use App\Http\Controllers\Commerce\StorefrontController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\HealthController;
 use App\Http\Controllers\Identity\IdentityCardController;
@@ -95,6 +96,9 @@ Route::domain(config('domains.app'))->group(function () {
 
     // OneMember Card (PH2-001A) — public by unguessable uuid; QR is token-only
     Route::get('/omid/{publicUuid}', [IdentityCardController::class, 'show'])->name('identity.card');
+
+    // Public Merchant Storefront (APP-002) — exists only while Commerce App installed
+    Route::get('/store/{slug}', [StorefrontController::class, 'show'])->name('storefront.show');
 
     // Customer self-service portal (public, no auth)
     Route::get('/member/{publicUuid}',        [CustomerPortalController::class, 'show'])->name('portal.show');
