@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\MerchantController as AdminMerchantController;
+use App\Http\Controllers\AppsController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\HealthController;
 use App\Http\Controllers\Identity\IdentityCardController;
@@ -143,6 +144,10 @@ Route::domain(config('domains.app'))->group(function () {
 
         Route::put('/settings/counter-mode', [CounterModeController::class, 'toggle'])->name('counter-mode.toggle');
         Route::get('/counter',               [CounterModeController::class, 'index'])->name('counter');
+
+        Route::get('/apps',            [AppsController::class, 'index'])->name('apps.index');
+        Route::post('/apps/install',   [AppsController::class, 'install'])->name('apps.install');
+        Route::post('/apps/uninstall', [AppsController::class, 'uninstall'])->name('apps.uninstall');
 
         Route::get('/launch-kit',              [LaunchKitController::class, 'index'])->name('launch-kit');
         Route::get('/launch-kit/poster',       [LaunchKitController::class, 'poster'])->name('launch-kit.poster');

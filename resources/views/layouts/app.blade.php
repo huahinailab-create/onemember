@@ -127,6 +127,14 @@
                     <span>{{ __('navigation.launch_kit') }}</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('apps.index') }}"
+                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('apps.*') ? 'active' : '' }}"
+                   >
+                    <i class="bi bi-grid-3x3-gap"></i>
+                    <span>{{ __('navigation.apps') }}</span>
+                </a>
+            </li>
         </ul>
 
         {{-- Account --}}

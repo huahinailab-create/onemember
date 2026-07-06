@@ -16,4 +16,5 @@ return [
     'powered_by'    => 'Powered by',
     'dev_tools'     => 'Dev Tools',
     'launch_kit'   => 'Launch Kit',
+    'apps'         => 'Apps',
 ];

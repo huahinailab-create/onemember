@@ -24,7 +24,8 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->alias([
-            'admin' => \App\Http\Middleware\EnsureUserIsAdmin::class,
+            'admin'         => \App\Http\Middleware\EnsureUserIsAdmin::class,
+            'app.installed' => \App\Http\Middleware\EnsureAppInstalled::class,
         ]);
 
         // Stripe webhooks carry their own signature verification; CSRF would reject them

@@ -1181,4 +1181,13 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-082 — CORE-002: OneMember Apps Framework
+
+- **Date:** 2026-07-06
+- **Status:** Approved (48-Hour Core Completion directive; implements ADR-012 Layer 2, minimal per DR-34's open scope — no SDK)
+- **Decision:** App registry lives in `config/apps.php` (10 apps: commerce available; restaurant/appointments/inventory/ai_marketing/crm/pos/accounting/staff/hotel as coming-soon marketplace placeholders). Installed state = `installed_apps` array in merchant settings JSON (no schema change). `Merchant::hasApp()` + `app.installed:{key}` middleware gate App routes (403 when absent). Install/uninstall are merchant actions on the Apps page, audit-logged; **uninstall disables access but retains data dormant** (full uninstall-data policy remains DR-34). Sidebar gains "Apps". Core note shown on the marketplace: membership/loyalty are always on, never an App.
+- **Impact:** New: `config/apps.php`, `AppsController`, `EnsureAppInstalled` middleware, `apps/index` view, `lang/{en,th}/apps.php`, `AppsFrameworkTest` (8 tests). Modified: Merchant model (installedApps/hasApp), bootstrap middleware alias, routes, sidebar, navigation lang.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

@@ -186,6 +186,20 @@ class Merchant extends Model
      * window between trial expiry and the next command run (status still Trial,
      * but trial_ends_at is in the past).
      */
+    /** CORE-002: keys of OneMember Apps this merchant has installed. */
+    public function installedApps(): array
+    {
+        $apps = $this->settings['installed_apps'] ?? [];
+
+        return is_array($apps) ? array_values($apps) : [];
+    }
+
+    /** CORE-002: gate for App features. */
+    public function hasApp(string $key): bool
+    {
+        return in_array($key, $this->installedApps(), true);
+    }
+
     public function wantsEmail(string $category): bool
     {
         if (in_array($category, ['billing', 'security_alerts'])) {
