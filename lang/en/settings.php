@@ -14,7 +14,7 @@ return [
     'business_phone'             => 'Business Phone',
     'website'                    => 'Website',
     'contact_person'             => 'Contact Person',
-    'contact_person_ph'          => 'e.g. Somchai Jaidee',
+    'contact_person_ph'          => 'e.g. David Chen',
     'business_email'             => 'Business Email',
     'mobile_number'              => 'Mobile Number',
     'address_line_1'             => 'Address Line 1',

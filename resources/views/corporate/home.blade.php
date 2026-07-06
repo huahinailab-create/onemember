@@ -58,7 +58,7 @@
                         </div>
                         <div style="background:#f8f9fb;border-radius:8px;padding:0.875rem;">
                             <div style="font-size:0.75rem;font-weight:600;color:#1A2E5A;margin-bottom:0.5rem;">{{ __('corporate.home_mockup_activity') }}</div>
-                            @foreach([['Somchai P.', '+50 pts', '2m ago'], ['Nong K.', 'Birthday Reward', '15m ago'], ['Arun T.', '+30 pts', '1h ago']] as $row)
+                            @foreach([['Chelsea P.', '+50 pts', '2m ago'], ['Mia K.', 'Birthday Reward', '15m ago'], ['Alex T.', '+30 pts', '1h ago']] as $row)
                             <div class="d-flex justify-content-between align-items-center py-1" style="font-size:0.8rem;border-bottom:1px solid rgba(26,46,90,0.05);">
                                 <span style="color:#334155;">{{ $row[0] }}</span>
                                 <span style="color:#FF1585;font-weight:600;">{{ $row[1] }}</span>

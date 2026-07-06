@@ -14,7 +14,7 @@ return [
     'business_phone'             => 'เบอร์โทรธุรกิจ',
     'website'                    => 'เว็บไซต์',
     'contact_person'             => 'ผู้ติดต่อ',
-    'contact_person_ph'          => 'เช่น สมชาย ใจดี',
+    'contact_person_ph'          => 'เช่น เดวิด เฉิน',
     'business_email'             => 'อีเมลธุรกิจ',
     'mobile_number'              => 'เบอร์โทรศัพท์',
     'address_line_1'             => 'ที่อยู่บรรทัดที่ 1',
