@@ -18,6 +18,7 @@
     </div>
 
     <div class="stat-card card">
+        <div class="table-responsive">
         <table class="table mb-0">
             <thead>
                 <tr style="font-size:0.72rem;color:#6B7280;text-transform:uppercase;letter-spacing:0.04em;">
@@ -44,6 +45,7 @@
                 @endforeach
             </tbody>
         </table>
+        </div>
     </div>
 
 </x-admin-layout>

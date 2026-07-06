@@ -31,6 +31,7 @@
                     </a>
                 </x-ui.empty-state>
             @else
+                <div class="table-responsive">
                 <table class="table table-hover mb-0">
                     <thead>
                         <tr>
@@ -74,6 +75,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                </div>
             @endif
         </div>
         @if ($products->hasPages())

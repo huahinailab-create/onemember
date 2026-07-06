@@ -42,17 +42,19 @@
                 <div class="p-3 border-bottom">
                     <h6 class="fw-600 mb-0" style="color:#1A2E5A;font-size:0.85rem;"><i class="bi bi-cpu me-2" style="color:#FF1585;"></i>Internal Status</h6>
                 </div>
+                <div class="table-responsive">
                 <table class="table mb-0">
                     <tbody>
                         @foreach ($internal as $row)
                             <tr>
-                                <td class="ps-3 fw-medium" style="width:35%;">{{ $row['label'] }}</td>
-                                <td style="width:22%;"><span class="badge {{ $badge($row['status']) }}">{{ $badgeLabel($row['status']) }}</span></td>
+                                <td class="ps-3 fw-medium" style="min-width:130px;">{{ $row['label'] }}</td>
+                                <td style="min-width:110px;"><span class="badge {{ $badge($row['status']) }}">{{ $badgeLabel($row['status']) }}</span></td>
                                 <td class="pe-3 text-muted" style="font-size:0.82rem;">{{ $row['detail'] }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
 
