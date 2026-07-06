@@ -2152,3 +2152,16 @@ body.om-sidebar-open {
     border-radius: 10px;
     border: 1px solid #edf0f5;
 }
+
+/* ── Design System (PLATFORM-001): shared progress bar ── */
+.om-progress {
+    flex: 1;
+    background: #F0F0F4;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.om-progress-fill {
+    height: 100%;
+    border-radius: 3px;
+}

@@ -100,6 +100,7 @@ Prepare OneMember Core for public launch: global onboarding with terms acceptanc
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
 | DOMAIN-001 | Definitive Domain Model | ✅ Complete | docs-only |
+| PLATFORM-001 | OneMember Design System | ✅ Complete (Type A) | HEAD |
 | APP-003 | Basic Orders (direct payment) | ⏳ Awaiting CTO Review | HEAD |
 | APP-002 | Public Merchant Storefront | ⏳ Awaiting CTO Review | `cae9be0` |
 | APP-001 | Commerce App MVP | ⏳ Awaiting CTO Review | `fd2ab30` |

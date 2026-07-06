@@ -1217,4 +1217,13 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-086 — PLATFORM-001: OneMember Design System
+
+- **Date:** 2026-07-06
+- **Status:** Approved
+- **Decision:** The official Design System lives at `docs/OMOS/07-Brand/Design-System.md` (v1.0.0): foundations (token palette, typography, icon pairings, breakpoints + z-index ladder) and canonical patterns for all 23 requested UI areas. Reusable anonymous Blade components ship under the `x-ui.*` namespace: page-header, stat-card, empty-state, status-badge (the ONLY status→colour mapping), input/select/textarea (label+validation+hint), modal, flash (toast standard), progress-bar (CSS charts, no JS libraries), spinner. **Standardization, not redesign:** components encode existing markup byte-for-byte in spirit; visual output unchanged. Adoption policy: mandatory on new screens, adopt-on-touch for existing ones; `apps/index` is the reference implementation. New components must land with a §2 table row.
+- **Impact:** New: 11 `resources/views/components/ui/*` components, `Design-System.md`, `DesignSystemTest` (13 tests incl. status-colour contract and a11y attributes). Modified: `apps/index` (reference adoption), `app.css` (`.om-progress`).
+
+---
+
 *New decisions must be appended above this line in the format shown.*

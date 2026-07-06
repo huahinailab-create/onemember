@@ -122,6 +122,7 @@ docs/OMOS/
 ├── 06-Operations/             ← Deployment, monitoring, incident response, SLAs
 │   └── Operations-Manual.md   ← START HERE to operate production (complete manual)
 ├── 07-Brand/                  ← Visual identity, voice, design system
+│   └── Design-System.md       ← THE component library + UI standards (PLATFORM-001)
 ├── 08-Security/               ← Security policy, threat model, compliance
 ├── 09-Roadmap/                ← Strategic roadmap (phases), NOT sprint specs
 │   └── Version-2.0-Vision-and-Master-Roadmap-2026-2030.md ← 5-year blueprint

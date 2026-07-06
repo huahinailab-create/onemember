@@ -1,15 +1,12 @@
+{{-- Reference implementation of the OneMember Design System (PLATFORM-001):
+     x-ui.page-header, x-ui.flash, x-ui.status-badge. --}}
 <x-app-layout>
     <x-slot name="title">{{ __('apps.title') }} – {{ config('app.name') }}</x-slot>
     <x-slot name="pageTitle">{{ __('apps.title') }}</x-slot>
 
-    <div class="page-header">
-        <h1>{{ __('apps.title') }}</h1>
-        <p>{{ __('apps.subtitle') }}</p>
-    </div>
+    <x-ui.page-header :title="__('apps.title')" :subtitle="__('apps.subtitle')" />
 
-    @if ($errors->any())
-        <div class="alert alert-danger mb-4">{{ $errors->first() }}</div>
-    @endif
+    <x-ui.flash :with-errors="true" />
 
     <div class="row g-3">
         @foreach ($registry as $key => $app)
@@ -27,9 +24,9 @@
                             <div>
                                 <div class="fw-semibold">{{ __('apps.name_' . $key) }}</div>
                                 @if ($isInstalled)
-                                    <span class="badge bg-success">{{ __('apps.badge_installed') }}</span>
+                                    <x-ui.status-badge status="active" :label="__('apps.badge_installed')" />
                                 @elseif (! $isAvailable)
-                                    <span class="badge bg-secondary">{{ __('apps.badge_coming_soon') }}</span>
+                                    <x-ui.status-badge status="coming_soon" :label="__('apps.badge_coming_soon')" />
                                 @endif
                             </div>
                         </div>
