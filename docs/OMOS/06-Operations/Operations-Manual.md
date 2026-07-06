@@ -79,6 +79,8 @@ All routes live in domain groups (`Route::domain(config('domains.app'))…`) and
 
 **One-liner post-deploy check:** `php artisan route:list | grep -E "control-room|go-live" && curl -fsS https://app.onemember.co/up`.
 
+**Ready-to-paste Forge deploy script:** [forge-deploy-script.sh](./forge-deploy-script.sh) — implements the correct order (clear → rebuild → FPM reload) and fails the deploy loudly if the critical routes are missing.
+
 
 ## 2. New Server Setup
 
