@@ -1152,4 +1152,14 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-079 — Global Platform Repositioning: Core / Apps / Country Extensions (GLOBAL-001)
+
+- **Date:** 2026-07-06
+- **Status:** Approved (Product Owner directive — supersedes previous strategic direction where conflicts exist)
+- **Decision:** OneMember is a **global** merchant-first Membership, Loyalty, Customer Identity and Engagement Platform — explicitly NOT a marketplace, payment processor, logistics company, bank, accounting system, POS company, or ERP. Three-layer architecture (ADR-012): lightweight global **Core**; optional installable **OneMember Apps** ("OneStore" name retired; Commerce incl. Merchant Storefront is an App, not Core); **Country Extensions** for local capabilities (PromptPay/DuitNow/KBZ Pay/UPI/VNPay/Stripe/PayPal — display-only, never money handling). Merchants choose country/language/currency/timezone (never browser-derived); onboarding adds country, language, plan selection, and versioned terms acceptance (legal wording draft pending review). Revenue: subscriptions only — free ≤ 100 members, paid tiers scale by members/features/automation/API/apps. DR-31 resolved: no regional-operations phase; software only, any country. Modularity is product-first inside the existing monolith — no microservices authorised.
+- **Reason:** Prevent the Core from becoming a monolithic everything-app; open the platform to any-country merchants without OneMember local operations; keep commerce optional so pure-loyalty merchants stay uncluttered.
+- **Impact:** New: `00-Executive/Global-Platform-Repositioning.md`, ADR-012. Modified: Product Bible → v2.0.0 (global framing, NOT-list, three-layer structure, localization/onboarding/pricing requirements), Glossary (3 layer terms), Master Roadmap v1.2.0 + Roadmap.md banners. Open: **DR-32** (pricing tiers — CEO), **DR-33** (legal T&C programme), **DR-34** (App framework technical spec — CTO, gates CORE-001). Recommended next implementation sprint: **CORE-001 — Global Onboarding & App Framework Foundation**.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

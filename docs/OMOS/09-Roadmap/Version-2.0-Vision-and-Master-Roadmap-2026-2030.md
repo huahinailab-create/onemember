@@ -3,11 +3,13 @@
 | Field | Value |
 |---|---|
 | **Document Owner** | Product Owner |
-| **Version** | 1.1.0 |
+| **Version** | 1.2.0 |
 | **Status** | Review — strategic proposals require Product Owner ratification (§14) |
 | **Last Updated** | 2026-07-06 |
 | **Author** | Claude Fable 5 (sprint VISION-001) |
 | **Related Documents** | [Product-Bible.md](../02-Product/Product-Bible.md) · [Long-term-Roadmap.md](./Long-term-Roadmap.md) · [Roadmap.md](./Roadmap.md) · [Customer-Wallet package](../02-Product/Customer-Wallet/README.md) · [Scalability-Review-2026-07](../10-Architecture/Scalability-Review-2026-07.md) · [Operations-Manual](../06-Operations/Operations-Manual.md) · [14-Version-2.0-Ideas](../../14-Version-2.0-Ideas.md) · [Bible-Gap-Review](../02-Product/Bible-Gap-Review-2026-07.md) |
+
+> **⚠️ 2026-07-06 second amendment (GLOBAL-001, PO-approved — supersedes where conflicting):** OneMember is now a **global merchant membership platform** with a three-layer architecture ([ADR-012](../12-ADR/ADR-012-Modular-Platform-Core-Apps-Extensions.md)): lightweight global Core, installable OneMember Apps (Commerce/POS/Inventory/Accounting are Apps, not platform modules), and Country Extensions (PromptPay et al. are extensions, never Core). **DR-31 is resolved:** no regional-expansion phase — any-country support by configuration + extensions, software only, no local operations. "Thailand-first" principle re-framed as launch-market Thailand. Pricing direction: subscriptions only, free ≤100 members, tiers by members/features/automation/API/apps (**DR-32**). §2/§8/§11 read through this lens; authoritative: [Global-Platform-Repositioning](../00-Executive/Global-Platform-Repositioning.md).
 
 > **⚠️ 2026-07-06 amendment (GOV-001, PO-approved):** the custodian principle, identity/consent model, and commerce principles are now settled in the [Product Bible v1.0.0](../02-Product/Product-Bible.md), [ADR-010](../12-ADR/ADR-010-Custodian-Identity-Consent.md), and [ADR-011](../12-ADR/ADR-011-Commerce-Principles-Phase-4.md). Where this document differs, those govern. Key changes: **Phase 3 = growth tools, Phase 4 = Merchant Storefront/commerce** (was reversed in §2); "PromptPay checkout" is re-scoped to **QR payment display** of the merchant's own payment identity — no money ever flows through OneMember, no commission economics; Apple/Google Wallet passes are approved Phase 2 scope (BD-04 product decision made); regional expansion timing is an open decision (**DR-31**). §13 milestone years for commerce/regional are indicative pending DR-31.
 

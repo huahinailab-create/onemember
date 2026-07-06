@@ -112,6 +112,7 @@ docs/OMOS/
 ├── Knowledge/                 ← Research, interviews, experiments, ideas
 │
 ├── 00-Executive/              ← Vision, Mission, North Star, Principles
+│   └── Global-Platform-Repositioning.md ← 2026-07-06 strategic direction (Core/Apps/Extensions)
 ├── 01-Company/                ← Culture, team, hiring, values in practice
 ├── 02-Product/                ← Product Bible, feature specs, UX principles
 │   └── Customer-Wallet/       ← Phase 2 design package (PH2-000)

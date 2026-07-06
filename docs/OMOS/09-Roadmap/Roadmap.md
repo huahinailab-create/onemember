@@ -30,6 +30,8 @@ When these documents conflict, this document takes precedence as the more recent
 
 ---
 
+> **⚠️ 2026-07-06 (ADR-012 — approved):** Global repositioning: three-layer platform (Core / Apps / Country Extensions); Commerce, POS, Inventory, Accounting are installable Apps; regional expansion phase dissolved (DR-31 resolved — global by configuration). See [Global-Platform-Repositioning](../00-Executive/Global-Platform-Repositioning.md).
+
 > **⚠️ 2026-07-06 (ADR-010/ADR-011 — approved):** Foundational custodian, identity, consent, and commerce principles recorded in the [Product Bible v1.0.0](../02-Product/Product-Bible.md). Phases re-sequenced: **Phase 3 = merchant growth tools, Phase 4 = Merchant Storefront/commerce** (no commissions, payment direct customer→merchant). The "Phase 3 — Regional Commerce Network" section below predates this and is superseded; regional expansion placement is an open decision (DR-31).
 
 > **2026-07-05:** PH2-000 design package approved as Phase 2 foundation; implementation specs PH2-001A–F and SCALE-001 are written and gated on decisions BD-01…BD-18 (see [Bible-Gap-Review](../02-Product/Bible-Gap-Review-2026-07.md) §4 and [Customer-Wallet package](../02-Product/Customer-Wallet/README.md)). Scale readiness: [Scalability-Review-2026-07](../10-Architecture/Scalability-Review-2026-07.md).

@@ -86,6 +86,19 @@ The date after which unused Points are no longer valid. Configured per Campaign 
 
 ---
 
+## Platform Layers (added 2026-07-06, ADR-012)
+
+### OneMember Core
+The lightweight, global layer every merchant receives: merchant management, customer identity, membership, loyalty, rewards, campaigns, analytics, notifications, authentication, APIs, AI foundation. Country-specific code is kept out of Core.
+
+### OneMember App
+An optional, installable extension a merchant adds per need (Commerce, POS, Inventory, Accounting, Restaurant, Hotel PMS, etc.). Commerce — including the Merchant Storefront — is an App, not Core. The ecosystem name "OneStore" is retired.
+
+### Country Extension
+Optional country-specific capability offered based on the merchant's country (e.g., PromptPay QR display for Thailand, DuitNow for Malaysia). Payment extensions only display the merchant's own payment identity — money never touches OneMember.
+
+---
+
 ## Identity & Custodianship (added 2026-07-06, ADR-010)
 
 ### Custodian

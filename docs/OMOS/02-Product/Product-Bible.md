@@ -3,10 +3,10 @@
 | Field | Value |
 |---|---|
 | **Document Owner** | Product Owner |
-| **Version** | 1.0.0 |
+| **Version** | 2.0.0 |
 | **Status** | Active |
 | **Last Updated** | 2026-07-06 |
-| **Related Documents** | [Vision.md](../00-Executive/Vision.md), [Mission.md](../00-Executive/Mission.md), [09-Roadmap/Roadmap.md](../09-Roadmap/Roadmap.md), [Version-2.0-Vision-and-Master-Roadmap-2026-2030.md](../09-Roadmap/Version-2.0-Vision-and-Master-Roadmap-2026-2030.md), [Glossary.md](./Glossary.md), [ADR-010](../12-ADR/ADR-010-Custodian-Identity-Consent.md), [ADR-011](../12-ADR/ADR-011-Commerce-Principles-Phase-4.md) |
+| **Related Documents** | [Global-Platform-Repositioning.md](../00-Executive/Global-Platform-Repositioning.md), [ADR-012](../12-ADR/ADR-012-Modular-Platform-Core-Apps-Extensions.md), [Vision.md](../00-Executive/Vision.md), [Mission.md](../00-Executive/Mission.md), [09-Roadmap/Roadmap.md](../09-Roadmap/Roadmap.md), [Version-2.0-Vision-and-Master-Roadmap-2026-2030.md](../09-Roadmap/Version-2.0-Vision-and-Master-Roadmap-2026-2030.md), [Glossary.md](./Glossary.md), [ADR-010](../12-ADR/ADR-010-Custodian-Identity-Consent.md), [ADR-011](../12-ADR/ADR-011-Commerce-Principles-Phase-4.md) |
 
 ---
 
@@ -34,15 +34,19 @@ Every feature, data model, and business decision must be checkable against this 
 
 ## One-Line Platform Principle (approved)
 
-> OneMember is a **merchant-first customer engagement and commerce platform**. Merchants retain full control over pricing, inventory, fulfillment, customer service, and payments. OneMember provides the technology that connects merchants with customers through identity, loyalty, communication, and commerce tools.
+> OneMember is a merchant-first **Membership, Loyalty, Customer Identity and Engagement Platform**. Merchants remain completely independent — they retain full control over pricing, inventory, fulfillment, customer service, and payments. Customers control their identity. OneMember provides the technology.
+>
+> OneMember is **NOT** a marketplace, a payment processor, a logistics company, a bank, an accounting system, a POS company, or an ERP.
 
 ---
 
 ## Introduction
 
-OneMember is a **Merchant Growth Platform**.
+OneMember is a **global merchant membership platform** (repositioned 2026-07-06 from Thailand-focused loyalty application — see [Global-Platform-Repositioning](../00-Executive/Global-Platform-Repositioning.md)).
 
 It is not a loyalty app. It is not a CRM. It is not a marketing tool. It is not a POS system. It is not a marketplace. It is a platform that brings these capabilities together in service of one goal: **helping merchants build lasting, profitable relationships with their customers**.
+
+The platform is modular (ADR-012): a lightweight, global **OneMember Core** every merchant gets; optional **OneMember Apps** merchants install per need (Commerce is an App, not Core); and **Country Extensions** for local capabilities like payment-QR display formats. The Core must never become a monolithic application. Merchants can come from any country; OneMember provides software, never local operations.
 
 The platform is built in phases (see Roadmap Positioning below). Every module connects. Loyalty drives repeat visits. Repeat visits drive commerce. Commerce drives merchant results. Results drive analytics. Analytics drives AI. AI drives merchant decisions. Merchant decisions drive loyalty. This is the flywheel.
 
@@ -51,7 +55,7 @@ The platform is built in phases (see Roadmap Positioning below). Every module co
 ## Who OneMember Serves
 
 ### Primary User: The Merchant
-A small or medium business owner in Southeast Asia who wants to grow their business by building better relationships with their customers. They are not technical. They do not have a marketing team. They need results, not complexity. **The merchant owns the business relationship with their customers.**
+A small or medium business owner — launch market Thailand, platform global — who wants to grow their business by building better relationships with their customers. They are not technical. They do not have a marketing team. They need results, not complexity. **The merchant owns the business relationship with their customers.**
 
 ### Secondary User: The Customer (Member)
 A customer who shops at OneMember-powered merchants. They want to earn rewards effortlessly and not be buried in apps and paper cards. **They own and control their identity and what they share with each merchant.** OneMember holds it in trust.
@@ -112,26 +116,19 @@ When commerce is introduced:
 | **Phase 3** | Merchant growth tools: AI marketing, advanced CRM, referrals, campaign automation. |
 | **Phase 4** | Merchant Storefront / commerce: product catalogues, ordering, pickup, merchant delivery, shipping, QR payment display, merchant-controlled fulfillment. |
 
+**Global requirements (2026-07-06):** language/country/currency/timezone are merchant-configured (onboarding + settings), never browser-derived; onboarding collects country, language, plan, and versioned terms acceptance; Apps are recommended by business type. Pricing direction: free ≤ 100 members, paid tiers scale by members/features/automation/API/apps (detail = DR-32).
+
 This positioning **supersedes** earlier phase orderings that placed commerce in Phase 3. Rationale: growth tools deepen merchant value on the proven loyalty base before commerce raises the stakes; commerce requires the trust, identity, and consent rails of Phases 2–3 to be mature. Regional expansion timing is not fixed by this positioning (open decision — see decision register).
 
 ---
 
-## Platform Modules
+## Platform Structure (ADR-012 — Core / Apps / Extensions)
 
-For detailed module specifications, see the individual documents in `docs/OMOS/02-Product/`:
-
-| Module | Phase | Document |
+| Layer | Contents | Documents |
 |---|---|---|
-| Merchant Platform | Phase 1 — Live | [Merchant-Platform.md](./Merchant-Platform.md) |
-| Customer Wallet | Phase 2 — Identity Platform live (PH2-001A); wallet UX designed (PH2-000) | [Customer-Wallet.md](./Customer-Wallet.md) → [design package](./Customer-Wallet/README.md) |
-| Enterprise Bridge | Phase 2+ — Planned | [Enterprise-Bridge.md](./Enterprise-Bridge.md) |
-| Growth Tools (AI marketing, CRM, referrals, automation) | Phase 3 — Planned | [AI-Features.md](./AI-Features.md), [Analytics.md](./Analytics.md) |
-| Merchant Storefront / Commerce | **Phase 4** — Principles approved | [Commerce.md](./Commerce.md) |
-| POS Lite | Phase 4 — Planned | [POS.md](./POS.md) |
-| Inventory | Phase 4 — Planned | [Inventory.md](./Inventory.md) |
-| Procurement | Future | [Procurement.md](./Procurement.md) |
-| Thailand Accounting | Future | [Accounting.md](./Accounting.md) |
-| Analytics & Intelligence | Continuous | [Analytics.md](./Analytics.md) |
+| **OneMember Core** (every merchant, global) | Merchant management, Customer Identity (live, PH2-001A), Membership, Loyalty, Rewards, Campaigns, Analytics, Notifications, Authentication, APIs, AI Foundation; Customer Wallet UX (Phase 2); Enterprise Bridge (Phase 2+); growth-tool basics | [Merchant-Platform.md](./Merchant-Platform.md), [Customer-Wallet package](./Customer-Wallet/README.md), [Enterprise-Bridge.md](./Enterprise-Bridge.md), [Analytics.md](./Analytics.md) |
+| **OneMember Apps** (optional installs) | **Commerce / Merchant Storefront** (Phase 4 target), POS, Inventory, Accounting, Procurement, Restaurant (QR menu, table ordering), Hotel PMS, Appointment Booking, CRM, AI Marketing, Shipping, Gift Cards*, Coupons*, Staff Management, Payroll, ERP Connectors (*still DR-gated) | [Commerce.md](./Commerce.md), [POS.md](./POS.md), [Inventory.md](./Inventory.md), [Accounting.md](./Accounting.md), [Procurement.md](./Procurement.md) |
+| **Country Extensions** (per country) | TH PromptPay, MY DuitNow, MM KBZ Pay, IN UPI, VN VNPay, global Stripe/PayPal — payment-QR display and local capabilities only; never money handling | [Global-Platform-Repositioning §3](../00-Executive/Global-Platform-Repositioning.md) |
 
 ---
 
