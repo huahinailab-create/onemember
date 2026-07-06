@@ -19,13 +19,11 @@
         @endforeach
     </ul>
 
-    @if ($errors->any())
-        <div class="alert alert-danger">{{ $errors->first() }}</div>
-    @endif
+    <x-ui.flash :with-errors="true" />
 
     @if ($orders->isEmpty())
-        <div class="card"><div class="card-body text-center text-muted py-5">
-            <i class="bi bi-inbox fs-1 d-block mb-2"></i>{{ __('commerce.orders_empty') }}
+        <div class="card"><div class="card-body">
+            <x-ui.empty-state icon="bi-inbox" :title="__('commerce.orders_empty')" />
         </div></div>
     @else
         @foreach ($orders as $order)
@@ -51,12 +49,8 @@
                         </div>
                         <div class="text-end">
                             <div class="fw-bold">{{ number_format($order->total, 2) }} {{ $merchant->currency ?? config('app.default_currency') }}</div>
-                            <span class="badge {{ $order->status === 'cancelled' ? 'bg-danger' : ($order->status === 'completed' ? 'bg-success' : 'bg-primary') }}">
-                                {{ __('commerce.order_status_' . $order->status) }}
-                            </span>
-                            <span class="badge {{ $order->payment_status === 'paid' ? 'bg-success' : 'bg-warning text-dark' }}">
-                                {{ __('commerce.order_payment_' . $order->payment_status) }}
-                            </span>
+                            <x-ui.status-badge :status="$order->status" :label="__('commerce.order_status_' . $order->status)" />
+                            <x-ui.status-badge :status="$order->payment_status" :label="__('commerce.order_payment_' . $order->payment_status)" />
                         </div>
                     </div>
 

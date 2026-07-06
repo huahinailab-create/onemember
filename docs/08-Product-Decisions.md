@@ -1262,4 +1262,13 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-091 — UX-001: Private Beta Polish Pass (Design System Adoption)
+
+- **Date:** 2026-07-06
+- **Status:** Approved (PHASE-A)
+- **Decision:** Adopt-on-touch pass applying the PLATFORM-001 design system to the newest merchant screens (commerce products & orders lists) that predated it: `x-ui.flash` toast standard, `x-ui.empty-state` with action slot, and `x-ui.status-badge` (single colour source) for product/order/payment status. No behaviour change — existing commerce/orders tests (22) pass unchanged, confirming no visual-contract regression. Established screens (dashboard, members, counter, launch kit, apps, storefront, admin) already conform to the standardized patterns; broader migration continues adopt-on-touch per the design-system policy rather than a risky big-bang rewrite.
+- **Impact:** Modified: `commerce/products/index`, `commerce/orders/index`. No new files; behaviour and tests unchanged.
+
+---
+
 *New decisions must be appended above this line in the format shown.*

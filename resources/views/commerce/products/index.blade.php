@@ -20,13 +20,16 @@
         </div>
     </div>
 
+    <x-ui.flash />
+
     <div class="card">
         <div class="card-body p-0">
             @if ($products->isEmpty())
-                <div class="text-center text-muted py-5">
-                    <i class="bi bi-box fs-1 d-block mb-2"></i>
-                    {{ __('commerce.no_products') }}
-                </div>
+                <x-ui.empty-state icon="bi-box" :title="__('commerce.no_products')">
+                    <a href="{{ route('commerce.products.create') }}" class="btn btn-primary btn-sm">
+                        <i class="bi bi-plus-lg me-1"></i>{{ __('commerce.add_product') }}
+                    </a>
+                </x-ui.empty-state>
             @else
                 <table class="table table-hover mb-0">
                     <thead>
@@ -55,9 +58,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <span class="badge {{ $product->status === 'active' ? 'bg-success' : 'bg-secondary' }}">
-                                        {{ __('commerce.status_' . $product->status) }}
-                                    </span>
+                                    <x-ui.status-badge :status="$product->status" :label="__('commerce.status_' . $product->status)" />
                                 </td>
                                 <td class="pe-3 text-end">
                                     <a href="{{ route('commerce.products.edit', $product) }}" class="btn btn-sm btn-outline-secondary">
