@@ -30,6 +30,16 @@ return [
             'provider'      => \App\Apps\Queue\QueueAppProvider::class,
             'docs'          => 'docs/dev/apps/queue.md',
         ],
+        'procurement' => [
+            'icon'          => 'bi-truck',
+            'status'        => 'available',
+            'version'       => '1.0.0',
+            'category'      => 'operations',
+            'permissions'   => ['procurement.suppliers.manage', 'procurement.requests.manage', 'procurement.orders.approve'],
+            'migrations'    => 'app/Apps/Procurement/database/migrations',
+            'provider'      => \App\Apps\Procurement\ProcurementAppProvider::class,
+            'docs'          => 'docs/dev/apps/procurement.md',
+        ],
         'restaurant' => [
             'icon'     => 'bi-cup-hot',
             'status'   => 'coming_soon',

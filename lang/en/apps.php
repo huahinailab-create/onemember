@@ -46,4 +46,6 @@ return [
     'status_disabled' => 'Disabled',
     'name_queue' => 'Queue',
     'desc_queue' => 'Ticket queue with counters, priorities, reservations and a display board.',
+    'name_procurement' => 'Procurement',
+    'desc_procurement' => 'Suppliers, purchase requests with approval, purchase orders and goods received.',
 ];
