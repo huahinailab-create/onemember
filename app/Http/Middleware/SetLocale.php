@@ -9,8 +9,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SetLocale
 {
-    private const SUPPORTED = ['en', 'th'];
-    private const DEFAULT   = 'th';
+    private const DEFAULT = 'th';
+
+    /**
+     * PLATFORM-002 P10 — internal UI languages are config-driven; adding a
+     * language means shipping its lang/ directory and adding it to
+     * config/localization.php internal_languages (docs/dev/localization.md).
+     * @return list<string>
+     */
+    private function supported(): array
+    {
+        return array_keys(config('localization.internal_languages', ['en' => '', 'th' => '']));
+    }
 
     public function handle(Request $request, Closure $next): Response
     {
@@ -36,7 +46,7 @@ class SetLocale
 
         // Always set an explicit locale — never fall through to config('app.locale')
         // which can differ between environments. Thai is the hard default.
-        App::setLocale(in_array($locale, self::SUPPORTED, true) ? $locale : self::DEFAULT);
+        App::setLocale(in_array($locale, $this->supported(), true) ? $locale : self::DEFAULT);
 
         return $next($request);
     }

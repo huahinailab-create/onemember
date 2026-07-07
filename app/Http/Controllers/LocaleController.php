@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 
 class LocaleController extends Controller
 {
-    private const SUPPORTED = ['en', 'th'];
+    // PLATFORM-002 P10 — config-driven (docs/dev/localization.md)
 
     public function switch(Request $request): RedirectResponse
     {
         $locale = $request->input('locale');
 
-        if (! in_array($locale, self::SUPPORTED, true)) {
+        if (! in_array($locale, array_keys(config('localization.internal_languages')), true)) {
             return redirect()->back(fallback: url('/'));
         }
 
