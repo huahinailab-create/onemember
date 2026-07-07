@@ -23,7 +23,7 @@
 
     @if ($orders->isEmpty())
         <div class="card"><div class="card-body">
-            <x-ui.empty-state icon="bi-inbox" :title="__('commerce.orders_empty')" />
+            <x-ui.empty-state icon="bi-inbox" :title="__('commerce.orders_empty')" :body="__('commerce.orders_empty_body')" />
         </div></div>
     @else
         @foreach ($orders as $order)

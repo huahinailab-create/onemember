@@ -20,11 +20,15 @@
                         @csrf
                         @if ($product) @method('PUT') @endif
 
+                        {{-- ── General ─────────────────────────────── (OMEGA-001B) --}}
+                        <h2 class="omega-form-section">{{ __('commerce.section_general') }}</h2>
+
                         <div class="mb-3">
                             <label for="name" class="form-label">{{ __('commerce.field_name') }} <span class="text-danger">*</span></label>
                             <input type="text" id="name" name="name" required maxlength="150"
                                    class="form-control @error('name') is-invalid @enderror"
                                    value="{{ old('name', $product?->name) }}">
+                            <div class="form-text">{{ __('commerce.name_hint') }}</div>
                             @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
 
@@ -32,8 +36,12 @@
                             <label for="description" class="form-label">{{ __('commerce.field_description') }}</label>
                             <textarea id="description" name="description" rows="3" maxlength="1000"
                                       class="form-control @error('description') is-invalid @enderror">{{ old('description', $product?->description) }}</textarea>
+                            <div class="form-text">{{ __('commerce.description_hint') }}</div>
                             @error('description')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
+
+                        {{-- ── Image ───────────────────────────────── --}}
+                        <h2 class="omega-form-section">{{ __('commerce.section_image') }}</h2>
 
                         {{-- OMEGA-001A — premium product image manager (one main image) --}}
                         @php
@@ -130,27 +138,49 @@
                             </div>
                         </div>
 
-                        <div class="row g-3 mb-3">
-                            <div class="col-6">
-                                <label for="price" class="form-label">{{ __('commerce.field_price') }} <span class="text-danger">*</span></label>
+                        {{-- ── Pricing ─────────────────────────────── --}}
+                        <h2 class="omega-form-section">{{ __('commerce.section_pricing') }}</h2>
+
+                        <div class="mb-3">
+                            <label for="price" class="form-label">{{ __('commerce.field_price') }} <span class="text-danger">*</span></label>
+                            <div class="input-group" style="max-width:280px;">
                                 <input type="number" id="price" name="price" required min="0" step="0.01"
+                                       inputmode="decimal"
                                        class="form-control @error('price') is-invalid @enderror"
                                        value="{{ old('price', $product?->price) }}">
-                                @error('price')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                <span class="input-group-text">{{ Auth::user()->merchant->currency ?? config('app.default_currency') }}</span>
                             </div>
-                            <div class="col-6">
-                                <label for="stock_qty" class="form-label">{{ __('commerce.field_stock') }}</label>
-                                <input type="number" id="stock_qty" name="stock_qty" min="0" step="1"
-                                       class="form-control @error('stock_qty') is-invalid @enderror"
-                                       value="{{ old('stock_qty', $product?->stock_qty) }}"
-                                       placeholder="{{ __('commerce.stock_untracked') }}">
-                                @error('stock_qty')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                <div class="form-text">{{ __('commerce.stock_hint') }}</div>
-                            </div>
+                            <div class="form-text">{{ __('commerce.price_hint') }}</div>
+                            @error('price')<div class="text-danger small">{{ $message }}</div>@enderror
                         </div>
 
+                        {{-- ── Inventory ───────────────────────────── --}}
+                        <h2 class="omega-form-section">{{ __('commerce.section_inventory') }}</h2>
+
+                        <div class="mb-3">
+                            <label for="stock_qty" class="form-label">{{ __('commerce.field_stock') }}</label>
+                            <input type="number" id="stock_qty" name="stock_qty" min="0" step="1"
+                                   inputmode="numeric" style="max-width:280px;"
+                                   class="form-control @error('stock_qty') is-invalid @enderror"
+                                   value="{{ old('stock_qty', $product?->stock_qty) }}"
+                                   placeholder="{{ __('commerce.stock_untracked') }}">
+                            <div class="form-text">{{ __('commerce.stock_hint') }}</div>
+                            @error('stock_qty')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
+
+                        {{-- ── Visibility ──────────────────────────── --}}
+                        <h2 class="omega-form-section">{{ __('commerce.section_visibility') }}</h2>
+
                         <div class="row g-3 mb-4">
-                            <div class="col-6">
+                            <div class="col-12 col-sm-6">
+                                <label for="status" class="form-label">{{ __('commerce.col_status') }}</label>
+                                <select id="status" name="status" class="form-select">
+                                    <option value="active" {{ old('status', $product?->status ?? 'active') === 'active' ? 'selected' : '' }}>{{ __('commerce.status_active') }}</option>
+                                    <option value="hidden" {{ old('status', $product?->status) === 'hidden' ? 'selected' : '' }}>{{ __('commerce.status_hidden') }}</option>
+                                </select>
+                                <div class="form-text">{{ __('commerce.status_hint') }}</div>
+                            </div>
+                            <div class="col-12 col-sm-6">
                                 <label for="category_name" class="form-label">{{ __('commerce.field_category') }}</label>
                                 <input type="text" id="category_name" name="category_name" maxlength="100"
                                        list="category-options"
@@ -161,14 +191,8 @@
                                         <option value="{{ $category->name }}">
                                     @endforeach
                                 </datalist>
+                                <div class="form-text">{{ __('commerce.category_hint') }}</div>
                                 @error('category_name')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                            </div>
-                            <div class="col-6">
-                                <label for="status" class="form-label">{{ __('commerce.col_status') }}</label>
-                                <select id="status" name="status" class="form-select">
-                                    <option value="active" {{ old('status', $product?->status ?? 'active') === 'active' ? 'selected' : '' }}>{{ __('commerce.status_active') }}</option>
-                                    <option value="hidden" {{ old('status', $product?->status) === 'hidden' ? 'selected' : '' }}>{{ __('commerce.status_hidden') }}</option>
-                                </select>
                             </div>
                         </div>
 

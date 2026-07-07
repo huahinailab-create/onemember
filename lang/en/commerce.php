@@ -125,4 +125,21 @@ return [
     'image_error_type' => 'That file type is not supported. Use JPG, PNG or WebP.',
     'image_error_size' => 'That file is larger than 2 MB. Choose a smaller photo.',
     'image_warning_low_res' => 'This photo is smaller than 800 × 800 px — it may look blurry. It will still be saved.',
+
+    // OMEGA-001B — production polish
+    'no_products_body' => 'Products you add appear on your storefront instantly. Photos sell — add one per product.',
+    'orders_empty_body' => 'Orders from your storefront will appear here the moment customers place them.',
+    'badge_archived' => 'Archived',
+    'stock_low' => 'Only :count left',
+    'stock_in' => ':count in stock',
+    'section_general' => 'General',
+    'section_image' => 'Image',
+    'section_pricing' => 'Pricing',
+    'section_inventory' => 'Inventory',
+    'section_visibility' => 'Visibility',
+    'name_hint' => 'Shown on your storefront and receipts.',
+    'description_hint' => 'A short description — the storefront shows the first two lines.',
+    'price_hint' => 'In your primary currency. Customers pay you directly.',
+    'status_hint' => 'Hidden products stay saved but never appear on the storefront.',
+    'category_hint' => 'Type to reuse an existing category or create a new one.',
 ];

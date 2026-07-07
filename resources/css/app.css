@@ -2213,10 +2213,12 @@ body.om-sidebar-open {
     border-color: transparent;
 }
 
-/* BETA-008A — main product image (storefront row + placeholder) */
+/* BETA-008A — main product image (storefront row + placeholder)
+   OMEGA-001B: larger media for card-like rows */
 .storefront-product-media {
-    width: 48px;
-    height: 48px;
+    width: 56px;
+    height: 56px;
+    position: relative;
     border-radius: 8px;
     background: #f1f4f8;
     display: flex;
@@ -2238,15 +2240,86 @@ body.om-sidebar-open {
     min-width: 0;
 }
 
-/* BETA-008A — merchant-side product thumbnails (list + form preview) */
+/* BETA-008A — merchant-side product thumbnails (list + form preview)
+   OMEGA-001B: larger list thumbnails + loading shimmer placeholder */
 .commerce-product-thumb {
-    width: 40px;
-    height: 40px;
-    border-radius: 6px;
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
     background: var(--om-cloud);
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Skeleton shimmer while images load (server-rendered app: images are the
+   only async content — Design System §2.18 keeps full-page skeletons out) */
+.commerce-product-thumb img,
+.storefront-product-media img {
+    position: relative;
+    z-index: 1;
+}
+
+.commerce-product-thumb::before,
+.storefront-product-media::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, rgba(0,0,0,0) 40%, rgba(255,255,255,0.6) 50%, rgba(0,0,0,0) 60%) var(--om-cloud);
+    background-size: 200% 100%;
+    animation: omega-shimmer 1.4s ease infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .commerce-product-thumb::before,
+    .storefront-product-media::before {
+        animation: none;
+    }
+}
+
+@keyframes omega-shimmer {
+    0%   { background-position: 120% 0; }
+    100% { background-position: -80% 0; }
+}
+
+.commerce-product-thumb i,
+.storefront-product-media i {
+    position: relative;
+    z-index: 1;
+}
+
+/* OMEGA-001B — product form section headings */
+.omega-form-section {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--om-navy);
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 0.4rem;
+    margin: 1.5rem 0 1rem;
+}
+
+.omega-form-section:first-of-type {
+    margin-top: 0;
+}
+
+/* OMEGA-001B — sticky table headers inside scrollable card tables */
+.table-sticky thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--bs-table-bg, #fff);
+    box-shadow: inset 0 -1px 0 #dee2e6;
+}
+
+/* OMEGA-001B — short descriptions clamp to two lines */
+.storefront-product-desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
