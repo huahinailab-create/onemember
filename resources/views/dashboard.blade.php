@@ -170,7 +170,8 @@
                         @endif
                     @else
                         <div class="progress" style="height:6px;">
-                            <div class="progress-bar bg-success" role="progressbar" style="width:100%;"></div>
+                            <div class="progress-bar bg-success" role="progressbar" style="width:100%;"
+                                 aria-label="{{ __('dashboard.unlimited') }}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         <div class="text-muted small mt-1">{{ __('dashboard.unlimited') }}</div>
                     @endif
@@ -205,7 +206,8 @@
                         @endif
                     @else
                         <div class="progress" style="height:6px;">
-                            <div class="progress-bar bg-success" role="progressbar" style="width:100%;"></div>
+                            <div class="progress-bar bg-success" role="progressbar" style="width:100%;"
+                                 aria-label="{{ __('dashboard.unlimited') }}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         <div class="text-muted small mt-1">{{ __('dashboard.unlimited') }}</div>
                     @endif

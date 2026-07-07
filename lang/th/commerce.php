@@ -65,6 +65,7 @@ return [
     'order_address_hint'  => 'จำเป็นสำหรับจัดส่งหรือไปรษณีย์',
     'order_notes'         => 'หมายเหตุ',
     'order_submit'        => 'ส่งคำสั่งซื้อถึงร้าน',
+    'order_qty_label'     => 'จำนวน: :product',
     'order_direct_note'   => 'คำสั่งซื้อส่งตรงถึง :merchant คุณชำระเงินให้ :merchant โดยตรง — OneMember ไม่ยุ่งกับเงินของคุณ',
     'order_empty'         => 'กรุณาเลือกอย่างน้อย 1 รายการ',
     'order_invalid_product' => 'สินค้าที่เลือกบางรายการไม่มีจำหน่ายแล้ว',

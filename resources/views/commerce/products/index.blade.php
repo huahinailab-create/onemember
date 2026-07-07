@@ -59,13 +59,17 @@
                                     <x-ui.status-badge :status="$product->status" :label="__('commerce.status_' . $product->status)" />
                                 </td>
                                 <td class="pe-3 text-end">
-                                    <a href="{{ route('commerce.products.edit', $product) }}" class="btn btn-sm btn-outline-secondary">
-                                        <i class="bi bi-pencil"></i>
+                                    <a href="{{ route('commerce.products.edit', $product) }}" class="btn btn-sm btn-outline-secondary"
+                                       aria-label="{{ __('buttons.edit') }}: {{ $product->name }}">
+                                        <i class="bi bi-pencil" aria-hidden="true"></i>
                                     </a>
                                     <form method="POST" action="{{ route('commerce.products.archive', $product) }}" class="d-inline"
                                           onsubmit="return confirm('{{ __('commerce.archive_confirm') }}');">
                                         @csrf @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-archive"></i></button>
+                                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                aria-label="{{ __('buttons.archive') }}: {{ $product->name }}">
+                                            <i class="bi bi-archive" aria-hidden="true"></i>
+                                        </button>
                                     </form>
                                 </td>
                             </tr>

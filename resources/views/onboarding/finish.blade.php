@@ -12,15 +12,16 @@
             <span class="text-muted small">100%</span>
         </div>
         <div class="progress mb-1" style="height:6px;">
-            <div class="progress-bar" style="background:var(--om-navy);" style="width:100%;" role="progressbar"></div>
+            <div class="progress-bar" style="background:var(--om-navy);width:100%;" role="progressbar"
+                 aria-label="{{ __('onboarding.step_6_of_6') }}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
     </div>
 
     <div class="card-body p-4 p-md-5 text-center">
 
-        <div class="d-flex align-items-center justify-content-center rounded-circle mx-auto mb-4" style="width:72px;height:72px;background:var(--om-icon-bg);"
-             style="width:80px;height:80px;">
-            <i class="bi bi-check-circle-fill" style="font-size:2.5rem;color:var(--om-navy);"></i>
+        <div class="d-flex align-items-center justify-content-center rounded-circle mx-auto mb-4"
+             style="width:80px;height:80px;background:var(--om-icon-bg);">
+            <i class="bi bi-check-circle-fill" style="font-size:2.5rem;color:var(--om-navy);" aria-hidden="true"></i>
         </div>
 
         <h2 class="fw-bold fs-3 mb-2">{{ __('onboarding.finish_heading') }}</h2>
