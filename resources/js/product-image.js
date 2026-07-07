@@ -57,7 +57,8 @@ function initMediaUpload(root) {
     if (!fallback || !enhanced || !nativeInput) return;
 
     let cropper = null;
-    let objectUrl = null;
+    let objectUrl = null;   // the blob URL currently assigned to cropImage.src, if any
+    let loadToken = 0;      // guards against a stale load/error callback touching newer state
 
     function showError(message) {
         if (!errorEl) return;
@@ -70,42 +71,91 @@ function initMediaUpload(root) {
             cropper.destroy();
             cropper = null;
         }
+        // Cropper hides the source <img> while it's active; make sure it's
+        // visible again for whatever state comes next (plain preview or a
+        // fresh Cropper instance) instead of staying blank.
+        cropImage.style.display = '';
+        cropImage.classList.remove('cropper-hidden');
     }
 
-    function revokeCurrentObjectUrl() {
-        if (objectUrl) {
-            URL.revokeObjectURL(objectUrl);
-            objectUrl = null;
-        }
+    function revokeUrl(url) {
+        if (url) URL.revokeObjectURL(url);
     }
 
     function showDropzoneState() {
         destroyCropperInstance();
-        revokeCurrentObjectUrl();
+        revokeUrl(objectUrl);
+        objectUrl = null;
+        loadToken += 1;
         dropzone.classList.remove('d-none');
         workspace.classList.add('d-none');
         showError('');
     }
 
-    function showWorkspaceState(imageSrc, label, sizeBytes) {
-        dropzone.classList.add('d-none');
-        workspace.classList.remove('d-none');
+    // Cropper needs the stage element to already have real, laid-out
+    // dimensions when it measures the container — constructing it against a
+    // still-collapsed (e.g. just-unhidden) parent produces a blank/zero-size
+    // crop view. Wait a couple of animation frames for layout to settle
+    // before mounting, and never let a failed mount leave the image hidden.
+    function mountCropper(retriesLeft = 5) {
+        if (cropStage.offsetWidth === 0 || cropStage.offsetHeight === 0) {
+            if (retriesLeft > 0) requestAnimationFrame(() => mountCropper(retriesLeft - 1));
+            return;
+        }
 
-        filenameEl.textContent = label || '';
-        filesizeEl.textContent = sizeBytes ? humanFileSize(sizeBytes) : '';
-        dimensionsEl.textContent = '';
-
-        destroyCropperInstance();
-        cropImage.src = imageSrc;
-        cropImage.onload = function () {
-            dimensionsEl.textContent = `${cropImage.naturalWidth} × ${cropImage.naturalHeight}px`;
+        try {
             cropper = new Cropper(cropImage, {
                 aspectRatio: defaultAspect,
                 viewMode: 1,
                 autoCropArea: 1,
                 background: false,
             });
+        } catch (err) {
+            console.error('media-upload: Cropper failed to initialize — showing plain preview instead', err);
+            cropper = null;
+            cropImage.style.display = '';
+            cropImage.classList.remove('cropper-hidden');
+        }
+    }
+
+    // `crop`: whether to mount Cropper once the image is ready (skipped for
+    // an already-stored image — cropping only applies to a newly selected
+    // file). `previousUrl`: a blob URL to release, but only once the new
+    // image has actually finished loading — revoking it any earlier can
+    // race with the browser still reading the old <img> src mid-swap and
+    // leave the preview blank.
+    function showWorkspaceState(imageSrc, label, sizeBytes, { crop = false, previousUrl = null } = {}) {
+        dropzone.classList.add('d-none');
+        workspace.classList.remove('d-none');
+
+        filenameEl.textContent = label || '';
+        filesizeEl.textContent = sizeBytes ? humanFileSize(sizeBytes) : '';
+        dimensionsEl.textContent = '';
+        showError('');
+
+        destroyCropperInstance();
+
+        const token = ++loadToken;
+        const onReady = function () {
+            if (token !== loadToken) return; // superseded by a later selection
+            dimensionsEl.textContent = `${cropImage.naturalWidth} × ${cropImage.naturalHeight}px`;
+            revokeUrl(previousUrl);
+            if (crop) mountCropper();
         };
+
+        cropImage.onload = onReady;
+        cropImage.onerror = function () {
+            if (token !== loadToken) return;
+            console.error('media-upload: image failed to load — reverting to dropzone');
+            showError(window.mediaUploadStrings?.errorBadType || 'Please choose a JPG, PNG, or WebP image.');
+            showDropzoneState();
+        };
+        cropImage.src = imageSrc;
+
+        // Some browsers resolve a same-frame/cached image without firing a
+        // fresh 'load' event — handle that synchronously instead of relying
+        // solely on the async event.
+        if (cropImage.complete && cropImage.naturalWidth > 0) onReady();
     }
 
     function acceptFile(file) {
@@ -118,12 +168,11 @@ function initMediaUpload(root) {
             return;
         }
 
-        showError('');
         if (removeCheckbox) removeCheckbox.checked = false;
 
-        revokeCurrentObjectUrl();
+        const previousUrl = objectUrl;
         objectUrl = URL.createObjectURL(file);
-        showWorkspaceState(objectUrl, file.name, file.size);
+        showWorkspaceState(objectUrl, file.name, file.size, { crop: true, previousUrl });
     }
 
     // ── File selection: native input change (dropzone click delegates here) ──
@@ -211,20 +260,12 @@ function initMediaUpload(root) {
     }
 
     // ── Initial state: existing stored image, or empty dropzone ──
+    // No Cropper on the already-stored image — cropping only applies to a
+    // newly selected file (re-processing a stored image is future work).
     const currentUrl = root.dataset.mediaUploadCurrent;
     const currentLabel = root.dataset.mediaUploadCurrentLabel;
     if (currentUrl) {
-        dropzone.classList.add('d-none');
-        workspace.classList.remove('d-none');
-        filenameEl.textContent = currentLabel || '';
-        filesizeEl.textContent = '';
-        dimensionsEl.textContent = '';
-        cropImage.src = currentUrl;
-        cropImage.onload = function () {
-            dimensionsEl.textContent = `${cropImage.naturalWidth} × ${cropImage.naturalHeight}px`;
-        };
-        // No Cropper on the already-stored image — cropping only applies to
-        // a newly selected file (re-processing a stored image is future work).
+        showWorkspaceState(currentUrl, currentLabel, null, { crop: false });
     } else {
         showDropzoneState();
     }
