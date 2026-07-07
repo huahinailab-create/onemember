@@ -61,27 +61,21 @@
     <div class="card">
         <div class="card-body p-0">
             @if ($campaigns->isEmpty())
-                <div class="text-center py-5">
-                    <div class="coming-soon-icon mx-auto">
-                        <i class="bi bi-star text-primary"></i>
-                    </div>
-                    @if (request('search_name'))
-                        <h5 class="fw-semibold mb-2">{{ __('campaigns.empty_search_title') }}</h5>
-                        <p class="text-muted mb-0" style="max-width:380px;margin:0 auto;">
+                @if (request('search_name'))
+                    <x-ui.empty-state icon="bi-search" :title="__('campaigns.empty_search_title')">
+                        <p class="mb-0" style="font-size:0.875rem;max-width:380px;margin:0 auto;">
                             {!! __('campaigns.empty_search_body', ['link' => route('campaigns.index', ['filter' => $filter])]) !!}
                         </p>
-                    @elseif ($filter === 'archived')
-                        <h5 class="fw-semibold mb-2">{{ __('campaigns.empty_archived_title') }}</h5>
-                        <p class="text-muted mb-0" style="max-width:380px;margin:0 auto;">
-                            {{ __('campaigns.empty_archived_body') }}
-                        </p>
-                    @else
-                        <h5 class="fw-semibold mb-2">{{ __('campaigns.empty_title') }}</h5>
-                        <p class="text-muted mb-0" style="max-width:380px;margin:0 auto;">
+                    </x-ui.empty-state>
+                @elseif ($filter === 'archived')
+                    <x-ui.empty-state icon="bi-archive" :title="__('campaigns.empty_archived_title')" :body="__('campaigns.empty_archived_body')" />
+                @else
+                    <x-ui.empty-state icon="bi-star" :title="__('campaigns.empty_title')">
+                        <p class="mb-0" style="font-size:0.875rem;max-width:380px;margin:0 auto;">
                             {!! __('campaigns.empty_body', ['link' => route('campaigns.create')]) !!}
                         </p>
-                    @endif
-                </div>
+                    </x-ui.empty-state>
+                @endif
             @else
                 {{-- Mobile card list (xs) --}}
                 <div class="d-sm-none">

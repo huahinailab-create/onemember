@@ -74,7 +74,7 @@ New reusable components live in `resources/views/components/ui/` (anonymous — 
 | 2.16 | **Apps marketplace** | App cards: `.stat-icon` + name + status badge + description + install/uninstall buttons (apps/index is the reference implementation). |
 | 2.17 | **Mobile layouts** | Overlay sidebar, counter-mode bar, FAB, 44px touch targets (`.btn` min-heights in the mobile block), print pages excluded. |
 | 2.18 | **Loading states** | **`<x-ui.spinner :label size>`**. Full-page loads rely on server render — no skeletons. |
-| 2.19 | **Toast notifications** | **`<x-ui.flash :with-errors>`** — session `success`/`error` + optional first validation error, dismissible. Set flashes in controllers; never inline ad-hoc alert markup in new views. |
+| 2.19 | **Toast notifications** | **`<x-ui.flash :with-errors>`** — session `success`/`error` + optional first validation error, dismissible. Set flashes in controllers; never inline ad-hoc alert markup in new views. Session flashes render **once, globally, in the layouts** (`x-app-layout`, `x-admin-layout`); a view that only needs the validation alert passes `:session="false"` (BETA-007A). |
 | 2.20 | **Page headers** | **`<x-ui.page-header :title :subtitle|:back-url>` + actions slot**. |
 
 ## 3. Print & Email

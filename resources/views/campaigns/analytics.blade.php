@@ -80,6 +80,7 @@
                             {{ __('campaigns.analytics_no_activity') }}
                         </div>
                     @else
+                        <div class="table-responsive">
                         <table class="table table-sm mb-0">
                             <thead>
                                 <tr style="font-size:0.78rem;color:#6B7280;">
@@ -106,6 +107,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        </div>
                     @endif
                 </div>
             </div>
@@ -124,6 +126,7 @@
                         </div>
                     @else
                         @php $maxRedeem = max(1, $rewardPerformance->max('redemptions_count')); @endphp
+                        <div class="table-responsive">
                         <table class="table table-sm mb-0">
                             <thead>
                                 <tr style="font-size:0.78rem;color:#6B7280;">
@@ -141,7 +144,7 @@
                                             @if ($reward->trashed())
                                                 <span class="badge bg-danger">{{ __('campaigns.analytics_status_archived') }}</span>
                                             @else
-                                                <span class="badge {{ $reward->status->value === 'active' ? 'bg-success' : 'bg-secondary' }}">{{ $reward->status->value }}</span>
+                                                <span class="badge {{ $reward->status->value === 'active' ? 'bg-success' : 'bg-secondary' }}">{{ $reward->status->label() }}</span>
                                             @endif
                                         </td>
                                         <td>{{ number_format($reward->redemptions_count) }}</td>
@@ -154,6 +157,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        </div>
                     @endif
                 </div>
             </div>

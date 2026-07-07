@@ -53,7 +53,8 @@
             <span class="text-muted small">50%</span>
         </div>
         <div class="progress mb-1" style="height:6px;">
-            <div class="progress-bar bg-primary" style="width:50%;" role="progressbar"></div>
+            <div class="progress-bar bg-primary" style="width:50%;" role="progressbar"
+                 aria-label="{{ __('onboarding.step_3_of_6') }}" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
     </div>
 

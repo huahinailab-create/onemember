@@ -1,3 +1,23 @@
+## 2026-07-07 — BETA-007 Premium Experience Sprint (private-beta polish)
+
+- fix(ux): session flash messages render exactly once — layouts are the single
+  global renderer via `x-ui.flash` (new `:session` prop); double flashes removed
+  from apps, commerce products/orders, settings; admin layout gains flash support (BETA-007A)
+- refactor(ux): members/campaigns lists adopt `x-ui.empty-state`; first-run members
+  empty state gains an Add Member CTA; dead "coming soon" row button replaced with a
+  real View action; dashboard Record Purchase quick action deep-links to Counter Mode
+  when enabled (BETA-007B)
+- feat(i18n): all ten `App\Enums` labels localized via new `lang/{en,th}/enums.php` —
+  Thai merchants no longer see English status badges/type labels; CSV exports
+  unaffected (raw values) (BETA-007C)
+- fix(a11y): onboarding finish-step progress bar was invisible (duplicate style
+  attribute); ARIA labels/values on onboarding + dashboard progress bars; icon-only
+  buttons labelled (counter, products); storefront qty inputs get per-product labels (BETA-007D)
+- fix(mobile): responsive wrappers on commerce products, campaign analytics, admin
+  go-live and trial-history tables; analytics reward status used raw enum value (BETA-007E)
+
+Suite: 669 tests / 1,519 assertions green. `npm run build` clean.
+
 ## 2026-07-07 — MORNING-001: Fable Maximum Sprint (DEPLOY-001, BETA-001…005)
 
 Private-beta readiness pass. One logical commit per sub-sprint; no new architecture.

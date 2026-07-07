@@ -65,6 +65,7 @@ return [
     'order_address_hint'  => 'Required for delivery or shipping.',
     'order_notes'         => 'Notes',
     'order_submit'        => 'Send order to the shop',
+    'order_qty_label'     => 'Quantity: :product',
     'order_direct_note'   => 'Your order goes directly to :merchant. You pay :merchant directly — OneMember never handles your money.',
     'order_empty'         => 'Please choose at least one item.',
     'order_invalid_product' => 'One of the selected items is no longer available.',

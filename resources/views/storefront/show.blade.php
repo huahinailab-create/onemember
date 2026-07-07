@@ -96,7 +96,8 @@
                                     @if ($orderingEnabled && $product->isAvailable())
                                         <input type="number" name="qty[{{ $product->id }}]" min="0" max="99" step="1"
                                                class="form-control form-control-sm storefront-qty" placeholder="0"
-                                               form="storefront-order-form" inputmode="numeric">
+                                               form="storefront-order-form" inputmode="numeric"
+                                               aria-label="{{ __('commerce.order_qty_label', ['product' => $product->name]) }}">
                                     @endif
                                 </div>
                             </li>

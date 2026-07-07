@@ -12,12 +12,6 @@ enum RewardType: string
 
     public function label(): string
     {
-        return match($this) {
-            self::FreeItem           => 'Free Item',
-            self::DiscountPercentage => 'Discount Percentage',
-            self::DiscountAmount     => 'Discount Amount',
-            self::Voucher            => 'Voucher',
-            self::Custom             => 'Custom Reward',
-        };
+        return __("enums.reward_type.{$this->value}");
     }
 }

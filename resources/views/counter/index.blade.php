@@ -33,9 +33,10 @@
                                value="{{ $query }}"
                                class="form-control form-control-lg"
                                placeholder="{{ __('mobile.counter_search_ph') }}"
+                               aria-label="{{ __('mobile.counter_search_ph') }}"
                                autofocus>
-                        <button type="submit" class="btn btn-primary btn-lg">
-                            <i class="bi bi-search"></i>
+                        <button type="submit" class="btn btn-primary btn-lg" aria-label="{{ __('buttons.search') }}">
+                            <i class="bi bi-search" aria-hidden="true"></i>
                         </button>
                     </form>
                     <div class="form-text mt-2">{{ __('mobile.counter_search_hint') }}</div>
@@ -52,7 +53,7 @@
                                 <div class="text-muted" style="font-size:0.85rem;">
                                     <i class="bi bi-telephone me-1"></i>{{ $member->phone }}
                                     <span class="ms-3">
-                                        <i class="bi bi-star-fill me-1" style="color:#FF1585;"></i>{{ number_format($member->total_points) }} {{ __('members.pts') }}
+                                        <i class="bi bi-star-fill me-1" style="color:var(--om-pink);"></i>{{ number_format($member->total_points) }} {{ __('members.pts') }}
                                     </span>
                                 </div>
                             </div>
@@ -67,13 +68,15 @@
                                        min="1"
                                        step="0.01"
                                        placeholder="{{ __('members.purchase_amount') }}"
+                                       aria-label="{{ __('members.purchase_amount') }}: {{ $member->name }}"
                                        required>
                                 <button type="submit" class="btn btn-primary text-nowrap">
                                     <i class="bi bi-cash-coin me-1"></i>{{ __('members.record_purchase') }}
                                 </button>
                             </form>
-                            <a href="{{ route('members.show', $member) }}" class="btn btn-outline-secondary btn-sm">
-                                <i class="bi bi-person"></i>
+                            <a href="{{ route('members.show', $member) }}" class="btn btn-outline-secondary btn-sm"
+                               aria-label="{{ __('buttons.view') }}: {{ $member->name }}">
+                                <i class="bi bi-person" aria-hidden="true"></i>
                             </a>
                         </div>
                     </div>

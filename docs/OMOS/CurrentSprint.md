@@ -16,6 +16,29 @@
 
 | Field | Value |
 |---|---|
+| **Sprint ID** | BETA-007 |
+| **Title** | Premium Experience Sprint (polish, friction, consistency) |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Code — UX polish only (no new modules, no architecture change) |
+| **Classification** | Type B — CTO Review (cross-cutting UX/i18n changes) |
+| **Sprint File** | Spec provided directly by Product Owner (this board records scope) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-07 |
+| **Actual Completion** | 2026-07-07 |
+| **Final Commit** | see git log: BETA-007A…E (5 commits on `fable-dev`) |
+
+### Business Objective
+
+Private-beta experience polish across onboarding, dashboard, members, campaigns, rewards, counter mode, commerce, storefront, orders, admin, mobile, empty states, flash messages, TH/EN copy, and accessibility. Sub-sprints: A flash-message single-render, B canonical empty states + dead-UI removal, C enum-label localization (Thai badges), D accessibility/ARIA + onboarding visual bug, E responsive tables. 669 tests green; production build clean.
+
+---
+
+## Previous Sprint (MORNING-001)
+
+| Field | Value |
+|---|---|
 | **Sprint ID** | MORNING-001 |
 | **Title** | Fable Maximum Sprint — Private Beta Readiness |
 | **Status** | ✅ Complete — 701 tests green, 0 bugs found in journey/mobile/first-use audits |
@@ -55,6 +78,19 @@ Make OneMember private-beta ready: verified deploy path (Forge script with post-
 ### Business Objective
 
 Private beta stabilization & bug hunt: deployment verification (route-integrity guard + deploy-troubleshooting docs), end-to-end smoke suite, broken-link audit (none found), mobile table-overflow fix, and safe error-state regression tests. One bug fixed (products table overflow at 375px); no other defects found. 697 tests green.
+
+---
+
+## Previous Sprint (PHASE-A)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | PHASE-A (TRIAL/BILLING/LAUNCH/ADMIN/UX/OPS-001) |
+| **Title** | Launch Readiness Sprint |
+| **Status** | ⏳ Awaiting CTO Review — private-beta readiness |
+| **Classification** | Type C — CEO Approval Required (phase change, pricing, legal, vendor) |
+| **Sprint File** | [Sprints/CORE-SPRINT-48H.md](./Sprints/CORE-SPRINT-48H.md) |
+| **Final Commit** | docs-only, see git log: GLOBAL-001 |
 
 ---
 
@@ -121,6 +157,9 @@ Private beta stabilization & bug hunt: deployment verification (route-integrity 
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
+| BETA-007 | Premium Experience Sprint (polish A–E) | ⏳ Awaiting CTO Review | HEAD (fable-dev) |
+| MORNING-001 | Fable Maximum Sprint — Private Beta Readiness (DEPLOY-001, BETA-001…005) | ✅ Complete (Type A) | `d40dda2` |
+| OVERNIGHT-001 | Private Beta Stabilization & Bug Hunt | ✅ Complete (Type A) | `4b62707` |
 | DOMAIN-001 | Definitive Domain Model | ✅ Complete | docs-only |
 | PLATFORM-001 | OneMember Design System | ✅ Complete (Type A) | HEAD |
 | ADMIN-002 | OneMember Control Room | ⏳ Awaiting CTO Review | HEAD |

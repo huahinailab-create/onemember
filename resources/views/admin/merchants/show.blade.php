@@ -130,9 +130,7 @@
     <div class="card mb-4">
         <div class="card-header fw-semibold"><i class="bi bi-hourglass-split me-2"></i>Trial Extension</div>
         <div class="card-body">
-            @if (session('success'))
-                <div class="alert alert-success py-2">{{ session('success') }}</div>
-            @endif
+            {{-- Session success is rendered once by the admin layout; keep form errors local --}}
             @if ($errors->any())
                 <div class="alert alert-danger py-2">{{ $errors->first() }}</div>
             @endif
@@ -162,6 +160,7 @@
             </form>
 
             @if ($merchant->trialExtensions->isNotEmpty())
+                <div class="table-responsive">
                 <table class="table table-sm mt-3 mb-0">
                     <thead><tr style="font-size:0.75rem;color:#6B7280;">
                         <th>When</th><th>Days</th><th>New end</th><th>Reason</th><th>By</th>
@@ -178,6 +177,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                </div>
             @endif
         </div>
     </div>

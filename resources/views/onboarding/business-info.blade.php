@@ -18,7 +18,8 @@
             <span class="text-muted small">33%</span>
         </div>
         <div class="progress mb-1" style="height:6px;">
-            <div class="progress-bar bg-primary" style="width:33%;" role="progressbar"></div>
+            <div class="progress-bar bg-primary" style="width:33%;" role="progressbar"
+                 aria-label="{{ __('onboarding.step_2_of_6') }}" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
     </div>
 

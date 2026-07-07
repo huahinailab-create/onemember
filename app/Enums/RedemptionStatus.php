@@ -11,12 +11,7 @@ enum RedemptionStatus: string
 
     public function label(): string
     {
-        return match($this) {
-            self::Pending   => 'Pending',
-            self::Used      => 'Used',
-            self::Expired   => 'Expired',
-            self::Cancelled => 'Cancelled',
-        };
+        return __("enums.redemption_status.{$this->value}");
     }
 
     public function badgeClass(): string

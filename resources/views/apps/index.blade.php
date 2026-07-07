@@ -6,7 +6,7 @@
 
     <x-ui.page-header :title="__('apps.title')" :subtitle="__('apps.subtitle')" />
 
-    <x-ui.flash :with-errors="true" />
+    <x-ui.flash :session="false" :with-errors="true" />
 
     <div class="row g-3">
         @foreach ($registry as $key => $app)
