@@ -35,30 +35,98 @@
                             @error('description')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
 
-                        {{-- Main product image (BETA-008A: one image; gallery = future) --}}
-                        <div class="mb-3">
+                        {{-- OMEGA-001A — premium product image manager (one main image) --}}
+                        @php
+                            $omegaStrings = [
+                                'error_type'      => __('commerce.image_error_type'),
+                                'error_size'      => __('commerce.image_error_size'),
+                                'warning_low_res' => __('commerce.image_warning_low_res'),
+                            ];
+                        @endphp
+                        <div class="mb-3" data-omega-image data-strings="{{ json_encode($omegaStrings) }}">
                             <label for="image" class="form-label">{{ __('commerce.field_image') }}</label>
-                            <div class="d-flex align-items-start gap-3 flex-wrap">
-                                <div class="commerce-product-thumb commerce-product-thumb-lg flex-shrink-0">
-                                    <img id="image-preview"
-                                         src="{{ $product?->imageUrl() ?? '' }}"
-                                         alt="{{ $product?->name ? __('commerce.field_image') . ': ' . $product->name : __('commerce.field_image') }}"
-                                         class="{{ $product?->imageUrl() ? '' : 'd-none' }}">
-                                    <i id="image-placeholder" class="bi bi-image text-muted {{ $product?->imageUrl() ? 'd-none' : '' }}" aria-hidden="true"></i>
+
+                            {{-- Current (already stored) image — edit mode --}}
+                            @if ($product?->imageUrl())
+                                <div class="d-flex align-items-center gap-3 mb-2 p-2 border rounded" data-omega-current>
+                                    <div class="commerce-product-thumb commerce-product-thumb-lg flex-shrink-0">
+                                        <img src="{{ $product->imageUrl() }}" alt="{{ __('commerce.image_current') }}: {{ $product->name }}">
+                                    </div>
+                                    <div class="small text-muted flex-grow-1">{{ __('commerce.image_current') }}</div>
                                 </div>
-                                <div class="flex-grow-1" style="min-width:220px;">
-                                    <input type="file" id="image" name="image"
-                                           accept="image/jpeg,image/png,image/webp"
-                                           class="form-control @error('image') is-invalid @enderror">
-                                    @error('image')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                    <div class="form-text">{{ __('commerce.image_hint') }}</div>
-                                    @if ($product?->imageUrl())
-                                        <div class="form-check mt-2">
-                                            <input class="form-check-input" type="checkbox" id="remove_image" name="remove_image" value="1">
-                                            <label class="form-check-label" for="remove_image">{{ __('commerce.remove_image') }}</label>
-                                        </div>
-                                    @endif
+                            @endif
+
+                            {{-- Upload card: drag & drop / click / keyboard / mobile camera --}}
+                            <div class="omega-dropzone {{ $product?->imageUrl() ? '' : '' }}"
+                                 data-omega-dropzone
+                                 role="button" tabindex="0"
+                                 aria-label="{{ __('commerce.image_dropzone_aria') }}">
+                                <i class="bi bi-cloud-arrow-up omega-dropzone-icon" aria-hidden="true"></i>
+                                <div class="fw-medium">
+                                    {{ $product?->imageUrl() ? __('commerce.image_replace_cta') : __('commerce.image_drop_cta') }}
                                 </div>
+                                <div class="text-muted small mt-1">{{ __('commerce.image_guidance_size') }}</div>
+                                <div class="text-muted small">{{ __('commerce.image_guidance_min') }}</div>
+                                <div class="text-muted small">{{ __('commerce.image_guidance_formats') }}</div>
+                            </div>
+                            {{-- Plain input stays visible without JS (progressive enhancement);
+                                 the module hides it and drives it via the card. --}}
+                            <input type="file" id="image" name="image"
+                                   accept="image/jpeg,image/png,image/webp"
+                                   class="form-control mt-2 @error('image') is-invalid @enderror"
+                                   data-omega-input
+                                   aria-describedby="image-guidance">
+                            <span id="image-guidance" class="visually-hidden">{{ __('commerce.image_guidance_size') }} {{ __('commerce.image_guidance_formats') }}</span>
+                            <input type="hidden" name="remove_image" value="" data-omega-remove-flag>
+                            @error('image')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
+
+                            {{-- Live preview + toolbar --}}
+                            <div class="d-none" data-omega-preview>
+                                <div class="omega-preview-frame">
+                                    <img src="" alt="{{ __('commerce.image_preview_alt') }}" data-omega-preview-img>
+                                </div>
+                                <div class="text-muted small mt-1" data-omega-meta aria-live="polite"></div>
+                            </div>
+
+                            <div class="alert alert-warning py-2 small mt-2 d-none" data-omega-warning role="status"></div>
+                            <div class="alert alert-danger py-2 small mt-2 d-none" data-omega-error role="alert"></div>
+
+                            {{-- Editor stage (Cropper.js mounts here on demand) --}}
+                            <div class="omega-editor d-none mt-2" data-omega-editor>
+                                <div class="omega-editor-stage" data-omega-stage></div>
+                            </div>
+
+                            <div class="d-flex flex-wrap gap-2 mt-2" data-omega-toolbar>
+                                <button type="button" class="btn btn-sm btn-outline-primary" data-omega-action="crop">
+                                    <i class="bi bi-crop me-1" aria-hidden="true"></i>{{ __('commerce.image_crop') }}
+                                </button>
+                                <div class="btn-group btn-group-sm" role="group" aria-label="{{ __('commerce.image_aspect_aria') }}">
+                                    <button type="button" class="btn btn-outline-secondary" data-omega-action="aspect" data-omega-ratio="1" aria-pressed="false">1:1</button>
+                                    <button type="button" class="btn btn-outline-secondary" data-omega-action="aspect" data-omega-ratio="0.8" aria-pressed="false">4:5</button>
+                                    <button type="button" class="btn btn-outline-secondary" data-omega-action="aspect" data-omega-ratio="{{ 16 / 9 }}" aria-pressed="false">16:9</button>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-omega-action="rotate-left"
+                                        aria-label="{{ __('commerce.image_rotate_left') }}">
+                                    <i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-omega-action="rotate-right"
+                                        aria-label="{{ __('commerce.image_rotate_right') }}">
+                                    <i class="bi bi-arrow-clockwise" aria-hidden="true"></i>
+                                </button>
+                                <span class="d-none d-inline-flex gap-2" data-omega-edit-actions>
+                                    <button type="button" class="btn btn-sm btn-primary" data-omega-action="apply">
+                                        <i class="bi bi-check-lg me-1" aria-hidden="true"></i>{{ __('commerce.image_apply') }}
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-omega-action="cancel-edit">
+                                        {{ __('buttons.cancel') }}
+                                    </button>
+                                </span>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-omega-action="replace">
+                                    <i class="bi bi-arrow-repeat me-1" aria-hidden="true"></i>{{ __('commerce.image_replace') }}
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-danger" data-omega-action="remove">
+                                    <i class="bi bi-trash me-1" aria-hidden="true"></i>{{ __('commerce.remove_image') }}
+                                </button>
                             </div>
                         </div>
 
@@ -116,19 +184,5 @@
         </div>
     </div>
 
-    <script>
-        // Live preview of the selected image (client-side only; server re-validates).
-        document.getElementById('image')?.addEventListener('change', function () {
-            const file = this.files && this.files[0];
-            const preview = document.getElementById('image-preview');
-            const placeholder = document.getElementById('image-placeholder');
-            if (file && file.type.startsWith('image/')) {
-                preview.src = URL.createObjectURL(file);
-                preview.classList.remove('d-none');
-                placeholder?.classList.add('d-none');
-                const remove = document.getElementById('remove_image');
-                if (remove) remove.checked = false;
-            }
-        });
-    </script>
+    @vite('resources/js/product-image.js')
 </x-app-layout>

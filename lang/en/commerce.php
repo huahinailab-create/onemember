@@ -106,4 +106,23 @@ return [
     'order_marked_paid'      => 'Payment confirmed.',
     'order_thanks'    => 'Thank you, :name!',
     'order_save_hint' => 'Save this page — it is your order reference and shows live status updates.',
+
+    // OMEGA-001A — premium image manager
+    'image_drop_cta' => 'Drag a photo here, or click to browse',
+    'image_replace_cta' => 'Drop a new photo here to replace the current one',
+    'image_guidance_size' => 'Recommended: 1200 × 1200 px — square images display best.',
+    'image_guidance_min' => 'Minimum: 800 × 800 px',
+    'image_guidance_formats' => 'JPG • PNG • WebP — maximum 2 MB',
+    'image_dropzone_aria' => 'Upload product photo: drag and drop, or press Enter to browse',
+    'image_preview_alt' => 'Selected product photo preview',
+    'image_current' => 'Current photo',
+    'image_crop' => 'Crop',
+    'image_aspect_aria' => 'Crop aspect ratio',
+    'image_rotate_left' => 'Rotate left',
+    'image_rotate_right' => 'Rotate right',
+    'image_apply' => 'Apply',
+    'image_replace' => 'Replace',
+    'image_error_type' => 'That file type is not supported. Use JPG, PNG or WebP.',
+    'image_error_size' => 'That file is larger than 2 MB. Choose a smaller photo.',
+    'image_warning_low_res' => 'This photo is smaller than 800 × 800 px — it may look blurry. It will still be saved.',
 ];

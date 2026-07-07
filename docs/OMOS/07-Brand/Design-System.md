@@ -77,6 +77,7 @@ New reusable components live in `resources/views/components/ui/` (anonymous — 
 | 2.19 | **Toast notifications** | **`<x-ui.flash :with-errors>`** — session `success`/`error` + optional first validation error, dismissible. Set flashes in controllers; never inline ad-hoc alert markup in new views. Session flashes render **once, globally, in the layouts** (`x-app-layout`, `x-admin-layout`); a view that only needs the validation alert passes `:session="false"` (BETA-007A). |
 | 2.20 | **Page headers** | **`<x-ui.page-header :title :subtitle|:back-url>` + actions slot**. |
 | 2.21 | **Help buttons** | **`<x-ui.help-button topic="screen.key" />`** — round "?" linking to the Knowledge Center article whose `context_key` matches the topic (falls back to Help Center). Global entry lives in the topbar; `label` doubles as tooltip/aria-label (PLATFORM-002 P11). |
+| 2.22 | **Image upload card** | `.omega-dropzone` + `resources/js/product-image.js` (OMEGA-001A): drag & drop / click / keyboard browse, guidance text before upload, live preview with metadata, Cropper.js v2 crop (1:1/4:5/16:9) + rotate, client WebP export; server re-optimizes via `ProductImageService` (≤1200px longest edge → WebP). Progressive enhancement — the plain file input works without JS. Reference: commerce product form. |
 
 ## 3. Print & Email
 

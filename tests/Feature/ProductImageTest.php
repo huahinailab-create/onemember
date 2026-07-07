@@ -152,4 +152,79 @@ class ProductImageTest extends TestCase
             ->assertOk()
             ->assertSee('commerce-product-thumb');
     }
+
+    // ── OMEGA-001A: automatic optimization pipeline ──────────────────────
+
+    public function test_large_upload_is_resized_and_converted_to_webp(): void
+    {
+        $this->actingAs($this->user)->post(route('commerce.products.store'), $this->productPayload([
+            'image' => UploadedFile::fake()->image('big.jpg', 2400, 1600),
+        ]));
+
+        $product = Product::firstWhere('name', 'Iced Latte');
+        $this->assertStringEndsWith('.webp', $product->image_path);
+
+        $stored = \Illuminate\Support\Facades\Storage::disk('public')->get($product->image_path);
+        [$width, $height] = getimagesizefromstring($stored);
+        $this->assertSame('image/webp', getimagesizefromstring($stored)['mime']);
+        $this->assertSame(1200, max($width, $height));           // longest edge capped
+        $this->assertSame(800, min($width, $height));            // aspect ratio preserved (3:2)
+    }
+
+    public function test_small_upload_is_not_upscaled_but_still_webp(): void
+    {
+        $this->actingAs($this->user)->post(route('commerce.products.store'), $this->productPayload([
+            'image' => UploadedFile::fake()->image('small.png', 600, 600),
+        ]));
+
+        $product = Product::firstWhere('name', 'Iced Latte');
+        $stored  = \Illuminate\Support\Facades\Storage::disk('public')->get($product->image_path);
+        [$width, $height] = getimagesizefromstring($stored);
+
+        $this->assertStringEndsWith('.webp', $product->image_path);
+        $this->assertSame([600, 600], [$width, $height]);        // never upscaled
+    }
+
+    public function test_client_cropped_webp_upload_is_accepted_and_reoptimized(): void
+    {
+        // The browser module exports crops as WebP; server accepts + re-optimizes.
+        $this->actingAs($this->user)->post(route('commerce.products.store'), $this->productPayload([
+            'image' => UploadedFile::fake()->image('product-image.webp', 1200, 1200),
+        ]))->assertSessionHasNoErrors();
+
+        $product = Product::firstWhere('name', 'Iced Latte');
+        $this->assertStringEndsWith('.webp', $product->image_path);
+        \Illuminate\Support\Facades\Storage::disk('public')->assertExists($product->image_path);
+    }
+
+    public function test_replacing_deletes_old_optimized_file(): void
+    {
+        $this->actingAs($this->user)->post(route('commerce.products.store'), $this->productPayload([
+            'image' => UploadedFile::fake()->image('first.jpg', 1500, 1500),
+        ]));
+        $product = Product::firstWhere('name', 'Iced Latte');
+        $old = $product->image_path;
+
+        $this->actingAs($this->user)->put(route('commerce.products.update', $product), $this->productPayload([
+            'image' => UploadedFile::fake()->image('second.jpg', 1500, 1500),
+        ]));
+
+        $product->refresh();
+        $this->assertNotSame($old, $product->image_path);
+        \Illuminate\Support\Facades\Storage::disk('public')->assertMissing($old);
+        \Illuminate\Support\Facades\Storage::disk('public')->assertExists($product->image_path);
+    }
+
+    public function test_form_renders_upload_card_with_guidance_and_tools(): void
+    {
+        $this->actingAs($this->user)
+            ->get(route('commerce.products.create', absolute: false))
+            ->assertOk()
+            ->assertSee('data-omega-dropzone', false)
+            ->assertSee(__('commerce.image_guidance_size'))
+            ->assertSee(__('commerce.image_guidance_formats'))
+            ->assertSee('data-omega-action="crop"', false)
+            ->assertSee('data-omega-action="rotate-left"', false)
+            ->assertSee('data-omega-action="remove"', false);
+    }
 }

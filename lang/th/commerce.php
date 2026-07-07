@@ -106,4 +106,23 @@ return [
     'order_marked_paid'      => 'ยืนยันการชำระเงินแล้ว',
     'order_thanks'    => 'ขอบคุณค่ะ/ครับ คุณ:name!',
     'order_save_hint' => 'บันทึกหน้านี้ไว้ — ใช้เป็นหมายเลขอ้างอิงคำสั่งซื้อและดูสถานะล่าสุดได้',
+
+    // OMEGA-001A — premium image manager
+    'image_drop_cta' => 'ลากรูปมาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์',
+    'image_replace_cta' => 'วางรูปใหม่ที่นี่เพื่อแทนที่รูปปัจจุบัน',
+    'image_guidance_size' => 'แนะนำ: 1200 × 1200 พิกเซล — รูปสี่เหลี่ยมจัตุรัสแสดงผลดีที่สุด',
+    'image_guidance_min' => 'ขั้นต่ำ: 800 × 800 พิกเซล',
+    'image_guidance_formats' => 'JPG • PNG • WebP — ไม่เกิน 2 MB',
+    'image_dropzone_aria' => 'อัปโหลดรูปสินค้า: ลากมาวาง หรือกด Enter เพื่อเลือกไฟล์',
+    'image_preview_alt' => 'ตัวอย่างรูปสินค้าที่เลือก',
+    'image_current' => 'รูปปัจจุบัน',
+    'image_crop' => 'ครอบตัด',
+    'image_aspect_aria' => 'สัดส่วนการครอบตัด',
+    'image_rotate_left' => 'หมุนซ้าย',
+    'image_rotate_right' => 'หมุนขวา',
+    'image_apply' => 'ใช้รูปนี้',
+    'image_replace' => 'เปลี่ยนรูป',
+    'image_error_type' => 'ไม่รองรับไฟล์ประเภทนี้ กรุณาใช้ JPG, PNG หรือ WebP',
+    'image_error_size' => 'ไฟล์ใหญ่เกิน 2 MB กรุณาเลือกรูปที่เล็กลง',
+    'image_warning_low_res' => 'รูปนี้เล็กกว่า 800 × 800 พิกเซล อาจแสดงผลไม่คมชัด แต่ยังบันทึกได้',
 ];

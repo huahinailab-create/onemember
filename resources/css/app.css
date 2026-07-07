@@ -2111,6 +2111,73 @@ body.om-sidebar-open {
     opacity: 0.55;
 }
 
+/* OMEGA-001A — premium product image manager */
+.omega-dropzone {
+    border: 2px dashed rgba(26, 46, 90, 0.25);
+    border-radius: 10px;
+    background: var(--om-cloud);
+    padding: 1.5rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    min-height: 44px; /* touch target */
+}
+
+.omega-dropzone:hover,
+.omega-dropzone.is-dragover {
+    border-color: var(--om-pink);
+    background: #fff0f7;
+}
+
+.omega-dropzone:focus-visible {
+    outline: 3px solid var(--om-pink);
+    outline-offset: 2px;
+}
+
+.omega-dropzone-icon {
+    font-size: 1.8rem;
+    color: var(--om-navy);
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.omega-preview-frame {
+    margin-top: 0.5rem;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    background: var(--om-cloud);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.omega-preview-frame img {
+    max-width: 100%;
+    max-height: 320px;
+    object-fit: contain;
+    display: block;
+}
+
+.omega-editor-stage {
+    max-width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.omega-editor-stage cropper-canvas {
+    height: 320px;
+}
+
+@media (max-width: 575.98px) {
+    /* large touch targets, no horizontal scroll */
+    [data-omega-toolbar] .btn {
+        min-height: 44px;
+        flex-grow: 1;
+    }
+}
+
 /* PLATFORM-002 P11 — contextual help buttons */
 .help-btn {
     width: 30px;

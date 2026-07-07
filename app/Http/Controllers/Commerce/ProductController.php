@@ -5,13 +5,17 @@ namespace App\Http\Controllers\Commerce;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Services\ProductImageService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 /** APP-001 — Commerce App: merchant catalogue CRUD (gated app.installed:commerce). */
 class ProductController extends Controller
 {
+    public function __construct(private readonly ProductImageService $images)
+    {
+    }
+
     public function index(Request $request)
     {
         $merchant = $request->user()->merchant;
@@ -43,8 +47,8 @@ class ProductController extends Controller
         $validated['product_category_id'] = $this->resolveCategory($request, $merchant->id);
 
         if ($request->hasFile('image')) {
-            $validated['image_path'] = $request->file('image')
-                ->store("products/{$merchant->id}", 'public');
+            // OMEGA-001A: optimized (≤1200px longest edge, WebP) via the service
+            $validated['image_path'] = $this->images->store($request->file('image'), $merchant);
         }
 
         Product::create(array_merge($validated, ['merchant_id' => $merchant->id]));
@@ -71,11 +75,10 @@ class ProductController extends Controller
         $validated['product_category_id'] = $this->resolveCategory($request, $product->merchant_id);
 
         if ($request->hasFile('image')) {
-            $this->deleteImage($product);
-            $validated['image_path'] = $request->file('image')
-                ->store("products/{$product->merchant_id}", 'public');
+            $this->images->delete($product->image_path);
+            $validated['image_path'] = $this->images->store($request->file('image'), $product->merchant);
         } elseif ($request->boolean('remove_image')) {
-            $this->deleteImage($product);
+            $this->images->delete($product->image_path);
             $validated['image_path'] = null;
         }
 
@@ -107,12 +110,6 @@ class ProductController extends Controller
         ]);
     }
 
-    private function deleteImage(Product $product): void
-    {
-        if ($product->image_path) {
-            Storage::disk('public')->delete($product->image_path);
-        }
-    }
 
     private function resolveCategory(Request $request, int $merchantId): ?int
     {

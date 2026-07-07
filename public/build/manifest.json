@@ -7,8 +7,14 @@
     "file": "assets/bootstrap-icons-mSm7cUeB.woff2",
     "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2"
   },
+  "node_modules/cropperjs/dist/cropper.esm.raw.js": {
+    "file": "assets/cropper.esm.raw-DxpQP2Hf.js",
+    "name": "cropper.esm.raw",
+    "src": "node_modules/cropperjs/dist/cropper.esm.raw.js",
+    "isDynamicEntry": true
+  },
   "resources/css/app.css": {
-    "file": "assets/app-BrLAdWUT.css",
+    "file": "assets/app-DcUzuFoU.css",
     "name": "app",
     "names": [
       "app.css"
@@ -25,5 +31,14 @@
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
+  },
+  "resources/js/product-image.js": {
+    "file": "assets/product-image-Cn_1nIj5.js",
+    "name": "product-image",
+    "src": "resources/js/product-image.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "node_modules/cropperjs/dist/cropper.esm.raw.js"
+    ]
   }
 }
