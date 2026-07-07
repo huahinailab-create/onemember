@@ -80,9 +80,10 @@
                     </a>
                 </div>
                 <div class="col-6 col-md-3">
-                    <a href="{{ route('members') }}"
+                    @php $counterEnabled = Auth::user()->merchant->settings['counter_mode'] ?? false; @endphp
+                    <a href="{{ $counterEnabled ? route('counter') : route('members') }}"
                        class="btn btn-outline-primary w-100 py-3 d-flex flex-column align-items-center gap-2">
-                        <i class="bi bi-bag-check fs-3"></i>
+                        <i class="bi {{ $counterEnabled ? 'bi-upc-scan' : 'bi-bag-check' }} fs-3"></i>
                         <span class="fw-medium">{{ __('dashboard.record_purchase') }}</span>
                     </a>
                 </div>

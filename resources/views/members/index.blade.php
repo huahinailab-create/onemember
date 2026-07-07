@@ -73,27 +73,21 @@
     <div class="card">
         <div class="card-body p-0">
             @if ($members->isEmpty())
-                <div class="text-center py-5">
-                    <div class="coming-soon-icon mx-auto">
-                        <i class="bi bi-people text-primary"></i>
-                    </div>
-                    @if(request('search_name') || request('search_phone'))
-                        <h5 class="fw-semibold mb-2">{{ __('members.empty_search_title') }}</h5>
-                        <p class="text-muted mb-0" style="max-width:380px;margin:0 auto;">
+                @if(request('search_name') || request('search_phone'))
+                    <x-ui.empty-state icon="bi-search" :title="__('members.empty_search_title')">
+                        <p class="mb-0" style="font-size:0.875rem;max-width:380px;margin:0 auto;">
                             {!! __('members.empty_search_body', ['link' => route('members', ['filter' => $filter])]) !!}
                         </p>
-                    @elseif($filter === 'archived')
-                        <h5 class="fw-semibold mb-2">{{ __('members.empty_archived_title') }}</h5>
-                        <p class="text-muted mb-0" style="max-width:380px;margin:0 auto;">
-                            {{ __('members.empty_archived_body') }}
-                        </p>
-                    @else
-                        <h5 class="fw-semibold mb-2">{{ __('members.empty_title') }}</h5>
-                        <p class="text-muted mb-0" style="max-width:380px;margin:0 auto;">
-                            {{ __('members.empty_body') }}
-                        </p>
-                    @endif
-                </div>
+                    </x-ui.empty-state>
+                @elseif($filter === 'archived')
+                    <x-ui.empty-state icon="bi-archive" :title="__('members.empty_archived_title')" :body="__('members.empty_archived_body')" />
+                @else
+                    <x-ui.empty-state icon="bi-people" :title="__('members.empty_title')" :body="__('members.empty_body')">
+                        <a href="{{ route('members.create') }}" class="btn btn-primary btn-sm">
+                            <i class="bi bi-person-plus me-1"></i> {{ __('members.add_member') }}
+                        </a>
+                    </x-ui.empty-state>
+                @endif
             @else
                 {{-- ── Mobile card list (xs only) ── --}}
                 <div class="d-sm-none">
@@ -196,11 +190,11 @@
                                         @endif
                                     </td>
                                     <td class="text-end pe-4">
-                                        <button type="button"
-                                                class="btn btn-sm btn-outline-secondary disabled"
-                                                title="{{ __('buttons.coming_soon') }}">
-                                            <i class="bi bi-three-dots"></i>
-                                        </button>
+                                        <a href="{{ route('members.show', $member) }}"
+                                           class="btn btn-sm btn-outline-secondary"
+                                           aria-label="{{ __('buttons.view') }}: {{ $member->name }}">
+                                            {{ __('buttons.view') }}
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
