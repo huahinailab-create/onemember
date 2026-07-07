@@ -1,0 +1,115 @@
+# PLATFORM-002 Part 5 — OpenAPI documentation structure for the OneMember
+# Public API. Every shipped endpoint MUST be described here before release;
+# this file is the contract of record (docs/dev/public-api.md explains the
+# conventions). Version: spec grows additively; breaking changes => /v2.
+openapi: 3.1.0
+info:
+  title: OneMember Public API
+  version: 1.0.0
+  description: >
+    Merchant-scoped REST API. Authentication is a merchant API key sent as a
+    Bearer token. All data access is limited to the authenticated merchant's
+    own tenant (ADR-010 — OneMember is the custodian, never the owner).
+servers:
+  - url: https://app.onemember.co/api/v1
+security:
+  - apiKey: []
+paths:
+  /ping:
+    get:
+      summary: Liveness and version probe
+      security: []
+      responses:
+        "200":
+          description: API is up
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok: { type: boolean }
+                  version: { type: string }
+                  time: { type: string, format: date-time }
+  /members:
+    get:
+      summary: List members (paginated)
+      description: Requires the `members:read` ability.
+      parameters:
+        - name: page
+          in: query
+          schema: { type: integer, minimum: 1 }
+        - name: per_page
+          in: query
+          schema: { type: integer, minimum: 1, maximum: 100, default: 25 }
+      responses:
+        "200":
+          description: Paginated member collection (data / links / meta)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: { $ref: "#/components/schemas/Member" }
+        "401": { $ref: "#/components/responses/Unauthenticated" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+  /members/{id}:
+    get:
+      summary: Retrieve one member
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: The member
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: { $ref: "#/components/schemas/Member" }
+        "404": { $ref: "#/components/responses/NotFound" }
+components:
+  securitySchemes:
+    apiKey:
+      type: http
+      scheme: bearer
+      description: Merchant API key ("om_live_…"). Shown once at creation.
+  schemas:
+    Member:
+      type: object
+      properties:
+        id: { type: integer }
+        member_code: { type: string }
+        name: { type: string }
+        phone: { type: string, nullable: true }
+        status: { type: string, enum: [active, inactive, blocked] }
+        total_points: { type: integer }
+        created_at: { type: string, format: date-time }
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code: { type: string }
+            message: { type: string }
+  responses:
+    Unauthenticated:
+      description: Invalid or missing API key
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+    Forbidden:
+      description: Key lacks the required ability
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+    NotFound:
+      description: Resource not found in this tenant
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }

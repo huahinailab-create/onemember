@@ -31,6 +31,16 @@ class AppServiceProvider extends ServiceProvider
                 ->symbols();
         });
 
+        // PLATFORM-002 P5: public API rate limit — per API key when
+        // authenticated, per IP for the unauthenticated ping.
+        \Illuminate\Support\Facades\RateLimiter::for('api', function (\Illuminate\Http\Request $request) {
+            $key = $request->bearerToken()
+                ? 'key:' . hash('sha256', $request->bearerToken())
+                : 'ip:' . $request->ip();
+
+            return \Illuminate\Cache\RateLimiting\Limit::perMinute(60)->by($key);
+        });
+
         // Share absolute app-domain URL with all corporate views so CTAs
         // link to app.onemember.co without relying on route() which would
         // generate a domain-constrained URL pointing to the wrong domain.
