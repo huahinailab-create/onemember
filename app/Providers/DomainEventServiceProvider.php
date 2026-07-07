@@ -31,6 +31,12 @@ class DomainEventServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
+        // Part 4: every domain event fans out to subscribed webhooks.
+        \Illuminate\Support\Facades\Event::listen(
+            'App\Events\Domain\*',
+            [\App\Webhooks\WebhookDispatcher::class, 'handle'],
+        );
+
         Member::created(fn (Member $member) => event(new MemberCreated($member)));
 
         Merchant::created(fn (Merchant $merchant) => event(new MerchantRegistered($merchant)));
