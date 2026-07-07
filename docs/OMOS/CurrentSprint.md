@@ -16,17 +16,33 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | BETA-008 |
-| **Title** | Global Merchant Settings + Product Images |
+| **Sprint ID** | PLATFORM-002 |
+| **Title** | Platform Foundation Sprint (Marketplace, SDK, Events, Webhooks, API, Automation, Knowledge, Queue, Procurement, i18n, Help, Docs) |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Sprint Type** | Code — two private-beta gaps (no architecture change; Commerce stays an App) |
-| **Classification** | Type B — CTO Review (schema addition + localization model) |
-| **Sprint File** | Spec provided directly by Product Owner (this board records scope); DECISION-094/095 |
+| **Sprint Type** | Code — 12-part architectural foundation (Laravel monolith preserved; everything backward compatible) |
+| **Classification** | Declared Type A by Product Owner (note: OMOS rules would classify new schema/modules as Type B/C — recorded for the review) |
+| **Sprint File** | Spec provided directly by Product Owner (this board records scope); docs/dev/ is the technical record |
 | **Owner** | Product Owner |
 | **Developer** | Claude Fable 5 |
 | **Reviewer** | ChatGPT CTO |
 | **Started** | 2026-07-07 |
 | **Actual Completion** | 2026-07-07 |
+| **Final Commit** | see git log: PLATFORM-002 P1–P12 (12 commits on `fable-dev`) |
+
+### Business Objective
+
+Five-year platform foundation, Shopify/Odoo-style, inside the monolith: Marketplace (manifests, registry, lifecycle, health), Plugin SDK (AppProvider + contracts; third-party-ready without Core changes), domain event bus (10 stable events), signed webhook framework, /api/v1 foundation (keys, rate limits, OpenAPI), WHEN/IF/THEN automation engine, Knowledge Center + screen help framework, Queue and Procurement apps as SDK references, config-driven localization expansion (7 placeholder locales), and full developer documentation.
+
+---
+
+## Previous Sprint (BETA-008)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | BETA-008 |
+| **Title** | Global Merchant Settings + Product Images |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Classification** | Type B — CTO Review (schema addition + localization model); DECISION-094/095 |
 | **Final Commit** | see git log: BETA-008A (product images), BETA-008B (localization) |
 
 ### Business Objective
@@ -173,7 +189,8 @@ Private beta stabilization & bug hunt: deployment verification (route-integrity 
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
-| BETA-008 | Global Merchant Settings + Product Images | ⏳ Awaiting CTO Review | HEAD (fable-dev) |
+| PLATFORM-002 | Platform Foundation (12 parts: marketplace→docs) | ⏳ Awaiting CTO Review | HEAD (fable-dev) |
+| BETA-008 | Global Merchant Settings + Product Images | ⏳ Awaiting CTO Review | `c57ff9d`/`fb10f08` |
 | BETA-007 | Premium Experience Sprint (polish A–E) | ⏳ Awaiting CTO Review | merged `f0e1b36` |
 | MORNING-001 | Fable Maximum Sprint — Private Beta Readiness (DEPLOY-001, BETA-001…005) | ✅ Complete (Type A) | `d40dda2` |
 | OVERNIGHT-001 | Private Beta Stabilization & Bug Hunt | ✅ Complete (Type A) | `4b62707` |

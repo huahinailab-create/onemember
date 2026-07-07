@@ -28,8 +28,8 @@ This file is read as part of the `Continue OMOS` initialisation sequence (step 2
 | **OMOS Version** | 1.2 |
 | **PHP Version** | 8.3+ (8.5 in production) |
 | **Laravel Version** | 13.17.0 |
-| **Last Code Commit** | BETA-007E (see git log, `fable-dev`) — Premium Experience Sprint |
-| **Last Code Sprint** | BETA-007 Premium Experience Sprint — polish/friction/i18n/a11y, 669 tests green |
+| **Last Code Commit** | PLATFORM-002 P12 (see git log, `fable-dev`) — Platform Foundation Sprint |
+| **Last Code Sprint** | PLATFORM-002 Platform Foundation (12 parts: marketplace, SDK, event bus, webhooks, API v1, automation, knowledge, Queue + Procurement apps, i18n expansion, help, docs) — 782 tests green. Preceded same-day by BETA-008 (product images + global localization settings). |
 | **Last OMOS Sprint** | OMOS-1.2 Autonomous Sprint Governance (`b99b1f9`) |
 
 ---

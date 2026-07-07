@@ -1,3 +1,43 @@
+## 2026-07-07 — PLATFORM-002: Platform Foundation Sprint (12 parts)
+
+Architectural foundation for the next platform phase. Laravel 13 monolith
+throughout (ADR-004/009/012) — no microservices; everything backward
+compatible; one commit per part.
+
+- **P1 Marketplace**: typed App Manifests + AppRegistry (runtime-registrable),
+  AppManager lifecycle (install/uninstall with dependency checks,
+  enable/disable, per-merchant config), merchant_apps state table, health
+  snapshots, lifecycle events + audit. Legacy installs unchanged.
+- **P2 Plugin SDK**: Sdk\AppProvider base (routes/translations/policies/
+  events/nav/widgets/settings schema) + 11 Provides* contracts; sidebar
+  renders manifest navigation — new apps appear without Core view changes.
+- **P3 Event Bus**: DomainEvent base + 10 stable events emitted from model
+  lifecycle hooks (member.created, purchase.recorded, reward.redeemed,
+  merchant.registered, order.placed, payment.received, subscription.changed,
+  queue.ticket_created, supplier.created, purchase_order.approved).
+- **P4 Webhooks**: merchant endpoints + delivery log, HMAC-signed queued
+  delivery with 5-try backoff, auto-disable after 10 consecutive failures.
+- **P5 Public API**: /api/v1 (ping + read-only members reference), hashed
+  om_live_* keys with abilities, per-key rate limiting, standard error
+  envelope, OpenAPI 3.1 skeleton.
+- **P6 Automation**: WHEN/IF/THEN rule engine on the event bus (conditions
+  evaluator fails closed; ActionRegistry with reference log action; queued
+  execution). Visual builder = future.
+- **P7 Knowledge Center**: markdown articles with categories/search/
+  versioning/locale fallback/video placeholders + /help surface.
+- **P8 Queue App**: first SDK app — counters, tickets (walk-in/reservation,
+  priority, status machine), daily numbering, estimated wait, display board,
+  SMS/LINE placeholders, analytics.
+- **P9 Procurement App**: suppliers + vendor rating, purchase requests with
+  approval workflow → purchase orders (cost tracking) → goods receipts with
+  goods.received inventory hook.
+- **P10 Localization expansion**: internal languages config-driven;
+  placeholder locales km/my/lo/vi/zh/ja/ko with English fallback.
+- **P11 Help framework**: x-ui.help-button (?) → context articles, global
+  topbar Help entry, tooltip/walkthrough hooks.
+- **P12 Developer docs**: docs/dev/ — marketplace, SDK, events, webhooks,
+  API, automation, localization, knowledge, queue, procurement, commerce.
+
 ## 2026-07-07 — BETA-008: Global Merchant Settings + Product Images
 
 - feat(commerce): one main image per product (BETA-008A, DECISION-094) — upload with
