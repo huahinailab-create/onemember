@@ -44,4 +44,6 @@ return [
     'toggle_enable' => 'Enable',
     'toggle_disable' => 'Disable',
     'status_disabled' => 'Disabled',
+    'name_queue' => 'Queue',
+    'desc_queue' => 'Ticket queue with counters, priorities, reservations and a display board.',
 ];

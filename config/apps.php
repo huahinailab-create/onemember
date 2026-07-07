@@ -18,6 +18,18 @@ return [
             'feature_flags' => [],
             'docs'          => 'docs/dev/apps/commerce.md',
         ],
+        'queue' => [
+            'icon'          => 'bi-people-fill',
+            'status'        => 'available',
+            'version'       => '1.0.0',
+            'category'      => 'operations',
+            'permissions'   => ['queue.tickets.manage', 'queue.counters.manage'],
+            'feature_flags' => ['sms_notifications' => false, 'line_notifications' => false],
+            'default_config' => ['avg_service_minutes' => 5],
+            'migrations'    => 'app/Apps/Queue/database/migrations',
+            'provider'      => \App\Apps\Queue\QueueAppProvider::class,
+            'docs'          => 'docs/dev/apps/queue.md',
+        ],
         'restaurant' => [
             'icon'     => 'bi-cup-hot',
             'status'   => 'coming_soon',

@@ -44,4 +44,6 @@ return [
     'toggle_enable' => 'เปิดใช้งาน',
     'toggle_disable' => 'ปิดใช้งาน',
     'status_disabled' => 'ปิดใช้งานอยู่',
+    'name_queue' => 'คิว',
+    'desc_queue' => 'ระบบบัตรคิว พร้อมเคาน์เตอร์ คิวด่วน การจอง และจอแสดงคิว',
 ];
