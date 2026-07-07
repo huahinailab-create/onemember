@@ -34,4 +34,14 @@ return [
     'desc_staff'         => 'บัญชีพนักงาน บทบาท และสิทธิ์',
     'name_hotel'         => 'เชื่อมต่อระบบโรงแรม',
     'desc_hotel'         => 'เชื่อมระบบจัดการที่พักเข้ากับระบบสะสมแต้ม',
+
+    // PLATFORM-002 — marketplace lifecycle
+    'enabled_success' => 'เปิดใช้งาน :app แล้ว',
+    'disabled_success' => 'ปิดใช้งาน :app แล้ว ข้อมูลของคุณยังถูกเก็บไว้',
+    'error_not_installed' => 'ยังไม่ได้ติดตั้งแอปนี้',
+    'error_missing_dependency' => ':app ต้องติดตั้ง :dependency ก่อน',
+    'error_dependents_installed' => 'ถอนการติดตั้งไม่ได้: :apps ต้องใช้แอปนี้',
+    'toggle_enable' => 'เปิดใช้งาน',
+    'toggle_disable' => 'ปิดใช้งาน',
+    'status_disabled' => 'ปิดใช้งานอยู่',
 ];

@@ -34,4 +34,14 @@ return [
     'desc_staff'         => 'Staff accounts, roles and permissions.',
     'name_hotel'         => 'Hotel PMS Connector',
     'desc_hotel'         => 'Connect your property management system to loyalty.',
+
+    // PLATFORM-002 — marketplace lifecycle
+    'enabled_success' => ':app enabled.',
+    'disabled_success' => ':app disabled. Your data has been kept.',
+    'error_not_installed' => 'This app is not installed.',
+    'error_missing_dependency' => ':app requires :dependency to be installed first.',
+    'error_dependents_installed' => 'Uninstall blocked: :apps depend on this app.',
+    'toggle_enable' => 'Enable',
+    'toggle_disable' => 'Disable',
+    'status_disabled' => 'Disabled',
 ];

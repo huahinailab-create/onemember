@@ -181,6 +181,7 @@ Route::domain(config('domains.app'))->group(function () {
         Route::get('/apps',            [AppsController::class, 'index'])->name('apps.index');
         Route::post('/apps/install',   [AppsController::class, 'install'])->name('apps.install');
         Route::post('/apps/uninstall', [AppsController::class, 'uninstall'])->name('apps.uninstall');
+        Route::post('/apps/toggle',    [AppsController::class, 'toggle'])->name('apps.toggle');
 
         Route::get('/launch-kit',              [LaunchKitController::class, 'index'])->name('launch-kit');
         Route::get('/launch-kit/poster',       [LaunchKitController::class, 'poster'])->name('launch-kit.poster');
