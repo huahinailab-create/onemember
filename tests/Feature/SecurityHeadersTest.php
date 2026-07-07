@@ -48,6 +48,21 @@ class SecurityHeadersTest extends TestCase
         $this->assertStringContainsString("base-uri 'self'", $csp);
     }
 
+    public function test_csp_img_src_allows_blob_for_client_side_image_previews(): void
+    {
+        // OMEGA-001A media-upload preview renders the selected file via
+        // URL.createObjectURL() before upload — blob: must be allowed.
+        // Every other directive stays exactly as restrictive as before.
+        $response = $this->get('http://onemember.co/');
+
+        $csp = $response->headers->get('Content-Security-Policy');
+
+        $this->assertStringContainsString("img-src 'self' data: blob:", $csp);
+        $this->assertStringContainsString("script-src 'self' 'unsafe-inline'", $csp);
+        $this->assertStringContainsString("connect-src 'self'", $csp);
+        $this->assertStringContainsString("frame-src 'none'", $csp);
+    }
+
     public function test_hsts_not_sent_over_http(): void
     {
         $response = $this->get('http://onemember.co/');
