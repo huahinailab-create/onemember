@@ -137,6 +137,22 @@
                 </a>
             </li>
             @endif
+            {{-- PLATFORM-002: manifest-declared App navigation (Plugin SDK) --}}
+            @if (Auth::user()?->merchant)
+                @foreach (app(\App\Marketplace\AppRegistry::class)->all() as $manifestApp)
+                    @if ($manifestApp->navigation !== [] && Auth::user()->merchant->hasApp($manifestApp->key))
+                        @foreach ($manifestApp->navigation as $navItem)
+                            <li class="nav-item">
+                                <a href="{{ route($navItem['route']) }}"
+                                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs($manifestApp->key . '.*') ? 'active' : '' }}">
+                                    <i class="bi {{ $navItem['icon'] }}"></i>
+                                    <span>{{ __($navItem['label']) }}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    @endif
+                @endforeach
+            @endif
             <li class="nav-item">
                 <a href="{{ route('apps.index') }}"
                    class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('apps.*') ? 'active' : '' }}"
