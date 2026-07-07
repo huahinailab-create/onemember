@@ -10,11 +10,7 @@ enum MerchantStatus: string
 
     public function label(): string
     {
-        return match($this) {
-            self::Active    => 'Active',
-            self::Inactive  => 'Inactive',
-            self::Suspended => 'Suspended',
-        };
+        return __("enums.merchant_status.{$this->value}");
     }
 
     public function badgeClass(): string

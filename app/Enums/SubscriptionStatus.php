@@ -11,12 +11,7 @@ enum SubscriptionStatus: string
 
     public function label(): string
     {
-        return match ($this) {
-            self::Trial     => 'Trial',
-            self::Active    => 'Active',
-            self::Expired   => 'Expired',
-            self::Cancelled => 'Cancelled',
-        };
+        return __("enums.subscription_status.{$this->value}");
     }
 
     public function badgeClass(): string

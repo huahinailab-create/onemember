@@ -10,11 +10,7 @@ enum MemberStatus: string
 
     public function label(): string
     {
-        return match($this) {
-            self::Active   => 'Active',
-            self::Inactive => 'Inactive',
-            self::Blocked  => 'Blocked',
-        };
+        return __("enums.member_status.{$this->value}");
     }
 
     public function badgeClass(): string

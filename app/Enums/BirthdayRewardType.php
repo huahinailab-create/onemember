@@ -10,10 +10,6 @@ enum BirthdayRewardType: string
 
     public function label(): string
     {
-        return match($this) {
-            self::Points   => 'Bonus Points',
-            self::Reward   => 'Free Reward',
-            self::Discount => 'Discount',
-        };
+        return __("enums.birthday_reward_type.{$this->value}");
     }
 }

@@ -12,13 +12,7 @@ enum TransactionType: string
 
     public function label(): string
     {
-        return match($this) {
-            self::Earn     => 'Earned',
-            self::Redeem   => 'Redeemed',
-            self::Adjust   => 'Adjusted',
-            self::Expire   => 'Expired',
-            self::Birthday => 'Birthday Bonus',
-        };
+        return __("enums.transaction_type.{$this->value}");
     }
 
     public function isCredit(): bool

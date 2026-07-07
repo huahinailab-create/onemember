@@ -11,12 +11,7 @@ enum LoyaltyProgramType: string
 
     public function label(): string
     {
-        return match($this) {
-            self::Points   => 'Points',
-            self::Stamps   => 'Stamps',
-            self::Tiers    => 'Tiers',
-            self::Cashback => 'Cashback',
-        };
+        return __("enums.campaign_type.{$this->value}");
     }
 
     public function icon(): string

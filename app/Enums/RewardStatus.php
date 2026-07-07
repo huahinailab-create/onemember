@@ -9,10 +9,7 @@ enum RewardStatus: string
 
     public function label(): string
     {
-        return match($this) {
-            self::Draft  => 'Draft',
-            self::Active => 'Active',
-        };
+        return __("enums.reward_status.{$this->value}");
     }
 
     public function badgeClass(): string
