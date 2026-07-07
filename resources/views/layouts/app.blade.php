@@ -264,6 +264,13 @@
                         <span class="d-none d-sm-inline">{{ __('mobile.counter_mode') }}</span>
                     </button>
                 </form>
+                {{-- PLATFORM-002 P11: global help entry (Knowledge Center) --}}
+                <a href="{{ route('help.index') }}"
+                   class="btn btn-sm btn-outline-secondary rounded-circle help-btn {{ request()->routeIs('help.*') ? 'active' : '' }}"
+                   title="{{ __('help.help_button') }}"
+                   aria-label="{{ __('help.help_button') }}">
+                    <i class="bi bi-question-lg" aria-hidden="true"></i>
+                </a>
                 <x-language-switcher />
                 <div class="topbar-user">
                     <i class="bi bi-person-circle text-secondary"></i>

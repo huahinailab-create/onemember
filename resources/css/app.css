@@ -2111,6 +2111,17 @@ body.om-sidebar-open {
     opacity: 0.55;
 }
 
+/* PLATFORM-002 P11 — contextual help buttons */
+.help-btn {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+}
+
 /* BETA-008B — customer language switcher (merchant-configured languages) */
 .storefront-langs {
     display: flex;
