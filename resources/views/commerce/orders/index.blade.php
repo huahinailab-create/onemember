@@ -19,7 +19,7 @@
         @endforeach
     </ul>
 
-    <x-ui.flash :with-errors="true" />
+    <x-ui.flash :session="false" :with-errors="true" />
 
     @if ($orders->isEmpty())
         <div class="card"><div class="card-body">

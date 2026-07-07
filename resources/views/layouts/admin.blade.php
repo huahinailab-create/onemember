@@ -163,6 +163,7 @@
 
         {{-- Content --}}
         <main class="p-4">
+            <x-ui.flash />
             {{ $slot }}
         </main>
     </div>

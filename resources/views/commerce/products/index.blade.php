@@ -20,8 +20,6 @@
         </div>
     </div>
 
-    <x-ui.flash />
-
     <div class="card">
         <div class="card-body p-0">
             @if ($products->isEmpty())

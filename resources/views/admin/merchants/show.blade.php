@@ -130,9 +130,7 @@
     <div class="card mb-4">
         <div class="card-header fw-semibold"><i class="bi bi-hourglass-split me-2"></i>Trial Extension</div>
         <div class="card-body">
-            @if (session('success'))
-                <div class="alert alert-success py-2">{{ session('success') }}</div>
-            @endif
+            {{-- Session success is rendered once by the admin layout; keep form errors local --}}
             @if ($errors->any())
                 <div class="alert alert-danger py-2">{{ $errors->first() }}</div>
             @endif

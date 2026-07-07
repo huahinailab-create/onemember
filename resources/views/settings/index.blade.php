@@ -10,12 +10,12 @@
     {{-- Trial Lifecycle Banner --}}
     <x-trial-banner :merchant="$merchant" />
 
-    {{-- Flash messages --}}
-    @if (session('success') || session('status') === 'password-updated')
+    {{-- Password-updated status (session success/error is rendered once by the layout) --}}
+    @if (session('status') === 'password-updated')
         <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
             <i class="bi bi-check-circle-fill me-2"></i>
-            {{ session('success') ?? __('settings.password_updated') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            {{ __('settings.password_updated') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 

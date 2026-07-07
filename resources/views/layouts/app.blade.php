@@ -277,21 +277,10 @@
             </div>
         @endif
 
-        {{-- Flash messages --}}
+        {{-- Flash messages (single global renderer — Design System §2.19) --}}
         @if (session('success') || session('error'))
             <div class="px-4 pt-4 pb-0">
-                @if (session('success'))
-                    <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
-                        <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                @endif
-                @if (session('error'))
-                    <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
-                        <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ session('error') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                @endif
+                <x-ui.flash />
             </div>
         @endif
 
