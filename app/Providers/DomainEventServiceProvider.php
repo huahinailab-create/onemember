@@ -37,6 +37,12 @@ class DomainEventServiceProvider extends ServiceProvider
             [\App\Webhooks\WebhookDispatcher::class, 'handle'],
         );
 
+        // Part 6: every domain event can trigger merchant automation rules.
+        \Illuminate\Support\Facades\Event::listen(
+            'App\Events\Domain\*',
+            [\App\Automation\AutomationEngine::class, 'handle'],
+        );
+
         Member::created(fn (Member $member) => event(new MemberCreated($member)));
 
         Merchant::created(fn (Merchant $merchant) => event(new MerchantRegistered($merchant)));
