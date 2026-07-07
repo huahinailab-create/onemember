@@ -16,23 +16,35 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | PHASE-A (TRIAL/BILLING/LAUNCH/ADMIN/UX/OPS-001) |
-| **Title** | Launch Readiness Sprint |
-| **Status** | ⏳ Awaiting CTO Review — private-beta readiness |
-| **Sprint Type** | Design / Documentation (no application code) |
-| **Classification** | Type C — CEO Approval Required (phase change, pricing, legal, vendor) |
-| **Sprint File** | [Sprints/CORE-SPRINT-48H.md](./Sprints/CORE-SPRINT-48H.md) |
+| **Sprint ID** | BETA-007 |
+| **Title** | Premium Experience Sprint (polish, friction, consistency) |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Code — UX polish only (no new modules, no architecture change) |
+| **Classification** | Type B — CTO Review (cross-cutting UX/i18n changes) |
+| **Sprint File** | Spec provided directly by Product Owner (this board records scope) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Fable 5 |
-| **Reviewer** | Product Owner (CEO) |
-| **Started** | 2026-07-05 |
-| **Target Completion** | 2026-07-05 |
-| **Actual Completion** | 2026-07-05 |
-| **Final Commit** | docs-only, see git log: GLOBAL-001 |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-07 |
+| **Actual Completion** | 2026-07-07 |
+| **Final Commit** | see git log: BETA-007A…E (5 commits on `fable-dev`) |
 
 ### Business Objective
 
-Get OneMember to private-beta readiness: admin trial extension, versioned merchant agreement, merchant success checklist, admin merchant-health dashboard, design-system polish pass, and an automated go-live readiness checklist (command + admin page). DECISION-087…092. 655 tests green.
+Private-beta experience polish across onboarding, dashboard, members, campaigns, rewards, counter mode, commerce, storefront, orders, admin, mobile, empty states, flash messages, TH/EN copy, and accessibility. Sub-sprints: A flash-message single-render, B canonical empty states + dead-UI removal, C enum-label localization (Thai badges), D accessibility/ARIA + onboarding visual bug, E responsive tables. 669 tests green; production build clean.
+
+---
+
+## Previous Sprint (PHASE-A)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | PHASE-A (TRIAL/BILLING/LAUNCH/ADMIN/UX/OPS-001) |
+| **Title** | Launch Readiness Sprint |
+| **Status** | ⏳ Awaiting CTO Review — private-beta readiness |
+| **Classification** | Type C — CEO Approval Required (phase change, pricing, legal, vendor) |
+| **Sprint File** | [Sprints/CORE-SPRINT-48H.md](./Sprints/CORE-SPRINT-48H.md) |
+| **Final Commit** | docs-only, see git log: GLOBAL-001 |
 
 ---
 
@@ -99,6 +111,7 @@ Get OneMember to private-beta readiness: admin trial extension, versioned mercha
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
+| BETA-007 | Premium Experience Sprint (polish A–E) | ⏳ Awaiting CTO Review | HEAD (fable-dev) |
 | DOMAIN-001 | Definitive Domain Model | ✅ Complete | docs-only |
 | PLATFORM-001 | OneMember Design System | ✅ Complete (Type A) | HEAD |
 | ADMIN-002 | OneMember Control Room | ⏳ Awaiting CTO Review | HEAD |

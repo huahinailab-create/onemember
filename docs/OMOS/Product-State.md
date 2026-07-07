@@ -28,8 +28,8 @@ This file is read as part of the `Continue OMOS` initialisation sequence (step 2
 | **OMOS Version** | 1.2 |
 | **PHP Version** | 8.3+ (8.5 in production) |
 | **Laravel Version** | 13.17.0 |
-| **Last Code Commit** | `568ff7a` — RELEASE-1B Corporate Website & Corporate Identity |
-| **Last Code Sprint** | RELEASE-1B Corporate Website & Corporate Identity (`568ff7a`) |
+| **Last Code Commit** | BETA-007E (see git log, `fable-dev`) — Premium Experience Sprint |
+| **Last Code Sprint** | BETA-007 Premium Experience Sprint — polish/friction/i18n/a11y, 669 tests green |
 | **Last OMOS Sprint** | OMOS-1.2 Autonomous Sprint Governance (`b99b1f9`) |
 
 ---
