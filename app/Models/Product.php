@@ -17,6 +17,7 @@ class Product extends Model
         'product_category_id',
         'name',
         'description',
+        'image_path',
         'price',
         'stock_qty',
         'status',
@@ -41,5 +42,13 @@ class Product extends Model
     {
         return $this->status === 'active'
             && ($this->stock_qty === null || $this->stock_qty > 0);
+    }
+
+    /** Public URL of the main product image, or null when none uploaded. */
+    public function imageUrl(): ?string
+    {
+        return $this->image_path
+            ? \Illuminate\Support\Facades\Storage::disk('public')->url($this->image_path)
+            : null;
     }
 }

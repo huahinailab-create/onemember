@@ -34,7 +34,14 @@
             <ul class="storefront-products">
                 @foreach ($order->items as $item)
                     <li class="storefront-product">
-                        <div class="storefront-product-name">{{ $item->qty }} × {{ $item->name }}</div>
+                        <div class="storefront-product-media">
+                            @if ($item->product?->imageUrl())
+                                <img src="{{ $item->product->imageUrl() }}" alt="{{ $item->name }}" loading="lazy">
+                            @else
+                                <i class="bi bi-image" aria-hidden="true"></i>
+                            @endif
+                        </div>
+                        <div class="storefront-product-body storefront-product-name">{{ $item->qty }} × {{ $item->name }}</div>
                         <div class="storefront-product-price">{{ number_format($item->price * $item->qty, 2) }}</div>
                     </li>
                 @endforeach

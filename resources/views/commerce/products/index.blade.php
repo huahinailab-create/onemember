@@ -44,7 +44,18 @@
                     <tbody>
                         @foreach ($products as $product)
                             <tr>
-                                <td class="ps-3 fw-medium">{{ $product->name }}</td>
+                                <td class="ps-3 fw-medium">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="commerce-product-thumb flex-shrink-0">
+                                            @if ($product->imageUrl())
+                                                <img src="{{ $product->imageUrl() }}" alt="{{ $product->name }}">
+                                            @else
+                                                <i class="bi bi-image text-muted" aria-hidden="true"></i>
+                                            @endif
+                                        </div>
+                                        <span>{{ $product->name }}</span>
+                                    </div>
+                                </td>
                                 <td class="text-muted">{{ $product->category?->name ?? '—' }}</td>
                                 <td>{{ number_format($product->price, 2) }} {{ $product->merchant->currency ?? config('app.default_currency') }}</td>
                                 <td>

@@ -15,7 +15,7 @@
         <div class="col-12 col-lg-7">
             <div class="card">
                 <div class="card-body">
-                    <form method="POST"
+                    <form method="POST" enctype="multipart/form-data"
                           action="{{ $product ? route('commerce.products.update', $product) : route('commerce.products.store') }}">
                         @csrf
                         @if ($product) @method('PUT') @endif
@@ -33,6 +33,33 @@
                             <textarea id="description" name="description" rows="3" maxlength="1000"
                                       class="form-control @error('description') is-invalid @enderror">{{ old('description', $product?->description) }}</textarea>
                             @error('description')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
+
+                        {{-- Main product image (BETA-008A: one image; gallery = future) --}}
+                        <div class="mb-3">
+                            <label for="image" class="form-label">{{ __('commerce.field_image') }}</label>
+                            <div class="d-flex align-items-start gap-3 flex-wrap">
+                                <div class="commerce-product-thumb commerce-product-thumb-lg flex-shrink-0">
+                                    <img id="image-preview"
+                                         src="{{ $product?->imageUrl() ?? '' }}"
+                                         alt="{{ $product?->name ? __('commerce.field_image') . ': ' . $product->name : __('commerce.field_image') }}"
+                                         class="{{ $product?->imageUrl() ? '' : 'd-none' }}">
+                                    <i id="image-placeholder" class="bi bi-image text-muted {{ $product?->imageUrl() ? 'd-none' : '' }}" aria-hidden="true"></i>
+                                </div>
+                                <div class="flex-grow-1" style="min-width:220px;">
+                                    <input type="file" id="image" name="image"
+                                           accept="image/jpeg,image/png,image/webp"
+                                           class="form-control @error('image') is-invalid @enderror">
+                                    @error('image')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                    <div class="form-text">{{ __('commerce.image_hint') }}</div>
+                                    @if ($product?->imageUrl())
+                                        <div class="form-check mt-2">
+                                            <input class="form-check-input" type="checkbox" id="remove_image" name="remove_image" value="1">
+                                            <label class="form-check-label" for="remove_image">{{ __('commerce.remove_image') }}</label>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
 
                         <div class="row g-3 mb-3">
@@ -88,4 +115,20 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Live preview of the selected image (client-side only; server re-validates).
+        document.getElementById('image')?.addEventListener('change', function () {
+            const file = this.files && this.files[0];
+            const preview = document.getElementById('image-preview');
+            const placeholder = document.getElementById('image-placeholder');
+            if (file && file.type.startsWith('image/')) {
+                preview.src = URL.createObjectURL(file);
+                preview.classList.remove('d-none');
+                placeholder?.classList.add('d-none');
+                const remove = document.getElementById('remove_image');
+                if (remove) remove.checked = false;
+            }
+        });
+    </script>
 </x-app-layout>

@@ -79,7 +79,14 @@
                     <ul class="storefront-products">
                         @foreach ($items as $product)
                             <li class="storefront-product {{ $product->isAvailable() ? '' : 'is-unavailable' }}">
-                                <div>
+                                <div class="storefront-product-media">
+                                    @if ($product->imageUrl())
+                                        <img src="{{ $product->imageUrl() }}" alt="{{ $product->name }}" loading="lazy">
+                                    @else
+                                        <i class="bi bi-image" aria-hidden="true"></i>
+                                    @endif
+                                </div>
+                                <div class="storefront-product-body">
                                     <div class="storefront-product-name">{{ $product->name }}</div>
                                     @if ($product->description)
                                         <div class="storefront-product-desc">{{ $product->description }}</div>
