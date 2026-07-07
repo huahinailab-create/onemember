@@ -15,10 +15,7 @@ class StoreOnboardingBusinessSettingsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'currency'    => ['required', 'string', Rule::in([
-                'THB', 'USD', 'EUR', 'GBP', 'JPY', 'SGD',
-                'MYR', 'IDR', 'PHP', 'VND', 'AUD', 'CAD',
-            ])],
+            'currency'    => ['required', 'string', Rule::in(array_keys(config('localization.currencies')))],
             'timezone'    => ['required', 'string', Rule::in(timezone_identifiers_list())],
             'date_format' => ['required', 'string', Rule::in(['DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'])],
             'locale'      => ['sometimes', 'string', Rule::in(['en', 'th'])],

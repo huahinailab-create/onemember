@@ -23,6 +23,9 @@ class JoinLandingController extends Controller
             ->where('status', MerchantStatus::Active)
             ->firstOrFail();
 
+        // Customer-language settings (BETA-008B); ?lang= wins when offered.
+        app()->setLocale($merchant->resolveCustomerLocale($request->query('lang')));
+
         $offer = $request->query('offer', 'coffee');
         if (! in_array($offer, LaunchKitController::OFFERS, true)) {
             $offer = 'coffee';

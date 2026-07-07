@@ -118,6 +118,8 @@ When commerce is introduced:
 
 **Global requirements (2026-07-06):** language/country/currency/timezone are merchant-configured (onboarding + settings), never browser-derived; onboarding collects country, language, plan, and versioned terms acceptance; Apps are recommended by business type. Pricing direction: free ≤ 100 members, paid tiers scale by members/features/automation/API/apps (detail = DR-32).
 
+**Localization model (2026-07-07, DECISION-095):** a merchant's **internal language** (dashboard UI) is separate from its **customer-facing languages** (storefront, portal, join, order pages — ordered list, first = default, customer may switch among them). A merchant declares a **primary currency** plus optional **additional accepted currencies** (display only — OneMember never converts money; automatic conversion is future work). Example: a Cambodian merchant may operate internally in English, offer customers Khmer + English, and accept KHR + USD. Allowed values are simple documented config lists, not a country/currency service.
+
 This positioning **supersedes** earlier phase orderings that placed commerce in Phase 3. Rationale: growth tools deepen merchant value on the proven loyalty base before commerce raises the stakes; commerce requires the trust, identity, and consent rails of Phases 2–3 to be mature. Regional expansion timing is not fixed by this positioning (open decision — see decision register).
 
 ---

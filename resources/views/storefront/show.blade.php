@@ -21,6 +21,18 @@
                 @if ($merchant->city)<span><i class="bi bi-geo-alt me-1"></i>{{ $merchant->city }}</span>@endif
             </div>
 
+            {{-- Customer language switcher (BETA-008B — merchant-configured, never browser-derived) --}}
+            @php $offeredLanguages = $merchant->customerLanguages(); @endphp
+            @if (count($offeredLanguages) > 1)
+                <nav class="storefront-langs" aria-label="Language">
+                    @foreach ($offeredLanguages as $lang)
+                        <a href="{{ route('storefront.show', ['slug' => $merchant->slug, 'lang' => $lang]) }}"
+                           class="{{ app()->getLocale() === $lang ? 'is-active' : '' }}"
+                           lang="{{ $lang }}">{{ strtoupper($lang) }}</a>
+                    @endforeach
+                </nav>
+            @endif
+
             {{-- Fulfillment badges --}}
             <div class="storefront-fulfillment">
                 @if ($commerce['pickup_enabled'] ?? false)<span class="badge bg-light text-dark"><i class="bi bi-bag me-1"></i>{{ __('commerce.pickup_label') }}</span>@endif

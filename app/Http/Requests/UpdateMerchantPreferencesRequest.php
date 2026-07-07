@@ -25,11 +25,10 @@ class UpdateMerchantPreferencesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'currency'    => ['required', 'string', Rule::in([
-                'THB', 'USD', 'EUR', 'GBP', 'JPY', 'SGD',
-                'MYR', 'IDR', 'PHP', 'VND', 'AUD', 'CAD',
-            ])],
-            'timezone'    => ['required', 'string', Rule::in(timezone_identifiers_list())],
+            // BETA-008B: global fields moved to the Localization tab; still
+            // accepted here when submitted (backwards compatibility).
+            'currency'    => ['sometimes', 'required', 'string', Rule::in(array_keys(config('localization.currencies')))],
+            'timezone'    => ['sometimes', 'required', 'string', Rule::in(timezone_identifiers_list())],
             'date_format' => ['required', 'string', Rule::in(['DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'])],
             'default_expiration_type'     => ['required', 'string', Rule::in(['never', 'months', 'years'])],
             'default_expiration_duration' => ['nullable', 'integer', 'min:1', 'max:120',
@@ -37,8 +36,8 @@ class UpdateMerchantPreferencesRequest extends FormRequest
             ],
             'default_birthday_enabled'   => ['required', 'boolean'],
             'winback_days'               => ['nullable', 'integer', 'min:0', 'max:365'],
-            'country'                    => ['required', 'string', \Illuminate\Validation\Rule::in(array_keys(config('countries.list')))],
-            'locale'                     => ['required', 'string', Rule::in(['en', 'th'])],
+            'country'                    => ['sometimes', 'required', 'string', \Illuminate\Validation\Rule::in(array_keys(config('countries.list')))],
+            'locale'                     => ['sometimes', 'required', 'string', Rule::in(array_keys(config('localization.internal_languages')))],
             'email_product_updates'       => ['required', 'boolean'],
             'email_tips'                  => ['required', 'boolean'],
             'email_feature_announcements' => ['required', 'boolean'],

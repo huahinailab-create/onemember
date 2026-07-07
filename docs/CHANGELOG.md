@@ -1,3 +1,20 @@
+## 2026-07-07 — BETA-008: Global Merchant Settings + Product Images
+
+- feat(commerce): one main image per product (BETA-008A, DECISION-094) — upload with
+  live preview, replace (old file deleted), remove; merchant-scoped storage
+  `products/{merchant_id}` on the public disk; jpg/png/webp ≤ 2 MB; shown in product
+  list, storefront, and order confirmation with `bi-image` placeholder. `ProductImageTest` (8).
+- feat(settings): Localization tab (BETA-008B, DECISION-095) — country, primary +
+  additional accepted currencies (display only; conversion = future work), timezone,
+  internal language separate from ordered customer-facing languages. Customer surfaces
+  (storefront/order/portal/join) resolve `?lang=` against the merchant's offered
+  languages, defaulting to the first — never the browser. Storefront gains a customer
+  language switcher. Allowed values documented in `config/localization.php`.
+  Existing merchants unchanged (internal locale maps to customer default).
+  `GlobalSettingsTest` (12) incl. the Cambodia KHR/USD + Khmer/English example.
+- docs: Product Bible localization model, Global-Platform-Repositioning §8 addendum,
+  DECISION-094/095.
+
 ## 2026-07-07 — BETA-007 Premium Experience Sprint (private-beta polish)
 
 - fix(ux): session flash messages render exactly once — layouts are the single

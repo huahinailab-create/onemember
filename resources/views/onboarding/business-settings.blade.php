@@ -10,38 +10,9 @@
 
 @section('content')
 @php
-    $timezones = [
-        'Asia/Bangkok'     => 'Bangkok (UTC+7)',
-        'Asia/Singapore'   => 'Singapore (UTC+8)',
-        'Asia/Kuala_Lumpur'=> 'Kuala Lumpur (UTC+8)',
-        'Asia/Jakarta'     => 'Jakarta (UTC+7)',
-        'Asia/Manila'      => 'Manila (UTC+8)',
-        'Asia/Ho_Chi_Minh' => 'Ho Chi Minh City (UTC+7)',
-        'Asia/Tokyo'       => 'Tokyo (UTC+9)',
-        'Asia/Seoul'       => 'Seoul (UTC+9)',
-        'Asia/Kolkata'     => 'Kolkata (UTC+5:30)',
-        'Asia/Dubai'       => 'Dubai (UTC+4)',
-        'Europe/London'    => 'London (UTC+0/+1)',
-        'Europe/Paris'     => 'Paris (UTC+1/+2)',
-        'America/New_York' => 'New York (UTC-5/-4)',
-        'America/Los_Angeles' => 'Los Angeles (UTC-8/-7)',
-        'Australia/Sydney' => 'Sydney (UTC+10/+11)',
-        'UTC'              => 'UTC',
-    ];
-    $currencies = [
-        'THB' => 'THB – Thai Baht',
-        'USD' => 'USD – US Dollar',
-        'EUR' => 'EUR – Euro',
-        'GBP' => 'GBP – British Pound',
-        'JPY' => 'JPY – Japanese Yen',
-        'SGD' => 'SGD – Singapore Dollar',
-        'MYR' => 'MYR – Malaysian Ringgit',
-        'IDR' => 'IDR – Indonesian Rupiah',
-        'PHP' => 'PHP – Philippine Peso',
-        'VND' => 'VND – Vietnamese Dong',
-        'AUD' => 'AUD – Australian Dollar',
-        'CAD' => 'CAD – Canadian Dollar',
-    ];
+    // BETA-008B — single documented source for allowed values
+    $timezones  = config('localization.timezones');
+    $currencies = config('localization.currencies');
 @endphp
 
 <div class="card shadow-sm">

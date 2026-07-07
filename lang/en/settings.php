@@ -90,4 +90,22 @@ return [
     'cancel'                       => 'Cancel',
     'winback_days'      => 'Win-back Alert (days)',
     'winback_days_hint' => 'Email me when a member has not visited for this many days. Set 0 to switch off.',
+
+    // BETA-008B — Localization / Global Settings
+    'tab_localization' => 'Localization',
+    'globals_moved_note' => 'Country, currency, timezone and language now live in the Localization tab:',
+    'localization_intro' => 'Where you operate, what you charge in, and which languages your team and your customers see. These settings apply across OneMember.',
+    'localization_updated' => 'Localization settings updated.',
+    'primary_currency' => 'Primary currency',
+    'accepted_currencies' => 'Additional accepted currencies',
+    'accepted_currencies_hint' => 'Currencies you accept alongside your primary currency. Shown to customers for information only.',
+    'currency_conversion_future' => 'Automatic currency conversion is planned as future work — prices are never converted by OneMember.',
+    'internal_language' => 'Internal language',
+    'internal_language_hint' => 'The language your team sees in the merchant dashboard.',
+    'customer_languages' => 'Customer-facing languages',
+    'customer_languages_hint' => 'Languages offered on your storefront, member portal and join pages. Customers can switch between them; the first selected is the default.',
+    'customer_languages_fallback_note' => 'Languages without full translations yet are shown in English until translations are available.',
+    'localization_examples_title' => 'Examples',
+    'localization_example_th' => 'A Bangkok cafe: internal language Thai, customer languages Thai + English, currency THB.',
+    'localization_example_kh' => 'A Phnom Penh shop: internal language English, customer languages Khmer + English, currencies KHR + USD.',
 ];

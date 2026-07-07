@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateMerchantLocalizationRequest;
 use App\Http\Requests\UpdateMerchantPreferencesRequest;
 use App\Http\Requests\UpdateMerchantProfileRequest;
 use App\Models\Merchant;
@@ -17,7 +18,7 @@ class SettingsController extends Controller
         $merchant = $user->merchant;
 
         $activeTab = $request->input('tab', 'profile');
-        if (! in_array($activeTab, ['profile', 'preferences', 'account', 'security', 'data'])) {
+        if (! in_array($activeTab, ['profile', 'preferences', 'localization', 'account', 'security', 'data'])) {
             $activeTab = 'profile';
         }
 
@@ -85,24 +86,66 @@ class SettingsController extends Controller
         $settings['default_expiration_duration'] = $validated['default_expiration_duration'] ?? null;
         $settings['default_birthday_enabled']    = $validated['default_birthday_enabled'];
         $settings['winback_days']                = (int) ($validated['winback_days'] ?? 0);
-        $settings['locale']                      = $validated['locale'];
         $settings['email_notifications']         = [
             'product_updates'        => $validated['email_product_updates'],
             'tips'                   => $validated['email_tips'],
             'feature_announcements'  => $validated['email_feature_announcements'],
         ];
 
-        $merchant->update([
-            'currency' => $validated['currency'],
-            'timezone' => $validated['timezone'],
-            'country'  => $validated['country'],
-            'settings' => $settings,
-        ]);
+        // BETA-008B: the global fields moved to the Localization tab; they
+        // remain accepted here (optional) for backwards compatibility.
+        if (array_key_exists('locale', $validated)) {
+            $settings['locale'] = $validated['locale'];
+        }
+
+        $update = ['settings' => $settings];
+        foreach (['currency', 'timezone', 'country'] as $column) {
+            if (array_key_exists($column, $validated)) {
+                $update[$column] = $validated[$column];
+            }
+        }
+
+        $merchant->update($update);
 
         $analytics->track('settings_updated', ['section' => 'preferences'], $request->user()->id, $merchant->id);
 
         return redirect(route('settings') . '?tab=preferences')
             ->with('success', __('messages.preferences_updated'));
+    }
+
+    /** BETA-008B — Global Settings / Localization tab. */
+    public function updateLocalization(UpdateMerchantLocalizationRequest $request, AnalyticsService $analytics)
+    {
+        $merchant = $request->user()->merchant;
+        abort_unless($merchant, 403);
+
+        $validated = $request->validated();
+        $settings  = $merchant->settings ?? [];
+
+        $settings['locale'] = $validated['locale'];
+
+        // Primary currency always leads the accepted list; extras keep the
+        // submitted order. Display only — no conversion (future work).
+        $settings['accepted_currencies'] = array_values(array_unique(array_merge(
+            [$validated['currency']],
+            $validated['accepted_currencies'] ?? [],
+        )));
+
+        // Ordered list; the first entry is the default customer-facing
+        // language on storefront/portal/join pages.
+        $settings['customer_languages'] = array_values(array_unique($validated['customer_languages']));
+
+        $merchant->update([
+            'country'  => $validated['country'],
+            'currency' => $validated['currency'],
+            'timezone' => $validated['timezone'],
+            'settings' => $settings,
+        ]);
+
+        $analytics->track('settings_updated', ['section' => 'localization'], $request->user()->id, $merchant->id);
+
+        return redirect(route('settings') . '?tab=localization')
+            ->with('success', __('settings.localization_updated'));
     }
 
 }

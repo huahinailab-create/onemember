@@ -111,7 +111,7 @@ class PublicOrderController extends Controller
         return redirect()->route('storefront.order.show', [$merchant->slug, $order->public_uuid]);
     }
 
-    public function show(string $slug, string $orderUuid)
+    public function show(Request $request, string $slug, string $orderUuid)
     {
         $merchant = Merchant::where('slug', $slug)->firstOrFail();
         $order    = Order::where('public_uuid', $orderUuid)
@@ -119,8 +119,8 @@ class PublicOrderController extends Controller
             ->with('items')
             ->firstOrFail();
 
-        $locale = $merchant->settings['locale'] ?? 'th';
-        app()->setLocale(in_array($locale, ['en', 'th'], true) ? $locale : 'th');
+        // Customer-language settings (BETA-008B); ?lang= wins when offered.
+        app()->setLocale($merchant->resolveCustomerLocale($request->query('lang')));
 
         return view('storefront.order', [
             'merchant' => $merchant,

@@ -26,10 +26,10 @@ class StorefrontController extends Controller
 
         abort_unless($merchant->hasApp('commerce'), 404);
 
-        // Storefront language follows the merchant's configured locale
-        // (never the browser — GLOBAL-001 localization rule).
-        $locale = $merchant->settings['locale'] ?? 'th';
-        app()->setLocale(in_array($locale, ['en', 'th'], true) ? $locale : 'th');
+        // Storefront language follows the merchant's customer-language
+        // settings (BETA-008B) — an explicit ?lang= wins when offered,
+        // never the browser (GLOBAL-001 localization rule).
+        app()->setLocale($merchant->resolveCustomerLocale($request->query('lang')));
 
         $products = Product::where('merchant_id', $merchant->id)
             ->where('status', 'active')

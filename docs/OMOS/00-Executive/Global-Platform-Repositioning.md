@@ -93,6 +93,7 @@ One phone = one OneMember Identity; no duplicates; identity global, memberships/
 - **Language is configurable, never browser-sniffed** (browser detection was already removed in DECISION-067; this extends the rule globally).
 - Merchant chooses **Country, Language, Currency, Timezone** — at onboarding and in Merchant Settings.
 - Customer language selection arrives with the customer-facing settings surface (future).
+- **Implemented 2026-07-07 (BETA-008B, DECISION-095):** internal language vs **customer-facing languages** are separate merchant settings; customer surfaces (storefront/portal/join/order) resolve `?lang=` against the merchant's offered list, defaulting to its first entry. Primary + additional accepted currencies recorded (display only; conversion = future work). Allowed values live in `config/localization.php` + `config/countries.php`.
 - Country choice determines which Country Extensions are offered.
 - Engineering groundwork already in place: locale files with completeness tests, `app.default_currency` config (TD-005 resolved), E.164 phones, per-customer `locale` column.
 

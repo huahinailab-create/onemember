@@ -1287,6 +1287,20 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 - **Decision:** Admin-only Control Room at `/admin/control-room` (`ControlRoomService`) gives the operator a production health snapshot plus an external-service dependency register. **Internal section** (16 checks): application, version, environment, debug, database, queue driver, failed jobs count, scheduler, mail driver, Resend domain, storage link, disk usage, backup path, last backup file, SSL/domain notes, last deploy/git commit — plus feature flags and surfaced config warnings. **External section** (DigitalOcean, Laravel Forge, Resend, GitHub, Cloudflare, Stripe, Sentry, PostHog): Phase 1 detects local config presence only — **no external API calls**; rows without a credential are "Manual check", rows with config are "Healthy (verify)". Each row carries service, purpose, status, required action, and notes. Four status levels: healthy / warning / critical / manual. Design-system styled, never exposed to merchants (behind the `admin` middleware).
 - **Impact:** New: `ControlRoomService`, `Admin\ControlRoomController`, `admin/control-room` view, `ControlRoomTest` (14 tests). Modified: admin routes + admin layout nav.
 
+## DECISION-094 — BETA-008A: Product Images (One Main Image)
+
+- **Date:** 2026-07-07
+- **Status:** Approved
+- **Decision:** Commerce products support **one main image** (`products.image_path`), uploaded on the product form with live preview, replace, and remove. Files stored merchant-scoped (`products/{merchant_id}`) on the public disk — same pattern as the payment-QR upload; validation jpg/jpeg/png/webp ≤ 2 MB. Displayed in the merchant product list, storefront rows, and order confirmations, with a neutral `bi-image` placeholder when absent. Explicitly **not** built: multi-image galleries, external image services, image editing. Object-storage migration remains the ADR-009/BD-13 track (paths are disk-relative and portable).
+- **Impact:** New: migration, `ProductImageTest` (8 tests). Modified: `Product` model (`imageUrl()`), `ProductController`, product form/list views, storefront + order views, CSS, commerce lang EN/TH.
+
+## DECISION-095 — BETA-008B: Global Merchant Settings (Localization Model)
+
+- **Date:** 2026-07-07
+- **Status:** Approved
+- **Decision:** Merchants get a **Localization** settings tab owning: Country, **Primary currency**, **Additional accepted currencies**, Timezone, **Internal language** (merchant dashboard: `settings.locale`, en/th today), and **Customer-facing languages** (`settings.customer_languages`, ordered, first = default) — a merchant may run internally in one language while offering customers others (e.g. Cambodia: internal EN, customers Khmer + English, currencies KHR + USD). Allowed values are **simple documented config lists** (`config/localization.php` — currencies, internal/customer languages, curated timezones; countries stay in `config/countries.php`); deliberately **no country/currency service**. Customer-facing pages (storefront, order pages, portal, join) resolve locale as: explicit `?lang=` if offered → merchant's default customer language → internal locale fallback (existing merchants unchanged); **never browser-derived** (GLOBAL-001 §8). Customer languages without shipped translations render via English fallback until translated. Accepted currencies are **display-only**; automatic currency conversion is explicitly **future work** (ADR-011: no money handling). The four global fields moved out of Business Preferences into the new tab; the preferences endpoint still accepts them (`sometimes`) for backwards compatibility.
+- **Impact:** New: `config/localization.php`, `UpdateMerchantLocalizationRequest`, `updateLocalization` action + route, Localization tab UI, storefront language switcher, `GlobalSettingsTest` (12 tests). Modified: `Merchant` model helpers (`acceptedCurrencies()`, `customerLanguages()`, `resolveCustomerLocale()`), storefront/public-order/portal/join controllers, onboarding + preferences validation now read the config lists, settings lang EN/TH.
+
 ---
 
 *New decisions must be appended above this line in the format shown.*

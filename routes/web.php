@@ -158,6 +158,7 @@ Route::domain(config('domains.app'))->group(function () {
         Route::get('/settings',              [SettingsController::class, 'index'])->name('settings');
         Route::put('/settings/profile',      [SettingsController::class, 'updateProfile'])->name('settings.profile.update');
         Route::put('/settings/preferences',  [SettingsController::class, 'updatePreferences'])->name('settings.preferences.update');
+        Route::put('/settings/localization', [SettingsController::class, 'updateLocalization'])->name('settings.localization.update');
 
         Route::put('/settings/counter-mode', [CounterModeController::class, 'toggle'])->name('counter-mode.toggle');
         Route::get('/counter',               [CounterModeController::class, 'index'])->name('counter');

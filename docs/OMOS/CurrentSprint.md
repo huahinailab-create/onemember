@@ -16,18 +16,34 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | BETA-007 |
-| **Title** | Premium Experience Sprint (polish, friction, consistency) |
+| **Sprint ID** | BETA-008 |
+| **Title** | Global Merchant Settings + Product Images |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Sprint Type** | Code — UX polish only (no new modules, no architecture change) |
-| **Classification** | Type B — CTO Review (cross-cutting UX/i18n changes) |
-| **Sprint File** | Spec provided directly by Product Owner (this board records scope) |
+| **Sprint Type** | Code — two private-beta gaps (no architecture change; Commerce stays an App) |
+| **Classification** | Type B — CTO Review (schema addition + localization model) |
+| **Sprint File** | Spec provided directly by Product Owner (this board records scope); DECISION-094/095 |
 | **Owner** | Product Owner |
 | **Developer** | Claude Fable 5 |
 | **Reviewer** | ChatGPT CTO |
 | **Started** | 2026-07-07 |
 | **Actual Completion** | 2026-07-07 |
-| **Final Commit** | see git log: BETA-007A…E (5 commits on `fable-dev`) |
+| **Final Commit** | see git log: BETA-008A (product images), BETA-008B (localization) |
+
+### Business Objective
+
+Part A — Commerce products get one main image (upload/preview/replace/remove, merchant-scoped storage, validation, list + storefront + order display, placeholder). Part B — Global Settings/Localization tab: country, primary + additional accepted currencies (display only, conversion = future), timezone, internal language separate from ordered customer-facing languages; customer surfaces resolve `?lang=` against the merchant's offered list (never browser). Cambodia (internal EN, customers KM+EN, KHR+USD) and Thailand (TH+EN, THB) covered by tests.
+
+---
+
+## Previous Sprint (BETA-007)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | BETA-007 |
+| **Title** | Premium Experience Sprint (polish, friction, consistency) |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Classification** | Type B — CTO Review (cross-cutting UX/i18n changes) |
+| **Final Commit** | see git log: BETA-007A…E (5 commits, merged to `main` in `f0e1b36`) |
 
 ### Business Objective
 
@@ -157,7 +173,8 @@ Private beta stabilization & bug hunt: deployment verification (route-integrity 
 
 | Sprint ID | Title | Status | Commit |
 |---|---|---|---|
-| BETA-007 | Premium Experience Sprint (polish A–E) | ⏳ Awaiting CTO Review | HEAD (fable-dev) |
+| BETA-008 | Global Merchant Settings + Product Images | ⏳ Awaiting CTO Review | HEAD (fable-dev) |
+| BETA-007 | Premium Experience Sprint (polish A–E) | ⏳ Awaiting CTO Review | merged `f0e1b36` |
 | MORNING-001 | Fable Maximum Sprint — Private Beta Readiness (DEPLOY-001, BETA-001…005) | ✅ Complete (Type A) | `d40dda2` |
 | OVERNIGHT-001 | Private Beta Stabilization & Bug Hunt | ✅ Complete (Type A) | `4b62707` |
 | DOMAIN-001 | Definitive Domain Model | ✅ Complete | docs-only |

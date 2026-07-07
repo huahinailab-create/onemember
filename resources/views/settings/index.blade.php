@@ -34,6 +34,12 @@
             </button>
         </li>
         <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab-localization" data-bs-toggle="tab"
+                    data-bs-target="#pane-localization" type="button" role="tab">
+                <i class="bi bi-globe2 me-1"></i>{{ __('settings.tab_localization') }}
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
             <button class="nav-link" id="tab-account" data-bs-toggle="tab"
                     data-bs-target="#pane-account" type="button" role="tab">
                 <i class="bi bi-person-circle me-1"></i>{{ __('settings.tab_account') }}
@@ -400,78 +406,18 @@
                         @csrf
                         @method('PUT')
 
-                        @php
-                            $currencies = [
-                                'THB'=>'THB – Thai Baht','USD'=>'USD – US Dollar','EUR'=>'EUR – Euro',
-                                'GBP'=>'GBP – British Pound','JPY'=>'JPY – Japanese Yen',
-                                'SGD'=>'SGD – Singapore Dollar','MYR'=>'MYR – Malaysian Ringgit',
-                                'IDR'=>'IDR – Indonesian Rupiah','PHP'=>'PHP – Philippine Peso',
-                                'VND'=>'VND – Vietnamese Dong','AUD'=>'AUD – Australian Dollar',
-                                'CAD'=>'CAD – Canadian Dollar',
-                            ];
-                            $timezones = [
-                                'Asia/Bangkok'=>'Bangkok (UTC+7)','Asia/Singapore'=>'Singapore (UTC+8)',
-                                'Asia/Kuala_Lumpur'=>'Kuala Lumpur (UTC+8)','Asia/Jakarta'=>'Jakarta (UTC+7)',
-                                'Asia/Manila'=>'Manila (UTC+8)','Asia/Ho_Chi_Minh'=>'Ho Chi Minh (UTC+7)',
-                                'Asia/Tokyo'=>'Tokyo (UTC+9)','Asia/Seoul'=>'Seoul (UTC+9)',
-                                'Asia/Kolkata'=>'Kolkata (UTC+5:30)','Asia/Dubai'=>'Dubai (UTC+4)',
-                                'Europe/London'=>'London (UTC+0/+1)','Europe/Paris'=>'Paris (UTC+1/+2)',
-                                'America/New_York'=>'New York (UTC-5/-4)','America/Los_Angeles'=>'Los Angeles (UTC-8/-7)',
-                                'Australia/Sydney'=>'Sydney (UTC+10/+11)','UTC'=>'UTC',
-                            ];
-                        @endphp
-
                         <div class="row g-4">
 
-                            {{-- Country (CORE-001) --}}
-                            <div class="col-md-4">
-                                <label for="country" class="form-label fw-medium">
-                                    {{ __('onboarding.country') }} <span class="text-danger">*</span>
-                                </label>
-                                <select id="country" name="country"
-                                        class="form-select @error('country') is-invalid @enderror" required>
-                                    @foreach (config('countries.list') as $code => $label)
-                                        <option value="{{ $code }}"
-                                            {{ old('country', $merchant?->country ?? config('countries.default')) === $code ? 'selected' : '' }}>
-                                            {{ $label }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('country')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                            </div>
-
-                            {{-- Currency --}}
-                            <div class="col-md-4">
-                                <label for="currency" class="form-label fw-medium">
-                                    {{ __('settings.currency') }} <span class="text-danger">*</span>
-                                </label>
-                                <select id="currency" name="currency"
-                                        class="form-select @error('currency') is-invalid @enderror" required>
-                                    @foreach ($currencies as $code => $label)
-                                        <option value="{{ $code }}"
-                                            {{ old('currency', $merchant?->currency ?? config('app.default_currency')) === $code ? 'selected' : '' }}>
-                                            {{ $label }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('currency')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                            </div>
-
-                            {{-- Timezone --}}
-                            <div class="col-md-5">
-                                <label for="timezone" class="form-label fw-medium">
-                                    {{ __('settings.timezone') }} <span class="text-danger">*</span>
-                                </label>
-                                <select id="timezone" name="timezone"
-                                        class="form-select @error('timezone') is-invalid @enderror" required>
-                                    @foreach ($timezones as $tz => $label)
-                                        <option value="{{ $tz }}"
-                                            {{ old('timezone', $merchant?->timezone ?? 'Asia/Bangkok') === $tz ? 'selected' : '' }}>
-                                            {{ $label }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('timezone')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            {{-- Country/currency/timezone/language now live in the Localization tab (BETA-008B) --}}
+                            <div class="col-12">
+                                <div class="alert alert-light border mb-0 py-2 small">
+                                    <i class="bi bi-globe2 me-1 text-primary"></i>
+                                    {{ __('settings.globals_moved_note') }}
+                                    <button type="button" class="btn btn-link btn-sm p-0 align-baseline"
+                                            data-bs-toggle="tab" data-bs-target="#pane-localization">
+                                        {{ __('settings.tab_localization') }}
+                                    </button>
+                                </div>
                             </div>
 
                             {{-- Date Format --}}
@@ -487,24 +433,6 @@
                                     @endforeach
                                 </select>
                                 @error('date_format')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                            </div>
-
-                            {{-- Language --}}
-                            <div class="col-md-3">
-                                <label for="locale" class="form-label fw-medium">
-                                    {{ __('settings.language') }} <span class="text-danger">*</span>
-                                </label>
-                                <select id="locale" name="locale"
-                                        class="form-select @error('locale') is-invalid @enderror" required>
-                                    <option value="en" {{ old('locale', $merchant?->settings['locale'] ?? 'en') === 'en' ? 'selected' : '' }}>
-                                        English
-                                    </option>
-                                    <option value="th" {{ old('locale', $merchant?->settings['locale'] ?? 'en') === 'th' ? 'selected' : '' }}>
-                                        ภาษาไทย
-                                    </option>
-                                </select>
-                                <div class="form-text">{{ __('settings.language_hint') }}</div>
-                                @error('locale')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
                             <div class="col-12"><hr class="my-0"></div>
@@ -655,6 +583,157 @@
         </div>
 
         {{-- ── TAB 3: Account ───────────────────────────────────── --}}
+        {{-- ── Localization / Global Settings (BETA-008B) ─────────────── --}}
+        <div class="tab-pane fade" id="pane-localization" role="tabpanel">
+            <div class="card border-top-0 rounded-top-0">
+                <div class="card-body p-4">
+
+                    <p class="text-muted small mb-4">
+                        <i class="bi bi-globe2 me-1"></i>{{ __('settings.localization_intro') }}
+                    </p>
+
+                    <form method="POST" action="{{ route('settings.localization.update') }}">
+                        @csrf
+                        @method('PUT')
+
+                        @php
+                            $locCurrencies       = config('localization.currencies');
+                            $locTimezones        = config('localization.timezones');
+                            $primaryCurrency     = old('currency', $merchant?->currency ?? config('app.default_currency'));
+                            $acceptedCurrencies  = old('accepted_currencies', $merchant?->acceptedCurrencies() ?? []);
+                            $customerLanguages   = old('customer_languages', $merchant?->customerLanguages() ?? ['th']);
+                            $internalLocale      = old('locale', $merchant?->settings['locale'] ?? 'th');
+                        @endphp
+
+                        <div class="row g-4">
+
+                            {{-- Country --}}
+                            <div class="col-md-4">
+                                <label for="loc-country" class="form-label fw-medium">
+                                    {{ __('onboarding.country') }} <span class="text-danger">*</span>
+                                </label>
+                                <select id="loc-country" name="country"
+                                        class="form-select @error('country') is-invalid @enderror" required>
+                                    @foreach (config('countries.list') as $code => $label)
+                                        <option value="{{ $code }}"
+                                            {{ old('country', $merchant?->country ?? config('countries.default')) === $code ? 'selected' : '' }}>
+                                            {{ $label }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('country')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+
+                            {{-- Primary currency --}}
+                            <div class="col-md-4">
+                                <label for="loc-currency" class="form-label fw-medium">
+                                    {{ __('settings.primary_currency') }} <span class="text-danger">*</span>
+                                </label>
+                                <select id="loc-currency" name="currency"
+                                        class="form-select @error('currency') is-invalid @enderror" required>
+                                    @foreach ($locCurrencies as $code => $label)
+                                        <option value="{{ $code }}" {{ $primaryCurrency === $code ? 'selected' : '' }}>{{ $label }}</option>
+                                    @endforeach
+                                </select>
+                                @error('currency')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+
+                            {{-- Timezone --}}
+                            <div class="col-md-4">
+                                <label for="loc-timezone" class="form-label fw-medium">
+                                    {{ __('settings.timezone') }} <span class="text-danger">*</span>
+                                </label>
+                                <select id="loc-timezone" name="timezone"
+                                        class="form-select @error('timezone') is-invalid @enderror" required>
+                                    @foreach ($locTimezones as $tz => $label)
+                                        <option value="{{ $tz }}"
+                                            {{ old('timezone', $merchant?->timezone ?? 'Asia/Bangkok') === $tz ? 'selected' : '' }}>
+                                            {{ $label }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('timezone')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+
+                            {{-- Additional accepted currencies --}}
+                            <div class="col-12">
+                                <label class="form-label fw-medium mb-1">{{ __('settings.accepted_currencies') }}</label>
+                                <div class="text-muted small mb-2">{{ __('settings.accepted_currencies_hint') }}</div>
+                                <div class="d-flex flex-wrap gap-3">
+                                    @foreach ($locCurrencies as $code => $label)
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                   id="cur-{{ $code }}" name="accepted_currencies[]" value="{{ $code }}"
+                                                   {{ in_array($code, (array) $acceptedCurrencies, true) ? 'checked' : '' }}>
+                                            <label class="form-check-label small" for="cur-{{ $code }}">{{ $code }}</label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="form-text">{{ __('settings.currency_conversion_future') }}</div>
+                                @error('accepted_currencies')<div class="text-danger small">{{ $message }}</div>@enderror
+                                @error('accepted_currencies.*')<div class="text-danger small">{{ $message }}</div>@enderror
+                            </div>
+
+                            <div class="col-12"><hr class="my-0"></div>
+
+                            {{-- Internal language --}}
+                            <div class="col-md-4">
+                                <label for="loc-locale" class="form-label fw-medium">
+                                    {{ __('settings.internal_language') }} <span class="text-danger">*</span>
+                                </label>
+                                <select id="loc-locale" name="locale"
+                                        class="form-select @error('locale') is-invalid @enderror" required>
+                                    @foreach (config('localization.internal_languages') as $code => $label)
+                                        <option value="{{ $code }}" {{ $internalLocale === $code ? 'selected' : '' }}>{{ $label }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="form-text">{{ __('settings.internal_language_hint') }}</div>
+                                @error('locale')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+
+                            {{-- Customer-facing languages --}}
+                            <div class="col-md-8">
+                                <label class="form-label fw-medium mb-1">{{ __('settings.customer_languages') }} <span class="text-danger">*</span></label>
+                                <div class="text-muted small mb-2">{{ __('settings.customer_languages_hint') }}</div>
+                                <div class="d-flex flex-wrap gap-3">
+                                    @foreach (config('localization.customer_languages') as $code => $label)
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                   id="lang-{{ $code }}" name="customer_languages[]" value="{{ $code }}"
+                                                   {{ in_array($code, (array) $customerLanguages, true) ? 'checked' : '' }}>
+                                            <label class="form-check-label small" for="lang-{{ $code }}">{{ $label }}</label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="form-text">{{ __('settings.customer_languages_fallback_note') }}</div>
+                                @error('customer_languages')<div class="text-danger small">{{ $message }}</div>@enderror
+                                @error('customer_languages.*')<div class="text-danger small">{{ $message }}</div>@enderror
+                            </div>
+
+                            {{-- Examples --}}
+                            <div class="col-12">
+                                <div class="alert alert-light border small mb-0">
+                                    <i class="bi bi-lightbulb me-1 text-warning"></i>
+                                    <strong>{{ __('settings.localization_examples_title') }}</strong>
+                                    <ul class="mb-0 mt-1 ps-3">
+                                        <li>{{ __('settings.localization_example_th') }}</li>
+                                        <li>{{ __('settings.localization_example_kh') }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check-lg me-1"></i>{{ __('buttons.save_changes') }}
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div class="tab-pane fade" id="pane-account" role="tabpanel">
             <div class="card border-top-0 rounded-top-0">
                 <div class="card-body p-4">

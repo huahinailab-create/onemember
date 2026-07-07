@@ -21,10 +21,10 @@ class CustomerPortalController extends Controller
     // ── Public portal routes (no auth) ────────────────────────────────────
 
     /** GET /member/{public_uuid} */
-    public function show(string $publicUuid): mixed
+    public function show(\Illuminate\Http\Request $request, string $publicUuid): mixed
     {
         $member = Member::where('public_uuid', $publicUuid)->firstOrFail();
-        App::setLocale($member->merchant->settings['locale'] ?? 'th');
+        App::setLocale($member->merchant->resolveCustomerLocale($request->query('lang'))); // BETA-008B
 
         if (! $this->portalService->isPortalEnabled($member)) {
             return view('portal.disabled', [
@@ -49,10 +49,10 @@ class CustomerPortalController extends Controller
     }
 
     /** GET /member/{public_uuid}/card */
-    public function card(string $publicUuid): mixed
+    public function card(\Illuminate\Http\Request $request, string $publicUuid): mixed
     {
         $member = Member::where('public_uuid', $publicUuid)->firstOrFail();
-        App::setLocale($member->merchant->settings['locale'] ?? 'th');
+        App::setLocale($member->merchant->resolveCustomerLocale($request->query('lang'))); // BETA-008B
 
         if (! $this->portalService->isPortalEnabled($member)) {
             return view('portal.disabled', [

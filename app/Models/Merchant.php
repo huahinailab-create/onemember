@@ -200,6 +200,70 @@ class Merchant extends Model
         return in_array($key, $this->installedApps(), true);
     }
 
+    /**
+     * BETA-008B: every currency this merchant accepts — primary first, then
+     * the additional accepted currencies from settings. Display only; no
+     * conversion (ADR-011 — money never touches OneMember).
+     */
+    public function acceptedCurrencies(): array
+    {
+        $primary = $this->currency ?: config('app.default_currency', 'THB');
+        $extra   = $this->settings['accepted_currencies'] ?? [];
+
+        return array_values(array_unique(array_merge([$primary], is_array($extra) ? $extra : [])));
+    }
+
+    /**
+     * BETA-008B: languages offered on customer-facing surfaces (storefront,
+     * portal, join, order pages), first entry = default. Falls back to the
+     * merchant's internal language so existing merchants behave unchanged.
+     */
+    public function customerLanguages(): array
+    {
+        $configured = $this->settings['customer_languages'] ?? [];
+        $allowed    = array_keys(config('localization.customer_languages', []));
+        $configured = array_values(array_intersect(is_array($configured) ? $configured : [], $allowed));
+
+        if ($configured !== []) {
+            return $configured;
+        }
+
+        // Unconfigured: offer the shipped app languages, merchant's internal
+        // language first — existing merchants render exactly as before while
+        // visitors can still switch within the shipped set.
+        $internal = $this->settings['locale'] ?? 'th';
+        $internal = in_array($internal, $allowed, true) ? $internal : 'th';
+
+        return array_values(array_unique(array_merge(
+            [$internal],
+            array_keys(config('localization.internal_languages', ['en' => '', 'th' => ''])),
+        )));
+    }
+
+    /**
+     * BETA-008B: resolve the locale for a customer-facing page. An explicit
+     * ?lang= request wins when the merchant offers that language; otherwise
+     * the merchant's default customer language. Never browser-derived
+     * (GLOBAL-001 §8).
+     */
+    public function resolveCustomerLocale(?string $requested = null): string
+    {
+        $offered = $this->customerLanguages();
+
+        if ($requested !== null && in_array($requested, $offered, true)) {
+            return $requested;
+        }
+
+        // Visitor's explicit site-wide language switch, when the merchant
+        // offers that language.
+        $session = session('locale');
+        if (is_string($session) && in_array($session, $offered, true)) {
+            return $session;
+        }
+
+        return $offered[0];
+    }
+
     public function trialExtensions(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(TrialExtension::class)->latest('created_at');
