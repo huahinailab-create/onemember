@@ -25,6 +25,9 @@ class TrialExtensionTest extends TestCase
         $merchantUser = User::factory()->create(['email_verified_at' => now()]);
         $this->merchant = Merchant::factory()->create([
             'user_id'             => $merchantUser->id,
+            // Fixed name: faker company names can collide/overlap between
+            // merchants, making the index assertSee/assertDontSee pair flaky.
+            'name'                => 'Ending Soon Bakery',
             'subscription_status' => SubscriptionStatus::Trial,
             'trial_ends_at'       => now()->addDays(3),
         ]);
@@ -122,10 +125,12 @@ class TrialExtensionTest extends TestCase
 
     public function test_index_filters_ending_soon_extended_and_expired(): void
     {
-        // ending soon (3 days) = $this->merchant
-        $extended = Merchant::factory()->create(['subscription_status' => SubscriptionStatus::Trial, 'trial_ends_at' => now()->addDays(40)]);
+        // ending soon (3 days) = $this->merchant ('Ending Soon Bakery').
+        // Names are pinned and non-overlapping — random faker company names
+        // can duplicate each other and break assertDontSee.
+        $extended = Merchant::factory()->create(['name' => 'Extended Trial Noodles', 'subscription_status' => SubscriptionStatus::Trial, 'trial_ends_at' => now()->addDays(40)]);
         TrialExtension::create(['merchant_id' => $extended->id, 'admin_user_id' => $this->admin->id, 'days' => 30, 'new_trial_ends_at' => now()->addDays(40), 'reason' => 'r']);
-        $expired = Merchant::factory()->create(['subscription_status' => SubscriptionStatus::Expired, 'trial_ends_at' => now()->subDay()]);
+        $expired = Merchant::factory()->create(['name' => 'Lapsed Coffee House', 'subscription_status' => SubscriptionStatus::Expired, 'trial_ends_at' => now()->subDay()]);
 
         $this->actingAs($this->admin)->get(route('admin.merchants.index', ['trial' => 'ending_soon'], absolute: false))
             ->assertOk()->assertSee($this->merchant->name)->assertDontSee($expired->name);
