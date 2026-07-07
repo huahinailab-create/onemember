@@ -28,8 +28,8 @@ This file is read as part of the `Continue OMOS` initialisation sequence (step 2
 | **OMOS Version** | 1.2 |
 | **PHP Version** | 8.3+ (8.5 in production) |
 | **Laravel Version** | 13.17.0 |
-| **Last Code Commit** | BETA-007E (see git log, `fable-dev`) — Premium Experience Sprint |
-| **Last Code Sprint** | BETA-007 Premium Experience Sprint — polish/friction/i18n/a11y, 669 tests green |
+| **Last Code Commit** | OMEGA-001C (see git log) — Unified Media Foundation |
+| **Last Code Sprint** | OMEGA-001C Unified Media Foundation — architecture only, builds on OMEGA-001A/B (BETA-008A/B); 728 tests green |
 | **Last OMOS Sprint** | OMOS-1.2 Autonomous Sprint Governance (`b99b1f9`) |
 
 ---

@@ -5,13 +5,17 @@ namespace App\Http\Controllers\Commerce;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Services\Media\MediaService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 /** APP-001 — Commerce App: merchant catalogue CRUD (gated app.installed:commerce). */
 class ProductController extends Controller
 {
+    public function __construct(private readonly MediaService $media)
+    {
+    }
+
     public function index(Request $request)
     {
         $merchant = $request->user()->merchant;
@@ -43,8 +47,7 @@ class ProductController extends Controller
         $validated['product_category_id'] = $this->resolveCategory($request, $merchant->id);
 
         if ($request->hasFile('image')) {
-            $validated['image_path'] = $request->file('image')
-                ->store("products/{$merchant->id}", 'public');
+            $validated['image_path'] = $this->media->store($request->file('image'), 'products', $merchant->id);
         }
 
         Product::create(array_merge($validated, ['merchant_id' => $merchant->id]));
@@ -71,11 +74,11 @@ class ProductController extends Controller
         $validated['product_category_id'] = $this->resolveCategory($request, $product->merchant_id);
 
         if ($request->hasFile('image')) {
-            $this->deleteImage($product);
-            $validated['image_path'] = $request->file('image')
-                ->store("products/{$product->merchant_id}", 'public');
+            $validated['image_path'] = $this->media->replace(
+                $product->image_path, $request->file('image'), 'products', $product->merchant_id,
+            );
         } elseif ($request->boolean('remove_image')) {
-            $this->deleteImage($product);
+            $this->media->delete($product->image_path);
             $validated['image_path'] = null;
         }
 
@@ -100,18 +103,11 @@ class ProductController extends Controller
         return $request->validate([
             'name'        => ['required', 'string', 'max:150'],
             'description' => ['nullable', 'string', 'max:1000'],
-            'image'       => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'image'       => $this->media->validationRules('products'),
             'price'       => ['required', 'numeric', 'min:0', 'max:9999999'],
             'stock_qty'   => ['nullable', 'integer', 'min:0', 'max:1000000'],
             'status'      => ['required', Rule::in(['active', 'hidden'])],
         ]);
-    }
-
-    private function deleteImage(Product $product): void
-    {
-        if ($product->image_path) {
-            Storage::disk('public')->delete($product->image_path);
-        }
     }
 
     private function resolveCategory(Request $request, int $merchantId): ?int

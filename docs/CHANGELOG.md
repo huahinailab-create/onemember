@@ -1,3 +1,16 @@
+## 2026-07-07 — OMEGA-001C: Unified Media Foundation
+
+Architecture-only sprint building on the approved OMEGA-001A/B foundation (BETA-008A product images, BETA-008B localization — DECISION-094/095). No merchant-facing behaviour, route, or schema changed; `ProductImageTest` passes unmodified.
+
+- **`App\Services\Media\MediaService`** — the one place that stores, replaces, deletes, validates, and resolves URLs for uploaded media. `Commerce\ProductController` now calls it instead of touching `Storage`/`UploadedFile` directly.
+- **`config/media.php`** — centralizes mime types, max upload size, default disk, WebP quality, named variant sizes, and per-collection storage-path prefixes. Controllers no longer hardcode validation values.
+- **Storage abstraction** — business logic never references a disk name; swapping to S3/R2/Spaces/Azure/Backblaze later is a config change.
+- **Variant architecture (not yet generated)** — `App\Services\Media\Contracts\ImagePipeline` is the processing seam (`optimize()`/`variant()`), bound today to a no-op `NullImagePipeline` so behaviour is unchanged. `config('media.variants')` declares thumbnail/medium/large sizes for a future real pipeline to fill in without changing callers.
+- **Future gallery scaffolding** — `MediaItem`/`MediaCollection` plain DTOs (no migration) give a settled shape for a later multi-image gallery feature.
+- See [ADR-013](./OMOS/12-ADR/ADR-013-Unified-Media-Foundation.md) for the full storage/variant/migration strategy.
+
+Suite: 701 → 728 tests green (7 new `MediaServiceTest` cases). Build clean. Awaiting CTO review (Type B).
+
 ## 2026-07-07 — BETA-008: Global Merchant Settings + Product Images
 
 - feat(commerce): one main image per product (BETA-008A, DECISION-094) — upload with

@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Contracts\InsightProviderInterface;
 use App\Services\Intelligence\RuleBasedInsightProvider;
+use App\Services\Media\Contracts\ImagePipeline;
+use App\Services\Media\NullImagePipeline;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
@@ -13,6 +15,11 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(InsightProviderInterface::class, RuleBasedInsightProvider::class);
+
+        // OMEGA-001C — default to a no-op pipeline so MediaService's
+        // optimize()/variant() calls change nothing until a real
+        // Intervention/Imagick-backed pipeline is bound in its place.
+        $this->app->bind(ImagePipeline::class, NullImagePipeline::class);
     }
 
     public function boot(): void

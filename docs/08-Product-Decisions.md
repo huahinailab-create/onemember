@@ -1303,4 +1303,13 @@ No decision may be assumed, invented, or implemented without a corresponding ent
 
 ---
 
+## DECISION-096 — OMEGA-001C: Unified Media Foundation
+
+- **Date:** 2026-07-07
+- **Status:** Approved
+- **Decision:** Per explicit Product Owner/CTO direction, BETA-008A (Product Images) and BETA-008B (Global Merchant Settings/Localization) are designated **OMEGA-001A** and **OMEGA-001B** respectively for the purposes of this and future sprints; DECISION-094 and DECISION-095 remain the authoritative record of what those sprints built, and no historical commits or their documentation were renamed. OMEGA-001C builds a reusable **Media Foundation** on that base: `App\Services\Media\MediaService` (store/replace/delete/optimize/url/validationRules), `config/media.php` (mimes, max size, disk, WebP quality, named variant sizes, per-collection storage paths), and an `App\Services\Media\Contracts\ImagePipeline` seam bound today to a no-op `NullImagePipeline` so optimize()/variant() calls change nothing yet. `Commerce\ProductController` was migrated to call `MediaService` instead of `Storage`/`UploadedFile` directly; the Commerce payment-QR upload and `Product::imageUrl()` were deliberately left unmigrated (see ADR-013 Migration Strategy) to keep this architecture-only sprint's behavioural surface to the one caller the spec named. `MediaItem`/`MediaCollection` are plain DTOs (no migration) preparing a future gallery API. No merchant-facing behaviour, route, or schema changed.
+- **Impact:** New: `app/Services/Media/MediaService.php`, `app/Services/Media/NullImagePipeline.php`, `app/Services/Media/Contracts/ImagePipeline.php`, `app/Services/Media/MediaItem.php`, `app/Services/Media/MediaCollection.php`, `config/media.php`, `MediaServiceTest` (7 tests), `docs/OMOS/12-ADR/ADR-013-Unified-Media-Foundation.md`. Modified: `app/Http/Controllers/Commerce/ProductController.php` (routed through MediaService, no behaviour change — `ProductImageTest` unchanged and passing), `app/Providers/AppServiceProvider.php` (binds `ImagePipeline` → `NullImagePipeline`).
+
+---
+
 *New decisions must be appended above this line in the format shown.*

@@ -5,7 +5,7 @@
 | **Document Owner** | ChatGPT CTO |
 | **Version** | Live |
 | **OMOS Version** | 1.1 |
-| **Status** | ✅ Complete — 701 tests green |
+| **Status** | ⏳ Awaiting CTO Review |
 | **Last Updated** | 2026-07-07 |
 
 | **Related Documents** | [EXECUTE.md](./EXECUTE.md), [Product-State.md](./Product-State.md), [Sprints/README.md](./Sprints/README.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md) |
@@ -16,17 +16,34 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | BETA-008 |
-| **Title** | Global Merchant Settings + Product Images |
+| **Sprint ID** | OMEGA-001C |
+| **Title** | Unified Media Foundation |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Sprint Type** | Code — two private-beta gaps (no architecture change; Commerce stays an App) |
-| **Classification** | Type B — CTO Review (schema addition + localization model) |
-| **Sprint File** | Spec provided directly by Product Owner (this board records scope); DECISION-094/095 |
+| **Sprint Type** | Architecture only — no merchant-facing behaviour change |
+| **Classification** | Type B — CTO Review (new service layer + config, changes how an existing controller stores files) |
+| **Sprint File** | Spec provided directly by Product Owner (this board records scope); DECISION-096; [ADR-013](./12-ADR/ADR-013-Unified-Media-Foundation.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Fable 5 |
 | **Reviewer** | ChatGPT CTO |
 | **Started** | 2026-07-07 |
 | **Actual Completion** | 2026-07-07 |
+| **Final Commit** | see git log: OMEGA-001C |
+
+### Business Objective
+
+Extract Commerce's product-image upload/validate/store/delete logic (built in OMEGA-001A, i.e. BETA-008A) into a reusable `MediaService` + `config/media.php`, so every future media-bearing module (merchant logos, staff photos, customer avatars, booking images, knowledge-center images, marketplace screenshots, marketing assets, documents, galleries) has one system to build on instead of re-inventing upload/validation/storage-path logic per module. Storage-provider abstraction (public disk today, S3/R2/Spaces/Azure/Backblaze later), a declared (not yet generated) image-variant pipeline, and DTO-only gallery scaffolding (`MediaItem`/`MediaCollection`, no migration) are prepared per ADR-013. `ProductController` now calls `MediaService`; merchant-facing behaviour, routes, and schema are unchanged — `ProductImageTest` passes unmodified.
+
+---
+
+## Previous Sprint (BETA-008)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | BETA-008 |
+| **Title** | Global Merchant Settings + Product Images (OMEGA-001A/B) |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Code — two private-beta gaps (no architecture change; Commerce stays an App) |
+| **Classification** | Type B — CTO Review (schema addition + localization model) |
 | **Final Commit** | see git log: BETA-008A (product images), BETA-008B (localization) |
 
 ### Business Objective

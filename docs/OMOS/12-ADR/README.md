@@ -165,3 +165,4 @@ Reference the context, constraints, and principles that drove the decision.]
 | [ADR-004](./ADR-004-Laravel-Architecture.md) | Laravel as Application Framework with Event-Driven Architecture | Approved | 2026-07-02 |
 | [ADR-005](./ADR-005-Bootstrap-5-Standard.md) | Bootstrap 5 as the Sole Frontend Framework | Approved | 2026-07-02 |
 | [ADR-006](./ADR-006-Thailand-First-Strategy.md) | Thailand-First Market Entry Strategy | Approved | 2026-07-02 |
+| [ADR-013](./ADR-013-Unified-Media-Foundation.md) | Unified Media Foundation | Approved | 2026-07-07 |
