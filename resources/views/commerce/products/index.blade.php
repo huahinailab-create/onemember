@@ -7,7 +7,7 @@
             <h1>{{ __('commerce.products_title') }}</h1>
             <p>{{ __('commerce.products_subtitle') }}</p>
         </div>
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2 flex-wrap">
             <a href="{{ route('commerce.orders.index') }}" class="btn btn-outline-primary">
                 <i class="bi bi-receipt me-1"></i>{{ __('commerce.orders_button') }}
             </a>
@@ -29,6 +29,7 @@
                     </a>
                 </x-ui.empty-state>
             @else
+                <div class="table-responsive">
                 <table class="table table-hover mb-0">
                     <thead>
                         <tr>
@@ -76,6 +77,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                </div>
             @endif
         </div>
         @if ($products->hasPages())

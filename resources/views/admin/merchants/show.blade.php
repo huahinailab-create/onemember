@@ -160,6 +160,7 @@
             </form>
 
             @if ($merchant->trialExtensions->isNotEmpty())
+                <div class="table-responsive">
                 <table class="table table-sm mt-3 mb-0">
                     <thead><tr style="font-size:0.75rem;color:#6B7280;">
                         <th>When</th><th>Days</th><th>New end</th><th>Reason</th><th>By</th>
@@ -176,6 +177,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                </div>
             @endif
         </div>
     </div>
