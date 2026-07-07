@@ -2240,6 +2240,106 @@ body.om-sidebar-open {
     border-radius: 3px;
 }
 
+/* ── OMEGA-001A: reusable media-upload component (x-ui.media-upload) ── */
+.media-upload-native-fallback.d-none,
+.media-upload-native-fallback[hidden] {
+    display: none;
+}
+
+.media-upload-enhanced[hidden] {
+    display: none;
+}
+
+.media-upload-dropzone {
+    border: 2px dashed #dde1e8;
+    border-radius: var(--om-card-radius, 10px);
+    padding: 2rem 1.25rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+    background-color: #fafbfc;
+}
+
+.media-upload-dropzone:hover,
+.media-upload-dropzone:focus-visible {
+    border-color: var(--om-pink, #FF1585);
+    background-color: rgba(255, 21, 133, 0.04);
+    outline: none;
+}
+
+.media-upload-dropzone.is-dragover {
+    border-color: var(--om-pink, #FF1585);
+    background-color: rgba(255, 21, 133, 0.08);
+}
+
+.media-upload-dropzone-icon {
+    font-size: 2rem;
+    color: var(--om-navy, #1A2E5A);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.media-upload-dropzone-text {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.media-upload-guidance {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 0.75rem;
+    font-size: 0.78rem;
+    color: #64748b;
+}
+
+.media-upload-workspace {
+    border: 1px solid #edf0f5;
+    border-radius: var(--om-card-radius, 10px);
+    padding: 1rem;
+}
+
+.media-upload-crop-stage {
+    max-width: 100%;
+    height: 320px;
+    overflow: hidden;
+    background: #f1f4f8;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+}
+
+.media-upload-crop-image {
+    display: block;
+    max-width: 100%;
+}
+
+.media-upload-aspect-presets,
+.media-upload-rotate-controls {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 0.6rem;
+}
+
+.media-upload-aspect-btn.active {
+    background-color: var(--om-navy, #1A2E5A);
+    border-color: var(--om-navy, #1A2E5A);
+    color: #fff;
+}
+
+.media-upload-meta {
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+}
+
+.media-upload-filename {
+    font-weight: 600;
+}
+
+.media-upload-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
 /* ── BETA-003: join landing contact line ── */
 .launch-landing-contact {
     display: flex;

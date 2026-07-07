@@ -1,3 +1,17 @@
+## 2026-07-08 — OMEGA-001A (frontend): Reusable Premium Image Upload UI
+
+A ticket asked to fix a "broken" drag/drop + Cropper.js product-image UI. A repo-wide search before writing any code found no such JS file, dependency, or UI pattern ever existed — the form had a plain file input. Raised to the Product Owner/CTO and approved as new work (DECISION-097), built generically so future modules (merchant logo, staff avatar, supplier logo, galleries, documents) can reuse it.
+
+- **`<x-ui.media-upload>`** — new generic Blade component (name/aspect/presets/remove-name all configurable via props, nothing Product-specific).
+- **`resources/js/product-image.js`** — enhances every `[data-media-upload]` root: drag/drop, click-to-browse, live preview, filename/dimensions/file-size display, Cropper.js crop stage with 1:1/4:5/16:9 presets, rotate left/right, replace/remove.
+- **Cropper.js `^1.6.2`** added as a dependency (classic stable API, not the v2 web-component rewrite).
+- **Progressive enhancement is structural**: the plain `<input type="file">` (and, in edit mode, its remove checkbox) are always present and functional; JS only hides them and reveals the rich UI after successfully wiring up, inside a try/catch — a JS failure leaves the native input working exactly as before.
+- **Cropping is client-side only** — `Cropper.getCroppedCanvas().toBlob()` swaps a cropped `File` into the real input via `DataTransfer` right before submit. The backend (`MediaService`/`ProductController`, from ADR-013) is unmodified; it just receives cropped bytes instead of the original.
+- `resources/views/commerce/products/form.blade.php` now renders `<x-ui.media-upload>` instead of its own inline file input + preview script.
+- See [ADR-014](./OMOS/12-ADR/ADR-014-Reusable-Media-Upload-UI.md) for the full architecture.
+
+728/728 tests green (`ProductImageTest` unmodified). Build clean. No database, route, or backend business-logic change. Awaiting CTO review (Type B).
+
 ## 2026-07-07 — OMEGA-001C: Unified Media Foundation
 
 Architecture-only sprint building on the approved OMEGA-001A/B foundation (BETA-008A product images, BETA-008B localization — DECISION-094/095). No merchant-facing behaviour, route, or schema changed; `ProductImageTest` passes unmodified.

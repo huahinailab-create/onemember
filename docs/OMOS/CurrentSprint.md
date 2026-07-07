@@ -6,7 +6,7 @@
 | **Version** | Live |
 | **OMOS Version** | 1.1 |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Last Updated** | 2026-07-07 |
+| **Last Updated** | 2026-07-08 |
 
 | **Related Documents** | [EXECUTE.md](./EXECUTE.md), [Product-State.md](./Product-State.md), [Sprints/README.md](./Sprints/README.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md) |
 
@@ -16,17 +16,34 @@
 
 | Field | Value |
 |---|---|
+| **Sprint ID** | OMEGA-001A (frontend) |
+| **Title** | Reusable Premium Image Upload UI (Drag/Drop, Crop, Rotate) |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | New feature (approved after ticket premise mismatch — see below); no backend/database change |
+| **Classification** | Type B — CTO Review (new npm dependency, new reusable UI component/pattern) |
+| **Sprint File** | Spec provided directly by Product Owner (this board records scope); DECISION-097; [ADR-014](./12-ADR/ADR-014-Reusable-Media-Upload-UI.md) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-08 |
+| **Actual Completion** | 2026-07-08 |
+| **Final Commit** | see git log: OMEGA-001A frontend |
+
+### Business Objective
+
+A ticket asked to "fix" a broken drag/drop + Cropper.js product-image upload UI. Before writing code, a repo search confirmed no such UI, JS file, or Cropper.js dependency existed — the form had a plain file input. Raised to the Product Owner/CTO, who approved building it as new work (DECISION-097), with the explicit requirement that it be a reusable component, not Product-specific. Delivered: `<x-ui.media-upload>` (generic Blade component) + `resources/js/product-image.js` (enhances every `[data-media-upload]` root), Cropper.js `^1.6.2` added as a dependency, drag/drop, live preview with filename/dimensions/file-size, crop with 1:1/4:5/16:9 presets, rotate left/right, replace/remove, and a structural progressive-enhancement fallback (plain file input works with zero JS). Cropping is client-side only — the server (`MediaService`/`ProductController`, unchanged since ADR-013) receives a normal multipart upload of the cropped bytes. `ProductImageTest` passes unmodified; 728 tests green; build clean.
+
+---
+
+## Previous Sprint (OMEGA-001C)
+
+| Field | Value |
+|---|---|
 | **Sprint ID** | OMEGA-001C |
 | **Title** | Unified Media Foundation |
 | **Status** | ⏳ Awaiting CTO Review |
 | **Sprint Type** | Architecture only — no merchant-facing behaviour change |
 | **Classification** | Type B — CTO Review (new service layer + config, changes how an existing controller stores files) |
-| **Sprint File** | Spec provided directly by Product Owner (this board records scope); DECISION-096; [ADR-013](./12-ADR/ADR-013-Unified-Media-Foundation.md) |
-| **Owner** | Product Owner |
-| **Developer** | Claude Fable 5 |
-| **Reviewer** | ChatGPT CTO |
-| **Started** | 2026-07-07 |
-| **Actual Completion** | 2026-07-07 |
 | **Final Commit** | see git log: OMEGA-001C |
 
 ### Business Objective

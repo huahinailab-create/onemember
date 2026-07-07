@@ -1,5 +1,7 @@
 import 'bootstrap';
 import Alpine from 'alpinejs';
+import 'cropperjs/dist/cropper.css';
+import './product-image.js';
 
 window.Alpine = Alpine;
 Alpine.start();
