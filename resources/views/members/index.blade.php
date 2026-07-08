@@ -8,7 +8,8 @@
             <h1>{{ __('members.title') }}</h1>
             <p>{{ __('members.subtitle') }}</p>
         </div>
-        <div class="d-flex gap-2 flex-shrink-0 flex-wrap">
+        <div class="d-flex gap-2 flex-shrink-0 flex-wrap align-items-center">
+            <x-ui.help-button topic="members.index" />
             @if (config('features.identity'))
                 <a href="{{ route('members.identity.add') }}" class="btn btn-outline-primary">
                     <i class="bi bi-qr-code-scan me-1"></i> {{ __('identity.add_button') }}

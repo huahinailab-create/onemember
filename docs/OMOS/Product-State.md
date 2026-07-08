@@ -28,8 +28,8 @@ This file is read as part of the `Continue OMOS` initialisation sequence (step 2
 | **OMOS Version** | 1.2 |
 | **PHP Version** | 8.3+ (8.5 in production) |
 | **Laravel Version** | 13.17.0 |
-| **Last Code Commit** | PLATFORM-002 P12 (see git log, `fable-dev`) — Platform Foundation Sprint |
-| **Last Code Sprint** | PLATFORM-002 Platform Foundation (12 parts: marketplace, SDK, event bus, webhooks, API v1, automation, knowledge, Queue + Procurement apps, i18n expansion, help, docs) — 782 tests green. Preceded same-day by BETA-008 (product images + global localization settings). |
+| **Last Code Commit** | MERCHANT-READY-001 (see git log, `fable-dev`) — Help Center & User Manual |
+| **Last Code Sprint** | MERCHANT-READY-001 — 47 EN + 6 TH merchant help articles on the PLATFORM-002 Knowledge Center rails, sidebar + contextual help surfacing. Recent history: OMEGA-001A/B (commerce image experience + UX polish), PLATFORM-002 (12-part foundation), BETA-008, BETA-007. |
 | **Last OMOS Sprint** | OMOS-1.2 Autonomous Sprint Governance (`b99b1f9`) |
 
 ---

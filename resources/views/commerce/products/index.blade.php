@@ -7,7 +7,8 @@
             <h1>{{ __('commerce.products_title') }}</h1>
             <p>{{ __('commerce.products_subtitle') }}</p>
         </div>
-        <div class="d-flex gap-2 flex-wrap">
+        <div class="d-flex gap-2 flex-wrap align-items-center">
+            <x-ui.help-button topic="commerce.products" />
             <a href="{{ route('commerce.orders.index') }}" class="btn btn-outline-primary">
                 <i class="bi bi-receipt me-1"></i>{{ __('commerce.orders_button') }}
             </a>

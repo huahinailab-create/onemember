@@ -18,4 +18,5 @@ return [
     'launch_kit'   => 'Launch Kit',
     'apps'         => 'Apps',
     'commerce'     => 'Commerce',
+    'help' => 'Help Center',
 ];

@@ -1,3 +1,25 @@
+## 2026-07-09 — MERCHANT-READY-001: Help Center & User Manual
+
+- content: 47 English merchant articles (Getting Started, Members, Loyalty,
+  Commerce, Launch Kit, Settings, Troubleshooting, 8 Industry Quick Starts)
+  + 6 Thai Getting Started articles; short, step-by-step, product-accurate
+- system: articles live as git-versioned markdown (database/seeders/knowledge/)
+  imported by an idempotent KnowledgeArticleSeeder (front-matter parser);
+  Help Center category ordering fixed (Getting Started → … → Quick Starts)
+- surfacing: Help Center added to the merchant sidebar; contextual ? buttons
+  on Members, Campaigns, Products and Launch Kit resolving to their articles
+- tests: MerchantHelpContentTest (8) — seeder import/idempotency, category
+  order, markdown rendering, search, Thai + fallback, guest auth, context
+  resolution, sidebar link
+
+## 2026-07-07 — OMEGA-001A/B: Commerce image experience + production UX polish
+
+- OMEGA-001A: upload card (drag & drop/keyboard/camera), guidance, live
+  preview, Cropper.js v2 crop/rotate, server-side WebP optimization ≤1200px
+- OMEGA-001B: product list badges + 56px thumbnails, grouped product form
+  with helper text, storefront availability nudges, image shimmer skeletons,
+  sticky table headers, a11y audit
+
 ## 2026-07-07 — PLATFORM-002: Platform Foundation Sprint (12 parts)
 
 Architectural foundation for the next platform phase. Laravel 13 monolith

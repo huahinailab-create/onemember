@@ -16,6 +16,29 @@
 
 | Field | Value |
 |---|---|
+| **Sprint ID** | MERCHANT-READY-001 |
+| **Title** | OneMember Help Center & User Manual (real merchant content) |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Content + surfacing (no business-logic changes) |
+| **Classification** | Type A — content, docs, tests |
+| **Sprint File** | Spec provided directly by Product Owner (this board records scope) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-09 |
+| **Actual Completion** | 2026-07-09 |
+| **Final Commit** | see git log: MERCHANT-READY-001 (fable-dev) |
+
+### Business Objective
+
+Populate the Knowledge Center (PLATFORM-002 P7/P11 rails) with a real merchant manual: 47 English articles across Getting Started, Members, Loyalty, Commerce, Launch Kit, Settings, Troubleshooting and 8 Industry Quick Starts, plus 6 Thai Getting Started articles (English fallback covers the rest). Content ships as git-versioned markdown imported by an idempotent seeder. Help Center added to the sidebar; contextual ? buttons wired on Members, Campaigns, Products and Launch Kit. Preceded on the same branch by OMEGA-001A/B (commerce image experience + UX polish).
+
+---
+
+## Previous Sprint (PLATFORM-002)
+
+| Field | Value |
+|---|---|
 | **Sprint ID** | PLATFORM-002 |
 | **Title** | Platform Foundation Sprint (Marketplace, SDK, Events, Webhooks, API, Automation, Knowledge, Queue, Procurement, i18n, Help, Docs) |
 | **Status** | ⏳ Awaiting CTO Review |

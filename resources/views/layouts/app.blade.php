@@ -161,6 +161,15 @@
                     <span>{{ __('navigation.apps') }}</span>
                 </a>
             </li>
+            {{-- MERCHANT-READY-001: Help Center in the main menu --}}
+            <li class="nav-item">
+                <a href="{{ route('help.index') }}"
+                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('help.*') ? 'active' : '' }}"
+                   >
+                    <i class="bi bi-life-preserver"></i>
+                    <span>{{ __('navigation.help') }}</span>
+                </a>
+            </li>
         </ul>
 
         {{-- Account --}}

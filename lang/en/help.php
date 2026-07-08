@@ -17,4 +17,13 @@ return [
     'category_getting_started' => 'Getting Started',
     'category_general' => 'General',
     'help_button' => 'Help',
+
+    // MERCHANT-READY-001 — content categories
+    'category_members' => 'Members',
+    'category_loyalty' => 'Loyalty & Rewards',
+    'category_commerce' => 'Commerce & Storefront',
+    'category_launch_kit' => 'Launch Kit',
+    'category_settings' => 'Settings',
+    'category_troubleshooting' => 'Troubleshooting',
+    'category_quick_start' => 'Industry Quick Starts',
 ];

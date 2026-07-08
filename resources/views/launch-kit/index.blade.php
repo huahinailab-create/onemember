@@ -2,9 +2,12 @@
     <x-slot name="title">{{ __('launch.title') }} – {{ config('app.name') }}</x-slot>
     <x-slot name="pageTitle">{{ __('launch.title') }}</x-slot>
 
-    <div class="page-header">
-        <h1>{{ __('launch.title') }}</h1>
-        <p>{{ __('launch.subtitle') }}</p>
+    <div class="page-header d-flex align-items-center justify-content-between">
+        <div>
+            <h1>{{ __('launch.title') }}</h1>
+            <p>{{ __('launch.subtitle') }}</p>
+        </div>
+        <x-ui.help-button topic="launch-kit" class="flex-shrink-0" />
     </div>
 
     <div class="row g-4">
