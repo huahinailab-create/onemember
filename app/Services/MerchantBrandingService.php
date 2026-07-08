@@ -3,12 +3,12 @@
 namespace App\Services;
 
 use App\Models\Merchant;
+use App\Services\Media\MediaService;
 use Illuminate\Support\Facades\Storage;
 
 class MerchantBrandingService
 {
-    private const LOGO_DISK      = 'public';
-    private const LOGO_DIRECTORY = 'merchant-logos';
+    private const LOGO_DISK = 'public';
     private const FALLBACK_COLOR_PRIMARY   = '#2563EB';
     private const FALLBACK_COLOR_SECONDARY = '#1E293B';
 
@@ -17,7 +17,7 @@ class MerchantBrandingService
     public function logo(): ?string
     {
         if ($this->merchant?->logo_path && Storage::disk(self::LOGO_DISK)->exists($this->merchant->logo_path)) {
-            return Storage::disk(self::LOGO_DISK)->url($this->merchant->logo_path);
+            return app(MediaService::class)->url($this->merchant->logo_path);
         }
 
         return null;
@@ -66,20 +66,15 @@ class MerchantBrandingService
 
     /**
      * Store a new logo, replacing the old one. Returns the stored path.
-     * Filename is namespaced by merchant ID to prevent cross-tenant collision.
+     * Delegates to MediaService (OMEGA-001C) — merchant-scoped storage
+     * path and validation now come from config/media.php instead of being
+     * hand-built here, same as Commerce product images.
      */
     public function storeLogo(\Illuminate\Http\UploadedFile $file): string
     {
-        if ($this->merchant?->logo_path) {
-            Storage::disk(self::LOGO_DISK)->delete($this->merchant->logo_path);
-        }
-
-        $extension = $file->getClientOriginalExtension();
-        $filename  = self::LOGO_DIRECTORY . '/' . $this->merchant->id . '_' . time() . '.' . strtolower($extension);
-
-        Storage::disk(self::LOGO_DISK)->put($filename, file_get_contents($file->getRealPath()));
-
-        return $filename;
+        return app(MediaService::class)->replace(
+            $this->merchant?->logo_path, $file, 'merchant_logos', $this->merchant->id,
+        );
     }
 
     /**
@@ -88,7 +83,7 @@ class MerchantBrandingService
     public function deleteLogo(): void
     {
         if ($this->merchant?->logo_path) {
-            Storage::disk(self::LOGO_DISK)->delete($this->merchant->logo_path);
+            app(MediaService::class)->delete($this->merchant->logo_path);
             $this->merchant->update(['logo_path' => null]);
         }
     }

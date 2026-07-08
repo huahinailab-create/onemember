@@ -78,19 +78,7 @@
 
                     @php $branding = $merchantBranding; @endphp
                     <form method="POST" action="{{ route('settings.profile.update') }}"
-                          enctype="multipart/form-data"
-                          x-data="{
-                              logoPreview: '{{ $branding->logo() ?? '' }}',
-                              removeLogo: false,
-                              handleLogo(e) {
-                                  const file = e.target.files[0];
-                                  if (!file) return;
-                                  const reader = new FileReader();
-                                  reader.onload = ev => { this.logoPreview = ev.target.result; this.removeLogo = false; };
-                                  reader.readAsDataURL(file);
-                              }
-                          }">
-                        <input type="hidden" name="remove_logo" :value="removeLogo ? '1' : '0'">
+                          enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -253,37 +241,17 @@
                                 {{-- Logo --}}
                                 <div class="col-12">
                                     <label class="form-label fw-medium">{{ __('settings.logo_label') }}</label>
-                                    <div class="d-flex align-items-start gap-3 flex-wrap">
-                                        <div class="rounded-3 border d-flex align-items-center justify-content-center flex-shrink-0"
-                                             style="width:80px;height:80px;background:#f8f9fa;overflow:hidden;">
-                                            <template x-if="logoPreview">
-                                                <img :src="logoPreview" alt="{{ __('settings.logo_preview_alt') }}"
-                                                     style="max-width:80px;max-height:80px;object-fit:contain;">
-                                            </template>
-                                            <template x-if="!logoPreview">
-                                                <i class="bi bi-shop text-secondary fs-2"></i>
-                                            </template>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <input type="file" id="settings_logo" name="logo"
-                                                   class="form-control @error('logo') is-invalid @enderror"
-                                                   accept=".jpg,.jpeg,.png,.webp"
-                                                   @change="handleLogo($event)">
-                                            <div class="form-text">{{ __('settings.logo_hint') }}</div>
-                                            @error('logo')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                            @if ($merchant?->logo_path)
-                                                <div class="mt-2">
-                                                    <button type="button" class="btn btn-sm btn-outline-danger"
-                                                            @click="removeLogo = true; logoPreview = ''">
-                                                        <i class="bi bi-trash me-1"></i>{{ __('settings.logo_remove') }}
-                                                    </button>
-                                                    <span x-show="removeLogo" class="text-danger small ms-2">
-                                                        {{ __('settings.logo_remove_note') }}
-                                                    </span>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </div>
+                                    <x-ui.media-upload
+                                        name="logo"
+                                        remove-name="remove_logo"
+                                        :current-url="$branding->logo()"
+                                        :current-label="$merchant?->name"
+                                        :recommended="__('settings.logo_recommended')"
+                                        minimum=""
+                                        formats="PNG, JPG, WebP"
+                                        :max-mb="2"
+                                        :aspect="1"
+                                        :presets="['1:1' => 1, '16:9' => 1.7777778]" />
                                 </div>
 
                                 {{-- Brand Colors --}}

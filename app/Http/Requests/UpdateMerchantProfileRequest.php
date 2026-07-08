@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Services\Media\MediaService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -36,7 +37,7 @@ class UpdateMerchantProfileRequest extends FormRequest
             'country'        => ['nullable', 'string', 'max:100'],
             'notes'            => ['nullable', 'string', 'max:2000'],
             // Branding
-            'logo'             => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'logo'             => app(MediaService::class)->validationRules('merchant_logos'),
             'remove_logo'      => ['nullable', 'boolean'],
             'brand_color'      => ['nullable', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'secondary_color'  => ['nullable', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],

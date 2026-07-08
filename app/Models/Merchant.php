@@ -80,7 +80,7 @@ class Merchant extends Model
     {
         static::creating(function (Merchant $merchant) {
             if (empty($merchant->slug)) {
-                $merchant->slug = Str::slug($merchant->name);
+                $merchant->slug = static::uniqueSlugFor($merchant->name);
             }
 
             $trialDays  = config('subscriptions.trial.days', 30);
@@ -90,6 +90,33 @@ class Merchant extends Model
             $merchant->subscription_status ??= SubscriptionStatus::Trial;
             $merchant->trial_ends_at       ??= now()->addDays($trialDays);
         });
+    }
+
+    /**
+     * Slug generation must never crash merchant creation. Two problems
+     * Str::slug() alone doesn't handle: (1) a name that slugifies to the
+     * same value as an existing merchant's (e.g. "Mike's Coffee" and
+     * "Mikes Coffee" both become "mikes-coffee") violates the `slug`
+     * unique constraint; (2) a name with no ASCII-transliterable
+     * characters (e.g. "!!!" or an all-emoji name) slugifies to an empty
+     * string. Both are handled here rather than left to bubble up as a
+     * 500 at registration/onboarding.
+     */
+    private static function uniqueSlugFor(string $name): string
+    {
+        $base = Str::slug($name);
+        if ($base === '') {
+            $base = 'merchant';
+        }
+
+        $slug = $base;
+        $suffix = 2;
+        while (static::withTrashed()->where('slug', $slug)->exists()) {
+            $slug = "{$base}-{$suffix}";
+            $suffix++;
+        }
+
+        return $slug;
     }
 
     public function owner(): BelongsTo

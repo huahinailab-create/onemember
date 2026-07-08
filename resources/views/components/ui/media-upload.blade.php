@@ -66,9 +66,9 @@
         @endif
 
         <div class="form-text media-upload-hint">
-            {{ __('media.upload_recommended', ['size' => $recommended]) }} ·
-            {{ __('media.upload_minimum', ['size' => $minimum]) }} ·
             {{ $formats }} · {{ __('media.upload_max_size', ['mb' => $maxMb]) }}
+            @if ($minimum) · {{ __('media.upload_minimum', ['size' => $minimum]) }} @endif
+            @if ($recommended) · {{ __('media.upload_recommended', ['size' => $recommended]) }} @endif
         </div>
     </div>
 
@@ -81,8 +81,8 @@
             <i class="bi bi-cloud-arrow-up media-upload-dropzone-icon" aria-hidden="true"></i>
             <div class="media-upload-dropzone-text">{{ __('media.upload_dropzone_text') }}</div>
             <div class="media-upload-guidance">
-                <span>{{ __('media.upload_recommended', ['size' => $recommended]) }}</span>
-                <span>{{ __('media.upload_minimum', ['size' => $minimum]) }}</span>
+                @if ($recommended)<span>{{ __('media.upload_recommended', ['size' => $recommended]) }}</span>@endif
+                @if ($minimum)<span>{{ __('media.upload_minimum', ['size' => $minimum]) }}</span>@endif
                 <span>{{ $formats }}</span>
                 <span>{{ __('media.upload_max_size', ['mb' => $maxMb]) }}</span>
             </div>

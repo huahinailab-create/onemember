@@ -36,7 +36,8 @@ return [
     // (`{collection}/{merchant_id}`) declared in one place instead of
     // string-built inline in each controller.
     'collections' => [
-        'products'   => 'products',
-        'payment_qr' => 'payment-qr',
+        'products'       => 'products',
+        'payment_qr'     => 'payment-qr',
+        'merchant_logos' => 'merchant-logos',
     ],
 ];
