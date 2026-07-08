@@ -8,7 +8,7 @@
         <div class="col-12 col-lg-6">
             <div class="card">
                 <div class="card-header fw-semibold">
-                    <i class="bi bi-shield-check me-2 text-primary"></i>{{ __('identity.consent_heading', ['merchant' => $merchant->name]) }}
+                    <i class="bi bi-shield-check me-2 text-primary"></i>{{ __('identity.consent_heading', ['merchant' => $merchant->displayName()]) }}
                 </div>
                 <div class="card-body">
 
@@ -17,7 +17,7 @@
                         <div class="text-muted small">{{ __('identity.consent_phone_hint', ['phone' => $customer->maskedPhone()]) }}</div>
                     </div>
 
-                    <p class="small">{{ __('identity.consent_body', ['merchant' => $merchant->name]) }}</p>
+                    <p class="small">{{ __('identity.consent_body', ['merchant' => $merchant->displayName()]) }}</p>
 
                     <form method="POST" action="{{ route('members.identity.join') }}">
                         @csrf

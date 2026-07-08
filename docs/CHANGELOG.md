@@ -1,3 +1,18 @@
+## 2026-07-08 — OMEGA-001D: Merchant Branding & Product Experience Polish
+
+Pure UI polish — no business logic, schema, route, or `MediaService` behaviour change.
+
+- **Sidebar branding** — logo container now scales any aspect ratio via `object-fit: contain` inside a fixed, light-backed box (never crops, stays visible for dark transparent PNGs). No-logo merchants get a generated initials avatar (`Merchant::initials()`) instead of the generic wordmark. Business name now shown under the logo/avatar; "Powered by onemember" always present underneath.
+- **Business name presentation** — new `Merchant::displayName()` normalizes all-lowercase or ALL-CAPS names to title case for display only ("mike's coffee" → "Mike's Coffee"). Deliberately-formatted mixed-case names ("Wilkinson LLC", "Aufderhar and Sons") are left untouched — the naive approach (unconditional title-case) was tried first and caught by the existing test suite mangling acronyms/connector words, so the rule was narrowed to only fire on all-lower/all-upper input. Applied to sidebar, storefront, order confirmation, join landing, launch-kit prints, and identity consent screens. Stored `name` value is never modified.
+- **Settings — Business Logo** — current-logo status line, and `<x-ui.media-upload>` now carries logo-specific guidance ("400 × 400 px or larger, square or landscape", 1:1/16:9 presets) instead of the product-image defaults.
+- **Commerce — View My Store** — prominent button on the Products page opening the existing storefront route in a new tab.
+- **Product list & storefront polish** — subtle row-hover treatment on the product table; storefront thumbnails enlarged (48px → 56px) with a border, still `object-fit: cover` (preserves aspect ratio, never stretches); friendly icon added to the empty-catalogue state.
+- **Accessibility** — global `:focus-visible` outline added as a safety net for custom interactive elements (sidebar brand, thumbs, dropzone) not already covered by Bootstrap's own focus styles.
+
+Verified in-browser (not just tests) at desktop and 375px mobile widths, for both a logo-less merchant (initials avatar) and a logo-bearing merchant.
+
+Suite: 734 → 739 tests green (5 new `MerchantDisplayNameTest` cases). Build clean. Awaiting CTO review (Type B).
+
 ## 2026-07-08 — OMEGA-001A (frontend): Reusable Premium Image Upload UI
 
 A ticket asked to fix a "broken" drag/drop + Cropper.js product-image UI. A repo-wide search before writing any code found no such JS file, dependency, or UI pattern ever existed — the form had a plain file input. Raised to the Product Owner/CTO and approved as new work (DECISION-097), built generically so future modules (merchant logo, staff avatar, supplier logo, galleries, documents) can reuse it.

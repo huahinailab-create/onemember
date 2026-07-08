@@ -57,6 +57,16 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+/* OMEGA-001D: keyboard-focus safety net — Bootstrap covers most controls,
+   this catches custom elements (sidebar links, thumbs, brand block, media-
+   upload dropzone) so nothing is keyboard-navigable without a visible ring. */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--om-pink);
+    outline-offset: 2px;
+}
+
 /* ── Brand utilities ─────────────────────────────────────── */
 .text-pink  { color: var(--om-pink) !important; }
 .text-navy  { color: var(--om-navy) !important; }
@@ -366,6 +376,67 @@ body {
 
 .sidebar-brand-mark .brand-member {
     color: #ffffff;
+}
+
+/* ── OMEGA-001D: sidebar brand block — logo, initials avatar, name ── */
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+/* Fixed, consistent container: logos of any aspect ratio scale to fit via
+   object-fit:contain (never cropped, never stretched); a light backing so
+   transparent-PNG logos with dark artwork stay visible against the navy
+   sidebar. Square logos fill it; landscape logos letterbox within it. */
+.sidebar-brand-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.92);
+    overflow: hidden;
+    padding: 4px;
+}
+
+.sidebar-brand-logo {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+.sidebar-brand-initials {
+    font-family: Arial, sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    color: var(--om-navy);
+}
+
+.sidebar-brand-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    line-height: 1.15;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 150px;
+}
+
+.sidebar-powered-by {
+    font-size: 0.65rem;
+    opacity: 0.5;
+    line-height: 1;
+}
+
+.sidebar-powered-mark {
+    font-family: Arial, sans-serif;
+    font-weight: 700;
 }
 
 /* ── Topbar ──────────────────────────────────────────────── */
@@ -2136,17 +2207,21 @@ body.om-sidebar-open {
 }
 
 /* BETA-008A — main product image (storefront row + placeholder) */
+/* OMEGA-001D: larger, bordered thumb — object-fit:cover preserves aspect
+   ratio (crops overflow, never stretches/distorts) */
 .storefront-product-media {
-    width: 48px;
-    height: 48px;
-    border-radius: 8px;
+    width: 56px;
+    height: 56px;
+    border-radius: 10px;
     background: #f1f4f8;
+    border: 1px solid #edf0f5;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
     overflow: hidden;
     color: #9aa4b2;
+    font-size: 1.1rem;
 }
 
 .storefront-product-media img {
@@ -2158,6 +2233,23 @@ body.om-sidebar-open {
 .storefront-product-body {
     flex-grow: 1;
     min-width: 0;
+}
+
+/* OMEGA-001D: friendly empty catalogue state */
+.storefront-empty {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    color: #94a3b8;
+}
+
+.storefront-empty i {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.storefront-empty p {
+    margin: 0;
 }
 
 /* BETA-008A — merchant-side product thumbnails (list + form preview) */
@@ -2183,6 +2275,15 @@ body.om-sidebar-open {
     height: 96px;
     border-radius: 8px;
     font-size: 1.6rem;
+}
+
+/* OMEGA-001D: product-list row hover — subtle lift, thumb-safe (no stretch) */
+.table-hover > tbody > tr {
+    transition: background-color 0.12s ease;
+}
+
+.table-hover > tbody > tr:hover .commerce-product-thumb {
+    box-shadow: 0 0 0 2px rgba(26, 46, 90, 0.08);
 }
 
 .storefront-product-name {

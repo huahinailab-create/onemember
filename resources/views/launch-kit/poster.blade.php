@@ -1,6 +1,6 @@
 @component('launch-kit.print-layout', ['title' => __('launch.asset_poster')])
     <section class="launch-sheet launch-sheet-a4">
-        <div class="launch-poster-brand">{{ $merchant->name }}</div>
+        <div class="launch-poster-brand">{{ $merchant->displayName() }}</div>
 
         <h1 class="launch-poster-headline">{{ __('launch.campaign_headline') }}</h1>
         <p class="launch-poster-offer">{{ __('launch.offer_' . $offer) }}</p>

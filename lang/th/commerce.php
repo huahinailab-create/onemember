@@ -89,6 +89,8 @@ return [
     'orders_tab_cancelled'=> 'ยกเลิก',
     'orders_empty'        => 'ยังไม่มีคำสั่งซื้อ',
     'orders_button'       => 'คำสั่งซื้อ',
+    'view_store_button'   => 'ดูร้านค้าของฉัน',
+    'opens_new_tab'       => '(เปิดในแท็บใหม่)',
     'order_status_placed'    => 'ใหม่',
     'order_status_accepted'  => 'รับแล้ว',
     'order_status_ready'     => 'พร้อมส่ง/รับ',

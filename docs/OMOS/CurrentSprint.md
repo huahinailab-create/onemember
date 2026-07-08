@@ -16,17 +16,32 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | OMEGA-001A (frontend) |
-| **Title** | Reusable Premium Image Upload UI (Drag/Drop, Crop, Rotate) |
+| **Sprint ID** | OMEGA-001D |
+| **Title** | Merchant Branding & Product Experience Polish |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Sprint Type** | New feature (approved after ticket premise mismatch — see below); no backend/database change |
-| **Classification** | Type B — CTO Review (new npm dependency, new reusable UI component/pattern) |
-| **Sprint File** | Spec provided directly by Product Owner (this board records scope); DECISION-097; [ADR-014](./12-ADR/ADR-014-Reusable-Media-Upload-UI.md) |
+| **Sprint Type** | Pure UI polish — no business logic, schema, route, or MediaService behaviour change |
+| **Classification** | Type B — CTO Review (visible merchant/customer-facing presentation changes) |
+| **Sprint File** | Spec provided directly by Product Owner (this board records scope) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Fable 5 |
 | **Reviewer** | ChatGPT CTO |
 | **Started** | 2026-07-08 |
 | **Actual Completion** | 2026-07-08 |
+| **Final Commit** | see git log: OMEGA-001D |
+
+### Business Objective
+
+Visual polish pass across merchant branding and Commerce. Sidebar brand block redesigned with a fixed, non-cropping logo container (object-fit: contain, light backing for transparent PNGs) and a generated initials avatar (`Merchant::initials()`) when no logo exists. New `Merchant::displayName()` normalizes all-lowercase/ALL-CAPS business names to title case for display only ("mike's coffee" → "Mike's Coffee") — the stored `name` and any mixed-case name typed deliberately ("Wilkinson LLC", "Aufderhar and Sons") are left untouched, so acronyms and connector words are never mangled. Settings' Business Logo section now labels the current-logo state and shows dimension/format/aspect guidance via the existing `<x-ui.media-upload>` component. Commerce Products page gained a "View My Store" button (existing storefront route, opens in a new tab). Product-list hover polish and larger, bordered, non-stretching storefront thumbnails (object-fit: cover). Storefront empty catalogue state got an icon. Global `:focus-visible` outline added as an accessibility safety net. Verified in-browser at desktop and 375px mobile widths for both a logo-less (initials avatar) and a logo-bearing merchant.
+
+---
+
+## Previous Sprint (OMEGA-001A frontend)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | OMEGA-001A (frontend) |
+| **Title** | Reusable Premium Image Upload UI (Drag/Drop, Crop, Rotate) |
+| **Status** | ⏳ Awaiting CTO Review |
 | **Final Commit** | see git log: OMEGA-001A frontend |
 
 ### Business Objective

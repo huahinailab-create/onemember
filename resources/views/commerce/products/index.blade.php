@@ -8,6 +8,12 @@
             <p>{{ __('commerce.products_subtitle') }}</p>
         </div>
         <div class="d-flex gap-2 flex-wrap">
+            <a href="{{ route('storefront.show', $merchant->slug) }}" target="_blank" rel="noopener"
+               class="btn btn-accent">
+                <i class="bi bi-shop me-1" aria-hidden="true"></i>{{ __('commerce.view_store_button') }}
+                <i class="bi bi-box-arrow-up-right ms-1 small" aria-hidden="true"></i>
+                <span class="visually-hidden">{{ __('commerce.opens_new_tab') }}</span>
+            </a>
             <a href="{{ route('commerce.orders.index') }}" class="btn btn-outline-primary">
                 <i class="bi bi-receipt me-1"></i>{{ __('commerce.orders_button') }}
             </a>

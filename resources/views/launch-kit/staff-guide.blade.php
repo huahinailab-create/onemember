@@ -1,7 +1,7 @@
 @component('launch-kit.print-layout', ['title' => __('launch.asset_staff_guide')])
     <section class="launch-sheet launch-sheet-a4 launch-guide">
         <header class="launch-guide-header">
-            <div class="launch-guide-brand">{{ $merchant->name }}</div>
+            <div class="launch-guide-brand">{{ $merchant->displayName() }}</div>
             <h1 class="launch-guide-title">{{ __('launch.guide_title') }}</h1>
             <p class="launch-guide-intro">{{ __('launch.guide_intro', ['url' => parse_url(config('app.url'), PHP_URL_HOST) ?? config('app.url')]) }}</p>
         </header>

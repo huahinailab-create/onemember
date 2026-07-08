@@ -89,6 +89,8 @@ return [
     'orders_tab_cancelled'=> 'Cancelled',
     'orders_empty'        => 'No orders here yet.',
     'orders_button'       => 'Orders',
+    'view_store_button'   => 'View My Store',
+    'opens_new_tab'       => '(opens in a new tab)',
     'order_status_placed'    => 'New',
     'order_status_accepted'  => 'Accepted',
     'order_status_ready'     => 'Ready',

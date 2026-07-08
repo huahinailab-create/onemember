@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
-    <title>{{ __('commerce.order_confirmation_title') }} – {{ $merchant->name }}</title>
+    <title>{{ __('commerce.order_confirmation_title') }} – {{ $merchant->displayName() }}</title>
     @vite(['resources/css/app.css'])
 </head>
 <body class="storefront-body">
     <main class="storefront">
         <header class="storefront-header">
-            <div class="storefront-brand">{{ $merchant->name }}</div>
+            <div class="storefront-brand">{{ $merchant->displayName() }}</div>
             <div class="storefront-type">{{ __('commerce.order_confirmation_title') }}</div>
             <div class="storefront-contact">
                 <span><i class="bi bi-person me-1"></i>{{ __('commerce.order_thanks', ['name' => $order->customer_name]) }}</span>
@@ -79,7 +79,7 @@
                 @if (!empty($commerce['payment_instructions']))
                     <p class="small mb-2">{{ $commerce['payment_instructions'] }}</p>
                 @endif
-                <p class="text-muted mb-0" style="font-size:0.72rem;">{{ __('commerce.order_pay_note', ['merchant' => $merchant->name]) }}</p>
+                <p class="text-muted mb-0" style="font-size:0.72rem;">{{ __('commerce.order_pay_note', ['merchant' => $merchant->displayName()]) }}</p>
             @endif
         </section>
 

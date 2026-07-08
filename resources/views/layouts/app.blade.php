@@ -45,28 +45,30 @@
             </button>
         </div>
 
-        {{-- Brand --}}
-        <a href="{{ route('dashboard') }}"
-           class="d-flex align-items-center gap-2 text-decoration-none text-white px-1 mb-1">
-            @if ($__logo)
-                <img src="{{ $__logo }}" alt="{{ $merchantBranding->displayName() }}"
-                     style="height:36px;width:auto;max-width:120px;object-fit:contain;border-radius:4px;">
-            @else
-                <span class="sidebar-brand-mark">
-                    <span class="brand-one">one</span><span class="brand-member">member</span>
-                </span>
+        {{-- Brand — OMEGA-001D: consistent container, never crops, initials avatar when no logo --}}
+        @php $__merchant = Auth::user()?->merchant; @endphp
+        <a href="{{ route('dashboard') }}" class="sidebar-brand text-decoration-none text-white px-1 mb-1">
+            <span class="sidebar-brand-box">
+                @if ($__logo)
+                    <img src="{{ $__logo }}" alt="{{ $merchantBranding->displayName() }}" class="sidebar-brand-logo">
+                @elseif ($__merchant)
+                    <span class="sidebar-brand-initials" aria-hidden="true">{{ $__merchant->initials() }}</span>
+                @else
+                    <span class="sidebar-brand-mark">
+                        <span class="brand-one">one</span><span class="brand-member">member</span>
+                    </span>
+                @endif
+            </span>
+            @if ($__merchant)
+                <span class="sidebar-brand-name">{{ $__merchant->displayName() }}</span>
             @endif
         </a>
-        @if ($__logo)
-            <div class="px-1 mb-4" style="font-size:0.65rem;opacity:0.5;line-height:1;">
-                {{ __('navigation.powered_by') }}
-                <span style="font-family:Arial,sans-serif;font-weight:700;">
-                    <span style="color:#FF1585;">one</span><span style="color:#ffffff;">member</span>
-                </span>
-            </div>
-        @else
-            <div class="mb-3"></div>
-        @endif
+        <div class="px-1 mb-4 sidebar-powered-by">
+            {{ __('navigation.powered_by') }}
+            <span class="sidebar-powered-mark">
+                <span style="color:#FF1585;">one</span><span style="color:#ffffff;">member</span>
+            </span>
+        </div>
 
         {{-- Main Menu --}}
         <div class="sidebar-section-label">{{ __('navigation.main_menu') }}</div>

@@ -28,8 +28,8 @@ This file is read as part of the `Continue OMOS` initialisation sequence (step 2
 | **OMOS Version** | 1.2 |
 | **PHP Version** | 8.3+ (8.5 in production) |
 | **Laravel Version** | 13.17.0 |
-| **Last Code Commit** | OMEGA-001A frontend (see git log) — Reusable Premium Image Upload UI |
-| **Last Code Sprint** | OMEGA-001A frontend — drag/drop + Cropper.js crop/rotate via new reusable `<x-ui.media-upload>` component; approved new feature after ticket premise (a pre-existing "broken" UI) was found not to exist. Backend (ADR-013 `MediaService`) unchanged. 728 tests green |
+| **Last Code Commit** | OMEGA-001D (see git log) — Merchant Branding & Product Experience Polish |
+| **Last Code Sprint** | OMEGA-001D — pure UI polish: sidebar logo container + initials avatar, presentation-only business-name title case, Commerce "View My Store" button, storefront/product-list image and empty-state polish, focus-visible accessibility pass. No business logic, schema, route, or MediaService change. 739 tests green |
 | **Last OMOS Sprint** | OMOS-1.2 Autonomous Sprint Governance (`b99b1f9`) |
 
 ---

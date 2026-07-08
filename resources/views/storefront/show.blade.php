@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $merchant->name }} – {{ config('app.name') }}</title>
-    <meta name="description" content="{{ __('commerce.store_meta', ['merchant' => $merchant->name]) }}">
+    <title>{{ $merchant->displayName() }} – {{ config('app.name') }}</title>
+    <meta name="description" content="{{ __('commerce.store_meta', ['merchant' => $merchant->displayName()]) }}">
     @vite(['resources/css/app.css'])
 </head>
 <body class="storefront-body">
@@ -12,7 +12,7 @@
 
         {{-- Business profile --}}
         <header class="storefront-header">
-            <div class="storefront-brand">{{ $merchant->name }}</div>
+            <div class="storefront-brand">{{ $merchant->displayName() }}</div>
             @if ($merchant->business_type)
                 <div class="storefront-type">{{ $merchant->business_type }}</div>
             @endif
@@ -49,7 +49,7 @@
         @if ($campaign)
             <section class="storefront-loyalty">
                 <div class="storefront-section-title"><i class="bi bi-star-fill me-2"></i>{{ __('commerce.store_loyalty_title') }}</div>
-                <p class="storefront-loyalty-line">{{ __('commerce.store_loyalty_line', ['merchant' => $merchant->name]) }}</p>
+                <p class="storefront-loyalty-line">{{ __('commerce.store_loyalty_line', ['merchant' => $merchant->displayName()]) }}</p>
                 @if ($rewards->isNotEmpty())
                     <ul class="storefront-rewards">
                         @foreach ($rewards as $reward)
@@ -82,7 +82,10 @@
             <div class="storefront-section-title"><i class="bi bi-shop me-2"></i>{{ __('commerce.store_products_title') }}</div>
 
             @if ($products->isEmpty())
-                <p class="text-muted">{{ __('commerce.store_no_products') }}</p>
+                <div class="storefront-empty">
+                    <i class="bi bi-shop" aria-hidden="true"></i>
+                    <p>{{ __('commerce.store_no_products') }}</p>
+                </div>
             @else
                 @foreach ($products as $categoryName => $items)
                     @if ($categoryName !== '')
@@ -169,13 +172,13 @@
                     <button type="submit" class="btn btn-primary w-100">
                         <i class="bi bi-bag-check me-1"></i>{{ __('commerce.order_submit') }}
                     </button>
-                    <p class="text-muted mt-2 mb-0" style="font-size:0.72rem;">{{ __('commerce.order_direct_note', ['merchant' => $merchant->name]) }}</p>
+                    <p class="text-muted mt-2 mb-0" style="font-size:0.72rem;">{{ __('commerce.order_direct_note', ['merchant' => $merchant->displayName()]) }}</p>
                 </form>
             </section>
         @endif
 
         <footer class="storefront-footer">
-            <div>{{ __('commerce.store_seller_note', ['merchant' => $merchant->name]) }}</div>
+            <div>{{ __('commerce.store_seller_note', ['merchant' => $merchant->displayName()]) }}</div>
             <div class="mt-1">{{ __('launch.poster_powered') }}</div>
         </footer>
     </main>

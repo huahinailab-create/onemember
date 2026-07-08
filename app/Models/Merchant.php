@@ -119,6 +119,43 @@ class Merchant extends Model
         return $slug;
     }
 
+    /**
+     * OMEGA-001D — presentation-only title case for merchant names. Never
+     * touches the stored `name` value (forms/editing still show the raw
+     * value); this is purely for read-only display (sidebar, storefront,
+     * headers) so "mike's coffee" / "MIKE'S COFFEE" both read "Mike's
+     * Coffee" without mangling the apostrophe the way naive title-case
+     * (ucwords/MB_CASE_TITLE) does ("Mike'S Coffee").
+     */
+    public function displayName(): string
+    {
+        $name = $this->name;
+
+        // Only normalize names typed as all-lowercase or ALL-CAPS. A
+        // mixed-case name ("Wilkinson LLC", "McDonald's", "iPhone Café")
+        // was almost certainly typed deliberately — forcing it through
+        // title-case would mangle acronyms and connector words ("LLC" ->
+        // "Llc", "and" -> "And") instead of improving presentation.
+        if ($name !== mb_strtolower($name) && $name !== mb_strtoupper($name)) {
+            return $name;
+        }
+
+        return preg_replace_callback(
+            '/(^|[\s\-])([a-z])/u',
+            fn (array $m) => $m[1] . mb_strtoupper($m[2]),
+            mb_strtolower($name),
+        );
+    }
+
+    /** Up to two initials for the sidebar's logo-less brand avatar. */
+    public function initials(): string
+    {
+        $words = preg_split('/\s+/', trim($this->name), -1, PREG_SPLIT_NO_EMPTY);
+        $letters = array_map(fn (string $w) => mb_strtoupper(mb_substr($w, 0, 1)), array_slice($words, 0, 2));
+
+        return implode('', $letters) ?: '?';
+    }
+
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

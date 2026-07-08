@@ -241,6 +241,13 @@
                                 {{-- Logo --}}
                                 <div class="col-12">
                                     <label class="form-label fw-medium">{{ __('settings.logo_label') }}</label>
+                                    <p class="text-muted small mb-2">
+                                        @if ($branding->logo())
+                                            <i class="bi bi-check-circle text-success me-1"></i>{{ __('settings.logo_current') }}
+                                        @else
+                                            <i class="bi bi-info-circle me-1"></i>{{ __('settings.logo_current_none') }}
+                                        @endif
+                                    </p>
                                     <x-ui.media-upload
                                         name="logo"
                                         remove-name="remove_logo"
