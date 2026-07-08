@@ -12,12 +12,23 @@ use Illuminate\Support\Collection;
  */
 class KnowledgeService
 {
+    /** Category display order on the Help Center index (MERCHANT-READY-001). */
+    private const CATEGORY_ORDER = [
+        'getting_started', 'members', 'loyalty', 'commerce', 'launch_kit',
+        'settings', 'troubleshooting', 'quick_start', 'manual', 'faq', 'general',
+    ];
+
     /** @return Collection<string, Collection<int, KnowledgeArticle>> category => articles */
     public function index(string $locale): Collection
     {
         return $this->localePreferred($locale)
             ->sortBy([['sort', 'asc'], ['title', 'asc']])
-            ->groupBy('category');
+            ->groupBy('category')
+            ->sortBy(function ($articles, string $category) {
+                $position = array_search($category, self::CATEGORY_ORDER, true);
+
+                return $position === false ? 99 : $position;
+            });
     }
 
     /** @return Collection<int, KnowledgeArticle> */

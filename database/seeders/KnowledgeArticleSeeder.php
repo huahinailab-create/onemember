@@ -6,36 +6,66 @@ use App\Models\KnowledgeArticle;
 use Illuminate\Database\Seeder;
 
 /**
- * PLATFORM-002 Part 7 — starter Knowledge Center content (never auto-runs;
- * invoke with `php artisan db:seed --class=KnowledgeArticleSeeder`).
- * Real documentation is content work; these two articles prove the rails.
+ * MERCHANT-READY-001 — imports the merchant Help Center content from
+ * database/seeders/knowledge/*.md (front-matter + Markdown body).
+ *
+ * Idempotent (updateOrCreate on slug+locale+version) — safe to re-run on
+ * every deploy: `php artisan db:seed --class=KnowledgeArticleSeeder`.
+ * Content lives in git; editing an article = edit the file, re-seed.
  */
 class KnowledgeArticleSeeder extends Seeder
 {
     public function run(): void
     {
-        KnowledgeArticle::updateOrCreate(
-            ['slug' => 'getting-started', 'locale' => 'en', 'version' => 1],
-            [
-                'category'    => 'getting_started',
-                'title'       => 'Getting started with OneMember',
-                'body'        => "## Welcome\n\n1. Create your first **campaign**.\n2. Add a **reward**.\n3. Add your first **member**.\n4. Print your **Launch Kit** and put the poster by the counter.",
-                'context_key' => 'dashboard',
-                'published'   => true,
-                'sort'        => 1,
-            ],
-        );
+        foreach (glob(database_path('seeders/knowledge/*.md')) as $file) {
+            $parsed = $this->parse(file_get_contents($file));
 
-        KnowledgeArticle::updateOrCreate(
-            ['slug' => 'what-is-counter-mode', 'locale' => 'en', 'version' => 1],
-            [
-                'category'    => 'faq',
-                'title'       => 'What is Counter Mode?',
-                'body'        => "Counter Mode is the fast staff-facing screen for recording purchases.\n\nEnable it in **Settings → Business Preferences**, then open it from the top bar.",
-                'context_key' => 'counter',
-                'published'   => true,
-                'sort'        => 1,
-            ],
-        );
+            if ($parsed === null) {
+                $this->command?->warn('Skipped (bad front-matter): ' . basename($file));
+
+                continue;
+            }
+
+            [$meta, $body] = $parsed;
+
+            KnowledgeArticle::updateOrCreate(
+                [
+                    'slug'    => $meta['slug'],
+                    'locale'  => $meta['locale'] ?? 'en',
+                    'version' => (int) ($meta['version'] ?? 1),
+                ],
+                [
+                    'category'    => $meta['category'] ?? 'general',
+                    'title'       => $meta['title'],
+                    'body'        => trim($body),
+                    'context_key' => $meta['context'] ?? null,
+                    'video_url'   => $meta['video'] ?? null,
+                    'sort'        => (int) ($meta['sort'] ?? 0),
+                    'published'   => true,
+                ],
+            );
+        }
+    }
+
+    /** @return array{0: array<string,string>, 1: string}|null */
+    private function parse(string $raw): ?array
+    {
+        if (! preg_match('/\A---\s*\n(.*?)\n---\s*\n(.*)\z/s', $raw, $m)) {
+            return null;
+        }
+
+        $meta = [];
+        foreach (preg_split('/\r?\n/', $m[1]) as $line) {
+            if (str_contains($line, ':')) {
+                [$key, $value] = explode(':', $line, 2);
+                $meta[trim($key)] = trim(trim($value), '"');
+            }
+        }
+
+        if (empty($meta['slug']) || empty($meta['title'])) {
+            return null;
+        }
+
+        return [$meta, $m[2]];
     }
 }
