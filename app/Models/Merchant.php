@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
 
 class Merchant extends Model
 {
@@ -79,8 +78,18 @@ class Merchant extends Model
     protected static function booted(): void
     {
         static::creating(function (Merchant $merchant) {
+            // OMEGA-001E: slug ("Store URL") generation must never crash
+            // merchant creation — two problems Str::slug() alone doesn't
+            // handle: (1) a name colliding with an existing merchant's
+            // slug (e.g. "Mike's Coffee" and "Mikes Coffee" both become
+            // "mikes-coffee") violates the unique constraint; (2) a name
+            // with no ASCII-transliterable characters, or one that
+            // slugifies to a reserved word, needs a safe fallback.
+            // StoreIdentityService::uniqueSlugFor() is the single place
+            // this algorithm lives — see ADR-015.
             if (empty($merchant->slug)) {
-                $merchant->slug = static::uniqueSlugFor($merchant->name);
+                $merchant->slug = app(\App\Services\StoreIdentity\StoreIdentityService::class)
+                    ->uniqueSlugFor($merchant->name);
             }
 
             $trialDays  = config('subscriptions.trial.days', 30);
@@ -90,33 +99,6 @@ class Merchant extends Model
             $merchant->subscription_status ??= SubscriptionStatus::Trial;
             $merchant->trial_ends_at       ??= now()->addDays($trialDays);
         });
-    }
-
-    /**
-     * Slug generation must never crash merchant creation. Two problems
-     * Str::slug() alone doesn't handle: (1) a name that slugifies to the
-     * same value as an existing merchant's (e.g. "Mike's Coffee" and
-     * "Mikes Coffee" both become "mikes-coffee") violates the `slug`
-     * unique constraint; (2) a name with no ASCII-transliterable
-     * characters (e.g. "!!!" or an all-emoji name) slugifies to an empty
-     * string. Both are handled here rather than left to bubble up as a
-     * 500 at registration/onboarding.
-     */
-    private static function uniqueSlugFor(string $name): string
-    {
-        $base = Str::slug($name);
-        if ($base === '') {
-            $base = 'merchant';
-        }
-
-        $slug = $base;
-        $suffix = 2;
-        while (static::withTrashed()->where('slug', $slug)->exists()) {
-            $slug = "{$base}-{$suffix}";
-            $suffix++;
-        }
-
-        return $slug;
     }
 
     /**

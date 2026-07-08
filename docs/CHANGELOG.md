@@ -1,3 +1,16 @@
+## 2026-07-08 — OMEGA-001E: Store Identity & Public URL Foundation
+
+Formalizes Business Name and Store URL as two distinct merchant identities. Reuses the existing `merchants.slug` column — no migration, no existing route changed, no breaking changes. Spec marks this as the final platform architecture sprint before Merchant Readiness.
+
+- **`App\Services\StoreIdentity\StoreIdentityService`** — the one place that generates (`uniqueSlugFor()`), validates (`isReserved()`, `isAvailable()`), and resolves (`publicStoreUrl()`) a Store URL. `Merchant::booted()` now delegates to it instead of holding the algorithm inline — identical output, existing merchants' slugs untouched (verified: `MerchantSlugTest`'s 5 pre-existing cases pass unmodified).
+- **`config/store_identity.php`** — reserved words (`admin`, `store`, `settings`, ...) documented in one place, enforced at both auto-generation and manual edit.
+- **Settings → Business Profile** — new editable "Store URL" field (merchant-facing UI never says "slug"): live sanitize-as-you-type, debounced live-availability check (`GET /settings/store-url/availability`, read-only, auth-scoped), copyable public-URL preview, and a plain `confirm()` warning — never a silent change, never a redirect — when the value actually differs on submit.
+- **Backward compatible** — Storefront, Join, Launch Kit, Commerce, and Identity all continue reading `$merchant->slug` exactly as before; this sprint centralizes for *future* callers per spec, not a retrofit of every existing one.
+- Caught via in-browser verification (not just tests) before commit: the URL-prefix input group squeezed the editable field to a few characters wide at both mobile and desktop widths — fixed with a full-width field and a mobile-hidden prefix badge.
+- See [ADR-015](./OMOS/12-ADR/ADR-015-Store-Identity-and-Public-URL.md) for the full architecture and future-work recommendations (slug history/redirects, migrating existing `->slug` readers to the service).
+
+Suite: 739 → 754 tests green (15 new `StoreIdentityTest` cases). Build clean. Awaiting CTO review (Type B).
+
 ## 2026-07-08 — OMEGA-001D: Merchant Branding & Product Experience Polish
 
 Pure UI polish — no business logic, schema, route, or `MediaService` behaviour change.

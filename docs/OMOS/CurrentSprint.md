@@ -16,17 +16,32 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | OMEGA-001D |
-| **Title** | Merchant Branding & Product Experience Polish |
+| **Sprint ID** | OMEGA-001E |
+| **Title** | Store Identity & Public URL Foundation |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Sprint Type** | Pure UI polish — no business logic, schema, route, or MediaService behaviour change |
-| **Classification** | Type B — CTO Review (visible merchant/customer-facing presentation changes) |
-| **Sprint File** | Spec provided directly by Product Owner (this board records scope) |
+| **Sprint Type** | Architecture + Settings UI — reuses existing `slug` column, no migration |
+| **Classification** | Type B — CTO Review (new editable merchant-facing field, new endpoint) |
+| **Sprint File** | Spec provided directly by Product Owner (this board records scope); DECISION-098; [ADR-015](./12-ADR/ADR-015-Store-Identity-and-Public-URL.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Fable 5 |
 | **Reviewer** | ChatGPT CTO |
 | **Started** | 2026-07-08 |
 | **Actual Completion** | 2026-07-08 |
+| **Final Commit** | see git log: OMEGA-001E |
+
+### Business Objective
+
+Formalizes Business Name (brand, exactly as typed, never auto-changed) and Store URL (`merchants.slug`, reused — no migration) as two distinct merchant identities, per spec's "intended to be the FINAL platform architecture sprint before Merchant Readiness." New `App\Services\StoreIdentity\StoreIdentityService` centralizes generation, reserved-word/uniqueness validation, and public-URL resolution — `Merchant::booted()` now delegates to it (identical output, existing merchants' slugs untouched). Reserved words documented once in `config/store_identity.php`. Settings → Business Profile gained an editable "Store URL" field (merchant-facing UI never says "slug"): live sanitize-as-you-type, a debounced live-availability check against a new `GET /settings/store-url/availability` endpoint, a copyable public-URL preview, and a `confirm()` warning (no redirect implemented — explicitly out of scope) when the value actually changes. Backward compatible: Storefront/Join/Launch Kit/Commerce/Identity all continue reading `$merchant->slug` unchanged. Caught and fixed a real mobile/desktop layout bug (URL prefix squeezing the input to unreadable width) via in-browser verification before commit.
+
+---
+
+## Previous Sprint (OMEGA-001D)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | OMEGA-001D |
+| **Title** | Merchant Branding & Product Experience Polish |
+| **Status** | ⏳ Awaiting CTO Review |
 | **Final Commit** | see git log: OMEGA-001D |
 
 ### Business Objective

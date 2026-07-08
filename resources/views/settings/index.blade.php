@@ -93,6 +93,40 @@
                                        value="{{ old('name', $merchant?->name) }}"
                                        placeholder="{{ __('settings.business_name_ph') }}" required>
                                 @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                <div class="form-text">{{ __('settings.business_name_hint') }}</div>
+                            </div>
+
+                            {{-- OMEGA-001E — Store URL is a distinct identity from Business Name --}}
+                            @php
+                                // route() requires a real {slug} value — build the base URL by
+                                // generating with a placeholder and stripping it back out.
+                                $storeUrlBase = rtrim(str_replace('__slug__', '', route('storefront.show', '__slug__', absolute: true)), '/') . '/';
+                            @endphp
+                            <div class="col-12" id="store-url-field"
+                                 data-original-slug="{{ $merchant?->slug }}"
+                                 data-check-url="{{ route('settings.store-url.availability') }}">
+                                <label for="slug" class="form-label fw-medium">{{ __('settings.store_url') }}</label>
+                                <div class="input-group" style="max-width:520px;">
+                                    <span class="input-group-text small text-muted d-none d-sm-inline-flex"
+                                          id="store-url-prefix">{{ $storeUrlBase }}</span>
+                                    <input type="text" id="slug" name="slug"
+                                           class="form-control @error('slug') is-invalid @enderror"
+                                           value="{{ old('slug', $merchant?->slug) }}"
+                                           autocomplete="off" spellcheck="false">
+                                    @error('slug')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                </div>
+                                <div class="form-text" id="store-url-status">{{ __('settings.store_url_hint') }}</div>
+                                @if ($merchant?->slug)
+                                    <div class="form-text mt-1 d-flex align-items-center gap-2 flex-wrap">
+                                        <span class="flex-shrink-0">{{ __('settings.public_store_url') }}:</span>
+                                        <code id="store-url-preview" class="small text-truncate" style="max-width:100%;">{{ route('storefront.show', $merchant->slug, absolute: true) }}</code>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2 flex-shrink-0"
+                                                id="store-url-copy" data-copy-label="{{ __('settings.copy') }}"
+                                                data-copied-label="{{ __('settings.copied') }}">
+                                            {{ __('settings.copy') }}
+                                        </button>
+                                    </div>
+                                @endif
                             </div>
 
                             <div class="col-md-6">
@@ -956,6 +990,92 @@
         var tab = new URLSearchParams(window.location.search).get('tab') || 'profile';
         var el  = document.getElementById('tab-' + tab);
         if (el) bootstrap.Tab.getOrCreateInstance(el).show();
+    });
+    </script>
+
+    {{-- OMEGA-001E — Store URL: live sanitize, live availability, copy, confirm-on-change --}}
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var field = document.getElementById('store-url-field');
+        if (!field) return;
+
+        var input      = document.getElementById('slug');
+        var status     = document.getElementById('store-url-status');
+        var preview    = document.getElementById('store-url-preview');
+        var copyBtn    = document.getElementById('store-url-copy');
+        var prefix     = document.getElementById('store-url-prefix')?.textContent.trim() || '';
+        var original   = field.dataset.originalSlug || '';
+        var checkUrl   = field.dataset.checkUrl;
+        var defaultHint = status ? status.textContent : '';
+        var checkTimer = null;
+
+        function sanitize(value) {
+            return value
+                .toLowerCase()
+                .normalize('NFKD').replace(/[̀-ͯ]/g, '') // strip accents, mirrors Str::slug
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
+
+        function setStatus(text, className) {
+            if (!status) return;
+            status.textContent = text;
+            status.className = 'form-text' + (className ? ' ' + className : '');
+        }
+
+        function checkAvailability(slug) {
+            if (!checkUrl) return;
+            fetch(checkUrl + '?slug=' + encodeURIComponent(slug))
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    if (input.value !== slug && sanitize(input.value) !== slug) return; // stale response
+                    if (slug === original) {
+                        setStatus(defaultHint, '');
+                    } else if (data.reserved) {
+                        setStatus('{{ __('settings.store_url_reserved') }}', 'text-danger');
+                    } else if (!data.available) {
+                        setStatus('{{ __('settings.store_url_taken') }}', 'text-danger');
+                    } else {
+                        setStatus('{{ __('settings.store_url_available') }}', 'text-success');
+                    }
+                    if (preview) preview.textContent = prefix + slug;
+                })
+                .catch(function () { /* silent — server-side validation is authoritative */ });
+        }
+
+        input?.addEventListener('input', function () {
+            var caret = input.selectionStart;
+            var sanitized = sanitize(input.value);
+            if (sanitized !== input.value) input.value = sanitized;
+            if (caret !== null) input.setSelectionRange(caret, caret);
+
+            if (preview) preview.textContent = prefix + sanitized;
+
+            clearTimeout(checkTimer);
+            if (sanitized === '' || sanitized === original) {
+                setStatus(defaultHint, '');
+                return;
+            }
+            setStatus('{{ __('settings.store_url_checking') }}', 'text-muted');
+            checkTimer = setTimeout(function () { checkAvailability(sanitized); }, 350);
+        });
+
+        copyBtn?.addEventListener('click', function () {
+            var url = preview ? preview.textContent : '';
+            navigator.clipboard?.writeText(url).then(function () {
+                copyBtn.textContent = copyBtn.dataset.copiedLabel;
+                setTimeout(function () { copyBtn.textContent = copyBtn.dataset.copyLabel; }, 1500);
+            });
+        });
+
+        // Warn (do not block, do not redirect) if Store URL actually changed.
+        field.closest('form')?.addEventListener('submit', function (e) {
+            var current = input ? sanitize(input.value) : original;
+            if (current && current !== original) {
+                var ok = window.confirm('{{ __('settings.store_url_confirm_change') }}');
+                if (!ok) e.preventDefault();
+            }
+        });
     });
     </script>
 

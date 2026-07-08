@@ -28,8 +28,8 @@ This file is read as part of the `Continue OMOS` initialisation sequence (step 2
 | **OMOS Version** | 1.2 |
 | **PHP Version** | 8.3+ (8.5 in production) |
 | **Laravel Version** | 13.17.0 |
-| **Last Code Commit** | OMEGA-001D (see git log) — Merchant Branding & Product Experience Polish |
-| **Last Code Sprint** | OMEGA-001D — pure UI polish: sidebar logo container + initials avatar, presentation-only business-name title case, Commerce "View My Store" button, storefront/product-list image and empty-state polish, focus-visible accessibility pass. No business logic, schema, route, or MediaService change. 739 tests green |
+| **Last Code Commit** | OMEGA-001E (see git log) — Store Identity & Public URL Foundation |
+| **Last Code Sprint** | OMEGA-001E — Business Name vs. Store URL formalized as distinct identities; new `StoreIdentityService` centralizes slug generation/validation/resolution (`config/store_identity.php` reserved words); Settings gained an editable, live-validated "Store URL" field with a copyable public-URL preview and change-warning (no redirect). Reuses `merchants.slug`, no migration. 754 tests green. Marked by spec as the final platform architecture sprint before Merchant Readiness. |
 | **Last OMOS Sprint** | OMOS-1.2 Autonomous Sprint Governance (`b99b1f9`) |
 
 ---

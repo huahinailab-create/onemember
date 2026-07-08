@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Services\Media\MediaService;
+use App\Services\StoreIdentity\StoreIdentityService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -16,9 +17,22 @@ class UpdateMerchantProfileRequest extends FormRequest
     public function rules(): array
     {
         $merchantId = $this->user()->merchant?->id;
+        $identity   = app(StoreIdentityService::class);
 
         return [
             'name'          => ['required', 'string', 'max:255'],
+            // OMEGA-001E — "Store URL" in the UI. Optional: omitted or
+            // blank leaves the merchant's existing slug untouched.
+            'slug' => [
+                'nullable', 'string', 'max:100',
+                'regex:/^[a-z0-9]+(-[a-z0-9]+)*$/',
+                Rule::unique('merchants', 'slug')->ignore($merchantId),
+                function ($attribute, $value, $fail) use ($identity) {
+                    if ($value && $identity->isReserved($value)) {
+                        $fail(__('settings.store_url_reserved'));
+                    }
+                },
+            ],
             'business_type' => ['required', 'string', Rule::in([
                 'Hair Salon', 'Nail Salon', 'Massage & Spa', 'Restaurant & Café',
                 'Hotel', 'Fashion Retail', 'Beauty & Cosmetics', 'Grocery Store',
@@ -53,6 +67,7 @@ class UpdateMerchantProfileRequest extends FormRequest
     {
         return [
             'name'           => 'business name',
+            'slug'           => 'store URL',
             'business_type'  => 'business type',
             'email'          => 'business email',
             'address_line_1' => 'address line 1',

@@ -167,3 +167,4 @@ Reference the context, constraints, and principles that drove the decision.]
 | [ADR-006](./ADR-006-Thailand-First-Strategy.md) | Thailand-First Market Entry Strategy | Approved | 2026-07-02 |
 | [ADR-013](./ADR-013-Unified-Media-Foundation.md) | Unified Media Foundation | Approved | 2026-07-07 |
 | [ADR-014](./ADR-014-Reusable-Media-Upload-UI.md) | Reusable Media Upload UI (Drag/Drop, Crop, Rotate) | Approved | 2026-07-08 |
+| [ADR-015](./ADR-015-Store-Identity-and-Public-URL.md) | Store Identity & Public URL Foundation | Approved | 2026-07-08 |

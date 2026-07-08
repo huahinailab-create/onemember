@@ -36,6 +36,17 @@ class SettingsController extends Controller
         $merchant = $user->merchant;
         $data     = $request->validated();
 
+        // OMEGA-001E — "Store URL" is optional on this form: a blank value
+        // means "leave it as-is", not "clear it". Only ever change the
+        // slug when the merchant explicitly typed a new one.
+        if (empty($data['slug'])) {
+            unset($data['slug']);
+        } elseif ($merchant && $data['slug'] !== $merchant->slug) {
+            $analytics->track('merchant_store_url_changed', [
+                'from' => $merchant->slug, 'to' => $data['slug'],
+            ], $user->id, $merchant->id);
+        }
+
         // Logo removal
         if ($request->boolean('remove_logo') && $merchant) {
             (new MerchantBrandingService($merchant))->deleteLogo();
@@ -71,6 +82,25 @@ class SettingsController extends Controller
 
         return redirect(route('settings') . '?tab=profile')
             ->with('success', 'Business profile updated successfully.');
+    }
+
+    /**
+     * OMEGA-001E — live Store URL availability check, called from Settings
+     * > Business Profile as the merchant types. Read-only; makes no
+     * changes. Sanitizes the same way StoreIdentityService::uniqueSlugFor()
+     * does, so what's shown as "available" matches what would actually be
+     * accepted on save.
+     */
+    public function checkStoreUrlAvailability(Request $request, \App\Services\StoreIdentity\StoreIdentityService $identity)
+    {
+        $merchant  = $request->user()->merchant;
+        $sanitized = $identity->sanitize((string) $request->query('slug', ''));
+
+        return response()->json([
+            'sanitized' => $sanitized,
+            'available' => $sanitized !== '' && $identity->isAvailable($sanitized, $merchant?->id),
+            'reserved'  => $sanitized !== '' && $identity->isReserved($sanitized),
+        ]);
     }
 
     public function updatePreferences(UpdateMerchantPreferencesRequest $request, AnalyticsService $analytics)
