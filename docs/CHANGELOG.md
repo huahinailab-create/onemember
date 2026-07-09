@@ -1,3 +1,28 @@
+## 2026-07-09 — MERCHANT-READY-001 / MR-001: Merchant Launch Dashboard
+
+Help every new merchant understand exactly what to do next. No new platform
+architecture, no new business modules — evolves the LAUNCH-001 checklist
+(`LaunchChecklistService`, same `launch_flags` mechanism) to the full launch
+path. Sprint umbrella defined in docs/OMOS/Sprints/MERCHANT-READY-001.md.
+
+- **Launch Checklist** — reusable tenant-scoped `<x-launch.checklist>`:
+  Business Profile, Logo, Store URL, First Product*, First Campaign,
+  First Reward, First Member, QR Poster viewed, Storefront visited*
+  (* = shown when the Commerce App is installed, per LAUNCH-001 precedent).
+  Completed count, progress %, visual progress bar, Launch Ready badge at 100%.
+- **Next Recommended Action** — the dashboard recommends exactly ONE next
+  action: first incomplete item in fixed priority order. Deterministic —
+  no AI, no randomness.
+- **Merchant Health Card** — `<x-launch.health-card>` with green/amber/red
+  per dimension (Profile, Logo, Store URL, Products, Campaigns, Members,
+  Storefront, Launch %).
+- **Tracking flags** — `qr_poster_viewed` set when the Launch Kit poster is
+  opened; `storefront_visited` set when the merchant views their own public
+  storefront (never another merchant's — tenant isolation tested).
+- Superseded checklist items "Open Launch Kit" / "Try Counter Mode" removed
+  from the list; their flags continue to be recorded.
+- Mobile responsive; ARIA on progress bar and status indicators; EN + TH.
+
 ## 2026-07-09 — MERCHANT-READY-001: Help Center & User Manual
 
 - content: 47 English merchant articles (Getting Started, Members, Loyalty,

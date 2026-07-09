@@ -5,8 +5,8 @@
 | **Document Owner** | ChatGPT CTO |
 | **Version** | Live |
 | **OMOS Version** | 1.1 |
-| **Status** | ⏳ Awaiting CTO Review |
-| **Last Updated** | 2026-07-08 |
+| **Status** | 🔄 In Progress — MERCHANT-READY-001 / MR-001 |
+| **Last Updated** | 2026-07-09 |
 
 | **Related Documents** | [EXECUTE.md](./EXECUTE.md), [Product-State.md](./Product-State.md), [Sprints/README.md](./Sprints/README.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md) |
 
@@ -17,21 +17,21 @@
 | Field | Value |
 |---|---|
 | **Sprint ID** | MERCHANT-READY-001 |
-| **Title** | OneMember Help Center & User Manual (real merchant content) |
-| **Status** | ⏳ Awaiting CTO Review |
-| **Sprint Type** | Content + surfacing (no business-logic changes) |
-| **Classification** | Type A — content, docs, tests |
-| **Sprint File** | Spec provided directly by Product Owner (this board records scope) |
+| **Title** | Merchant Readiness (umbrella: Help Center & Manual ✅ · MR-001 Merchant Launch Dashboard 🔄) |
+| **Status** | 🔄 In Progress — MR-001 |
+| **Sprint Type** | Merchant experience — guidance, content, dashboard (no new platform architecture, no new business modules) |
+| **Classification** | Type A — dashboard surfacing on existing rails, content, docs, tests |
+| **Sprint File** | [Sprints/MERCHANT-READY-001.md](./Sprints/MERCHANT-READY-001.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Fable 5 |
 | **Reviewer** | ChatGPT CTO |
 | **Started** | 2026-07-09 |
-| **Actual Completion** | 2026-07-09 |
-| **Final Commit** | see git log: MERCHANT-READY-001 (fable-dev) |
+| **Actual Completion** | — |
+| **Final Commit** | Help Center: `856a9e9`/`dd801dd` (merged `c698cea`) · MR-001: see git log |
 
 ### Business Objective
 
-Populate the Knowledge Center (PLATFORM-002 P7/P11 rails) with a real merchant manual: 47 English articles across Getting Started, Members, Loyalty, Commerce, Launch Kit, Settings, Troubleshooting and 8 Industry Quick Starts, plus 6 Thai Getting Started articles (English fallback covers the rest). Content ships as git-versioned markdown imported by an idempotent seeder. Help Center added to the sidebar; contextual ? buttons wired on Members, Campaigns, Products and Launch Kit. Preceded on the same branch by OMEGA-001A/B (commerce image experience + UX polish).
+Help every new merchant understand exactly what to do next. Work item 1 (✅ shipped): 47 EN + 6 TH merchant manual articles on the PLATFORM-002 Knowledge Center rails, Help Center sidebar link, contextual ? buttons on Members, Campaigns, Products and Launch Kit. Work item 2 (🔄 MR-001 — Merchant Launch Dashboard): the LAUNCH-001 checklist evolved to the full merchant launch path (profile, logo, Store URL, first product/campaign/reward/member, QR poster, storefront visit) as a reusable tenant-scoped component with progress %, completed count, progress bar and a Launch Ready badge at 100%; a deterministic Next Recommended Action (first incomplete item, fixed priority order — no AI, no randomness); and a Merchant Health Card with green/amber/red status per dimension. No new architecture; no new business modules.
 
 ---
 

@@ -5,7 +5,7 @@
 | **Document Owner** | ChatGPT CTO |
 | **Version** | 1.0.0 |
 | **Status** | Active |
-| **Last Updated** | 2026-07-03 |
+| **Last Updated** | 2026-07-09 |
 | **Related Documents** | [CurrentSprint.md](./CurrentSprint.md), [Audits/AI-03-Application-Audit.md](./Audits/AI-03-Application-Audit.md), [Engineering-Backlog.md](./Engineering-Backlog.md), [09-Roadmap/Long-term-Roadmap.md](./09-Roadmap/Long-term-Roadmap.md) |
 
 ---
@@ -28,8 +28,8 @@ This file is read as part of the `Continue OMOS` initialisation sequence (step 2
 | **OMOS Version** | 1.2 |
 | **PHP Version** | 8.3+ (8.5 in production) |
 | **Laravel Version** | 13.17.0 |
-| **Last Code Commit** | merge: integrate merchant readiness and OMEGA platform work (`main`) |
-| **Last Code Sprint** | Integration merge of two parallel lines: **fable-dev** — MERCHANT-READY-001 (47 EN + 6 TH help articles on the PLATFORM-002 Knowledge Center rails, sidebar + contextual help), OMEGA-001A/B (commerce image experience + UX polish), PLATFORM-002 (12-part foundation) · **origin/main** — OMEGA-001C Unified Media Foundation (`MediaService`, `config/media.php`, ADR-013), OMEGA-001A frontend (reusable `x-ui.media-upload`, CSP blob fix), OMEGA-001D branding/product polish, OMEGA-001E Store Identity (`StoreIdentityService`, editable live-validated Store URL). Post-merge the real `GdImagePipeline` (WebP ≤1200px, from fable-dev's optimizer) is the bound MediaService pipeline. |
+| **Last Code Commit** | feat(dashboard): merchant launch dashboard (`merchant-ready-001-mr-001`) |
+| **Last Code Sprint** | **MERCHANT-READY-001 / MR-001 — Merchant Launch Dashboard**: the LAUNCH-001 checklist evolved to the full launch path (profile, logo, Store URL, first product/campaign/reward/member, QR poster viewed, storefront visited) as a reusable tenant-scoped Blade component with progress %, completed count, progress bar and Launch Ready badge; deterministic Next Recommended Action; Merchant Health Card (green/amber/red per dimension). Before that: the `c698cea` integration merge — **fable-dev** MERCHANT-READY-001 help manual (47 EN + 6 TH articles), OMEGA-001A/B, PLATFORM-002 (12-part foundation) · **origin/main** OMEGA-001C Media Foundation, OMEGA-001A frontend, OMEGA-001D polish, OMEGA-001E Store Identity. Post-merge the real `GdImagePipeline` (WebP ≤1200px) is the bound MediaService pipeline. |
 | **Last OMOS Sprint** | OMOS-1.2 Autonomous Sprint Governance (`b99b1f9`) |
 
 ---
@@ -76,11 +76,11 @@ Next health score update: after next sprint completes.
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | RELEASE-1B |
-| **Title** | Corporate Website & Corporate Identity |
-| **Status** | ⏳ Awaiting CTO Review |
-| **Sprint File** | [Sprints/RELEASE-1B-Corporate-Website.md](./Sprints/RELEASE-1B-Corporate-Website.md) |
-| **Final Commit** | `568ff7a` |
+| **Sprint ID** | MERCHANT-READY-001 |
+| **Title** | Merchant Readiness (Help Center & Manual ✅ · MR-001 Merchant Launch Dashboard 🔄) |
+| **Status** | 🔄 In Progress — MR-001 |
+| **Sprint File** | [Sprints/MERCHANT-READY-001.md](./Sprints/MERCHANT-READY-001.md) |
+| **Final Commit** | Help Center: `856a9e9`/`dd801dd` · MR-001: see git log |
 
 ---
 
