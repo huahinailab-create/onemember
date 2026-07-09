@@ -17,8 +17,8 @@
 | Field | Value |
 |---|---|
 | **Sprint ID** | MERCHANT-READY-001 |
-| **Title** | Merchant Readiness (umbrella: Help Center & Manual ✅ · MR-001 ✅ · MR-002 ✅ CTO approved · MR-003 Onboarding Experience 🔄) |
-| **Status** | 🔄 In Progress — MR-003 |
+| **Title** | Merchant Readiness (umbrella: Help Center ✅ · MR-001 ✅ · MR-002 ✅ · MR-003 ✅ all CTO approved · MR-004 Readiness Audit 🔄) |
+| **Status** | 🔄 In Progress — MR-004 |
 | **Sprint Type** | Merchant experience — guidance, content, dashboard (no new platform architecture, no new business modules) |
 | **Classification** | Type A — dashboard surfacing on existing rails, content, docs, tests |
 | **Sprint File** | [Sprints/MERCHANT-READY-001.md](./Sprints/MERCHANT-READY-001.md) |
@@ -31,7 +31,7 @@
 
 ### Business Objective
 
-Help every new merchant understand exactly what to do next. Work item 1 (✅ shipped): 47 EN + 6 TH merchant manual articles on the PLATFORM-002 Knowledge Center rails, Help Center sidebar link, contextual ? buttons on Members, Campaigns, Products and Launch Kit. Work item 2 (✅ MR-001, CTO approved): Merchant Launch Dashboard — the LAUNCH-001 checklist evolved to the full launch path as a reusable tenant-scoped component (progress %, Launch Ready badge), deterministic Next Recommended Action, and a green/amber/red Merchant Health Card. Work item 3 (✅ MR-002, CTO approved): empty states with friendly EN/TH copy + CTA + contextual Help Center link on every list screen; ? help buttons on all 8 primary screens; /rewards dead end removed; regression test forbids dead help links. Work item 4 (🔄 MR-003 — Merchant Onboarding Experience): guided launch journey — after completing any launch step the merchant sees why it matters + the ONE deterministic next action (`x-launch.step-success`); raw-English create flashes localized (EN/TH); encouraging steps-left progress copy; a calm 🎉 Launch Ready celebration with quick actions at 100%; onboarding finish hands off to the dashboard launch plan. Wizard business rules untouched; no new architecture.
+Help every new merchant understand exactly what to do next. Work item 1 (✅ shipped): 47 EN + 6 TH merchant manual articles on the PLATFORM-002 Knowledge Center rails, Help Center sidebar link, contextual ? buttons on Members, Campaigns, Products and Launch Kit. Work item 2 (✅ MR-001, CTO approved): Merchant Launch Dashboard — the LAUNCH-001 checklist evolved to the full launch path as a reusable tenant-scoped component (progress %, Launch Ready badge), deterministic Next Recommended Action, and a green/amber/red Merchant Health Card. Work item 3 (✅ MR-002, CTO approved): empty states with friendly EN/TH copy + CTA + contextual Help Center link on every list screen; ? help buttons on all 8 primary screens; /rewards dead end removed; regression test forbids dead help links. Work item 4 (✅ MR-003, CTO approved): guided launch journey — step-success guidance (why + next action), encouraging progress copy, 🎉 Launch Ready celebration, onboarding handoff. Work item 5 (🔄 MR-004 — Merchant Readiness Audit): senior-QA/UX audit of the whole merchant experience — no features/logic/architecture/schema. Small safe fixes only: 11 remaining raw-English flashes/limit errors localized to existing EN/TH keys, 4 a11y label fixes, 1 hardcoded alt, 1 duplicate lang key. Verified clean: zero horizontal overflow at 375/768 across ~20 pages, EN↔TH lang parity 100%, consistent page titles, no dead links. TH/Myanmar international readiness documented (document-only per spec) in the sprint file's audit summary.
 
 ---
 

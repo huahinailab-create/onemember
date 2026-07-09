@@ -131,5 +131,4 @@ return [
     'portal_toggled_enabled'    => 'Member portal enabled.',
     'portal_toggled_disabled'   => 'Member portal disabled.',
     'portal_qr_regenerated'     => 'QR code regenerated. Old QR codes are now invalid.',
-    'qr_coming_soon'            => 'QR Code — Coming Soon',
 ];

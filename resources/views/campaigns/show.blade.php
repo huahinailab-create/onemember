@@ -350,8 +350,8 @@
 
                                 {{-- Earn Method (read-only in MVP) --}}
                                 <div class="mb-3">
-                                    <label class="form-label form-label-sm">{{ __('campaigns.earn_method') }}</label>
-                                    <select class="form-select form-select-sm bg-light" disabled>
+                                    <label class="form-label form-label-sm" for="earn_method_display">{{ __('campaigns.earn_method') }}</label>
+                                    <select id="earn_method_display" class="form-select form-select-sm bg-light" disabled>
                                         <option selected>{{ __('campaigns.spend_amount') }}</option>
                                     </select>
                                     <div class="form-text">{{ __('campaigns.earn_method_hint') }}</div>
@@ -730,10 +730,12 @@
                                    name="reward_search"
                                    class="form-control form-control-sm reward-search-input"
                                    placeholder="{{ __('campaigns.search_rewards_ph') }}"
+                                   aria-label="{{ __('campaigns.search_rewards_ph') }}"
                                    value="{{ request('reward_search') }}"
                                    style="min-width:0;">
-                            <button type="submit" class="btn btn-sm btn-outline-secondary flex-shrink-0">
-                                <i class="bi bi-search"></i>
+                            <button type="submit" class="btn btn-sm btn-outline-secondary flex-shrink-0"
+                                    aria-label="{{ __('buttons.search') }}" title="{{ __('buttons.search') }}">
+                                <i class="bi bi-search" aria-hidden="true"></i>
                             </button>
                             @if (request('reward_search'))
                                 <a href="{{ route('campaigns.show', $campaign) . '?' . http_build_query(['reward_filter' => $rewardFilter, 'active_tab' => 'rewards']) }}"

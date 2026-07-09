@@ -23,7 +23,8 @@ MERCHANT-READY-001 is the umbrella sprint that turns the platform built through 
 | Help Center & User Manual | 47 EN + 6 TH articles on the Knowledge Center rails; sidebar link; contextual `?` buttons | ✅ Shipped (`856a9e9`, `dd801dd`) |
 | **MR-001 — Merchant Launch Dashboard** | Launch Checklist component, Next Recommended Action, Merchant Health Card | ✅ Shipped (`954135e`, `25b8d97`) — CTO approved |
 | **MR-002 — Empty States & Contextual Help** | Every empty state answers "what next?"; help buttons on all 8 primary screens; no dead help links | ✅ Shipped (`57bc844`) — CTO approved |
-| **MR-003 — Merchant Onboarding Experience** | Guided launch journey: step-success guidance, encouraging progress, Launch Ready celebration | This branch |
+| **MR-003 — Merchant Onboarding Experience** | Guided launch journey: step-success guidance, encouraging progress, Launch Ready celebration | ✅ Shipped (`4a33f3c`) — CTO approved |
+| **MR-004 — Merchant Readiness Audit** | UX/QA/a11y/i18n audit; small safe fixes only; TH/MM readiness review | This branch |
 
 ---
 
@@ -128,6 +129,68 @@ To be measured across the first pilot merchant cohort:
 - No changes to onboarding business rules, steps, validation, trial start, or starter-campaign creation
 - No new platform architecture, schema, or modules
 - QR-poster and storefront-visit steps don't flash step-success (they're visit-flags, not form submits) — the dashboard next-action covers them
+
+---
+
+## MR-004 — Merchant Readiness Audit (summary)
+
+Senior-QA/UX audit of the whole merchant experience. **No features, no business logic, no architecture, no schema.** Small safe fixes only; everything else documented here.
+
+### Part 1+4 — Journey & consistency findings
+
+| # | Finding | Action |
+|---|---|---|
+| 1 | 8 success flashes (member/campaign/reward update-archive-pause-configure) were hardcoded English while EN+TH keys already existed in `messages.php` — Thai merchants saw English after these actions | ✅ Fixed — now use `__('messages.*')` |
+| 2 | 3 plan-limit validation errors (member/campaign/reward store) hardcoded English; `messages.*_limit_reached` keys existed | ✅ Fixed |
+| 3 | `alt="QR Code"` hardcoded in members/show | ✅ Fixed — `__('members.qr_code')` |
+| 4 | Duplicate `qr_coming_soon` key in `lang/en/members.php` + `lang/th/members.php` (second silently won) | ✅ Fixed — deduped |
+| 5 | Page titles: all 14 primary merchant pages use localized `pageTitle` slots consistently | ✅ Clean — no action |
+| 6 | EN↔TH lang-file parity: **zero missing keys across all files** (scripted check) | ✅ Clean |
+| 7 | No `href="#"` dead links, no TODO/FIXME in merchant views; feedback modal fully localized | ✅ Clean |
+| 8 | Rewards nav → campaigns landing (MR-002); Transactions/Reports friendly placeholders | ✅ Already handled |
+
+### Part 2 — Mobile audit (375 / 768 / desktop)
+
+Checked with real browser rendering, logged-in merchant with data (dashboard, members list/create/detail, campaigns list/create/detail/analytics, products list/create, orders, commerce settings, launch kit, settings, help, rewards, reports, subscription, apps, public storefront):
+
+- **375px: zero horizontal overflow on every page checked.** 768px (table-heavy pages re-checked): zero overflow. Desktop verified during MR-001–003.
+- Empty states, button hierarchy and spacing follow the design system (upgraded in MR-002/003); `.page-header` wraps actions below the title at <576px by design — consistent app-wide.
+
+### Part 3 — Accessibility findings
+
+| # | Finding | Action |
+|---|---|---|
+| 1 | Reward-search submit button (campaign page) was icon-only with no accessible name | ✅ Fixed — aria-label + title |
+| 2 | Reward-search text input had placeholder but no label | ✅ Fixed — aria-label |
+| 3 | "Earn method" read-only select not associated with its visible label | ✅ Fixed — for/id |
+| 4 | `x-ui.media-upload` native fallback file input had no accessible name (visible when JS fails) | ✅ Fixed — aria-label in the shared component |
+| 5 | `html lang` follows the active locale; ARIA progressbars complete; icon-only topbar/help buttons all carry aria-labels; scripted scan found no other unlabelled controls on audited pages | ✅ Clean |
+| 6 | No skip-to-content link in the app layout | 📋 Recommendation (small, but styling/testing beyond audit scope) |
+| 7 | Contrast: navy `#1A2E5A` on white 12.9:1 ✓; brand pink `#FF1585` on white ≈3.7:1 — fine for non-text (progress fills, accents) per WCAG 1.4.11, **should not be used for body-size text on white** | 📋 Guideline documented |
+| 8 | `d-none` remove-checkbox inside media-upload is JS-state only, never user-visible | ✅ No action needed |
+
+### Part 5 — International readiness review (Thailand · Myanmar) — DOCUMENT ONLY
+
+**Assumptions the codebase currently makes**
+- Merchant **UI** languages are EN + TH only (`internal_languages`); other locales are customer-facing offers that fall back to English (BETA-008B).
+- One primary currency per merchant, display-only, `number_format(x, 2)` everywhere — no conversion, no per-currency decimal rules (ADR-011: money never touches OneMember).
+- Dates render Gregorian (CE) via Carbon `translatedFormat`; no Buddhist-era (BE) option.
+- Phone numbers: free-form string (max 30), uniqueness is exact-string per merchant — no normalization (`08x` vs `+66 8x` are different members).
+- Web font (Figtree via bunny.net CDN) covers Latin only; Thai/Burmese glyphs fall back to system fonts.
+
+**Thailand — READY (launch market)**
+- TH default country, THB, Asia/Bangkok, full Thai UI with completeness tests, Thai help articles (6 + EN fallback), storefront/join/portal all locale-aware. Known cosmetic gap: CE-only dates (most Thai SaaS accepts this; BE display would be a welcome polish).
+
+**Myanmar — PARTIALLY READY (customer-side yes, merchant-side no)**
+- ✅ Already in place: `MM` country, `MMK` currency, `Asia/Yangon` (+06:30 handled by PHP tz db), Burmese (`my`) offerable as a *customer* language, storefront QR-payment-image flow is provider-agnostic (KBZPay/WavePay QR images work exactly like PromptPay).
+- ⚠️ Limitations:
+  1. No Burmese merchant UI — `lang/my/` is a 3-key placeholder; merchants would run the app in English.
+  2. **Zawgyi vs Unicode**: a large share of Myanmar devices still type/render the legacy Zawgyi encoding; free-text member names/products entered in Zawgyi will look garbled on Unicode devices and vice versa. No detection/conversion exists (and none should be built until the market is real).
+  3. MMK amounts show 2 decimals (`1,500.00 MMK`) — kyat is used without decimals; needs per-currency decimal config before launch.
+  4. Latin-only webfont → Burmese renders in system fonts of very mixed quality on older Android.
+  5. Terms/legal bundle is EN/TH draft only (DR-33); no Myanmar review.
+  6. CDN-hosted fonts + ~350KB CSS matter more on Myanmar bandwidth; consider self-hosted fonts and a lighter first paint.
+- **Recommendations (future, in order)**: per-currency decimal rules in `config/localization.php`; translate `lang/my/` + extend `TranslationCompletenessTest`; self-host fonts incl. a Myanmar Unicode face (e.g. Noto Sans Myanmar); phone normalization strategy before any cross-border identity work; legal review per market. No code changed for Part 5 (per spec).
 
 ### Decisions & Notes
 

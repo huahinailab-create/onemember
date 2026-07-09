@@ -88,7 +88,7 @@ class MemberController extends Controller
         $member->update($request->validated());
 
         return redirect()->route('members.show', $member)
-                         ->with('success', 'Member updated successfully.');
+                         ->with('success', __('messages.member_updated'));
     }
 
     public function archive(Request $request, Member $member, AnalyticsService $analytics)
@@ -100,7 +100,7 @@ class MemberController extends Controller
 
         $analytics->track('member_archived', [], $request->user()->id, $request->user()->merchant?->id);
 
-        return redirect()->route('members')->with('success', 'Member archived successfully.');
+        return redirect()->route('members')->with('success', __('messages.member_archived'));
     }
 
     public function create(SubscriptionService $subscriptionService)
@@ -119,7 +119,7 @@ class MemberController extends Controller
 
         if ($merchant && ! $subscriptionService->canCreateMember($merchant)) {
             return back()->withInput()->withErrors([
-                'limit' => 'You have reached your member limit on your current plan. Please upgrade your subscription to add more members.',
+                'limit' => __('messages.member_limit_reached'),
             ]);
         }
 

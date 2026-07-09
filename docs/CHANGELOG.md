@@ -1,3 +1,33 @@
+## 2026-07-10 — MERCHANT-READY-001 / MR-004: Merchant Readiness Audit
+
+Senior-QA/UX and production-readiness audit of the entire merchant
+experience. No features, no business logic, no architecture, no schema —
+small safe fixes only; full findings in
+docs/OMOS/Sprints/MERCHANT-READY-001.md (audit summary).
+
+- **Localization** — the last 8 raw-English success flashes (member/
+  campaign/reward update, archive, pause, configure) and 3 plan-limit
+  errors now use their existing EN/TH messages.* keys; hardcoded
+  alt="QR Code" localized; duplicate qr_coming_soon lang key removed.
+  Scripted check: EN↔TH key parity is 100% across all lang files.
+- **Accessibility** — reward-search button (icon-only) and input gained
+  accessible names; earn-method read-only select associated with its
+  label; x-ui.media-upload's native fallback file input gained an
+  aria-label (shared component — fixes every media upload form).
+- **Mobile** — real-browser sweep of ~20 merchant pages at 375px and
+  768px (logged-in merchant with data): zero horizontal overflow
+  anywhere; desktop verified during MR-001–003.
+- **Consistency** — page titles all localized slots; no dead links or
+  view TODOs; button/CTA/help-button patterns consistent post MR-002/3.
+- **International readiness (documented only)** — Thailand READY.
+  Myanmar partially ready: MM/MMK/Asia yangon +06:30/Burmese-offer all
+  in place, but merchant UI is EN/TH-only, Zawgyi-vs-Unicode input risk,
+  MMK shows 2 decimals, Latin-only webfont. Recommendations recorded
+  (per-currency decimals, lang/my translation, self-hosted Myanmar
+  Unicode font, phone normalization, per-market legal review).
+- Known recommendations left open: skip-to-content link; brand pink not
+  for body-size text on white (≈3.7:1); BE-date display option for TH.
+
 ## 2026-07-09 — MERCHANT-READY-001 / MR-003: Merchant Onboarding Experience
 
 Onboarding becomes a guided launch journey: a merchant never has to ask

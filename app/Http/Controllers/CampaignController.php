@@ -63,7 +63,7 @@ class CampaignController extends Controller
 
         if ($merchant && ! $subscriptionService->canCreateCampaign($merchant)) {
             return back()->withInput()->withErrors([
-                'limit' => 'You have reached your campaign limit on your current plan. Please upgrade your subscription to create more campaigns.',
+                'limit' => __('messages.campaign_limit_reached'),
             ]);
         }
 
@@ -162,7 +162,7 @@ class CampaignController extends Controller
         $campaign->update(['settings' => $request->validated()]);
 
         return redirect()->route('campaigns.show', $campaign)
-                         ->with('success', 'Campaign configuration saved.');
+                         ->with('success', __('messages.campaign_configured'));
     }
 
     public function update(UpdateCampaignRequest $request, LoyaltyProgram $campaign)
@@ -172,7 +172,7 @@ class CampaignController extends Controller
 
         $campaign->update($request->validated());
 
-        return redirect()->route('campaigns.show', $campaign)->with('success', 'Campaign updated successfully.');
+        return redirect()->route('campaigns.show', $campaign)->with('success', __('messages.campaign_updated'));
     }
 
     public function pause(Request $request, LoyaltyProgram $campaign)
@@ -182,7 +182,7 @@ class CampaignController extends Controller
 
         $campaign->update(['status' => CampaignStatus::Paused]);
 
-        return redirect()->route('campaigns.show', $campaign)->with('success', 'Campaign paused.');
+        return redirect()->route('campaigns.show', $campaign)->with('success', __('messages.campaign_paused'));
     }
 
     public function archive(Request $request, LoyaltyProgram $campaign, AnalyticsService $analytics)
@@ -194,6 +194,6 @@ class CampaignController extends Controller
 
         $analytics->track('campaign_archived', [], $request->user()->id, $request->user()->merchant?->id);
 
-        return redirect()->route('campaigns.index')->with('success', 'Campaign archived.');
+        return redirect()->route('campaigns.index')->with('success', __('messages.campaign_archived'));
     }
 }

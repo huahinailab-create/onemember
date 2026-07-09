@@ -131,5 +131,4 @@ return [
     'portal_toggled_enabled'    => 'เปิดใช้งานพอร์ทัลสมาชิกแล้ว',
     'portal_toggled_disabled'   => 'ปิดใช้งานพอร์ทัลสมาชิกแล้ว',
     'portal_qr_regenerated'     => 'สร้าง QR โค้ดใหม่แล้ว QR เดิมใช้ไม่ได้แล้ว',
-    'qr_coming_soon'            => 'QR โค้ด — เร็วๆ นี้',
 ];

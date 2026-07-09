@@ -231,7 +231,7 @@
                     @if ($member->portal_enabled && $member->public_uuid)
                         <div class="mb-3">
                             <img src="{{ route('portal.qr', $member->public_uuid) }}"
-                                 alt="QR Code"
+                                 alt="{{ __('members.qr_code') }}"
                                  width="140" height="140"
                                  class="img-fluid"
                                  loading="lazy">
