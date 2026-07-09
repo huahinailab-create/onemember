@@ -16,9 +16,32 @@
 
 | Field | Value |
 |---|---|
+| **Sprint ID** | INTERNATIONAL-001 |
+| **Title** | Thailand + Myanmar Readiness Blueprint |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Architecture & product planning — documentation ONLY (no code, schema, routes, features) |
+| **Classification** | Type A — docs |
+| **Sprint File** | [Roadmaps/INTERNATIONAL-001.md](./Roadmaps/INTERNATIONAL-001.md) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 (Solution Architect role) |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-10 |
+| **Actual Completion** | 2026-07-10 |
+| **Final Commit** | see git log: INTERNATIONAL-001 (merchant-ready-001-mr-001) |
+
+### Business Objective
+
+Technical blueprint for OneMember's first international expansion (Thailand hardening + Myanmar activation; Laos/Cambodia/Vietnam/Malaysia/Singapore ranked). Covers country strategy, per-country address architecture (postcode visibility rules, Township-vs-District semantics), language strategy per surface, currency strategy (billing vs display, per-currency decimals — MMK has none), date/time (Buddhist-Era display recommendation, Asia/Yangon +06:30), Myanmar Unicode/Zawgyi typography risk, payment readiness (Stripe/Omise/2C2P/PromptPay tracks), legal review areas (PDPA, DR-33, MM sanctions), and a 3-phase roadmap (TH hardening → market-agnostic foundations → Myanmar activation). Recommendations only — nothing implemented.
+
+---
+
+## Previous Sprint (MERCHANT-READY-001)
+
+| Field | Value |
+|---|---|
 | **Sprint ID** | MERCHANT-READY-001 |
-| **Title** | Merchant Readiness (umbrella: Help Center ✅ · MR-001 ✅ · MR-002 ✅ · MR-003 ✅ all CTO approved · MR-004 Readiness Audit 🔄) |
-| **Status** | 🔄 In Progress — MR-004 |
+| **Title** | Merchant Readiness (Help Center ✅ · MR-001 ✅ · MR-002 ✅ · MR-003 ✅ · MR-004 ✅) |
+| **Status** | ✅ COMPLETE — declared by CTO 2026-07-10 |
 | **Sprint Type** | Merchant experience — guidance, content, dashboard (no new platform architecture, no new business modules) |
 | **Classification** | Type A — dashboard surfacing on existing rails, content, docs, tests |
 | **Sprint File** | [Sprints/MERCHANT-READY-001.md](./Sprints/MERCHANT-READY-001.md) |

@@ -1,3 +1,28 @@
+## 2026-07-10 — INTERNATIONAL-001: Thailand + Myanmar Readiness Blueprint
+
+Documentation-only architecture & product planning sprint (MERCHANT-READY-001
+declared COMPLETE by CTO). New: docs/OMOS/Roadmaps/INTERNATIONAL-001.md —
+no code, no schema, no routes, no features.
+
+- Country strategy: TH (ready) → MM (this blueprint) → LA → KH → VN → MY → SG,
+  with the rule that Phase 2 machinery makes markets 3–7 config + content only
+- Address architecture per country: postcode required/optional/HIDDEN (Myanmar
+  hides it), Township replaces District for MM, tier/label profiles for
+  TH/MM/LA/KH/VN/MY/SG — config-first, no migrations planned
+- Language strategy per surface (merchant UI 100%-or-nothing policy; customer
+  surfaces translate first; Burmese support staffing is a launch gate)
+- Currency strategy: billing vs display separated (ADR-011); per-currency
+  decimal rules flagged as first Phase 2 item (MMK/VND/LAK/KHR/JPY = 0 dp)
+- Date/time: Buddhist-Era as TH display-only preference; Gregorian for MM;
+  Asia/Yangon +06:30 confirmed handled
+- Typography: Unicode-only Burmese strings, self-hosted Noto Sans Thai/Myanmar
+  via unicode-range, Zawgyi detection strategy
+- Payments: Stripe kept global; Omise/PromptPay recommended evaluation for TH
+  billing; 2C2P deferred to market #3; MMK billing options (USD/manual/partner)
+  deferred to MM pilot; storefront QR model confirmed provider-agnostic
+- Legal: PDPA + DR-33 (TH, on the clock), MM data/sanctions screening areas
+- 3-phase roadmap + 8 ranked risks (Zawgyi, MMK rails, sanctions top the list)
+
 ## 2026-07-10 — MERCHANT-READY-001 / MR-004: Merchant Readiness Audit
 
 Senior-QA/UX and production-readiness audit of the entire merchant
