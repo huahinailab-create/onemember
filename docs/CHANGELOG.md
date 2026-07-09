@@ -1,3 +1,36 @@
+## 2026-07-10 — GO-TO-MARKET-001: Merchant Acquisition Strategy
+
+Business-strategy sprint, documentation only (no software). New:
+docs/OMOS/Roadmaps/GO-TO-MARKET-001.md — the complete GTM plan for the
+first 100 merchants.
+
+- Vision & positioning: "delivery apps rent you customers; OneMember
+  helps you keep yours"; UVP anchored to the built 10-minute guided
+  launch journey
+- Markets: Thailand direct/founder-led (all first-100 effort); Myanmar
+  partner-led and pilot-gated per INTERNATIONAL-001; LA/KH/VN/MY/SG
+  sequenced
+- 10 merchant segments mapped (size, current loyalty, pains, triggers,
+  rejections, modules); beachhead = coffee shops + hair/nail salons
+- 4 personas (owner-operator, hired manager, multi-branch owner, ops
+  manager) with decision processes and sales approaches
+- Pricing positioning for Free/Starter/Professional/Enterprise
+  (Free-100 as distribution; trial = Professional; Enterprise =
+  chains/white-label/corporate controls); amounts stay DECISION-014
+- 9-stage sales journey wired to existing product telemetry (launch
+  checklist = activation, MerchantHealthService = churn signals)
+- 14 channels evaluated: street cold outreach + LINE + Facebook core;
+  email de-prioritized; POS vendors strategic
+- Thailand playbook (street-cluster demos, LINE-first comms, objection
+  battle-card, scripted 10-minute demo) and Myanmar entry (exclusive
+  Yangon reseller, Burmese-first support, gated not dated)
+- Founding Merchant pilot: 20 merchants, 8 weeks, success criteria,
+  feedback/support processes, 5 case studies + video testimonials
+- Sales toolkit inventory (exists / needs build), KPI ladder for
+  30 days / 100 / 1,000 merchants, 90-180-365-day roadmap
+- Revenue blockers surfaced: DECISION-014 (pricing) + DR-33 (terms
+  legal review) gate charging anyone
+
 ## 2026-07-10 — INTERNATIONAL-001: Thailand + Myanmar Readiness Blueprint
 
 Documentation-only architecture & product planning sprint (MERCHANT-READY-001

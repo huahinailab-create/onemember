@@ -16,9 +16,32 @@
 
 | Field | Value |
 |---|---|
+| **Sprint ID** | GO-TO-MARKET-001 |
+| **Title** | Merchant Acquisition Strategy (first 100 merchants) |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Business strategy — documentation ONLY (no software) |
+| **Classification** | Type A — docs |
+| **Sprint File** | [Roadmaps/GO-TO-MARKET-001.md](./Roadmaps/GO-TO-MARKET-001.md) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 (VP Sales / VP Marketing / COO role) |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-10 |
+| **Actual Completion** | 2026-07-10 |
+| **Final Commit** | see git log: GO-TO-MARKET-001 (merchant-ready-001-mr-001) |
+
+### Business Objective
+
+Complete go-to-market strategy for OneMember's first 100 merchants: vision & positioning ("delivery apps rent you customers; OneMember helps you keep yours"), market rollout order (TH direct founder-led; MM partner-led and gated), 10 merchant segments with pain/trigger/module mapping (beachhead: coffee + salons), 4 personas, tier positioning incl. Enterprise (chains/white-label/corporate controls) with Free-100 as distribution strategy, 9-stage sales journey mapped onto the built product (guided launch journey = onboarding stage), channel evaluation (street sales + LINE + Facebook core; email de-prioritized), Thailand playbook (street-cluster demos, objection battle-card, 10-min scripted demo), Myanmar partner strategy, 20-merchant Founding Merchant pilot design, sales-asset inventory with build list, KPI ladder (30 days / 100 / 1,000 merchants), and a 90/180/365-day roadmap. Blockers surfaced: DECISION-014 (pricing) and DR-33 (terms legal review) gate all revenue.
+
+---
+
+## Previous Sprint (INTERNATIONAL-001)
+
+| Field | Value |
+|---|---|
 | **Sprint ID** | INTERNATIONAL-001 |
 | **Title** | Thailand + Myanmar Readiness Blueprint |
-| **Status** | ⏳ Awaiting CTO Review |
+| **Status** | ✅ Approved by CTO (2026-07-10) |
 | **Sprint Type** | Architecture & product planning — documentation ONLY (no code, schema, routes, features) |
 | **Classification** | Type A — docs |
 | **Sprint File** | [Roadmaps/INTERNATIONAL-001.md](./Roadmaps/INTERNATIONAL-001.md) |
