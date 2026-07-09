@@ -28,8 +28,8 @@ This file is read as part of the `Continue OMOS` initialisation sequence (step 2
 | **OMOS Version** | 1.2 |
 | **PHP Version** | 8.3+ (8.5 in production) |
 | **Laravel Version** | 13.17.0 |
-| **Last Code Commit** | feat(dashboard): merchant launch dashboard (`merchant-ready-001-mr-001`) |
-| **Last Code Sprint** | **MERCHANT-READY-001 / MR-001 — Merchant Launch Dashboard**: the LAUNCH-001 checklist evolved to the full launch path (profile, logo, Store URL, first product/campaign/reward/member, QR poster viewed, storefront visited) as a reusable tenant-scoped Blade component with progress %, completed count, progress bar and Launch Ready badge; deterministic Next Recommended Action; Merchant Health Card (green/amber/red per dimension). Before that: the `c698cea` integration merge — **fable-dev** MERCHANT-READY-001 help manual (47 EN + 6 TH articles), OMEGA-001A/B, PLATFORM-002 (12-part foundation) · **origin/main** OMEGA-001C Media Foundation, OMEGA-001A frontend, OMEGA-001D polish, OMEGA-001E Store Identity. Post-merge the real `GdImagePipeline` (WebP ≤1200px) is the bound MediaService pipeline. |
+| **Last Code Commit** | feat(ux): MR-002 empty states & contextual help (`merchant-ready-001-mr-001`) |
+| **Last Code Sprint** | **MERCHANT-READY-001 / MR-002 — Empty States & Contextual Help**: all merchant empty states (Members, Campaigns, Rewards, Products, Orders, placeholders) now carry friendly EN/TH copy, a primary CTA and a contextual Help Center link via `<x-ui.empty-state help-topic="…">`; ? help buttons on all 8 primary screens; `/rewards` dead end replaced with a landing that routes to campaigns; view-scan regression test forbids dead help links. Before that on this branch: **MR-001 — Merchant Launch Dashboard** (CTO approved) — LAUNCH-001 checklist evolved to the full launch path (reusable tenant-scoped component, progress %, Launch Ready badge), deterministic Next Recommended Action, green/amber/red Merchant Health Card. Earlier: `c698cea` integration merge (help manual, OMEGA-001A–E, PLATFORM-002; `GdImagePipeline` bound). |
 | **Last OMOS Sprint** | OMOS-1.2 Autonomous Sprint Governance (`b99b1f9`) |
 
 ---

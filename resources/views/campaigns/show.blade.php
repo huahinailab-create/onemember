@@ -741,6 +741,7 @@
                             @endif
                         </form>
 
+                        <x-ui.help-button topic="rewards" class="flex-shrink-0" />
                         @unless ($isArchived)
                             <a href="{{ route('campaigns.rewards.create', $campaign) }}"
                                class="btn btn-sm btn-primary flex-shrink-0">
@@ -752,25 +753,23 @@
 
                 {{-- Rewards list --}}
                 @if ($rewards->isEmpty())
-                    <div class="text-center py-5">
-                        <div class="coming-soon-icon mx-auto">
-                            <i class="bi bi-gift text-primary"></i>
-                        </div>
-                        @if (request('reward_search'))
-                            <h6 class="fw-semibold mb-1">{{ __('campaigns.rewards_empty_search_title') }}</h6>
-                            <p class="text-muted mb-0 small">{!! __('campaigns.rewards_empty_search_body', ['link' => route('campaigns.show', $campaign) . '?' . http_build_query(['reward_filter' => $rewardFilter, 'active_tab' => 'rewards'])]) !!}</p>
-                        @elseif ($rewardFilter === 'archived')
-                            <h6 class="fw-semibold mb-1">{{ __('campaigns.rewards_empty_archived_title') }}</h6>
-                            <p class="text-muted mb-0 small">{{ __('campaigns.rewards_empty_archived_body') }}</p>
-                        @else
-                            <h6 class="fw-semibold mb-1">{{ __('campaigns.rewards_empty_title') }}</h6>
+                    @if (request('reward_search'))
+                        <x-ui.empty-state icon="bi-search" :title="__('campaigns.rewards_empty_search_title')">
+                            <p class="mb-0" style="font-size:0.875rem;max-width:380px;margin:0 auto;">
+                                {!! __('campaigns.rewards_empty_search_body', ['link' => route('campaigns.show', $campaign) . '?' . http_build_query(['reward_filter' => $rewardFilter, 'active_tab' => 'rewards'])]) !!}
+                            </p>
+                        </x-ui.empty-state>
+                    @elseif ($rewardFilter === 'archived')
+                        <x-ui.empty-state icon="bi-archive" :title="__('campaigns.rewards_empty_archived_title')" :body="__('campaigns.rewards_empty_archived_body')" />
+                    @else
+                        <x-ui.empty-state icon="bi-gift" :title="__('campaigns.rewards_empty_title')" :body="$isArchived ? null : __('campaigns.rewards_empty_state_body')" help-topic="rewards">
                             @unless ($isArchived)
-                                <p class="text-muted mb-0 small">
-                                    {!! __('campaigns.rewards_empty_body', ['link' => route('campaigns.rewards.create', $campaign)]) !!}
-                                </p>
+                                <a href="{{ route('campaigns.rewards.create', $campaign) }}" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>{{ __('buttons.add_reward') }}
+                                </a>
                             @endunless
-                        @endif
-                    </div>
+                        </x-ui.empty-state>
+                    @endif
                 @else
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">

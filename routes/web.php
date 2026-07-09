@@ -235,16 +235,23 @@ Route::domain(config('domains.app'))->group(function () {
         Route::put('/campaigns/{campaign}/rewards/{reward}',        [RewardController::class, 'update'])->name('campaigns.rewards.update');
         Route::delete('/campaigns/{campaign}/rewards/{reward}',     [RewardController::class, 'archive'])->name('campaigns.rewards.archive');
 
+        // MR-002: Rewards live inside campaigns today — this page says so and
+        // sends the merchant to the right place instead of "coming soon".
         Route::get('/rewards', fn () => view('coming-soon', [
-            'pageTitle' => 'Rewards', 'icon' => 'bi-gift',
+            'pageTitle'  => __('navigation.rewards'), 'icon' => 'bi-gift',
+            'emptyTitle' => __('messages.rewards_landing_title'),
+            'emptyBody'  => __('messages.rewards_landing_body'),
+            'ctaRoute'   => 'campaigns.index', 'ctaIcon' => 'bi-star',
+            'ctaLabel'   => __('messages.rewards_landing_cta'),
+            'helpTopic'  => 'rewards',
         ]))->name('rewards');
 
         Route::get('/transactions', fn () => view('coming-soon', [
-            'pageTitle' => 'Transactions', 'icon' => 'bi-arrow-left-right',
+            'pageTitle' => __('navigation.transactions'), 'icon' => 'bi-arrow-left-right',
         ]))->name('transactions');
 
         Route::get('/reports', fn () => view('coming-soon', [
-            'pageTitle' => 'Reports', 'icon' => 'bi-bar-chart-line',
+            'pageTitle' => __('navigation.reports'), 'icon' => 'bi-bar-chart-line',
         ]))->name('reports');
     });
 

@@ -60,7 +60,6 @@ return [
     'empty_archived_title'    => 'ยังไม่มีแคมเปญที่เก็บถาวร',
     'empty_archived_body'     => 'แคมเปญที่เก็บถาวรจะปรากฏที่นี่เมื่อมีการเก็บถาวรแคมเปญ',
     'empty_title'             => 'ยังไม่มีแคมเปญ',
-    'empty_body'              => '<a href=":link">สร้างแคมเปญแรกของคุณ</a> เพื่อเริ่มมอบรางวัลให้ลูกค้า',
     'pagination_showing'      => 'แสดง :first–:last จากทั้งหมด :total แคมเปญ',
     'count'                   => ':count แคมเปญ',
 
@@ -110,7 +109,6 @@ return [
     'rewards_empty_archived_title'=> 'ยังไม่มีรางวัลที่เก็บถาวร',
     'rewards_empty_archived_body' => 'รางวัลที่เก็บถาวรจะปรากฏที่นี่',
     'rewards_empty_title'     => 'ยังไม่มีรางวัล',
-    'rewards_empty_body'      => '<a href=":link">เพิ่มรางวัลแรก</a> ให้กับแคมเปญนี้',
     'col_reward_name'         => 'ชื่อรางวัล',
     'col_reward_type'         => 'ประเภทรางวัล',
     'col_points_required'     => 'คะแนนที่ต้องใช้',
@@ -161,4 +159,8 @@ return [
     'analytics_col_share'       => 'สัดส่วน',
     'analytics_status_archived' => 'เก็บถาวร',
 
+
+    // MR-002 — plain-text empty-state copy (CTA is a real button now)
+    'empty_state_body'         => 'แคมเปญคือวิธีที่สมาชิกสะสมแต้มหรือสแตมป์ สร้างแคมเปญแล้วเริ่มให้รางวัลลูกค้าของคุณวันนี้',
+    'rewards_empty_state_body' => 'รางวัลคือสิ่งที่สมาชิกรอคอย เพิ่มสิ่งแรกที่พวกเขาแลกได้เลย',
 ];

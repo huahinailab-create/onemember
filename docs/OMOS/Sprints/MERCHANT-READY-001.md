@@ -21,7 +21,8 @@ MERCHANT-READY-001 is the umbrella sprint that turns the platform built through 
 | Work item | Deliverable | Status |
 |---|---|---|
 | Help Center & User Manual | 47 EN + 6 TH articles on the Knowledge Center rails; sidebar link; contextual `?` buttons | ✅ Shipped (`856a9e9`, `dd801dd`) |
-| **MR-001 — Merchant Launch Dashboard** | Launch Checklist component, Next Recommended Action, Merchant Health Card | This spec |
+| **MR-001 — Merchant Launch Dashboard** | Launch Checklist component, Next Recommended Action, Merchant Health Card | ✅ Shipped (`954135e`, `25b8d97`) — CTO approved |
+| **MR-002 — Empty States & Contextual Help** | Every empty state answers "what next?"; help buttons on all 8 primary screens; no dead help links | This branch |
 
 ---
 
@@ -91,6 +92,23 @@ To be measured across the first pilot merchant cohort:
 | Merchants adding their first member within 7 days | ≥ 60% |
 | Merchants who print/view the QR poster | ≥ 50% |
 | Support requests asking "what do I do next?" | ~0 (manual + dashboard answer it) |
+
+---
+
+## MR-002 — Empty States & Contextual Help
+
+### Scope
+
+1. **Empty states** — Members, Campaigns, Rewards (campaign tab + `/rewards` page), Products, Orders, and the Reports/Transactions placeholders all use the design-system `<x-ui.empty-state>` with: friendly, encouraging merchant copy (EN + TH, no technical wording), a primary CTA button, and a contextual Help Center link (new `help-topic` prop).
+2. **Contextual help expansion** — `?` buttons now on Dashboard, Members, Campaigns, Rewards (campaign Rewards tab + `/rewards`), Products, Orders, Settings, and Launch Kit. New `rewards` context registered on the `create-rewards` article. A regression test scans every literal `topic=`/`help-topic=` in Blade views and fails if any doesn't resolve to a published article — dead help links cannot ship.
+3. **Dead ends removed** — `/rewards` no longer says "coming soon" in hardcoded English; it explains that rewards live inside campaigns and routes the merchant there. The generic coming-soon view (Reports, Transactions) is localized and friendly with a way back to the dashboard.
+4. **Visual polish** — rewards-tab empty state converted from hand-rolled markup to the design-system component; consistent page-header + help-button pattern (Launch Kit's) on Dashboard/Settings/Orders; icons `aria-hidden`; empty-state body width/typography unified in the component instead of per-view inline styles.
+
+### Out of Scope (MR-002)
+
+- No business-logic changes — controllers and services untouched; the only `routes/web.php` edit passes different *view data* to the same placeholder routes
+- No new platform architecture; no schema changes
+- Reports/Transactions remain placeholders (now friendly + localized) — building them is future work
 
 ### Decisions & Notes
 

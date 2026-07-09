@@ -60,7 +60,6 @@ return [
     'empty_archived_title'    => 'No archived campaigns',
     'empty_archived_body'     => 'Archived campaigns will appear here once a campaign is archived.',
     'empty_title'             => 'No campaigns yet',
-    'empty_body'              => '<a href=":link">Create your first campaign</a> to start rewarding your customers.',
     'pagination_showing'      => 'Showing :first–:last of :total campaigns',
     'count'                   => ':count campaign|:count campaigns',
 
@@ -110,7 +109,6 @@ return [
     'rewards_empty_archived_title'=> 'No archived rewards',
     'rewards_empty_archived_body' => 'Archived rewards will appear here.',
     'rewards_empty_title'     => 'No rewards yet',
-    'rewards_empty_body'      => '<a href=":link">Add your first reward</a> to this campaign.',
     'col_reward_name'         => 'Reward Name',
     'col_reward_type'         => 'Reward Type',
     'col_points_required'     => 'Points Required',
@@ -161,4 +159,8 @@ return [
     'analytics_col_share'       => 'Share',
     'analytics_status_archived' => 'Archived',
 
+
+    // MR-002 — plain-text empty-state copy (CTA is a real button now)
+    'empty_state_body'         => 'A campaign is how your members earn points or stamps. Create one and start rewarding your customers today.',
+    'rewards_empty_state_body' => 'Rewards are what your members look forward to. Add the first thing they can redeem.',
 ];

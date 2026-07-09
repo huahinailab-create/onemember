@@ -69,7 +69,7 @@ return [
     'empty_archived_title'=> 'No archived members',
     'empty_archived_body' => 'Archived members will appear here once a member is archived.',
     'empty_title'         => 'No members yet',
-    'empty_body'          => 'Members will appear here once they are added to your programme.',
+    'empty_body'          => 'Add your first member and start rewarding every visit — it takes less than a minute.',
     'pagination_showing'  => 'Showing :first–:last of :total members',
     'count'               => ':count member|:count members',
     'read_only'           => 'Read-only',

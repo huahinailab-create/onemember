@@ -3,9 +3,12 @@
     <x-slot name="pageTitle">{{ __('dashboard.title') }}</x-slot>
 
     {{-- Page Header --}}
-    <div class="page-header">
-        <h1>{{ __('dashboard.title') }}</h1>
-        <p>{{ __('dashboard.welcome', ['name' => Auth::user()->name]) }}</p>
+    <div class="page-header d-flex align-items-center justify-content-between gap-2">
+        <div>
+            <h1>{{ __('dashboard.title') }}</h1>
+            <p>{{ __('dashboard.welcome', ['name' => Auth::user()->name]) }}</p>
+        </div>
+        <x-ui.help-button topic="dashboard" class="flex-shrink-0" />
     </div>
 
     {{-- ── Trial Lifecycle Banner ───────────────────────────── --}}

@@ -2,9 +2,12 @@
     <x-slot name="title">{{ __('commerce.orders_title') }} – {{ config('app.name') }}</x-slot>
     <x-slot name="pageTitle">{{ __('commerce.orders_title') }}</x-slot>
 
-    <div class="page-header">
-        <h1>{{ __('commerce.orders_title') }}</h1>
-        <p>{{ __('commerce.orders_subtitle') }}</p>
+    <div class="page-header d-flex align-items-center justify-content-between gap-2">
+        <div>
+            <h1>{{ __('commerce.orders_title') }}</h1>
+            <p>{{ __('commerce.orders_subtitle') }}</p>
+        </div>
+        <x-ui.help-button topic="commerce.orders" class="flex-shrink-0" />
     </div>
 
     {{-- Status filter --}}
@@ -23,7 +26,12 @@
 
     @if ($orders->isEmpty())
         <div class="card"><div class="card-body">
-            <x-ui.empty-state icon="bi-inbox" :title="__('commerce.orders_empty')" :body="__('commerce.orders_empty_body')" />
+            <x-ui.empty-state icon="bi-inbox" :title="__('commerce.orders_empty')" :body="__('commerce.orders_empty_body')" help-topic="commerce.orders">
+                <a href="{{ route('storefront.show', $merchant->slug) }}" target="_blank" rel="noopener" class="btn btn-primary btn-sm">
+                    <i class="bi bi-shop me-1" aria-hidden="true"></i>{{ __('commerce.view_store_button') }}
+                    <span class="visually-hidden">{{ __('commerce.opens_new_tab') }}</span>
+                </a>
+            </x-ui.empty-state>
         </div></div>
     @else
         @foreach ($orders as $order)

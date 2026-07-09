@@ -1,3 +1,31 @@
+## 2026-07-09 — MERCHANT-READY-001 / MR-002: Empty States & Contextual Help
+
+Reduce merchant confusion: every page explains what to do when there is no
+data, and the Knowledge Center is one tap away from wherever the merchant is.
+No business-logic changes; no new architecture.
+
+- **`<x-ui.empty-state>` evolved** — new `help-topic` prop renders a
+  contextual "Learn how in the Help Center" link; body width/typography
+  unified in the component (per-view inline styles removed).
+- **Empty states upgraded** — Members, Campaigns (real CTA button instead of
+  an inline text link), Products, Orders (new "View My Store" CTA — orders
+  come from the storefront), and the campaign Rewards tab (converted from
+  hand-rolled markup to the design-system component). Copy pass: encouraging,
+  non-technical, EN + TH.
+- **Dead ends removed** — `/rewards` no longer shows hardcoded-English
+  "Coming Soon": it explains rewards live inside campaigns and routes there.
+  The shared placeholder view (Reports, Transactions) is localized, friendly,
+  and always offers a way back to the dashboard.
+- **Contextual help on all 8 primary screens** — ? buttons added to
+  Dashboard, Rewards (campaign tab + landing), Orders and Settings, joining
+  the existing Members, Campaigns, Products and Launch Kit buttons. New
+  `rewards` context on the `create-rewards` article.
+- **No dead help links, enforced** — a regression test scans every literal
+  `topic=`/`help-topic=` in Blade views and fails when a topic doesn't
+  resolve to a published article.
+- tests: +10 (EmptyStateExperienceTest 8, MerchantHelpContentTest +2);
+  847 green. Verified in-browser (members/rewards/orders, EN, mobile width).
+
 ## 2026-07-09 — MERCHANT-READY-001 / MR-001: Merchant Launch Dashboard
 
 Help every new merchant understand exactly what to do next. No new platform
