@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
+        api: __DIR__.'/../routes/api.php',
         commands: __DIR__.'/../routes/console.php',
         then: function () {
             Route::middleware(['web', 'auth', \App\Http\Middleware\DevToolsAccess::class])
@@ -26,6 +27,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin'         => \App\Http\Middleware\EnsureUserIsAdmin::class,
             'app.installed' => \App\Http\Middleware\EnsureAppInstalled::class,
+            'api.key'       => \App\Http\Middleware\AuthenticateApiKey::class,
         ]);
 
         // Stripe webhooks carry their own signature verification; CSRF would reject them

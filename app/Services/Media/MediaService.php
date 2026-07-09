@@ -36,9 +36,8 @@ class MediaService
     {
         $path = $file->store($this->collectionPath($collection, $ownerId), $this->diskName());
 
-        $this->pipeline->optimize($path);
-
-        return $path;
+        // The pipeline may convert/rename (e.g. → .webp); persist ITS path.
+        return $this->pipeline->optimize($path);
     }
 
     /**
@@ -85,9 +84,9 @@ class MediaService
      * stored file. A no-op until a real ImagePipeline is bound — see
      * NullImagePipeline — so calling this today changes nothing.
      */
-    public function optimize(string $path): void
+    public function optimize(string $path): string
     {
-        $this->pipeline->optimize($path);
+        return $this->pipeline->optimize($path);
     }
 
     /**

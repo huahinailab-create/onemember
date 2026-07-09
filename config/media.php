@@ -20,6 +20,9 @@ return [
     // changes — see Part 5 of ADR-013.
     'default_disk' => 'public',
 
+    // Longest-edge cap applied by GdImagePipeline (never upscales).
+    'max_edge' => 1200,
+
     // WebP re-encode quality, used only when a future caller opts into
     // conversion via MediaService::optimize(). Not applied today.
     'webp_quality' => 82,

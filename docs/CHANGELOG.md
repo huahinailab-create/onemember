@@ -1,3 +1,30 @@
+## 2026-07-09 — MERCHANT-READY-001: Help Center & User Manual
+
+- content: 47 English merchant articles (Getting Started, Members, Loyalty,
+  Commerce, Launch Kit, Settings, Troubleshooting, 8 Industry Quick Starts)
+  + 6 Thai Getting Started articles; short, step-by-step, product-accurate
+- system: articles live as git-versioned markdown (database/seeders/knowledge/)
+  imported by an idempotent KnowledgeArticleSeeder (front-matter parser);
+  Help Center category ordering fixed (Getting Started → … → Quick Starts)
+- surfacing: Help Center added to the merchant sidebar; contextual ? buttons
+  on Members, Campaigns, Products and Launch Kit resolving to their articles
+- tests: MerchantHelpContentTest (8) — seeder import/idempotency, category
+  order, markdown rendering, search, Thai + fallback, guest auth, context
+  resolution, sidebar link
+
+## 2026-07-09 — merge: integrate merchant readiness and OMEGA platform work
+
+Integration of two parallel lines into main. Both feature sets preserved:
+fable-dev (PLATFORM-002 foundation, OMEGA-001A/B image UX + polish,
+MERCHANT-READY-001 manual) and origin/main (OMEGA-001C Media Foundation,
+reusable media-upload frontend + CSP blob fix, OMEGA-001D polish,
+OMEGA-001E Store Identity). Reconciliations: ProductController now uses
+MediaService; fable-dev's GD optimizer became the bound ImagePipeline
+(GdImagePipeline — WebP ≤1200px, replacing the inert NullImagePipeline
+default); product form keeps OMEGA-001B section grouping around the
+reusable x-ui.media-upload; cropperjs pinned to ^1.6.2 (the surviving
+frontend's API).
+
 ## 2026-07-08 — OMEGA-001E: Store Identity & Public URL Foundation
 
 Formalizes Business Name and Store URL as two distinct merchant identities. Reuses the existing `merchants.slug` column — no migration, no existing route changed, no breaking changes. Spec marks this as the final platform architecture sprint before Merchant Readiness.
@@ -52,6 +79,54 @@ Architecture-only sprint building on the approved OMEGA-001A/B foundation (BETA-
 - See [ADR-013](./OMOS/12-ADR/ADR-013-Unified-Media-Foundation.md) for the full storage/variant/migration strategy.
 
 Suite: 701 → 728 tests green (7 new `MediaServiceTest` cases). Build clean. Awaiting CTO review (Type B).
+
+## 2026-07-07 — OMEGA-001A/B: Commerce image experience + production UX polish
+
+- OMEGA-001A: upload card (drag & drop/keyboard/camera), guidance, live
+  preview, Cropper.js v2 crop/rotate, server-side WebP optimization ≤1200px
+- OMEGA-001B: product list badges + 56px thumbnails, grouped product form
+  with helper text, storefront availability nudges, image shimmer skeletons,
+  sticky table headers, a11y audit
+
+## 2026-07-07 — PLATFORM-002: Platform Foundation Sprint (12 parts)
+
+Architectural foundation for the next platform phase. Laravel 13 monolith
+throughout (ADR-004/009/012) — no microservices; everything backward
+compatible; one commit per part.
+
+- **P1 Marketplace**: typed App Manifests + AppRegistry (runtime-registrable),
+  AppManager lifecycle (install/uninstall with dependency checks,
+  enable/disable, per-merchant config), merchant_apps state table, health
+  snapshots, lifecycle events + audit. Legacy installs unchanged.
+- **P2 Plugin SDK**: Sdk\AppProvider base (routes/translations/policies/
+  events/nav/widgets/settings schema) + 11 Provides* contracts; sidebar
+  renders manifest navigation — new apps appear without Core view changes.
+- **P3 Event Bus**: DomainEvent base + 10 stable events emitted from model
+  lifecycle hooks (member.created, purchase.recorded, reward.redeemed,
+  merchant.registered, order.placed, payment.received, subscription.changed,
+  queue.ticket_created, supplier.created, purchase_order.approved).
+- **P4 Webhooks**: merchant endpoints + delivery log, HMAC-signed queued
+  delivery with 5-try backoff, auto-disable after 10 consecutive failures.
+- **P5 Public API**: /api/v1 (ping + read-only members reference), hashed
+  om_live_* keys with abilities, per-key rate limiting, standard error
+  envelope, OpenAPI 3.1 skeleton.
+- **P6 Automation**: WHEN/IF/THEN rule engine on the event bus (conditions
+  evaluator fails closed; ActionRegistry with reference log action; queued
+  execution). Visual builder = future.
+- **P7 Knowledge Center**: markdown articles with categories/search/
+  versioning/locale fallback/video placeholders + /help surface.
+- **P8 Queue App**: first SDK app — counters, tickets (walk-in/reservation,
+  priority, status machine), daily numbering, estimated wait, display board,
+  SMS/LINE placeholders, analytics.
+- **P9 Procurement App**: suppliers + vendor rating, purchase requests with
+  approval workflow → purchase orders (cost tracking) → goods receipts with
+  goods.received inventory hook.
+- **P10 Localization expansion**: internal languages config-driven;
+  placeholder locales km/my/lo/vi/zh/ja/ko with English fallback.
+- **P11 Help framework**: x-ui.help-button (?) → context articles, global
+  topbar Help entry, tooltip/walkthrough hooks.
+- **P12 Developer docs**: docs/dev/ — marketplace, SDK, events, webhooks,
+  API, automation, localization, knowledge, queue, procurement, commerce.
 
 ## 2026-07-07 — BETA-008: Global Merchant Settings + Product Images
 

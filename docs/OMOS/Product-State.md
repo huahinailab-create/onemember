@@ -28,8 +28,8 @@ This file is read as part of the `Continue OMOS` initialisation sequence (step 2
 | **OMOS Version** | 1.2 |
 | **PHP Version** | 8.3+ (8.5 in production) |
 | **Laravel Version** | 13.17.0 |
-| **Last Code Commit** | OMEGA-001E (see git log) — Store Identity & Public URL Foundation |
-| **Last Code Sprint** | OMEGA-001E — Business Name vs. Store URL formalized as distinct identities; new `StoreIdentityService` centralizes slug generation/validation/resolution (`config/store_identity.php` reserved words); Settings gained an editable, live-validated "Store URL" field with a copyable public-URL preview and change-warning (no redirect). Reuses `merchants.slug`, no migration. 754 tests green. Marked by spec as the final platform architecture sprint before Merchant Readiness. |
+| **Last Code Commit** | merge: integrate merchant readiness and OMEGA platform work (`main`) |
+| **Last Code Sprint** | Integration merge of two parallel lines: **fable-dev** — MERCHANT-READY-001 (47 EN + 6 TH help articles on the PLATFORM-002 Knowledge Center rails, sidebar + contextual help), OMEGA-001A/B (commerce image experience + UX polish), PLATFORM-002 (12-part foundation) · **origin/main** — OMEGA-001C Unified Media Foundation (`MediaService`, `config/media.php`, ADR-013), OMEGA-001A frontend (reusable `x-ui.media-upload`, CSP blob fix), OMEGA-001D branding/product polish, OMEGA-001E Store Identity (`StoreIdentityService`, editable live-validated Store URL). Post-merge the real `GdImagePipeline` (WebP ≤1200px, from fable-dev's optimizer) is the bound MediaService pipeline. |
 | **Last OMOS Sprint** | OMOS-1.2 Autonomous Sprint Governance (`b99b1f9`) |
 
 ---

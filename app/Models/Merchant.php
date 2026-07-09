@@ -240,10 +240,27 @@ class Merchant extends Model
         return is_array($apps) ? array_values($apps) : [];
     }
 
-    /** CORE-002: gate for App features. */
+    /** PLATFORM-002: per-merchant App state rows (version/enabled/config). */
+    public function appStates(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(MerchantApp::class);
+    }
+
+    /**
+     * CORE-002: gate for App features.
+     * PLATFORM-002: a disabled app stays installed (data retained) but gates
+     * access. A missing state row means enabled — pre-marketplace merchants
+     * behave exactly as before.
+     */
     public function hasApp(string $key): bool
     {
-        return in_array($key, $this->installedApps(), true);
+        if (! in_array($key, $this->installedApps(), true)) {
+            return false;
+        }
+
+        $state = $this->appStates->firstWhere('app_key', $key);
+
+        return $state === null || $state->enabled;
     }
 
     /**

@@ -139,12 +139,37 @@
                 </a>
             </li>
             @endif
+            {{-- PLATFORM-002: manifest-declared App navigation (Plugin SDK) --}}
+            @if (Auth::user()?->merchant)
+                @foreach (app(\App\Marketplace\AppRegistry::class)->all() as $manifestApp)
+                    @if ($manifestApp->navigation !== [] && Auth::user()->merchant->hasApp($manifestApp->key))
+                        @foreach ($manifestApp->navigation as $navItem)
+                            <li class="nav-item">
+                                <a href="{{ route($navItem['route']) }}"
+                                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs($manifestApp->key . '.*') ? 'active' : '' }}">
+                                    <i class="bi {{ $navItem['icon'] }}"></i>
+                                    <span>{{ __($navItem['label']) }}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    @endif
+                @endforeach
+            @endif
             <li class="nav-item">
                 <a href="{{ route('apps.index') }}"
                    class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('apps.*') ? 'active' : '' }}"
                    >
                     <i class="bi bi-grid-3x3-gap"></i>
                     <span>{{ __('navigation.apps') }}</span>
+                </a>
+            </li>
+            {{-- MERCHANT-READY-001: Help Center in the main menu --}}
+            <li class="nav-item">
+                <a href="{{ route('help.index') }}"
+                   class="nav-link d-flex align-items-center gap-2 px-3 py-2 {{ request()->routeIs('help.*') ? 'active' : '' }}"
+                   >
+                    <i class="bi bi-life-preserver"></i>
+                    <span>{{ __('navigation.help') }}</span>
                 </a>
             </li>
         </ul>
@@ -250,6 +275,13 @@
                         <span class="d-none d-sm-inline">{{ __('mobile.counter_mode') }}</span>
                     </button>
                 </form>
+                {{-- PLATFORM-002 P11: global help entry (Knowledge Center) --}}
+                <a href="{{ route('help.index') }}"
+                   class="btn btn-sm btn-outline-secondary rounded-circle help-btn {{ request()->routeIs('help.*') ? 'active' : '' }}"
+                   title="{{ __('help.help_button') }}"
+                   aria-label="{{ __('help.help_button') }}">
+                    <i class="bi bi-question-lg" aria-hidden="true"></i>
+                </a>
                 <x-language-switcher />
                 <div class="topbar-user">
                     <i class="bi bi-person-circle text-secondary"></i>

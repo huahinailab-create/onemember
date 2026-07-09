@@ -8,9 +8,12 @@
             <h1>{{ __('campaigns.title') }}</h1>
             <p>{{ __('campaigns.subtitle') }}</p>
         </div>
-        <a href="{{ route('campaigns.create') }}" class="btn btn-primary flex-shrink-0">
-            <i class="bi bi-plus-lg me-1"></i> {{ __('campaigns.create_campaign') }}
-        </a>
+        <div class="d-flex gap-2 flex-shrink-0 align-items-center">
+            <x-ui.help-button topic="campaigns.index" />
+            <a href="{{ route('campaigns.create') }}" class="btn btn-primary flex-shrink-0">
+                <i class="bi bi-plus-lg me-1"></i> {{ __('campaigns.create_campaign') }}
+            </a>
+        </div>
     </div>
 
     {{-- Filter Tabs --}}

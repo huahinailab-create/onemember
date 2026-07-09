@@ -156,6 +156,10 @@ Route::domain(config('domains.app'))->group(function () {
         Route::post('/subscription/downgrade',[SubscriptionController::class, 'downgrade'])->name('subscription.downgrade');
 
         Route::get('/settings',              [SettingsController::class, 'index'])->name('settings');
+        // PLATFORM-002 P7/P11 — Knowledge Center + context help
+        Route::get('/help',                  [\App\Http\Controllers\HelpController::class, 'index'])->name('help.index');
+        Route::get('/help/context/{key}',    [\App\Http\Controllers\HelpController::class, 'context'])->name('help.context');
+        Route::get('/help/{slug}',           [\App\Http\Controllers\HelpController::class, 'article'])->name('help.article');
         Route::put('/settings/profile',      [SettingsController::class, 'updateProfile'])->name('settings.profile.update');
         Route::put('/settings/preferences',  [SettingsController::class, 'updatePreferences'])->name('settings.preferences.update');
         Route::put('/settings/localization', [SettingsController::class, 'updateLocalization'])->name('settings.localization.update');
@@ -184,6 +188,7 @@ Route::domain(config('domains.app'))->group(function () {
         Route::get('/apps',            [AppsController::class, 'index'])->name('apps.index');
         Route::post('/apps/install',   [AppsController::class, 'install'])->name('apps.install');
         Route::post('/apps/uninstall', [AppsController::class, 'uninstall'])->name('apps.uninstall');
+        Route::post('/apps/toggle',    [AppsController::class, 'toggle'])->name('apps.toggle');
 
         Route::get('/launch-kit',              [LaunchKitController::class, 'index'])->name('launch-kit');
         Route::get('/launch-kit/poster',       [LaunchKitController::class, 'poster'])->name('launch-kit.poster');

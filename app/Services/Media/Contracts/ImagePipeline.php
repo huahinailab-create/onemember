@@ -11,12 +11,13 @@ namespace App\Services\Media\Contracts;
 interface ImagePipeline
 {
     /**
-     * Optimize a stored image in place (re-encode / strip metadata / convert
-     * to WebP). Today's default implementation is a no-op — see
-     * NullImagePipeline — so behaviour is unchanged until a real pipeline
-     * is bound in a future sprint.
+     * Optimize a stored image (re-encode / resize / convert to WebP) and
+     * return the FINAL disk-relative path — implementations may rename the
+     * file (e.g. .jpg → .webp). NullImagePipeline returns the path
+     * unchanged; GdImagePipeline (the production binding since the OMEGA
+     * merge) converts to WebP at ≤ config(media.max_edge).
      */
-    public function optimize(string $absolutePath): void;
+    public function optimize(string $path): string;
 
     /**
      * Generate a named variant (thumbnail/medium/large, see config/media.php

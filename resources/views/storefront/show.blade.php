@@ -108,6 +108,10 @@
                                     @endif
                                     @unless ($product->isAvailable())
                                         <span class="badge bg-secondary">{{ __('commerce.stock_out') }}</span>
+                                    @else
+                                        @if (! is_null($product->stock_qty) && $product->stock_qty <= 5)
+                                            <span class="badge bg-warning text-dark">{{ __('commerce.stock_low', ['count' => $product->stock_qty]) }}</span>
+                                        @endif
                                     @endunless
                                 </div>
                                 <div class="text-end">

@@ -23,7 +23,10 @@
                             </div>
                             <div>
                                 <div class="fw-semibold">{{ __('apps.name_' . $key) }}</div>
-                                @if ($isInstalled)
+                                @php $isEnabled = $isInstalled && (($states[$key]->enabled ?? true) === true); @endphp
+                                @if ($isInstalled && ! $isEnabled)
+                                    <x-ui.status-badge status="paused" :label="__('apps.status_disabled')" />
+                                @elseif ($isInstalled)
                                     <x-ui.status-badge status="active" :label="__('apps.badge_installed')" />
                                 @elseif (! $isAvailable)
                                     <x-ui.status-badge status="coming_soon" :label="__('apps.badge_coming_soon')" />
@@ -33,14 +36,23 @@
                         <p class="text-muted small flex-grow-1">{{ __('apps.desc_' . $key) }}</p>
 
                         @if ($isInstalled)
-                            <form method="POST" action="{{ route('apps.uninstall') }}"
-                                  onsubmit="return confirm('{{ __('apps.uninstall_confirm') }}');">
-                                @csrf
-                                <input type="hidden" name="app" value="{{ $key }}">
-                                <button type="submit" class="btn btn-outline-danger btn-sm">
-                                    {{ __('apps.uninstall_button') }}
-                                </button>
-                            </form>
+                            <div class="d-flex gap-2">
+                                <form method="POST" action="{{ route('apps.toggle') }}">
+                                    @csrf
+                                    <input type="hidden" name="app" value="{{ $key }}">
+                                    <button type="submit" class="btn btn-outline-secondary btn-sm">
+                                        {{ $isEnabled ? __('apps.toggle_disable') : __('apps.toggle_enable') }}
+                                    </button>
+                                </form>
+                                <form method="POST" action="{{ route('apps.uninstall') }}"
+                                      onsubmit="return confirm('{{ __('apps.uninstall_confirm') }}');">
+                                    @csrf
+                                    <input type="hidden" name="app" value="{{ $key }}">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                                        {{ __('apps.uninstall_button') }}
+                                    </button>
+                                </form>
+                            </div>
                         @elseif ($isAvailable)
                             <form method="POST" action="{{ route('apps.install') }}">
                                 @csrf

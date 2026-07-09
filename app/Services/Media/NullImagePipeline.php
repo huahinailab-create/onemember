@@ -12,9 +12,9 @@ use App\Services\Media\Contracts\ImagePipeline;
  */
 class NullImagePipeline implements ImagePipeline
 {
-    public function optimize(string $absolutePath): void
+    public function optimize(string $path): string
     {
-        // Intentionally inert — see class docblock.
+        return $path; // Intentionally inert — see class docblock.
     }
 
     public function variant(string $sourcePath, string $variantName): ?string
