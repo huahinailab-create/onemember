@@ -158,6 +158,11 @@ class Merchant extends Model
         return $this->hasMany(Reward::class);
     }
 
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
+
     public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);

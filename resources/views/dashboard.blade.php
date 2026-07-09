@@ -232,28 +232,14 @@
         </div>
     @endif
 
-    {{-- ── Launch checklist (LAUNCH-001) — hidden once complete ── --}}
-    @if (($launchChecklist ?? null) && $launchChecklist['percent'] < 100)
-        <div class="card mb-4">
-            <div class="card-header d-flex align-items-center justify-content-between">
-                <span class="fw-semibold"><i class="bi bi-rocket-takeoff me-2 text-primary"></i>{{ __('launch_check.title') }}</span>
-                <span class="badge bg-primary">{{ $launchChecklist['done'] }}/{{ $launchChecklist['total'] }} · {{ $launchChecklist['percent'] }}%</span>
+    {{-- ── Merchant Launch Dashboard (MERCHANT-READY-001 / MR-001) ── --}}
+    @if ($launchChecklist ?? null)
+        <div class="row g-3 mb-4">
+            <div class="col-12 col-xl-7">
+                <x-launch.checklist :checklist="$launchChecklist" :next-action="$launchNextAction ?? null" class="h-100" />
             </div>
-            <div class="card-body">
-                <x-ui.progress-bar :percent="$launchChecklist['percent']" color="pink" height="8px" class="mb-3" />
-                <ul class="list-unstyled mb-0">
-                    @foreach ($launchChecklist['items'] as $item)
-                        <li class="d-flex align-items-center gap-2 py-1">
-                            @if ($item['done'])
-                                <i class="bi bi-check-circle-fill text-success"></i>
-                                <span class="text-muted text-decoration-line-through">{{ __($item['label_key']) }}</span>
-                            @else
-                                <i class="bi bi-circle text-muted"></i>
-                                <a href="{{ $item['url'] }}" class="text-decoration-none">{{ __($item['label_key']) }}</a>
-                            @endif
-                        </li>
-                    @endforeach
-                </ul>
+            <div class="col-12 col-xl-5">
+                <x-launch.health-card :health="$merchantHealth" class="h-100" />
             </div>
         </div>
     @endif
