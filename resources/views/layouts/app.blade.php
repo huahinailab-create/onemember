@@ -315,6 +315,8 @@
         @if (session('success') || session('error'))
             <div class="px-4 pt-4 pb-0">
                 <x-ui.flash />
+                {{-- MR-003 guided launch journey: why the step mattered + the next one --}}
+                <x-launch.step-success />
             </div>
         @endif
 

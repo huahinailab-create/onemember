@@ -134,7 +134,9 @@ class MemberController extends Controller
 
         $analytics->track('member_created', [], $request->user()->id, $merchant?->id);
 
-        return redirect()->route('members')->with('success', 'Member created successfully.');
+        return redirect()->route('members')
+            ->with('success', __('messages.member_created'))
+            ->with('launch_step', 'member');
     }
 
     public function index(Request $request, AnalyticsService $analytics)

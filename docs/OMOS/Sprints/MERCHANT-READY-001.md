@@ -22,7 +22,8 @@ MERCHANT-READY-001 is the umbrella sprint that turns the platform built through 
 |---|---|---|
 | Help Center & User Manual | 47 EN + 6 TH articles on the Knowledge Center rails; sidebar link; contextual `?` buttons | ✅ Shipped (`856a9e9`, `dd801dd`) |
 | **MR-001 — Merchant Launch Dashboard** | Launch Checklist component, Next Recommended Action, Merchant Health Card | ✅ Shipped (`954135e`, `25b8d97`) — CTO approved |
-| **MR-002 — Empty States & Contextual Help** | Every empty state answers "what next?"; help buttons on all 8 primary screens; no dead help links | This branch |
+| **MR-002 — Empty States & Contextual Help** | Every empty state answers "what next?"; help buttons on all 8 primary screens; no dead help links | ✅ Shipped (`57bc844`) — CTO approved |
+| **MR-003 — Merchant Onboarding Experience** | Guided launch journey: step-success guidance, encouraging progress, Launch Ready celebration | This branch |
 
 ---
 
@@ -109,6 +110,24 @@ To be measured across the first pilot merchant cohort:
 - No business-logic changes — controllers and services untouched; the only `routes/web.php` edit passes different *view data* to the same placeholder routes
 - No new platform architecture; no schema changes
 - Reports/Transactions remain placeholders (now friendly + localized) — building them is future work
+
+---
+
+## MR-003 — Merchant Onboarding Experience
+
+### Scope
+
+1. **Guided launch journey** — completing any launch step (business profile / logo / store URL via Settings, first product, first campaign, first reward, first member) flashes `launch_step`; a new `<x-launch.step-success>` (rendered once, globally, under the flash) then shows *why the step matters* + the ONE deterministic next action from `LaunchChecklistService`. When the step completes the whole checklist, it hands off to the dashboard celebration instead.
+2. **Success experience** — ✓ localized success message (the raw-English create flashes for member/campaign/reward/profile now use the existing `messages.*` EN/TH keys — friction found in the Part 1 review) + why-it-matters + recommended next action.
+3. **Progress experience** — the launch checklist shows encouraging steps-left copy ("Just 1 step to go — you're almost there!"), completed items get a screen-reader "completed" suffix; the X/Y · % badge stays.
+4. **First-launch celebration** — at 100% the checklist card becomes a calm 🎉 "Congratulations! Your business is now ready to welcome customers." with quick actions: View storefront (Commerce merchants), Print QR poster, Add a customer, Read the merchant guide. No animation.
+5. **Onboarding wizard handoff** — the finish page's primary CTA is now "See your launch plan" (dashboard), where the journey continues; Launch Kit and Add member remain as secondary actions. The wizard's own 6 steps, business rules and starter-campaign logic are untouched.
+
+### Out of Scope (MR-003)
+
+- No changes to onboarding business rules, steps, validation, trial start, or starter-campaign creation
+- No new platform architecture, schema, or modules
+- QR-poster and storefront-visit steps don't flash step-success (they're visit-flags, not form submits) — the dashboard next-action covers them
 
 ### Decisions & Notes
 

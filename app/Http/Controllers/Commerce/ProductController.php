@@ -53,7 +53,8 @@ class ProductController extends Controller
         Product::create(array_merge($validated, ['merchant_id' => $merchant->id]));
 
         return redirect()->route('commerce.products.index')
-            ->with('success', __('commerce.product_created'));
+            ->with('success', __('commerce.product_created'))
+            ->with('launch_step', 'product');
     }
 
     public function edit(Request $request, Product $product)

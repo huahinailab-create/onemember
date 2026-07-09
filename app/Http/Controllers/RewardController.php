@@ -57,7 +57,8 @@ class RewardController extends Controller
         $analytics->track('reward_created', [], $request->user()->id, $campaign->merchant_id);
 
         return redirect(route('campaigns.show', $campaign) . '?active_tab=rewards')
-               ->with('success', 'Reward added successfully.');
+               ->with('success', __('messages.reward_created'))
+               ->with('launch_step', 'reward');
     }
 
     public function show(Request $request, LoyaltyProgram $campaign, Reward $reward)

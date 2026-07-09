@@ -1,3 +1,35 @@
+## 2026-07-09 — MERCHANT-READY-001 / MR-003: Merchant Onboarding Experience
+
+Onboarding becomes a guided launch journey: a merchant never has to ask
+"what should I do next?". UX only — wizard business rules, validation,
+trial start and starter-campaign logic untouched; no new architecture.
+
+- **Step-success guidance** — completing a launch step (profile, logo,
+  store URL, first product/campaign/reward/member) now shows, under the
+  success message: why this matters + the ONE next recommended action
+  (new `<x-launch.step-success>`, rendered once globally under the flash;
+  driven by the same deterministic LaunchChecklistService — no AI).
+  When the step finishes the checklist, it celebrates and points to the
+  dashboard instead.
+- **Localized success flashes** — Part 1 friction find: member/campaign/
+  reward/profile create-flashes were raw English while EN+TH keys already
+  existed in messages.php; they now use them.
+- **Progress experience** — checklist card adds encouraging steps-left
+  copy ("Just 1 step to go — you're almost there!"); done items carry a
+  screen-reader "completed" suffix.
+- **First-launch celebration** — at 100% the checklist becomes a calm 🎉
+  "Congratulations! Your business is now ready to welcome customers."
+  with quick actions: View storefront, Print QR poster, Add a customer,
+  Read the merchant guide. No animations.
+- **Onboarding handoff** — the wizard finish page's primary CTA is now
+  "See your launch plan" (dashboard); Launch Kit and Add member stay as
+  secondary actions.
+- tests: +7 (GuidedLaunchJourneyTest — why+next after each step, final-
+  step celebration, quick actions, Thai guidance, finish handoff);
+  854 green. Verified in-browser at 375px (EN + TH): step-success after
+  campaign creation, celebration grid (76px touch targets, no horizontal
+  scroll), ARIA progressbars, aria-hidden decorative emoji.
+
 ## 2026-07-09 — MERCHANT-READY-001 / MR-002: Empty States & Contextual Help
 
 Reduce merchant confusion: every page explains what to do when there is no

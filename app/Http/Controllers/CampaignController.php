@@ -71,7 +71,9 @@ class CampaignController extends Controller
 
         $analytics->track('campaign_created', [], $request->user()->id, $merchant?->id);
 
-        return redirect()->route('campaigns.index')->with('success', 'Campaign created successfully.');
+        return redirect()->route('campaigns.index')
+            ->with('success', __('messages.campaign_created'))
+            ->with('launch_step', 'campaign');
     }
 
     public function show(Request $request, LoyaltyProgram $campaign)
