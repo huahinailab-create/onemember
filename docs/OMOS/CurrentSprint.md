@@ -16,9 +16,32 @@
 
 | Field | Value |
 |---|---|
+| **Sprint ID** | WEBSITE-001 |
+| **Title** | OneMember Public Website Master Blueprint |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Marketing/UX-writing documentation ONLY (no implementation) — final documentation assignment before pilot merchant acquisition |
+| **Classification** | Type A — docs |
+| **Sprint File** | [Website/](./Website/) — 13 documents (01-Website-Strategy … 13-Launch-Checklist) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 (Creative Director / UX Writer / SEO Strategist role) |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-10 |
+| **Actual Completion** | 2026-07-10 |
+| **Final Commit** | see git log: WEBSITE-001 (merchant-ready-001-mr-001) |
+
+### Business Objective
+
+Complete public-website blueprint whose single objective is converting visitors into merchants. Thirteen documents: strategy (merchant-growth positioning — never "just another loyalty system" — voice/tone, Thai-first writing rules), site map (shallow, phone-first, Start Free everywhere), section-by-section home page with copy, full outcome-voiced feature pages, 10 industry landing pages with campaign recipes and story placeholders, value-story pricing page (amounts stay DECISION-014), About/founder-philosophy page, 100 grouped FAQs, six-door contact design (LINE-first), Thai-first SEO strategy with keyword clusters and internal-linking engine, legal-page inventory (gated on DR-33), the 7-stage conversion funnel welded to the built product journey (website's real conversion = Launch Ready, not signup), and a gated launch checklist including the promise-keeping test (every site claim provably true in-product within 10 minutes).
+
+---
+
+## Previous Sprint (SALES-001)
+
+| Field | Value |
+|---|---|
 | **Sprint ID** | SALES-001 |
 | **Title** | OneMember Sales Operating System |
-| **Status** | ⏳ Awaiting CTO Review |
+| **Status** | ✅ Approved by CTO (2026-07-10) |
 | **Sprint Type** | Business documentation ONLY (no software) — final assignment of this development cycle |
 | **Classification** | Type A — docs |
 | **Sprint File** | [Sales/](./Sales/) — 10 documents (01-Sales-Playbook … 10-Sales-KPIs) |

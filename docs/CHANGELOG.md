@@ -1,3 +1,46 @@
+## 2026-07-10 — WEBSITE-001: Public Website Master Blueprint
+
+Marketing/UX-writing documentation sprint (final documentation
+assignment before pilot merchant acquisition; no implementation).
+New folder docs/OMOS/Website/ — 13 documents designing the complete
+public site with one objective: convert visitors into merchants.
+
+- 01 Strategy — merchant-GROWTH positioning (never "just another
+  loyalty system"): "delivery apps rent you customers; OneMember helps
+  you keep yours"; voice/tone system; Thai written natively, never
+  translated; anti-goals (no gated PDFs, no dark patterns)
+- 02 Site Map — shallow phone-first nav, Start Free always one tap,
+  full URL tree incl. 10 industry + 8 feature pages, footer, 404 rules
+- 03 Home Page — 10 sections with headline/subhead/body/CTAs/visual
+  direction/trust elements per section; real-screenshot rule;
+  testimonials hidden until real (no fake proof, ever)
+- 04 Features — 9 outcome pages ("Know every regular by name", "Sell
+  more, commission-free"); business outcomes only, zero software-speak
+- 05 Industries — 10 landing pages: problems in the owner's words,
+  campaign recipes from SALES-001, story placeholders, per-page CTAs
+- 06 Pricing — value story per tier (Free "prove it works" →
+  Enterprise "your brand, your network"); honest comparison table;
+  amounts remain DECISION-014 placeholders
+- 07 About — founding story, mission/vision, 5 founder credos
+  (free must be real; your data is yours; simple is respect)
+- 08 FAQ — 100 questions in 11 groups (pricing, setup, security,
+  loyalty, commerce, payments, storefront, languages, Thailand,
+  Myanmar, Enterprise); legal-gated answers flagged ⚖️
+- 09 Contact — six doors (sales/support/partnerships/media/investors/
+  merchant success), LINE-first, kept response-time promises
+- 10 SEO — Thai-first keyword clusters (ระบบสะสมแต้ม + industries),
+  hub-and-spoke internal linking, 4 content pillars, Myanmar
+  deliberately light (Facebook > Google there)
+- 11 Legal — 7 required pages inventoried with priorities, all gated
+  on DR-33; plain-language-summary format
+- 12 Conversion Funnel — Visitor→Learn→Trust→Start Free→Launch Ready→
+  Upgrade→Refer with drop-off risks and counters per stage; the real
+  conversion is Launch Ready, not signup; golden rule: every website
+  promise provably true in-product within 10 minutes
+- 13 Launch Checklist — gated 🔴/🟠 checklist across content, SEO,
+  analytics, performance (hero <1.5s on 4G), security, accessibility,
+  localization, legal, and the merchant-journey promise-keeping test
+
 ## 2026-07-10 — SALES-001: OneMember Sales Operating System
 
 Business documentation sprint (final assignment of this development
