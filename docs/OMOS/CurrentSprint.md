@@ -16,9 +16,32 @@
 
 | Field | Value |
 |---|---|
+| **Sprint ID** | SALES-001 |
+| **Title** | OneMember Sales Operating System |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Business documentation ONLY (no software) — final assignment of this development cycle |
+| **Classification** | Type A — docs |
+| **Sprint File** | [Sales/](./Sales/) — 10 documents (01-Sales-Playbook … 10-Sales-KPIs) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 (VP Sales / Sales Trainer / CS Director role) |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-10 |
+| **Actual Completion** | 2026-07-10 |
+| **Final Commit** | see git log: SALES-001 (merchant-ready-001-mr-001) |
+
+### Business Objective
+
+Complete sales operating manual — detailed enough that a new salesperson can sell OneMember after reading it. Ten documents in docs/OMOS/Sales/: playbook (philosophy, consultative selling, merchant-first rules, 9-stage process, daily activity targets), 10 ideal customer profiles with red flags, structured discovery framework (LINE/Facebook/POS/database/budget/decision-maker), per-industry campaign playbooks with launch sequences and quick wins, minute-by-minute 10-minute demo script, objection handling (13 objections incl. walk-away criteria), ROI formulas with three worked examples (break-even-visits framing), day-1/3/7/14/21/30 follow-up cadences (trial + prospect), the Founding Merchant pilot operating manual (weekly review ritual, feedback routing, case-study/testimonial production, graduation, referral incentives, tripwires), and the daily/weekly/monthly KPI system with funnel math and anti-gaming rules. Blockers repeated: DECISION-014 pricing and DR-33 terms gate revenue claims.
+
+---
+
+## Previous Sprint (GO-TO-MARKET-001)
+
+| Field | Value |
+|---|---|
 | **Sprint ID** | GO-TO-MARKET-001 |
 | **Title** | Merchant Acquisition Strategy (first 100 merchants) |
-| **Status** | ⏳ Awaiting CTO Review |
+| **Status** | ✅ Approved by CTO (2026-07-10) |
 | **Sprint Type** | Business strategy — documentation ONLY (no software) |
 | **Classification** | Type A — docs |
 | **Sprint File** | [Roadmaps/GO-TO-MARKET-001.md](./Roadmaps/GO-TO-MARKET-001.md) |

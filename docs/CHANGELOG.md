@@ -1,3 +1,38 @@
+## 2026-07-10 — SALES-001: OneMember Sales Operating System
+
+Business documentation sprint (final assignment of this development
+cycle; no software). New folder docs/OMOS/Sales/ with the complete
+sales operating manual — detailed enough for a new salesperson to sell
+OneMember after reading it:
+
+- 01 Sales Playbook — philosophy (sell repeat customers, demo is the
+  pitch, Free is a real answer, honesty compounds), consultative rules,
+  9-stage process with exit criteria, cycle-length expectations per
+  persona, daily activity targets (10 conversations / 3-4 demos)
+- 02 Ideal Customer Profiles — 10 segments with size, owner, pains,
+  triggers, modules, red flags + universal qualify-out rules
+- 03 Discovery Questions — 3-question street qualifier + 12-topic
+  framework (loyalty, repeats, marketing, FB, LINE, POS, database,
+  challenges, goals, budget-indirect, decision makers, next steps)
+- 04 Industry Playbooks — per-industry mechanics (points vs stamps),
+  reward ladders, birthday/referral/seasonal patterns, launch sequence,
+  week-one quick wins
+- 05 10-Minute Demo Script — minute-by-minute beats: customer scan →
+  Counter Mode → win-back reveal → storefront/Launch Kit fork →
+  Free-100 close with on-the-spot signup
+- 06 Objection Handling — 8 core + 5 bonus objections
+  (acknowledge/reframe/evidence/advance) + graceful walk-away criteria
+- 07 ROI Calculator — formulas only + 3 worked examples; break-even-
+  visits framing; prices remain DECISION-014 placeholders
+- 08 Follow-Up Playbook — day 1/3/7/14/21/30 cadences for trials and
+  prospects; LINE-first channel rules; max-5-touches rule
+- 09 Pilot Merchant Program — Founding Merchants operating manual:
+  the exchange, weekly review ritual ("what almost made you stop?"),
+  feedback routing to CTO, case-study/testimonial production,
+  graduation, referral incentives, tripwires
+- 10 Sales KPIs — daily/weekly/monthly tables, funnel math proving
+  one seller ≈ 100 activated merchants in ~4 months, anti-gaming rules
+
 ## 2026-07-10 — GO-TO-MARKET-001: Merchant Acquisition Strategy
 
 Business-strategy sprint, documentation only (no software). New:
