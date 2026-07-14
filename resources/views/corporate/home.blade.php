@@ -19,7 +19,14 @@
                 <p class="corp-hero-sub">{{ __('corporate.home_hero_sub') }}</p>
                 <div class="d-flex flex-wrap gap-3">
                     <a href="{{ $appUrl }}/register" class="btn btn-pink btn-pink-lg">{{ __('corporate.cta_start_trial') }} <i class="bi bi-arrow-right ms-1"></i></a>
-                    <a href="{{ route('corporate.demo') }}" class="btn btn-outline-navy btn-outline-navy-lg" style="border-color:rgba(255,255,255,0.4);color:#fff;">{{ __('corporate.nav_book_demo') }}</a>
+                    @if (config('services.line.oa_url'))
+                        <a href="{{ config('services.line.oa_url') }}" target="_blank" rel="noopener"
+                           class="btn btn-outline-navy btn-outline-navy-lg" style="border-color:rgba(255,255,255,0.4);color:#fff;">
+                            <i class="bi bi-chat-dots-fill me-1" aria-hidden="true"></i>{{ __('corporate.contact_line_cta') }}
+                        </a>
+                    @else
+                        <a href="{{ route('corporate.demo') }}" class="btn btn-outline-navy btn-outline-navy-lg" style="border-color:rgba(255,255,255,0.4);color:#fff;">{{ __('corporate.nav_book_demo') }}</a>
+                    @endif
                 </div>
                 <div class="hero-stats">
                     <div>
@@ -175,7 +182,13 @@
     </div>
 </section>
 
-{{-- Testimonials --}}
+{{-- Testimonials — ships hidden until >=1 real Founding Merchant quote
+     exists in corporate.home_testimonials (docs/OMOS/Website/03-Home-Page.md
+     §8: "no fake quotes, ever"). --}}
+{{-- is_array(), not empty(): Laravel's translator falls back to returning
+     the key string itself when a translation value is an empty array, so
+     !empty() on that string would incorrectly evaluate truthy. --}}
+@if (is_array(trans('corporate.home_testimonials')) && count(trans('corporate.home_testimonials')))
 <section class="corp-section corp-section-alt">
     <div class="container">
         <div class="text-center mb-5">
@@ -198,6 +211,7 @@
         </div>
     </div>
 </section>
+@endif
 
 {{-- Pilot Programme --}}
 <section class="corp-section">
@@ -228,7 +242,7 @@
         <p class="small text-muted mb-5">{{ __('corporate.home_pricing_sub2') }} <a href="{{ route('corporate.pricing') }}">{{ __('corporate.home_pricing_view_full') }}</a>.</p>
         <div class="row justify-content-center g-4">
             @foreach(trans('corporate.home_pricing_plans') as $p)
-            <div class="col-md-5">
+            <div class="col-md-6 col-lg-4">
                 <div class="corp-pricing-card {{ $p[5] ? 'featured' : '' }}">
                     @if($p[5]) <div class="corp-pricing-badge">{{ __('corporate.pricing_pro_badge') }}</div> @endif
                     <div class="corp-pricing-plan">{{ $p[0] }}</div>
@@ -265,7 +279,8 @@
                     @foreach(trans('corporate.home_faq_items') as $i => $qa)
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button {{ $i > 0 ? 'collapsed' : '' }}" type="button" data-bs-toggle="collapse" data-bs-target="#homeFaq{{ $i }}">
+                            <button class="accordion-button {{ $i > 0 ? 'collapsed' : '' }}" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#homeFaq{{ $i }}" aria-expanded="{{ $i === 0 ? 'true' : 'false' }}" aria-controls="homeFaq{{ $i }}">
                                 {{ $qa[0] }}
                             </button>
                         </h2>
@@ -287,7 +302,9 @@
         <p class="section-sub section-sub-light mx-auto mb-4">{{ __('corporate.home_cta_sub') }}</p>
         <div class="d-flex flex-wrap justify-content-center gap-3">
             <a href="{{ $appUrl }}/register" class="btn btn-pink btn-pink-lg">{{ __('corporate.cta_start_trial') }} <i class="bi bi-arrow-right ms-1"></i></a>
-            <a href="{{ route('corporate.contact') }}" class="btn btn-outline-navy btn-outline-navy-lg" style="border-color:rgba(255,255,255,0.35);color:#fff;">{{ __('corporate.home_cta_contact') }}</a>
+            <a href="{{ config('services.line.oa_url') ?: route('corporate.contact') }}"
+               @if (config('services.line.oa_url')) target="_blank" rel="noopener" @endif
+               class="btn btn-outline-navy btn-outline-navy-lg" style="border-color:rgba(255,255,255,0.35);color:#fff;">{{ __('corporate.home_cta_contact') }}</a>
         </div>
     </div>
 </section>

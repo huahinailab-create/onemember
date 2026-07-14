@@ -1020,6 +1020,10 @@ body.om-sidebar-open {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     color: #1A1A2E;
     background: #ffffff;
+    /* WEBSITE-002A: Bootstrap's .row negative gutter margins (g-4/g-5)
+       overflow the viewport at narrow widths unless clipped here — this
+       does not affect any element's actual layout width. */
+    overflow-x: hidden;
 }
 
 /* ── Navigation ── */
