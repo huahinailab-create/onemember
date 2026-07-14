@@ -13,6 +13,23 @@
     </div>
 </section>
 
+{{-- Public Knowledge Center entry point (site map §02: /resources/help) —
+     the full merchant manual is in-app (App\Models\KnowledgeArticle); this
+     is a teaser that sends visitors to sign in/start free rather than
+     exposing article content publicly this sprint. --}}
+<section class="corp-section pb-0">
+    <div class="container">
+        <div class="d-flex align-items-center gap-3 p-4 rounded-4" style="background:rgba(26,46,90,0.04);border:1px solid rgba(26,46,90,0.08);">
+            <i class="bi bi-question-circle-fill" style="color:#1A2E5A;font-size:1.75rem;" aria-hidden="true"></i>
+            <div class="flex-grow-1">
+                <div class="fw-bold" style="color:#1A1A2E;">{{ __('corporate.resources_kc_title') }}</div>
+                <div class="text-muted small">{{ __('corporate.resources_kc_body') }}</div>
+            </div>
+            <a href="{{ $appUrl }}/register" class="btn btn-sm btn-pink flex-shrink-0">{{ __('corporate.cta_start_trial') }}</a>
+        </div>
+    </div>
+</section>
+
 <section class="corp-section">
     <div class="container">
         <div class="row g-4">

@@ -106,7 +106,8 @@
             @foreach(trans('corporate.pricing_faq_items') as $i => $qa)
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button {{ $i > 0 ? 'collapsed' : '' }}" type="button" data-bs-toggle="collapse" data-bs-target="#pFaq{{ $i }}">
+                    <button class="accordion-button {{ $i > 0 ? 'collapsed' : '' }}" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#pFaq{{ $i }}" aria-expanded="{{ $i === 0 ? 'true' : 'false' }}" aria-controls="pFaq{{ $i }}">
                         {{ $qa[0] }}
                     </button>
                 </h2>
