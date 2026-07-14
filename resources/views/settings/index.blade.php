@@ -2,9 +2,12 @@
     <x-slot name="title">{{ __('settings.title') }} – {{ config('app.name') }}</x-slot>
     <x-slot name="pageTitle">{{ __('settings.title') }}</x-slot>
 
-    <div class="page-header">
-        <h1>{{ __('settings.title') }}</h1>
-        <p>{{ __('settings.subtitle') }}</p>
+    <div class="page-header d-flex align-items-center justify-content-between gap-2">
+        <div>
+            <h1>{{ __('settings.title') }}</h1>
+            <p>{{ __('settings.subtitle') }}</p>
+        </div>
+        <x-ui.help-button topic="settings" class="flex-shrink-0" />
     </div>
 
     {{-- Trial Lifecycle Banner --}}

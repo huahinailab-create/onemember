@@ -35,4 +35,12 @@ return [
     'account_info'         => 'Account details are managed by OneMember. To update your email address, please contact support.',
     'coming_soon'          => 'This feature is coming soon.',
     'subscription_coming'  => 'Subscription management coming soon.',
+
+    // MR-002 — friendly placeholder + rewards landing
+    'coming_soon_title'     => ':page is coming soon',
+    'coming_soon_body'      => "We're building this for you. In the meantime, everything you need to run your loyalty programme is ready on your dashboard.",
+    'back_to_dashboard'     => 'Back to dashboard',
+    'rewards_landing_title' => 'Rewards live inside your campaigns',
+    'rewards_landing_body'  => 'Every campaign has its own rewards. Open a campaign to add or edit what your members can redeem.',
+    'rewards_landing_cta'   => 'Go to campaigns',
 ];

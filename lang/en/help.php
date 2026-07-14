@@ -26,4 +26,7 @@ return [
     'category_settings' => 'Settings',
     'category_troubleshooting' => 'Troubleshooting',
     'category_quick_start' => 'Industry Quick Starts',
+
+    // MR-002 — contextual link under empty states
+    'empty_state_link' => 'Learn how in the Help Center',
 ];

@@ -44,6 +44,8 @@ class DashboardController extends Controller
                 'healthScore'         => ['score' => 0, 'label' => 'new_business', 'label_text' => __('intelligence.health_new_business'), 'explanation' => __('intelligence.health_new_business_explanation'), 'badge_class' => 'bg-secondary'],
                 'opportunities'       => [],
                 'launchChecklist'     => null,
+                'launchNextAction'    => null,
+                'merchantHealth'      => null,
                 'winbackCount'        => 0,
                 'winbackDays'         => 0,
             ]);
@@ -99,8 +101,12 @@ class DashboardController extends Controller
         $healthScore  = $intelligence->getHealthScore($merchant);
         $opportunities = $intelligence->getOpportunities($merchant);
 
-        // LAUNCH-001 merchant success checklist
-        $launchChecklist = app(\App\Services\LaunchChecklistService::class)->for($merchant);
+        // LAUNCH-001 → MR-001 merchant launch checklist, next recommended
+        // action (deterministic: first incomplete item) and health card.
+        $launchService    = app(\App\Services\LaunchChecklistService::class);
+        $launchChecklist  = $launchService->for($merchant);
+        $launchNextAction = $launchService->nextAction($merchant, $launchChecklist);
+        $merchantHealth   = $launchService->health($merchant, $launchChecklist);
 
         // Win-back alert (MVP-008): members inactive past the configured threshold
         $winbackDays  = (int) ($merchant->settings['winback_days'] ?? 0);
@@ -130,6 +136,8 @@ class DashboardController extends Controller
             'winbackCount',
             'winbackDays',
             'launchChecklist',
+            'launchNextAction',
+            'merchantHealth',
         ));
     }
 }

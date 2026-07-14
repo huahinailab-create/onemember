@@ -36,12 +36,16 @@ class SettingsController extends Controller
         $merchant = $user->merchant;
         $data     = $request->validated();
 
+        // MR-003 guided journey — which launch step did this save complete?
+        $launchStep = 'profile';
+
         // OMEGA-001E — "Store URL" is optional on this form: a blank value
         // means "leave it as-is", not "clear it". Only ever change the
         // slug when the merchant explicitly typed a new one.
         if (empty($data['slug'])) {
             unset($data['slug']);
         } elseif ($merchant && $data['slug'] !== $merchant->slug) {
+            $launchStep = 'store_url';
             $analytics->track('merchant_store_url_changed', [
                 'from' => $merchant->slug, 'to' => $data['slug'],
             ], $user->id, $merchant->id);
@@ -55,6 +59,7 @@ class SettingsController extends Controller
 
         // Logo upload
         if ($request->hasFile('logo') && $merchant) {
+            $launchStep         = 'logo';
             $data['logo_path'] = (new MerchantBrandingService($merchant))->storeLogo($request->file('logo'));
             $analytics->track('merchant_logo_uploaded', [], $user->id, $merchant->id);
         }
@@ -81,7 +86,8 @@ class SettingsController extends Controller
         $analytics->track('settings_updated', ['section' => 'profile'], $user->id, $user->fresh()->merchant?->id);
 
         return redirect(route('settings') . '?tab=profile')
-            ->with('success', 'Business profile updated successfully.');
+            ->with('success', __('messages.profile_updated'))
+            ->with('launch_step', $launchStep);
     }
 
     /**

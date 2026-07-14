@@ -30,9 +30,9 @@
     <div class="card">
         <div class="card-body p-0">
             @if ($products->isEmpty())
-                <x-ui.empty-state icon="bi-box-seam" :title="__('commerce.no_products')" :body="__('commerce.no_products_body')">
+                <x-ui.empty-state icon="bi-box-seam" :title="__('commerce.no_products')" :body="__('commerce.no_products_body')" help-topic="commerce.products">
                     <a href="{{ route('commerce.products.create') }}" class="btn btn-primary btn-sm">
-                        <i class="bi bi-plus-lg me-1"></i>{{ __('commerce.add_product') }}
+                        <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>{{ __('commerce.add_product') }}
                     </a>
                 </x-ui.empty-state>
             @else

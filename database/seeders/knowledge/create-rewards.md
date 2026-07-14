@@ -2,6 +2,7 @@
 slug: create-rewards
 category: loyalty
 title: Create rewards
+context: rewards
 sort: 3
 ---
 Rewards are what members redeem their points or stamps for.

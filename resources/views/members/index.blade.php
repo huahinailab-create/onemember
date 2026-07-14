@@ -83,9 +83,9 @@
                 @elseif($filter === 'archived')
                     <x-ui.empty-state icon="bi-archive" :title="__('members.empty_archived_title')" :body="__('members.empty_archived_body')" />
                 @else
-                    <x-ui.empty-state icon="bi-people" :title="__('members.empty_title')" :body="__('members.empty_body')">
+                    <x-ui.empty-state icon="bi-people" :title="__('members.empty_title')" :body="__('members.empty_body')" help-topic="members.index">
                         <a href="{{ route('members.create') }}" class="btn btn-primary btn-sm">
-                            <i class="bi bi-person-plus me-1"></i> {{ __('members.add_member') }}
+                            <i class="bi bi-person-plus me-1" aria-hidden="true"></i> {{ __('members.add_member') }}
                         </a>
                     </x-ui.empty-state>
                 @endif

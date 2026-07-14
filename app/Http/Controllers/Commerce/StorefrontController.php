@@ -26,6 +26,13 @@ class StorefrontController extends Controller
 
         abort_unless($merchant->hasApp('commerce'), 404);
 
+        // MR-001 launch checklist: mark "storefront visited" only when the
+        // authenticated owner is viewing their OWN storefront — a public
+        // visitor or another merchant must never flip this tenant's flag.
+        if ($request->user()?->merchant?->id === $merchant->id) {
+            app(\App\Services\LaunchChecklistService::class)->markFlag($merchant, 'storefront_visited');
+        }
+
         // Storefront language follows the merchant's customer-language
         // settings (BETA-008B) — an explicit ?lang= wins when offered,
         // never the browser (GLOBAL-001 localization rule).

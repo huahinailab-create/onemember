@@ -94,4 +94,7 @@ return [
     'privacy_link'     => 'Privacy Policy',
     'terms_scope'      => 'Covers subscription, payment, trial, free-plan limits, upgrades, acceptable use and merchant responsibilities.',
     'terms_draft_note' => 'draft pending legal review',
+
+    // MR-003 — guided launch journey handoff
+    'see_launch_plan' => 'See your launch plan',
 ];

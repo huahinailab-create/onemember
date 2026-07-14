@@ -31,6 +31,9 @@ class LaunchKitController extends Controller
     {
         [$merchant, $offer] = $this->merchantAndOffer($request);
 
+        // MR-001 launch checklist: the QR poster has been viewed/printed.
+        app(\App\Services\LaunchChecklistService::class)->markFlag($merchant, 'qr_poster_viewed');
+
         return view('launch-kit.poster', [
             'merchant'  => $merchant,
             'offer'     => $offer,

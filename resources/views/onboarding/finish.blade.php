@@ -52,20 +52,22 @@
         </div>
         @endif
 
+        {{-- MR-003: the journey continues on the dashboard — its launch plan
+             recommends every next step until the merchant is Launch Ready. --}}
         <div class="row g-3 justify-content-center">
             <div class="col-12">
-                <a href="{{ route('launch-kit') }}" class="btn btn-primary btn-lg w-100">
-                    <i class="bi bi-rocket-takeoff me-2"></i>{{ __('onboarding.open_launch_kit') }}
+                <a href="{{ route('dashboard') }}" class="btn btn-primary btn-lg w-100">
+                    <i class="bi bi-rocket-takeoff me-2" aria-hidden="true"></i>{{ __('onboarding.see_launch_plan') }}
                 </a>
             </div>
             <div class="col-12 col-sm-6">
-                <a href="{{ route('dashboard') }}" class="btn btn-outline-primary btn-lg w-100">
-                    <i class="bi bi-speedometer2 me-2"></i>{{ __('onboarding.go_to_dashboard') }}
+                <a href="{{ route('launch-kit') }}" class="btn btn-outline-primary btn-lg w-100">
+                    <i class="bi bi-qr-code me-2" aria-hidden="true"></i>{{ __('onboarding.open_launch_kit') }}
                 </a>
             </div>
             <div class="col-12 col-sm-6">
                 <a href="{{ route('members.create') }}" class="btn btn-outline-primary btn-lg w-100">
-                    <i class="bi bi-person-plus me-2"></i>{{ __('onboarding.add_first_member') }}
+                    <i class="bi bi-person-plus me-2" aria-hidden="true"></i>{{ __('onboarding.add_first_member') }}
                 </a>
             </div>
         </div>

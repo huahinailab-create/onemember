@@ -5,8 +5,8 @@
 | **Document Owner** | ChatGPT CTO |
 | **Version** | Live |
 | **OMOS Version** | 1.1 |
-| **Status** | ⏳ Awaiting CTO Review |
-| **Last Updated** | 2026-07-08 |
+| **Status** | 🔄 In Progress — MERCHANT-READY-001 / MR-001 |
+| **Last Updated** | 2026-07-09 |
 
 | **Related Documents** | [EXECUTE.md](./EXECUTE.md), [Product-State.md](./Product-State.md), [Sprints/README.md](./Sprints/README.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md) |
 
@@ -16,22 +16,114 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | MERCHANT-READY-001 |
-| **Title** | OneMember Help Center & User Manual (real merchant content) |
+| **Sprint ID** | WEBSITE-001 |
+| **Title** | OneMember Public Website Master Blueprint |
 | **Status** | ⏳ Awaiting CTO Review |
-| **Sprint Type** | Content + surfacing (no business-logic changes) |
-| **Classification** | Type A — content, docs, tests |
-| **Sprint File** | Spec provided directly by Product Owner (this board records scope) |
+| **Sprint Type** | Marketing/UX-writing documentation ONLY (no implementation) — final documentation assignment before pilot merchant acquisition |
+| **Classification** | Type A — docs |
+| **Sprint File** | [Website/](./Website/) — 13 documents (01-Website-Strategy … 13-Launch-Checklist) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 (Creative Director / UX Writer / SEO Strategist role) |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-10 |
+| **Actual Completion** | 2026-07-10 |
+| **Final Commit** | see git log: WEBSITE-001 (merchant-ready-001-mr-001) |
+
+### Business Objective
+
+Complete public-website blueprint whose single objective is converting visitors into merchants. Thirteen documents: strategy (merchant-growth positioning — never "just another loyalty system" — voice/tone, Thai-first writing rules), site map (shallow, phone-first, Start Free everywhere), section-by-section home page with copy, full outcome-voiced feature pages, 10 industry landing pages with campaign recipes and story placeholders, value-story pricing page (amounts stay DECISION-014), About/founder-philosophy page, 100 grouped FAQs, six-door contact design (LINE-first), Thai-first SEO strategy with keyword clusters and internal-linking engine, legal-page inventory (gated on DR-33), the 7-stage conversion funnel welded to the built product journey (website's real conversion = Launch Ready, not signup), and a gated launch checklist including the promise-keeping test (every site claim provably true in-product within 10 minutes).
+
+---
+
+## Previous Sprint (SALES-001)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | SALES-001 |
+| **Title** | OneMember Sales Operating System |
+| **Status** | ✅ Approved by CTO (2026-07-10) |
+| **Sprint Type** | Business documentation ONLY (no software) — final assignment of this development cycle |
+| **Classification** | Type A — docs |
+| **Sprint File** | [Sales/](./Sales/) — 10 documents (01-Sales-Playbook … 10-Sales-KPIs) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 (VP Sales / Sales Trainer / CS Director role) |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-10 |
+| **Actual Completion** | 2026-07-10 |
+| **Final Commit** | see git log: SALES-001 (merchant-ready-001-mr-001) |
+
+### Business Objective
+
+Complete sales operating manual — detailed enough that a new salesperson can sell OneMember after reading it. Ten documents in docs/OMOS/Sales/: playbook (philosophy, consultative selling, merchant-first rules, 9-stage process, daily activity targets), 10 ideal customer profiles with red flags, structured discovery framework (LINE/Facebook/POS/database/budget/decision-maker), per-industry campaign playbooks with launch sequences and quick wins, minute-by-minute 10-minute demo script, objection handling (13 objections incl. walk-away criteria), ROI formulas with three worked examples (break-even-visits framing), day-1/3/7/14/21/30 follow-up cadences (trial + prospect), the Founding Merchant pilot operating manual (weekly review ritual, feedback routing, case-study/testimonial production, graduation, referral incentives, tripwires), and the daily/weekly/monthly KPI system with funnel math and anti-gaming rules. Blockers repeated: DECISION-014 pricing and DR-33 terms gate revenue claims.
+
+---
+
+## Previous Sprint (GO-TO-MARKET-001)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | GO-TO-MARKET-001 |
+| **Title** | Merchant Acquisition Strategy (first 100 merchants) |
+| **Status** | ✅ Approved by CTO (2026-07-10) |
+| **Sprint Type** | Business strategy — documentation ONLY (no software) |
+| **Classification** | Type A — docs |
+| **Sprint File** | [Roadmaps/GO-TO-MARKET-001.md](./Roadmaps/GO-TO-MARKET-001.md) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 (VP Sales / VP Marketing / COO role) |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-10 |
+| **Actual Completion** | 2026-07-10 |
+| **Final Commit** | see git log: GO-TO-MARKET-001 (merchant-ready-001-mr-001) |
+
+### Business Objective
+
+Complete go-to-market strategy for OneMember's first 100 merchants: vision & positioning ("delivery apps rent you customers; OneMember helps you keep yours"), market rollout order (TH direct founder-led; MM partner-led and gated), 10 merchant segments with pain/trigger/module mapping (beachhead: coffee + salons), 4 personas, tier positioning incl. Enterprise (chains/white-label/corporate controls) with Free-100 as distribution strategy, 9-stage sales journey mapped onto the built product (guided launch journey = onboarding stage), channel evaluation (street sales + LINE + Facebook core; email de-prioritized), Thailand playbook (street-cluster demos, objection battle-card, 10-min scripted demo), Myanmar partner strategy, 20-merchant Founding Merchant pilot design, sales-asset inventory with build list, KPI ladder (30 days / 100 / 1,000 merchants), and a 90/180/365-day roadmap. Blockers surfaced: DECISION-014 (pricing) and DR-33 (terms legal review) gate all revenue.
+
+---
+
+## Previous Sprint (INTERNATIONAL-001)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | INTERNATIONAL-001 |
+| **Title** | Thailand + Myanmar Readiness Blueprint |
+| **Status** | ✅ Approved by CTO (2026-07-10) |
+| **Sprint Type** | Architecture & product planning — documentation ONLY (no code, schema, routes, features) |
+| **Classification** | Type A — docs |
+| **Sprint File** | [Roadmaps/INTERNATIONAL-001.md](./Roadmaps/INTERNATIONAL-001.md) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 (Solution Architect role) |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-10 |
+| **Actual Completion** | 2026-07-10 |
+| **Final Commit** | see git log: INTERNATIONAL-001 (merchant-ready-001-mr-001) |
+
+### Business Objective
+
+Technical blueprint for OneMember's first international expansion (Thailand hardening + Myanmar activation; Laos/Cambodia/Vietnam/Malaysia/Singapore ranked). Covers country strategy, per-country address architecture (postcode visibility rules, Township-vs-District semantics), language strategy per surface, currency strategy (billing vs display, per-currency decimals — MMK has none), date/time (Buddhist-Era display recommendation, Asia/Yangon +06:30), Myanmar Unicode/Zawgyi typography risk, payment readiness (Stripe/Omise/2C2P/PromptPay tracks), legal review areas (PDPA, DR-33, MM sanctions), and a 3-phase roadmap (TH hardening → market-agnostic foundations → Myanmar activation). Recommendations only — nothing implemented.
+
+---
+
+## Previous Sprint (MERCHANT-READY-001)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | MERCHANT-READY-001 |
+| **Title** | Merchant Readiness (Help Center ✅ · MR-001 ✅ · MR-002 ✅ · MR-003 ✅ · MR-004 ✅) |
+| **Status** | ✅ COMPLETE — declared by CTO 2026-07-10 |
+| **Sprint Type** | Merchant experience — guidance, content, dashboard (no new platform architecture, no new business modules) |
+| **Classification** | Type A — dashboard surfacing on existing rails, content, docs, tests |
+| **Sprint File** | [Sprints/MERCHANT-READY-001.md](./Sprints/MERCHANT-READY-001.md) |
 | **Owner** | Product Owner |
 | **Developer** | Claude Fable 5 |
 | **Reviewer** | ChatGPT CTO |
 | **Started** | 2026-07-09 |
-| **Actual Completion** | 2026-07-09 |
-| **Final Commit** | see git log: MERCHANT-READY-001 (fable-dev) |
+| **Actual Completion** | — |
+| **Final Commit** | Help Center: `856a9e9`/`dd801dd` (merged `c698cea`) · MR-001: see git log |
 
 ### Business Objective
 
-Populate the Knowledge Center (PLATFORM-002 P7/P11 rails) with a real merchant manual: 47 English articles across Getting Started, Members, Loyalty, Commerce, Launch Kit, Settings, Troubleshooting and 8 Industry Quick Starts, plus 6 Thai Getting Started articles (English fallback covers the rest). Content ships as git-versioned markdown imported by an idempotent seeder. Help Center added to the sidebar; contextual ? buttons wired on Members, Campaigns, Products and Launch Kit. Preceded on the same branch by OMEGA-001A/B (commerce image experience + UX polish).
+Help every new merchant understand exactly what to do next. Work item 1 (✅ shipped): 47 EN + 6 TH merchant manual articles on the PLATFORM-002 Knowledge Center rails, Help Center sidebar link, contextual ? buttons on Members, Campaigns, Products and Launch Kit. Work item 2 (✅ MR-001, CTO approved): Merchant Launch Dashboard — the LAUNCH-001 checklist evolved to the full launch path as a reusable tenant-scoped component (progress %, Launch Ready badge), deterministic Next Recommended Action, and a green/amber/red Merchant Health Card. Work item 3 (✅ MR-002, CTO approved): empty states with friendly EN/TH copy + CTA + contextual Help Center link on every list screen; ? help buttons on all 8 primary screens; /rewards dead end removed; regression test forbids dead help links. Work item 4 (✅ MR-003, CTO approved): guided launch journey — step-success guidance (why + next action), encouraging progress copy, 🎉 Launch Ready celebration, onboarding handoff. Work item 5 (🔄 MR-004 — Merchant Readiness Audit): senior-QA/UX audit of the whole merchant experience — no features/logic/architecture/schema. Small safe fixes only: 11 remaining raw-English flashes/limit errors localized to existing EN/TH keys, 4 a11y label fixes, 1 hardcoded alt, 1 duplicate lang key. Verified clean: zero horizontal overflow at 375/768 across ~20 pages, EN↔TH lang parity 100%, consistent page titles, no dead links. TH/Myanmar international readiness documented (document-only per spec) in the sprint file's audit summary.
 
 ---
 

@@ -73,10 +73,10 @@
                 @elseif ($filter === 'archived')
                     <x-ui.empty-state icon="bi-archive" :title="__('campaigns.empty_archived_title')" :body="__('campaigns.empty_archived_body')" />
                 @else
-                    <x-ui.empty-state icon="bi-star" :title="__('campaigns.empty_title')">
-                        <p class="mb-0" style="font-size:0.875rem;max-width:380px;margin:0 auto;">
-                            {!! __('campaigns.empty_body', ['link' => route('campaigns.create')]) !!}
-                        </p>
+                    <x-ui.empty-state icon="bi-star" :title="__('campaigns.empty_title')" :body="__('campaigns.empty_state_body')" help-topic="campaigns.index">
+                        <a href="{{ route('campaigns.create') }}" class="btn btn-primary btn-sm">
+                            <i class="bi bi-plus-lg me-1" aria-hidden="true"></i> {{ __('campaigns.create_campaign') }}
+                        </a>
                     </x-ui.empty-state>
                 @endif
             @else

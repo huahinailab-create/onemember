@@ -38,7 +38,7 @@ class RewardController extends Controller
         $merchant = $request->user()->merchant;
         if ($merchant && ! $subscriptionService->canCreateReward($merchant, $campaign)) {
             return back()->withInput()->withErrors([
-                'limit' => 'You have reached the reward limit for this campaign on your current plan. Please upgrade your subscription to add more rewards.',
+                'limit' => __('messages.reward_limit_reached'),
             ]);
         }
 
@@ -57,7 +57,8 @@ class RewardController extends Controller
         $analytics->track('reward_created', [], $request->user()->id, $campaign->merchant_id);
 
         return redirect(route('campaigns.show', $campaign) . '?active_tab=rewards')
-               ->with('success', 'Reward added successfully.');
+               ->with('success', __('messages.reward_created'))
+               ->with('launch_step', 'reward');
     }
 
     public function show(Request $request, LoyaltyProgram $campaign, Reward $reward)
@@ -85,7 +86,7 @@ class RewardController extends Controller
         $reward->update($data);
 
         return redirect(route('campaigns.rewards.show', [$campaign, $reward]))
-               ->with('success', 'Reward updated successfully.');
+               ->with('success', __('messages.reward_updated'));
     }
 
     public function archive(Request $request, LoyaltyProgram $campaign, Reward $reward, AnalyticsService $analytics)
@@ -99,6 +100,6 @@ class RewardController extends Controller
         $analytics->track('reward_archived', [], $request->user()->id, $campaign->merchant_id);
 
         return redirect(route('campaigns.show', $campaign) . '?active_tab=rewards')
-               ->with('success', 'Reward archived.');
+               ->with('success', __('messages.reward_archived'));
     }
 }

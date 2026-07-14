@@ -51,6 +51,7 @@
                id="{{ $name }}"
                name="{{ $name }}"
                accept="image/jpeg,image/png,image/webp"
+               aria-label="{{ __('media.upload_dropzone_label') }}"
                class="media-upload-native-input form-control @error($name) is-invalid @enderror">
         @error($name)<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
 

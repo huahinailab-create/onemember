@@ -26,4 +26,7 @@ return [
     'category_settings' => 'ตั้งค่า',
     'category_troubleshooting' => 'แก้ปัญหา',
     'category_quick_start' => 'คู่มือเริ่มต้นตามประเภทธุรกิจ',
+
+    // MR-002 — contextual link under empty states
+    'empty_state_link' => 'ดูวิธีทำในศูนย์ช่วยเหลือ',
 ];

@@ -106,6 +106,10 @@ class MerchantHelpContentTest extends TestCase
             ['route' => 'campaigns.index',         'topic' => 'campaigns.index',   'slug' => 'create-points-campaign'],
             ['route' => 'commerce.products.index', 'topic' => 'commerce.products', 'slug' => 'add-a-product'],
             ['route' => 'launch-kit',              'topic' => 'launch-kit',        'slug' => 'print-qr-poster'],
+            // MR-002 — expanded contextual help
+            ['route' => 'dashboard',               'topic' => 'dashboard',         'slug' => 'what-is-onemember'],
+            ['route' => 'commerce.orders.index',   'topic' => 'commerce.orders',   'slug' => 'receive-orders'],
+            ['route' => 'settings',                'topic' => 'settings',          'slug' => null],
         ];
 
         foreach ($pages as $page) {
@@ -114,9 +118,66 @@ class MerchantHelpContentTest extends TestCase
                 ->assertOk()
                 ->assertSee('help/context/' . $page['topic'], false);
 
-            // …and the context route resolves to the right article.
+            // …and the context route resolves to the right article. A null
+            // slug means "any article for this context" (multiple qualify).
+            $slug = $page['slug']
+                ?? app(\App\Services\KnowledgeService::class)->forContext($page['topic'], 'en')?->slug;
+            $this->assertNotNull($slug, "No article registered for context {$page['topic']}");
+
             $this->actingAs($this->user)->get(route('help.context', $page['topic'], absolute: false))
-                ->assertRedirect(route('help.article', $page['slug'], absolute: false));
+                ->assertRedirect(route('help.article', $slug, absolute: false));
+        }
+    }
+
+    /** MR-002 — rewards live inside a campaign; its tab carries a ? button. */
+    public function test_rewards_help_button_on_campaign_and_landing_page(): void
+    {
+        $campaign = \App\Models\LoyaltyProgram::factory()->create([
+            'merchant_id' => $this->user->merchant->id,
+            'type'        => \App\Enums\LoyaltyProgramType::Points,
+            'status'      => \App\Enums\CampaignStatus::Active,
+        ]);
+
+        $this->actingAs($this->user)->get(route('campaigns.show', $campaign, absolute: false))
+            ->assertOk()
+            ->assertSee('help/context/rewards', false);
+
+        $this->actingAs($this->user)->get(route('rewards', absolute: false))
+            ->assertOk()
+            ->assertSee('help/context/rewards', false);
+
+        $this->actingAs($this->user)->get(route('help.context', 'rewards', absolute: false))
+            ->assertRedirect(route('help.article', 'create-rewards', absolute: false));
+    }
+
+    /**
+     * MR-002 — no dead help links: every literal topic / help-topic used in a
+     * Blade view must resolve to a published article (never the fallback).
+     */
+    public function test_every_help_topic_used_in_views_resolves_to_an_article(): void
+    {
+        $topics = [];
+        $files = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator(resource_path('views'), \FilesystemIterator::SKIP_DOTS)
+        );
+
+        foreach ($files as $file) {
+            if (! str_ends_with($file->getFilename(), '.blade.php')) {
+                continue;
+            }
+            preg_match_all('/(?:help-topic|topic)="([\w.\-]+)"/', file_get_contents($file->getPathname()), $m);
+            $topics = array_merge($topics, $m[1]);
+        }
+
+        $topics = array_unique($topics);
+        $this->assertNotEmpty($topics);
+
+        $knowledge = app(\App\Services\KnowledgeService::class);
+        foreach ($topics as $topic) {
+            $this->assertNotNull(
+                $knowledge->forContext($topic, 'en'),
+                "Help topic '{$topic}' is used in a view but no published article has that context_key",
+            );
         }
     }
 
