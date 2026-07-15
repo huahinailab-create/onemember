@@ -21,6 +21,19 @@ class AppServiceProvider extends ServiceProvider
         // Intervention/Imagick-backed pipeline is bound in its place.
         // OMEGA merge: real GD pipeline (WebP ≤ media.max_edge) is the default.
         $this->app->bind(ImagePipeline::class, GdImagePipeline::class);
+
+        // CUSTOMER-001A — SMS delivery seam, config-driven so a real
+        // gateway is one class + one config value (see ADR-016).
+        $this->app->bind(
+            \App\Services\CustomerIdentity\Contracts\SmsProvider::class,
+            function () {
+                $key = config('customer_identity.sms_provider', 'log');
+                $class = config("customer_identity.sms_providers.{$key}")
+                    ?? \App\Services\CustomerIdentity\LogSmsProvider::class;
+
+                return new $class();
+            },
+        );
     }
 
     public function boot(): void
