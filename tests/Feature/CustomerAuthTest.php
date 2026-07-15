@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Services\CustomerIdentity\Contracts\SmsProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
+use Tests\Support\FakeSmsProvider;
 use Tests\TestCase;
 
 /**
@@ -392,12 +393,3 @@ class CustomerAuthTest extends TestCase
 }
 
 /** Test double for the SMS seam — records instead of sending. */
-class FakeSmsProvider implements SmsProvider
-{
-    public array $sent = [];
-
-    public function send(string $to, string $message): void
-    {
-        $this->sent[] = ['to' => $to, 'message' => $message];
-    }
-}

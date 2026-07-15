@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Services\CustomerIdentity\Contracts\SmsProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
+use Tests\Support\FakeSmsProvider;
 use Tests\TestCase;
 
 /**
