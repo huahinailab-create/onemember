@@ -8,15 +8,18 @@
     $err     = fn (string $f) => $ns === '' ? $f : "{$ns}.{$f}";
     $old     = fn (string $f, $default = null) => old($err($f), $address?->{$f} ?? $default);
     $schema  = config("customer_address.countries.{$country}");
-    $req     = fn (string $f) => in_array($f, $schema['required'], true);
-    $star    = fn (string $f) => $req($f) ? ' <span class="text-danger">*</span>' : '';
+    // Client-side `required` only in the standalone form — at checkout these
+    // fields may be hidden behind a saved-address choice, and a required
+    // hidden input would block the submit. The server validates either way.
+    $req     = fn (string $f) => $ns === '' && in_array($f, $schema['required'], true);
+    $star    = fn (string $f) => in_array($f, $schema['required'], true) ? ' <span class="text-danger">*</span>' : '';
     $idp     = $ns === '' ? 'addr' : $ns;
 @endphp
 
 <div class="row g-3 mb-3">
     <div class="col-12">
         <label for="{{ $idp }}_recipient_name" class="form-label fw-semibold">{{ __('customer_address.field_recipient') }} <span class="text-danger">*</span></label>
-        <input type="text" id="{{ $idp }}_recipient_name" name="{{ $name('recipient_name') }}" maxlength="150" required
+        <input type="text" id="{{ $idp }}_recipient_name" name="{{ $name('recipient_name') }}" maxlength="150" @if($ns === '') required @endif
                class="form-control @error($err('recipient_name')) is-invalid @enderror" value="{{ $old('recipient_name') }}">
         @error($err('recipient_name'))<div class="invalid-feedback">{{ $message }}</div>@enderror
     </div>

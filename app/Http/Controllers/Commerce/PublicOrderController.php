@@ -35,16 +35,27 @@ class PublicOrderController extends Controller
             'shipping' => (bool) ($commerce['shipping_enabled'] ?? false),
         ]));
 
+        // CUSTOMER-001B — signed-in customers pick from their address book
+        // instead of typing; the plain textarea remains the guest path.
+        $customer     = $request->user('customer');
+        $needsAddress = fn () => in_array($request->input('fulfillment_type'), ['delivery', 'shipping'], true);
+
         $validated = $request->validate([
             'customer_name'    => ['required', 'string', 'max:150'],
             'customer_phone'   => ['required', 'string', 'max:30'],
             'fulfillment_type' => ['required', Rule::in($enabled ?: ['pickup'])],
             'address'          => ['nullable', 'string', 'max:500',
-                Rule::requiredIf(fn () => in_array($request->input('fulfillment_type'), ['delivery', 'shipping'], true))],
+                Rule::requiredIf(fn () => $customer === null && $needsAddress())],
+            'address_choice'   => ['nullable', 'string', 'max:64'],
+            'save_address'     => ['nullable', 'boolean'],
             'notes'            => ['nullable', 'string', 'max:500'],
             'qty'              => ['required', 'array'],
             'qty.*'            => ['nullable', 'integer', 'min:0', 'max:99'],
         ]);
+
+        if ($customer !== null) {
+            $validated['address'] = $this->resolveCustomerAddress($request, $customer, $needsAddress());
+        }
 
         $quantities = array_filter(array_map('intval', $validated['qty']), fn ($q) => $q > 0);
         if ($quantities === []) {
@@ -109,6 +120,48 @@ class PublicOrderController extends Controller
         });
 
         return redirect()->route('storefront.order.show', [$merchant->slug, $order->public_uuid]);
+    }
+
+    /**
+     * CUSTOMER-001B — resolve the delivery address for a signed-in customer.
+     * The merchant receives ONLY a plain-text snapshot of the one address
+     * chosen for this order — never a reference into the customer's book.
+     */
+    private function resolveCustomerAddress(Request $request, \App\Models\Customer $customer, bool $required): ?string
+    {
+        $book   = app(\App\Services\CustomerIdentity\AddressBookService::class);
+        $choice = $request->input('address_choice');
+
+        if ($choice === 'new') {
+            // Full country-aware address form, optionally saved to the book.
+            $rules = collect($book->rulesFor($request->input('new_address.country')))
+                ->except(['label', 'is_default'])
+                ->mapWithKeys(fn ($rule, $field) => ["new_address.{$field}" => $rule])
+                ->all();
+            $data = $request->validate($rules)['new_address'];
+
+            $address = $request->boolean('save_address')
+                ? $book->create($customer, $data + ['label' => __('customer_address.label_other')])
+                : $book->makeUnsaved($data);
+
+            return mb_substr($address->orderSnapshot(), 0, 500);
+        }
+
+        if (is_string($choice) && $choice !== '') {
+            // Saved address — must be the signed-in customer's own, active.
+            $address = $customer->addresses()->active()->where('uuid', $choice)->first();
+            if ($address === null) {
+                throw ValidationException::withMessages(['address_choice' => __('customer_address.invalid_choice')]);
+            }
+
+            return mb_substr($address->orderSnapshot(), 0, 500);
+        }
+
+        if ($required) {
+            throw ValidationException::withMessages(['address_choice' => __('customer_address.choose_address')]);
+        }
+
+        return null;
     }
 
     public function show(Request $request, string $slug, string $orderUuid)

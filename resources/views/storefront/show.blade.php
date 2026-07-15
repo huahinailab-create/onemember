@@ -147,12 +147,12 @@
                     <div class="mb-2">
                         <label class="form-label form-label-sm" for="customer_name">{{ __('commerce.order_name') }} *</label>
                         <input type="text" id="customer_name" name="customer_name" required maxlength="150"
-                               class="form-control" value="{{ old('customer_name') }}">
+                               class="form-control" value="{{ old('customer_name', $customer?->name) }}">
                     </div>
                     <div class="mb-2">
                         <label class="form-label form-label-sm" for="customer_phone">{{ __('commerce.order_phone') }} *</label>
                         <input type="tel" id="customer_phone" name="customer_phone" required maxlength="30"
-                               class="form-control" value="{{ old('customer_phone') }}">
+                               class="form-control" value="{{ old('customer_phone', $customer?->phone) }}">
                     </div>
                     <div class="mb-2">
                         <label class="form-label form-label-sm" for="fulfillment_type">{{ __('commerce.order_fulfillment') }} *</label>
@@ -164,11 +164,52 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="mb-2">
-                        <label class="form-label form-label-sm" for="address">{{ __('commerce.order_address') }}</label>
-                        <textarea id="address" name="address" rows="2" maxlength="500" class="form-control"
-                                  placeholder="{{ __('commerce.order_address_hint') }}">{{ old('address') }}</textarea>
-                    </div>
+                    {{-- CUSTOMER-001B — signed-in customers pick from their
+                         address book (few clicks); guests keep the free-text
+                         field. Only the chosen address reaches the merchant. --}}
+                    @if ($customer !== null)
+                        <fieldset class="mb-2">
+                            <legend class="form-label form-label-sm mb-1">{{ __('customer_address.deliver_to') }}</legend>
+                            @error('address_choice')<div class="alert alert-danger py-1 small">{{ $message }}</div>@enderror
+                            @foreach ($customerAddresses as $saved)
+                                <div class="form-check storefront-address-option">
+                                    <input class="form-check-input" type="radio" name="address_choice" id="addr_{{ $saved->uuid }}"
+                                           value="{{ $saved->uuid }}"
+                                           {{ old('address_choice', $loop->first ? $saved->uuid : null) === $saved->uuid ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="addr_{{ $saved->uuid }}">
+                                        <span class="fw-semibold">{{ $saved->label }}</span>
+                                        @if ($saved->is_default)<span class="badge bg-success ms-1">{{ __('customer_address.default_badge') }}</span>@endif
+                                        <span class="d-block small text-muted">{{ $saved->oneLine() }}</span>
+                                    </label>
+                                </div>
+                            @endforeach
+                            <div class="form-check storefront-address-option">
+                                <input class="form-check-input" type="radio" name="address_choice" id="addr_new" value="new"
+                                       {{ old('address_choice') === 'new' || $customerAddresses->isEmpty() ? 'checked' : '' }}>
+                                <label class="form-check-label fw-semibold" for="addr_new">{{ __('customer_address.checkout_add_new') }}</label>
+                            </div>
+                            <details class="storefront-new-address mt-2" {{ old('address_choice') === 'new' || $customerAddresses->isEmpty() || $errors->hasAny(['new_address.line1', 'new_address.postal_code']) ? 'open' : '' }}>
+                                <summary class="small text-muted">{{ __('customer_address.checkout_add_new') }}</summary>
+                                <div class="mt-2">
+                                    <input type="hidden" name="new_address[country]" value="{{ $newAddressCountry = ($customer->country && config('customer_address.countries.'.$customer->country) ? $customer->country : config('customer_address.default_country')) }}">
+                                    @include('customer.addresses._fields', ['ns' => 'new_address', 'address' => null, 'country' => $newAddressCountry])
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="save_address" name="save_address" value="1"
+                                               {{ old('save_address') ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="save_address">{{ __('customer_address.checkout_save') }}</label>
+                                    </div>
+                                </div>
+                            </details>
+                            <a href="{{ route('customer.addresses.index') }}" class="small d-inline-block mt-1" target="_blank" rel="noopener">{{ __('customer_address.checkout_manage') }}</a>
+                        </fieldset>
+                    @else
+                        <div class="mb-2">
+                            <label class="form-label form-label-sm" for="address">{{ __('commerce.order_address') }}</label>
+                            <textarea id="address" name="address" rows="2" maxlength="500" class="form-control"
+                                      placeholder="{{ __('commerce.order_address_hint') }}">{{ old('address') }}</textarea>
+                            <a href="{{ route('customer.login') }}" class="small d-inline-block mt-1">{{ __('customer_address.checkout_signin') }}</a>
+                        </div>
+                    @endif
                     <div class="mb-3">
                         <label class="form-label form-label-sm" for="notes">{{ __('commerce.order_notes') }}</label>
                         <input type="text" id="notes" name="notes" maxlength="500" class="form-control" value="{{ old('notes') }}">

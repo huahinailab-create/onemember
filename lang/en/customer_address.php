@@ -88,5 +88,7 @@ return [
     'checkout_save'     => 'Save this address to my address book',
     'checkout_manage'   => 'Manage addresses',
     'checkout_signin'   => 'Sign in to use your saved addresses',
+    'invalid_choice' => 'That saved address is no longer available. Please choose another.',
+    'choose_address' => 'Please choose a delivery address or add a new one.',
 
 ];

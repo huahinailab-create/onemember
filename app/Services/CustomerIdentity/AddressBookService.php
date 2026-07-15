@@ -162,6 +162,15 @@ class AddressBookService
             ?->forceFill(['is_default' => true])->save();
     }
 
+    /**
+     * An unsaved, sanitized address instance — used at checkout when the
+     * customer types a one-off address without saving it to the book.
+     */
+    public function makeUnsaved(array $data): CustomerAddress
+    {
+        return new CustomerAddress($this->clean($data));
+    }
+
     /** Trim every string; normalize the contact phone to E.164 when possible. */
     private function clean(array $data): array
     {
