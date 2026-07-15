@@ -21,6 +21,7 @@ return [
     'nav_start_trial'      => 'ทดลองใช้ฟรี',
     'nav_line'             => 'LINE',
     'nav_toggle_menu'      => 'เปิด/ปิดเมนูนำทาง',
+    'skip_to_content'      => 'ข้ามไปยังเนื้อหา',
 
     // ── Footer ────────────────────────────────────────────────────────────────
     'footer_tagline'       => 'ความสัมพันธ์คือหัวใจ — ลูกค้าประจำของคุณ กลับมาบ่อยขึ้น',
@@ -39,7 +40,7 @@ return [
     'footer_built'         => 'สร้างในไทย 🇹🇭',
 
     // ── Shared CTAs ───────────────────────────────────────────────────────────
-    'cta_start_trial'      => 'ทดลองใช้ฟรี',
+    'cta_start_trial'      => 'เริ่มใช้ฟรี',
     'cta_book_demo'        => 'จองการสาธิต',
     'cta_contact_us'       => 'ติดต่อเรา',
     'cta_learn_more'       => 'เรียนรู้เพิ่มเติม',
@@ -61,11 +62,11 @@ return [
     'home_stat_trial'         => 'ฟรีสำหรับสมาชิก 100 คนแรก',
     'home_stat_setup_label'   => 'ตั้งค่าภายใน',
     'home_stat_setup_value'   => '10 นาที',
-    'home_stat_pdpa_label'    => 'ไม่ต้องใช้บัตร',
+    'home_stat_pdpa_label'    => 'กฎหมายข้อมูลไทย',
     'home_stat_pdpa_value'    => 'พร้อม PDPA',
     'home_mockup_title'       => 'แดชบอร์ด OneMember',
     'home_mockup_active'      => 'สมาชิกที่ใช้งาน',
-    'home_mockup_retention'   => 'อัตราการกลับมา',
+    'home_mockup_retention'   => 'มาเยือนวันนี้',
     'home_mockup_activity'    => 'กิจกรรมล่าสุด',
 
     'home_problem_eyebrow'    => 'วันอังคารที่เงียบเหงา',

@@ -43,7 +43,12 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="hero-mockup">
+                {{-- Decorative product-UI illustration. aria-hidden: the sample
+                     numbers are a small shop's day view, not claims — screen
+                     readers should not announce them as content. Trust rule
+                     (§8): modest small-shop figures, no percentage that could
+                     read as a marketing statistic. --}}
+                <div class="hero-mockup" aria-hidden="true">
                     <div class="hero-mockup-screen">
                         <div class="d-flex align-items-center gap-2 mb-3">
                             <div style="width:8px;height:8px;border-radius:50%;background:#FF1585;"></div>
@@ -52,23 +57,23 @@
                         <div class="row g-2 mb-3">
                             <div class="col-6">
                                 <div style="background:#f8f9ff;border-radius:8px;padding:0.875rem;border-left:3px solid #1A2E5A;">
-                                    <div style="font-size:1.5rem;font-weight:800;color:#1A1A2E;">1,247</div>
+                                    <div style="font-size:1.5rem;font-weight:800;color:#1A1A2E;">128</div>
                                     <div style="font-size:0.75rem;color:#64748b;">{{ __('corporate.home_mockup_active') }}</div>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div style="background:#fff0f7;border-radius:8px;padding:0.875rem;border-left:3px solid #FF1585;">
-                                    <div style="font-size:1.5rem;font-weight:800;color:#1A1A2E;">89%</div>
+                                    <div style="font-size:1.5rem;font-weight:800;color:#1A1A2E;">12</div>
                                     <div style="font-size:0.75rem;color:#64748b;">{{ __('corporate.home_mockup_retention') }}</div>
                                 </div>
                             </div>
                         </div>
                         <div style="background:#f8f9fb;border-radius:8px;padding:0.875rem;">
                             <div style="font-size:0.75rem;font-weight:600;color:#1A2E5A;margin-bottom:0.5rem;">{{ __('corporate.home_mockup_activity') }}</div>
-                            @foreach([['Chelsea P.', '+50 pts', '2m ago'], ['Mia K.', 'Birthday Reward', '15m ago'], ['Alex T.', '+30 pts', '1h ago']] as $row)
+                            @foreach([['Chelsea P.', '+50 pts', '2m'], ['Mia K.', '🎂', '15m'], ['Alex T.', '+30 pts', '1h']] as $row)
                             <div class="d-flex justify-content-between align-items-center py-1" style="font-size:0.8rem;border-bottom:1px solid rgba(26,46,90,0.05);">
                                 <span style="color:#334155;">{{ $row[0] }}</span>
-                                <span style="color:#FF1585;font-weight:600;">{{ $row[1] }}</span>
+                                <span class="text-pink" style="font-weight:600;">{{ $row[1] }}</span>
                                 <span style="color:#94a3b8;">{{ $row[2] }}</span>
                             </div>
                             @endforeach
@@ -278,12 +283,12 @@
                 <div class="accordion corp-faq" id="homeFaq">
                     @foreach(trans('corporate.home_faq_items') as $i => $qa)
                     <div class="accordion-item">
-                        <h2 class="accordion-header">
+                        <h3 class="accordion-header">
                             <button class="accordion-button {{ $i > 0 ? 'collapsed' : '' }}" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#homeFaq{{ $i }}" aria-expanded="{{ $i === 0 ? 'true' : 'false' }}" aria-controls="homeFaq{{ $i }}">
                                 {{ $qa[0] }}
                             </button>
-                        </h2>
+                        </h3>
                         <div id="homeFaq{{ $i }}" class="accordion-collapse collapse {{ $i === 0 ? 'show' : '' }}" data-bs-parent="#homeFaq">
                             <div class="accordion-body">{{ $qa[1] }}</div>
                         </div>

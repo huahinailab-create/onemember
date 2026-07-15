@@ -7,7 +7,7 @@
 
 <section class="corp-page-hero">
     <div class="container">
-        <span class="section-eyebrow" style="color:#FF1585;">{{ __('corporate.contact_eyebrow') }}</span>
+        <span class="section-eyebrow text-pink">{{ __('corporate.contact_eyebrow') }}</span>
         <h1>{{ __('corporate.contact_h1') }}</h1>
         <p>{{ __('corporate.contact_sub') }}</p>
     </div>
@@ -19,12 +19,12 @@
         <a href="{{ config('services.line.oa_url') }}" target="_blank" rel="noopener"
            class="d-flex align-items-center gap-3 p-4 rounded-4 text-decoration-none"
            style="background:rgba(255,21,133,0.06);border:1px solid rgba(255,21,133,0.2);">
-            <i class="bi bi-chat-dots-fill" style="color:#FF1585;font-size:1.75rem;" aria-hidden="true"></i>
+            <i class="bi bi-chat-dots-fill text-pink" style="font-size:1.75rem;" aria-hidden="true"></i>
             <div>
                 <div class="fw-bold" style="color:#1A1A2E;">{{ __('corporate.contact_line_cta') }}</div>
                 <div class="text-muted small">{{ __('corporate.contact_line_note') }}</div>
             </div>
-            <i class="bi bi-arrow-right ms-auto" style="color:#FF1585;" aria-hidden="true"></i>
+            <i class="bi bi-arrow-right ms-auto text-pink" aria-hidden="true"></i>
         </a>
     </div>
 </section>

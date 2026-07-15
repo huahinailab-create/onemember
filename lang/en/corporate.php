@@ -21,6 +21,7 @@ return [
     'nav_start_trial'      => 'Start Free Trial',
     'nav_line'             => 'LINE',
     'nav_toggle_menu'      => 'Toggle navigation menu',
+    'skip_to_content'      => 'Skip to content',
 
     // ── Footer ────────────────────────────────────────────────────────────────
     'footer_tagline'       => 'Relationships matter — your regulars, coming back more often.',
@@ -39,7 +40,7 @@ return [
     'footer_built'         => 'Built in Thailand 🇹🇭',
 
     // ── Shared CTAs ───────────────────────────────────────────────────────────
-    'cta_start_trial'      => 'Start Free Trial',
+    'cta_start_trial'      => 'Start Free',
     'cta_book_demo'        => 'Book a Demo',
     'cta_contact_us'       => 'Contact Us',
     'cta_learn_more'       => 'Learn More',
@@ -62,11 +63,11 @@ return [
     'home_stat_trial'         => 'Free up to 100 members',
     'home_stat_setup_label'   => 'Setup time',
     'home_stat_setup_value'   => '10 min',
-    'home_stat_pdpa_label'    => 'No card needed',
+    'home_stat_pdpa_label'    => 'Thai privacy law',
     'home_stat_pdpa_value'    => 'PDPA-ready',
     'home_mockup_title'       => 'OneMember Dashboard',
     'home_mockup_active'      => 'Active Members',
-    'home_mockup_retention'   => 'Retention Rate',
+    'home_mockup_retention'   => 'Visits today',
     'home_mockup_activity'    => 'Recent Activity',
 
     'home_problem_eyebrow'    => 'The quiet Tuesday',

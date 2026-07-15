@@ -2604,3 +2604,56 @@ body.om-sidebar-open {
     color: #8a90a5;
     margin-top: 0.25rem;
 }
+
+/* ── WEBSITE-002A polish: public marketing site ─────────────────────────── */
+
+/* Skip link — first tab stop; visible only when focused */
+.corp-skip-link:focus {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 2000;
+    padding: 0.5rem 1rem;
+    background: var(--om-navy);
+    color: #ffffff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Reduced motion: the marketing site must never animate for users who
+   opted out — kills hover transitions, smooth scrolling, and collapse
+   animation without touching layout. */
+@media (prefers-reduced-motion: reduce) {
+    .corp-body *,
+    .corp-body *::before,
+    .corp-body *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Touch targets: 44px minimum for the small nav/FAQ-category buttons on
+   touch-first viewports (WCAG 2.5.8 / Apple HIG) — desktop keeps the
+   compact design-system sizing. */
+@media (max-width: 991.98px) {
+    .corp-nav .btn-sm,
+    .corp-body main nav .btn-sm {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+    }
+    .corp-nav .nav-link,
+    .corp-nav .dropdown-item {
+        padding-top: 0.625rem;
+        padding-bottom: 0.625rem;
+    }
+}
+
+/* Section rhythm: consistent hero → first-section seam (a few pages had a
+   double-padding jolt where pb-0 helper sections meet corp-section). */
+.corp-section.pb-0 + .corp-section {
+    padding-top: 2.5rem;
+}

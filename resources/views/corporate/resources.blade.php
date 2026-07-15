@@ -7,7 +7,7 @@
 
 <section class="corp-page-hero">
     <div class="container">
-        <span class="section-eyebrow" style="color:#FF1585;">{{ __('corporate.resources_eyebrow') }}</span>
+        <span class="section-eyebrow text-pink">{{ __('corporate.resources_eyebrow') }}</span>
         <h1>{{ __('corporate.resources_h1') }}</h1>
         <p>{{ __('corporate.resources_sub2') }}</p>
     </div>

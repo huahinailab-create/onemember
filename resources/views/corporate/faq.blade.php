@@ -31,9 +31,9 @@
 
 <section class="corp-page-hero">
     <div class="container">
-        <span class="section-eyebrow" style="color:#FF1585;">{{ __('corporate.faq_eyebrow') }}</span>
+        <span class="section-eyebrow text-pink">{{ __('corporate.faq_eyebrow') }}</span>
         <h1>{{ __('corporate.faq_h1') }}</h1>
-        <p>{{ __('corporate.faq_sub') }} <a href="{{ route('corporate.contact') }}" style="color:#FF1585;">{{ __('corporate.faq_contact_link') }}</a></p>
+        <p>{{ __('corporate.faq_sub') }} <a href="{{ route('corporate.contact') }}" class="text-pink">{{ __('corporate.faq_contact_link') }}</a></p>
     </div>
 </section>
 
