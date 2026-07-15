@@ -160,6 +160,19 @@ Route::domain(config('domains.app'))->group(function () {
             Route::post('/settings/confirm',  [\App\Http\Controllers\Customer\AccountController::class, 'confirmChange'])
                 ->middleware('throttle:customer-otp-verify')->name('change.apply');
 
+            // CUSTOMER-001B — permanent address book (customer-owned;
+            // merchants have no route into any of these).
+            Route::get('/addresses',                    [\App\Http\Controllers\Customer\AddressController::class, 'index'])->name('addresses.index');
+            Route::get('/addresses/new',                [\App\Http\Controllers\Customer\AddressController::class, 'create'])->name('addresses.create');
+            Route::post('/addresses',                   [\App\Http\Controllers\Customer\AddressController::class, 'store'])->name('addresses.store');
+            Route::get('/addresses/{address}/edit',     [\App\Http\Controllers\Customer\AddressController::class, 'edit'])->name('addresses.edit');
+            Route::put('/addresses/{address}',          [\App\Http\Controllers\Customer\AddressController::class, 'update'])->name('addresses.update');
+            Route::delete('/addresses/{address}',       [\App\Http\Controllers\Customer\AddressController::class, 'destroy'])->name('addresses.destroy');
+            Route::post('/addresses/{address}/archive', [\App\Http\Controllers\Customer\AddressController::class, 'archive'])->name('addresses.archive');
+            Route::post('/addresses/{address}/restore', [\App\Http\Controllers\Customer\AddressController::class, 'restore'])->name('addresses.restore');
+            Route::post('/addresses/{address}/default', [\App\Http\Controllers\Customer\AddressController::class, 'setDefault'])->name('addresses.default');
+            Route::post('/addresses/{address}/duplicate', [\App\Http\Controllers\Customer\AddressController::class, 'duplicate'])->name('addresses.duplicate');
+
             Route::post('/logout', [\App\Http\Controllers\Customer\AuthController::class, 'logout'])->name('logout');
         });
     });

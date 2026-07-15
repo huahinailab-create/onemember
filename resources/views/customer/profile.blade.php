@@ -96,6 +96,7 @@
 
     <div class="d-grid gap-2">
         <button type="submit" class="btn btn-primary">{{ __('customer.save_profile') }}</button>
+        <a href="{{ route('customer.addresses.index') }}" class="btn btn-outline-primary"><i class="bi bi-geo-alt me-1"></i>{{ __('customer_address.index_title') }}</a>
         <a href="{{ route('customer.settings') }}" class="btn btn-outline-primary">{{ __('customer.account_settings') }}</a>
     </div>
 </form>

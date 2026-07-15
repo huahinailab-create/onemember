@@ -2693,3 +2693,19 @@ body.om-sidebar-open {
     font-weight: 700;
     color: rgba(255, 255, 255, 0.75);
 }
+
+/* CUSTOMER-001B — address book cards */
+.customer-address-card {
+    border: 1px solid #e3e6ef;
+    border-radius: 0.75rem;
+    padding: 0.9rem 1rem;
+    margin-bottom: 0.75rem;
+    background: #fff;
+}
+.customer-address-card .btn-sm {
+    min-height: 38px; /* large touch targets on mobile */
+}
+.customer-address-archived {
+    opacity: 0.65;
+    background: #f6f7fa;
+}
