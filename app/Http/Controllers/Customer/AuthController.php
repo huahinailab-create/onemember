@@ -158,7 +158,7 @@ class AuthController extends Controller
         $customer->forceFill(['last_login_at' => now()])->save();
         $request->session()->put('locale', $customer->locale);
 
-        return redirect()->intended(route('customer.profile', absolute: false));
+        return redirect()->intended(route('customer.wallet', absolute: false));
     }
 
     /**

@@ -62,7 +62,7 @@ class PublicOrderController extends Controller
             throw ValidationException::withMessages(['qty' => __('commerce.order_empty')]);
         }
 
-        $order = DB::transaction(function () use ($merchant, $validated, $quantities, $commerce) {
+        $order = DB::transaction(function () use ($merchant, $validated, $quantities, $commerce, $customer) {
             $products = Product::where('merchant_id', $merchant->id)
                 ->where('status', 'active')
                 ->whereIn('id', array_keys($quantities))
@@ -92,6 +92,8 @@ class PublicOrderController extends Controller
 
             $order = Order::create([
                 'merchant_id'      => $merchant->id,
+                // CUSTOMER-001C — wallet order history; guests stay NULL
+                'customer_id'      => $customer?->id,
                 'customer_name'    => $validated['customer_name'],
                 'customer_phone'   => $validated['customer_phone'],
                 'fulfillment_type' => $validated['fulfillment_type'],

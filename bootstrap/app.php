@@ -41,7 +41,7 @@ return Application::configure(basePath: dirname(__DIR__))
         });
         $middleware->redirectUsersTo(function (Request $request) {
             return $request->routeIs('customer.*')
-                ? route('customer.profile')
+                ? route('customer.wallet')
                 : route('dashboard');
         });
 

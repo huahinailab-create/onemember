@@ -42,6 +42,7 @@ class Customer extends Authenticatable
         'country',
         'timezone',
         'status',
+        'preferences',
     ];
 
     protected $hidden = [
@@ -55,6 +56,7 @@ class Customer extends Authenticatable
         'email_verified_at' => 'datetime',
         'phone_verified_at' => 'datetime',
         'last_login_at'     => 'datetime',
+        'preferences'       => 'array',
     ];
 
     protected static function booted(): void
@@ -120,6 +122,18 @@ class Customer extends Authenticatable
     public function otps(): HasMany
     {
         return $this->hasMany(CustomerOtp::class);
+    }
+
+    /** Orders placed while signed in (CUSTOMER-001C wallet order history). */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /** A customer preference with default (CUSTOMER-001C wallet settings). */
+    public function preference(string $key, mixed $default = null): mixed
+    {
+        return data_get($this->preferences, $key, $default);
     }
 
     /** The customer's permanent address book (CUSTOMER-001B). */

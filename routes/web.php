@@ -147,6 +147,15 @@ Route::domain(config('domains.app'))->group(function () {
         });
 
         Route::middleware('auth:customer')->group(function () {
+            // CUSTOMER-001C — OneMember Wallet (read-only MVP)
+            Route::get('/wallet',                    [\App\Http\Controllers\Customer\WalletController::class, 'home'])->name('wallet');
+            Route::get('/wallet/memberships',        [\App\Http\Controllers\Customer\WalletController::class, 'memberships'])->name('wallet.memberships');
+            Route::get('/wallet/memberships/{uuid}', [\App\Http\Controllers\Customer\WalletController::class, 'membership'])->name('wallet.membership');
+            Route::get('/wallet/rewards',            [\App\Http\Controllers\Customer\WalletController::class, 'rewards'])->name('wallet.rewards');
+            Route::get('/wallet/activity',           [\App\Http\Controllers\Customer\WalletController::class, 'activity'])->name('wallet.activity');
+            Route::get('/wallet/orders',             [\App\Http\Controllers\Customer\WalletController::class, 'orders'])->name('wallet.orders');
+            Route::put('/settings/preferences',      [\App\Http\Controllers\Customer\AccountController::class, 'updatePreferences'])->name('preferences.update');
+
             Route::get('/',         [\App\Http\Controllers\Customer\ProfileController::class, 'show'])->name('profile');
             Route::put('/profile',  [\App\Http\Controllers\Customer\ProfileController::class, 'update'])->name('profile.update');
 

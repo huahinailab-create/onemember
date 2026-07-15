@@ -31,6 +31,28 @@ class AccountController extends Controller
         return view('customer.settings', ['customer' => $request->user('customer')]);
     }
 
+    /**
+     * CUSTOMER-001C — wallet preferences: communication channel + marketing
+     * consent, stored in the extensible customers.preferences JSON.
+     */
+    public function updatePreferences(Request $request)
+    {
+        $customer = $request->user('customer');
+
+        $data = $request->validate([
+            'communication_channel' => ['required', 'in:email,sms,none'],
+            'marketing_opt_in'      => ['nullable', 'boolean'],
+        ]);
+
+        $customer->update(['preferences' => array_merge($customer->preferences ?? [], [
+            'communication_channel' => $data['communication_channel'],
+            'marketing_opt_in'      => $request->boolean('marketing_opt_in'),
+        ])]);
+
+        return redirect()->route('customer.settings')
+            ->with('status', __('customer_wallet.preferences_saved'));
+    }
+
     public function updatePassword(Request $request)
     {
         $customer = $request->user('customer');
