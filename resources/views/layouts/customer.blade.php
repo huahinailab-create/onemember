@@ -10,19 +10,26 @@
 </head>
 <body class="customer-body">
 
-<main class="customer-shell">
+<main class="customer-shell @yield('shell-class')">
     <header class="customer-header">
-        <a href="{{ auth('customer')->check() ? route('customer.profile') : route('customer.login') }}"
+        <a href="{{ auth('customer')->check() ? route('customer.wallet') : route('customer.login') }}"
            class="text-decoration-none" aria-label="OneMember">
             <span class="customer-wordmark"><span class="text-pink">one</span><span class="customer-wordmark-member">member</span></span>
         </a>
         @auth('customer')
-            <form method="POST" action="{{ route('customer.logout') }}" class="ms-auto">
+            <a href="{{ route('customer.profile') }}" class="btn btn-sm btn-outline-light ms-auto me-2" aria-label="{{ __('customer.profile_title') }}">
+                <i class="bi bi-person" aria-hidden="true"></i>
+            </a>
+            <form method="POST" action="{{ route('customer.logout') }}">
                 @csrf
                 <button type="submit" class="btn btn-sm btn-outline-light">{{ __('customer.sign_out') }}</button>
             </form>
         @endauth
     </header>
+
+    @hasSection('wallet-nav')
+        @include('customer.wallet._nav')
+    @endif
 
     <div class="customer-card">
         @if (session('status'))

@@ -91,6 +91,17 @@ class WalletService
             ->filter(fn (Collection $rewards) => $rewards->isNotEmpty());
     }
 
+    /** Available-reward count per member id (membership list badges). */
+    public function availableRewardCounts(Customer $customer): array
+    {
+        return $this->rewardsByMerchant($customer)
+            ->flatten(1)
+            ->where('status', 'available')
+            ->groupBy(fn (array $row) => $row['member']->id)
+            ->map->count()
+            ->all();
+    }
+
     private function rewardStatus(Reward $reward, Member $member): string
     {
         $inStock   = $reward->remainingQuantity() === null || $reward->remainingQuantity() > 0;

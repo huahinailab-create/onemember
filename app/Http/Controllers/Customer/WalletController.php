@@ -36,9 +36,9 @@ class WalletController extends Controller
         $customer = $request->user('customer');
 
         return view('customer.wallet.memberships', [
-            'customer'    => $customer,
-            'memberships' => $this->wallet->memberships($customer),
-            'wallet'      => $this->wallet,
+            'customer'     => $customer,
+            'memberships'  => $this->wallet->memberships($customer),
+            'rewardCounts' => $this->wallet->availableRewardCounts($customer),
         ]);
     }
 

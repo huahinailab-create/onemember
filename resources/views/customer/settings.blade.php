@@ -6,6 +6,38 @@
 <h1 class="customer-h1">{{ __('customer.settings_title') }}</h1>
 <p class="text-muted mb-4">{{ __('customer.settings_sub') }}</p>
 
+{{-- Preferences (CUSTOMER-001C) --}}
+<section class="mb-5" aria-labelledby="settings-preferences">
+    <h2 class="customer-h2" id="settings-preferences">{{ __('customer_wallet.preferences_title') }}</h2>
+    <form method="POST" action="{{ route('customer.preferences.update') }}" novalidate>
+        @csrf
+        @method('PUT')
+        <div class="mb-3">
+            <label for="communication_channel" class="form-label fw-semibold">{{ __('customer_wallet.pref_channel') }}</label>
+            <select id="communication_channel" name="communication_channel"
+                    class="form-select @error('communication_channel') is-invalid @enderror">
+                @foreach (['email', 'sms', 'none'] as $channel)
+                    <option value="{{ $channel }}"
+                        {{ old('communication_channel', $customer->preference('communication_channel', 'email')) === $channel ? 'selected' : '' }}>
+                        {{ __('customer_wallet.pref_channel_'.$channel) }}
+                    </option>
+                @endforeach
+            </select>
+            @error('communication_channel')<div class="invalid-feedback">{{ $message }}</div>@enderror
+        </div>
+        <div class="form-check mb-3">
+            <input type="checkbox" class="form-check-input" id="marketing_opt_in" name="marketing_opt_in" value="1"
+                   {{ old('marketing_opt_in', $customer->preference('marketing_opt_in', false)) ? 'checked' : '' }}>
+            <label class="form-check-label" for="marketing_opt_in">{{ __('customer_wallet.pref_marketing') }}</label>
+            <div class="form-text">{{ __('customer_wallet.pref_marketing_note') }}</div>
+        </div>
+        <p class="small text-muted mb-3">
+            <i class="bi bi-bell me-1" aria-hidden="true"></i>{{ __('customer_wallet.pref_notifications_soon') }}
+        </p>
+        <button type="submit" class="btn btn-primary btn-sm">{{ __('customer_wallet.save_preferences') }}</button>
+    </form>
+</section>
+
 {{-- Change password --}}
 <section class="mb-5" aria-labelledby="settings-password">
     <h2 class="customer-h2" id="settings-password">{{ __('customer.change_password') }}</h2>

@@ -55,7 +55,7 @@ class CustomerAuthTest extends TestCase
 
         // Complete the OTP → signed in + phone verified
         $this->post(route('customer.otp.verify'), ['code' => $this->lastSmsCode()])
-            ->assertRedirect(route('customer.profile', absolute: false));
+            ->assertRedirect(route('customer.wallet', absolute: false));
 
         $this->assertAuthenticatedAs($customer->fresh(), 'customer');
         $this->assertNotNull($customer->fresh()->phone_verified_at);
@@ -128,7 +128,7 @@ class CustomerAuthTest extends TestCase
             ->assertRedirect(route('customer.otp.form', absolute: false));
 
         $this->post(route('customer.otp.verify'), ['code' => $this->lastSmsCode()])
-            ->assertRedirect(route('customer.profile', absolute: false));
+            ->assertRedirect(route('customer.wallet', absolute: false));
 
         $this->assertAuthenticatedAs($customer->fresh(), 'customer');
     }
@@ -221,7 +221,7 @@ class CustomerAuthTest extends TestCase
         $this->post(route('customer.login.password'), [
             'identifier' => $customer->email,
             'password'   => 'Secret!Password99',
-        ])->assertRedirect(route('customer.profile', absolute: false));
+        ])->assertRedirect(route('customer.wallet', absolute: false));
 
         $this->assertAuthenticatedAs($customer->fresh(), 'customer');
     }
@@ -233,7 +233,7 @@ class CustomerAuthTest extends TestCase
         $this->post(route('customer.login.password'), [
             'identifier' => $customer->phone,
             'password'   => 'Secret!Password99',
-        ])->assertRedirect(route('customer.profile', absolute: false));
+        ])->assertRedirect(route('customer.wallet', absolute: false));
 
         $this->assertAuthenticatedAs($customer->fresh(), 'customer');
     }
@@ -300,7 +300,7 @@ class CustomerAuthTest extends TestCase
             'code'                  => $this->lastSmsCode(),
             'password'              => 'NewSecret!Pass123',
             'password_confirmation' => 'NewSecret!Pass123',
-        ])->assertRedirect(route('customer.profile', absolute: false));
+        ])->assertRedirect(route('customer.wallet', absolute: false));
 
         $this->assertAuthenticatedAs($customer->fresh(), 'customer');
         auth('customer')->logout();
@@ -309,7 +309,7 @@ class CustomerAuthTest extends TestCase
         $this->post(route('customer.login.password'), [
             'identifier' => $customer->phone,
             'password'   => 'NewSecret!Pass123',
-        ])->assertRedirect(route('customer.profile', absolute: false));
+        ])->assertRedirect(route('customer.wallet', absolute: false));
     }
 
     public function test_password_reset_for_unknown_identifier_responds_identically(): void
@@ -361,7 +361,7 @@ class CustomerAuthTest extends TestCase
 
         $this->actingAs($customer, 'customer')
             ->get(route('customer.login', absolute: false))
-            ->assertRedirect(route('customer.profile', absolute: false));
+            ->assertRedirect(route('customer.wallet', absolute: false));
     }
 
     public function test_storefront_and_portal_remain_public_for_guests(): void

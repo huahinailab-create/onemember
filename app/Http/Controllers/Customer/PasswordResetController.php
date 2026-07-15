@@ -93,7 +93,7 @@ class PasswordResetController extends Controller
         auth('customer')->login($otp->customer);
         $request->session()->regenerate();
 
-        return redirect()->route('customer.profile')
+        return redirect()->route('customer.wallet')
             ->with('status', __('customer.password_reset_done'));
     }
 }
