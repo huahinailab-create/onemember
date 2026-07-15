@@ -1,3 +1,35 @@
+## 2026-07-15 — WEBSITE-002A Polish: World-Class Pass (branch, not merged)
+
+Approved follow-up on `website-002a-public-site`: performance, accessibility, SEO, trust, content, and code-quality polish on the existing 8 pages. No new pages, no redesign.
+
+**Performance**
+- New Bootstrap-only `resources/js/corporate.js` Vite entry for all marketing pages: **~54 KB gz → ~24 KB gz JS per page view (−55%)**. Alpine no longer boots and the 42 KB Cropper chunk is no longer preloaded on pages that can never use them.
+
+**SEO (two real defects fixed)**
+- `og:image` pointed at an SVG — LINE/Facebook/Twitter render SVG share images as **blank**; replaced with a generated 1200×630 PNG (GD, on-brand navy/pink wordmark + tagline). Added `twitter:image` and `og:locale`.
+- `robots.txt` has advertised `Sitemap: https://onemember.co/sitemap.xml` since RELEASE-1B — **the URL 404'd for crawlers the whole time**. Added the route + `CorporateController::sitemap()` generating valid XML from the same named routes the site links to.
+
+**Accessibility**
+- Skip-to-content link (first tab stop, styled on focus) + `<main id="corp-main">` landmark — page content previously sat directly in `<body>` with no main landmark.
+- FAQ accordion headers demoted h2→h3 on Home and Pricing (heading hierarchy).
+- `prefers-reduced-motion` now disables all corporate transitions/animations.
+- 44 px minimum touch targets for small nav/FAQ-category buttons below 992 px (WCAG 2.5.8).
+
+**Trust (§8)**
+- Hero dashboard mockup no longer displays figures that read as marketing statistics ("1,247 Active Members / 89% Retention Rate" → a small shop's day view: 128 members / 12 visits today) and is `aria-hidden` as the decorative illustration it is.
+
+**Content**
+- Primary CTA now reads **"Start Free"** sitewide per the blueprint (was "Start Free Trial"); Thai เริ่มใช้ฟรี.
+- Fixed mismatched hero stat pairing ("PDPA-ready" value under a "No card needed" label → "Thai privacy law").
+- Terminology audit: no banned voice words (leverage/cutting-edge/AI-powered/synergy), "programme" used consistently (21×, zero "program"), meta titles all follow "Page — OneMember".
+
+**Code quality**
+- 22 duplicated `style="color:#FF1585"` inline styles replaced with the design-system `text-pink` utility across all corporate views.
+
+**Tests:** +6 regressions (sitemap XML validity + page coverage, PNG og-image exists and is referenced, slim bundle loads / Cropper chunk never leaks onto marketing pages, skip link + landmark, mockup carries no statistic-like figures, CTA naming both locales). **880 → 886 green.** Build clean. Verified in-browser at 375/390/414/768/1024/1440 in EN and TH, including nav toggle, dropdowns, and accordions running on the slim bundle.
+
+**Known limitations:** hreflang pairs still not emitted (locale is session-based, not URL-based — needs the `/th/` URL scheme from the SEO blueprint, a future sprint); Lighthouse not run in-sandbox (no Chrome audit tooling) — LCP/CLS reasoning is structural (text-first hero, no webfonts on corporate pages, fixed-size mockup, no images above the fold).
+
 ## 2026-07-14 — WEBSITE-002A: Public Marketing Website MVP (branch, not merged)
 
 Implements the approved WEBSITE-001 blueprint against the **existing** onemember.co corporate site rather than building a parallel one. On branch `website-002a-public-site`, awaiting CTO review — not merged to `main`.
