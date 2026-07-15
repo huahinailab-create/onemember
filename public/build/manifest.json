@@ -1,4 +1,15 @@
 {
+  "_bootstrap.esm-TXhOD4G9.js": {
+    "file": "assets/bootstrap.esm-TXhOD4G9.js",
+    "name": "bootstrap.esm",
+    "imports": [
+      "_rolldown-runtime-QTnfLwEv.js"
+    ]
+  },
+  "_rolldown-runtime-QTnfLwEv.js": {
+    "file": "assets/rolldown-runtime-QTnfLwEv.js",
+    "name": "rolldown-runtime"
+  },
   "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff": {
     "file": "assets/bootstrap-icons-BeopsB42.woff",
     "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff"
@@ -8,7 +19,7 @@
     "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-CRCQ3Imf.css",
+    "file": "assets/app-CBnNKPpV.css",
     "name": "app",
     "names": [
       "app.css"
@@ -21,11 +32,12 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-fg6WIrW1.js",
+    "file": "assets/app-DdZgFJPX.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
+      "_bootstrap.esm-TXhOD4G9.js",
       "resources/js/product-image.js",
       "resources/js/product-image.js"
     ],
@@ -33,10 +45,22 @@
       "assets/app-_JpMZc7H.css"
     ]
   },
+  "resources/js/corporate.js": {
+    "file": "assets/corporate-CTk7MZY8.js",
+    "name": "corporate",
+    "src": "resources/js/corporate.js",
+    "isEntry": true,
+    "imports": [
+      "_bootstrap.esm-TXhOD4G9.js"
+    ]
+  },
   "resources/js/product-image.js": {
-    "file": "assets/product-image-C0izMTIM.js",
+    "file": "assets/product-image-BO5Z0YtC.js",
     "name": "product-image",
     "src": "resources/js/product-image.js",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "_rolldown-runtime-QTnfLwEv.js"
+    ]
   }
 }

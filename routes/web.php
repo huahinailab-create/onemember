@@ -76,6 +76,10 @@ Route::domain(config('domains.corporate'))->group(function () {
     Route::get('/terms',       [CorporateController::class, 'terms'])->name('corporate.terms');
     Route::get('/pdpa',        [CorporateController::class, 'pdpa'])->name('corporate.pdpa');
 
+    // WEBSITE-002A polish: robots.txt has advertised this URL since the
+    // corporate site shipped — it 404'd until now.
+    Route::get('/sitemap.xml', [CorporateController::class, 'sitemap'])->name('corporate.sitemap');
+
     Route::get('/welcome', fn () => view('welcome'));
 });
 

@@ -12,20 +12,22 @@
     <title>@yield('title', __('corporate.home_meta_title'))</title>
     <meta name="description" content="@yield('description', __('corporate.home_meta_desc'))">
 
-    {{-- Open Graph --}}
+    {{-- Open Graph — PNG image: LINE/Facebook/Twitter do not render SVG og:images --}}
     <meta property="og:type" content="website">
     <meta property="og:title" content="@yield('og_title', __('corporate.home_meta_title'))">
     <meta property="og:description" content="@yield('og_description', __('corporate.home_meta_desc'))">
-    <meta property="og:image" content="@yield('og_image', asset('images/og-default.svg'))">
+    <meta property="og:image" content="@yield('og_image', asset('images/og-default.png'))">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:site_name" content="OneMember">
+    <meta property="og:locale" content="{{ app()->getLocale() === 'th' ? 'th_TH' : 'en_US' }}">
 
     {{-- Twitter Card --}}
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="@yield('og_title', 'OneMember')">
+    <meta name="twitter:title" content="@yield('og_title', __('corporate.home_meta_title'))">
     <meta name="twitter:description" content="@yield('og_description', __('corporate.home_meta_desc'))">
+    <meta name="twitter:image" content="@yield('og_image', asset('images/og-default.png'))">
 
     {{-- Canonical --}}
     <link rel="canonical" href="{{ url()->current() }}">
@@ -39,14 +41,19 @@
         ('@' . 'type') => 'Organization',
         'name' => 'OneMember',
         'url' => config('domains.corporate') ? 'https://' . config('domains.corporate') : url('/'),
-        'logo' => asset('images/og-default.svg'),
+        'logo' => asset('images/og-default.png'),
         'description' => __('corporate.home_meta_desc'),
     ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
     </script>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- WEBSITE-002A polish: corporate.js is Bootstrap-only (no Alpine, no
+         Cropper chunk) — the marketing site needs none of the merchant app JS --}}
+    @vite(['resources/css/app.css', 'resources/js/corporate.js'])
 </head>
 <body class="corp-body">
+
+{{-- Skip link — first focusable element for keyboard/screen-reader users --}}
+<a href="#corp-main" class="visually-hidden-focusable corp-skip-link">{{ __('corporate.skip_to_content') }}</a>
 
 {{-- Corporate Navigation --}}
 <nav class="navbar navbar-expand-lg corp-nav sticky-top" id="corpNav">
@@ -108,7 +115,9 @@
 </nav>
 
 {{-- Page Content --}}
-@yield('content')
+<main id="corp-main">
+    @yield('content')
+</main>
 
 {{-- Corporate Footer --}}
 <footer class="corp-footer mt-0">
