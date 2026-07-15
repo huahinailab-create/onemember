@@ -122,6 +122,17 @@ class Customer extends Authenticatable
         return $this->hasMany(CustomerOtp::class);
     }
 
+    /** The customer's permanent address book (CUSTOMER-001B). */
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(CustomerAddress::class);
+    }
+
+    public function defaultAddress(): ?CustomerAddress
+    {
+        return $this->addresses()->active()->where('is_default', true)->first();
+    }
+
     /** What the customer is called across OneMember surfaces. */
     public function displayName(): string
     {
