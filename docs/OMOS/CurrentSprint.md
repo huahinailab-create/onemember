@@ -5,7 +5,7 @@
 | **Document Owner** | ChatGPT CTO |
 | **Version** | Live |
 | **OMOS Version** | 1.1 |
-| **Status** | ⏳ Awaiting CTO Review — CUSTOMER-001A |
+| **Status** | ⏳ Awaiting CTO Review — CUSTOMER-001B (reviewed together with CUSTOMER-001A) |
 | **Last Updated** | 2026-07-15 |
 
 | **Related Documents** | [EXECUTE.md](./EXECUTE.md), [Product-State.md](./Product-State.md), [Sprints/README.md](./Sprints/README.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md) |
@@ -13,6 +13,43 @@
 ---
 
 ## Current Sprint
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | CUSTOMER-001B |
+| **Title** | Customer Saved Addresses & Checkout Foundation |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Code — permanent customer address book + checkout address selection; merchant privacy by construction. Not a delivery form: durable infrastructure for delivery/shipping/appointments/hotel/Wallet. |
+| **Classification** | Type B — CTO Review (new schema, new customer surface, checkout change); DECISION-101; [ADR-017](./12-ADR/ADR-017-Customer-Address-Book.md) |
+| **Sprint File** | Spec provided directly by Product Owner (this board records scope) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-15 |
+| **Actual Completion** | 2026-07-15 |
+| **Branch** | `customer-001b-saved-addresses` (stacked on `customer-001a-identity-foundation` per CTO instruction; NOT merged, NOT pushed) |
+| **Final Commit** | see git log: CUSTOMER-001B (5 commits) |
+
+### Business Objective
+
+One customer, many merchants, one address book. Customers save unlimited labelled
+addresses (one default, enforced); the schema stores administrative areas
+generically (admin_area_1…4) with each country's field names, required fields and
+postcode rules in config — Thailand and Myanmar shipped, a new country is one
+config entry. AddressBookService owns the lifecycle: first address auto-default,
+delete/archive promotes the next active address, duplicate, search, archive,
+E.164 phone normalization, trimming. Checkout: signed-in customers pick "Deliver
+to" from their book or add a new country-aware address (optional save-to-book);
+guests keep the exact free-text path they had. Merchant privacy by construction:
+orders store only a plain-text snapshot of the chosen address (no FK, no orders
+schema change) — merchants can never see the book, and later edits never rewrite
+a received order. Ownership enforced everywhere (foreign addresses 404 / fail
+validation without confirming existence). No GPS, maps, routing, pricing, or
+wallet UI per charter. 32 new tests (931 total green); build clean.
+
+---
+
+## Previous Sprint (CUSTOMER-001A)
 
 | Field | Value |
 |---|---|

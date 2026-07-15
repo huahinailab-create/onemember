@@ -1,3 +1,43 @@
+## 2026-07-15 — CUSTOMER-001B: Customer Saved Addresses & Checkout Foundation
+
+The customer's permanent address book — one customer, many merchants,
+one address book. Branch `customer-001b-saved-addresses`, stacked on
+CUSTOMER-001A per CTO instruction (both reviewed together; not merged,
+not pushed). DECISION-101; ADR-017. Not a delivery form: the same
+architecture serves food delivery, retail shipping, service
+appointments, hotel delivery, and future Wallet capabilities.
+
+- Address book — unlimited labelled addresses (suggested labels +
+  custom), recipient + contact phone (E.164-normalized), exactly one
+  default among active addresses; create/edit/rename, delete (soft),
+  archive/restore, duplicate, search, set default. Deleting or
+  archiving the default promotes the most recently used active address
+- Country model — administrative areas stored generically
+  (admin_area_1 largest → admin_area_4 smallest); per-country field
+  names, required fields and postcode patterns in
+  config/customer_address.php (TH: province/district/subdistrict;
+  MM: state-region/district/township/ward-village). A new country is
+  one config entry — no migration, no code change. Lat/lng columns
+  nullable, never required (reserved for future GPS work)
+- Checkout — signed-in customers see "Deliver to" with their active
+  addresses (default first) or "Add new address" (full country-aware
+  form + optional save-to-book); guests keep the existing free-text
+  address field untouched; works without JavaScript
+- Merchant privacy by construction — orders store only a plain-text
+  snapshot of the chosen address in the existing orders.address column
+  (no FK, no uuid, no orders schema change): merchants can never
+  traverse into the book; later book edits never rewrite a received
+  order; chosen addresses must be the signed-in customer's own and
+  active (foreign addresses 404 / fail validation without confirming
+  existence)
+- Security — all 10 book routes behind the customer guard; merchant
+  web sessions and guests redirected; sanity cap on book size;
+  country-specific validation with length caps
+- Tests — 32 new (18 address book, 14 checkout incl. guest-unchanged
+  and privacy-boundary proofs); FakeSmsProvider extracted to
+  tests/Support so CUSTOMER-001A files pass standalone. 931 total
+  green, 2465 assertions; build clean
+
 ## 2026-07-15 — CUSTOMER-001A: OneMember Identity Foundation
 
 Customer identity foundation — the beginning of the future OneMember
