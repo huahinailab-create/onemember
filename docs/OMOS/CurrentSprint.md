@@ -5,7 +5,7 @@
 | **Document Owner** | ChatGPT CTO |
 | **Version** | Live |
 | **OMOS Version** | 1.1 |
-| **Status** | ⏳ Awaiting CTO Review — CUSTOMER-001C (001A/B/C stack reviewed together) |
+| **Status** | ⏳ Awaiting CTO Review — RELEASE-001 beta readiness audit (on top of the CUSTOMER-001 stack) |
 | **Last Updated** | 2026-07-15 |
 
 | **Related Documents** | [EXECUTE.md](./EXECUTE.md), [Product-State.md](./Product-State.md), [Sprints/README.md](./Sprints/README.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md) |
@@ -13,6 +13,37 @@
 ---
 
 ## Current Sprint
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | RELEASE-001 |
+| **Title** | OneMember Beta Readiness Audit |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Type A — release audit: safe low-risk fixes only; behaviour/architecture findings documented, not implemented |
+| **Sprint File** | Spec provided directly by Product Owner; findings in the sprint return report |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 (senior release engineer role) |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-16 |
+| **Actual Completion** | 2026-07-16 |
+| **Branch** | `release-001-beta-readiness` (stacked on customer-001c-wallet-mvp; NOT merged, NOT pushed) |
+| **Final Commit** | see git log: RELEASE-001 |
+
+### Business Objective
+
+Full cross-platform production-readiness review before first public beta:
+website, merchant portal, customer identity/addresses/wallet, storefront,
+ordering, auth, localization, responsive, accessibility, performance,
+security, configuration, documentation. Safe fixes applied (OG PNG, missing
+PWA icons, empty favicon, off-brand manifest colors, robots /account,
+branded EN/TH error pages, env docs). Release blockers and journey gaps
+documented for CTO decision — notably: branch integration (customer stack +
+WEBSITE-002A both unmerged), no production SMS provider (phone OTP), no
+customer self-join from storefront, and orders not awarding points.
+
+---
+
+## Previous Sprint (CUSTOMER-001C)
 
 | Field | Value |
 |---|---|

@@ -1,3 +1,25 @@
+## 2026-07-16 — RELEASE-001: Beta Readiness Audit
+
+Cross-platform release audit on `release-001-beta-readiness` (stacked
+on the CUSTOMER-001 stack). Safe fixes only; everything else documented
+in the sprint report for CTO decision.
+
+- og:image switched to PNG (SVG og:images render blank on LINE/FB);
+  brand OG art PNG added with width/height meta
+- /icons/icon-192.png + icon-512.png created (manifest and
+  apple-touch-icon pointed at missing files); 0-byte favicon.ico
+  replaced by a real /favicon.png linked from every layout
+- manifest.webmanifest corrected to brand colors (#1A2E5A / #F0F0F4)
+- robots.txt disallows /account
+- Branded, localized (EN/TH), self-contained 403/404/419/500/503
+  error pages
+- .env.example documents CUSTOMER_SMS_PROVIDER and the
+  no-production-SMS constraint
+- Audit found: EN/TH lang parity 100%, no debug leftovers, no
+  unguarded models, DevTools hard-gated off in production, CSP +
+  security headers in place, honest pricing (฿0 + TBA), all corporate
+  pages 200, sitemap OK. 949 tests green; build clean
+
 ## 2026-07-16 — CUSTOMER-001C: OneMember Wallet MVP
 
 The customer's home inside OneMember — a long-term relationship hub,
