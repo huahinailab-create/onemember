@@ -5,14 +5,52 @@
 | **Document Owner** | ChatGPT CTO |
 | **Version** | Live |
 | **OMOS Version** | 1.1 |
-| **Status** | 🔄 In Progress — MERCHANT-READY-001 / MR-001 |
-| **Last Updated** | 2026-07-09 |
+| **Status** | ⏳ Awaiting CTO Review — CUSTOMER-001A |
+| **Last Updated** | 2026-07-15 |
 
 | **Related Documents** | [EXECUTE.md](./EXECUTE.md), [Product-State.md](./Product-State.md), [Sprints/README.md](./Sprints/README.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md) |
 
 ---
 
 ## Current Sprint
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | CUSTOMER-001A |
+| **Title** | OneMember Identity Foundation (Customer Authentication) |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Code — customer identity foundation (auth, OTP, profile); the beginning of the future OneMember Wallet. Merchant authentication untouched. |
+| **Classification** | Type B — CTO Review (new guard, new schema fields, new public auth surface); DECISION-100; [ADR-016](./12-ADR/ADR-016-Customer-Identity-Foundation.md) |
+| **Sprint File** | Spec provided directly by Product Owner (this board records scope) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-15 |
+| **Actual Completion** | 2026-07-15 |
+| **Branch** | `customer-001a-identity-foundation` (off main `20084eb`; NOT merged, NOT pushed) |
+| **Final Commit** | see git log: CUSTOMER-001A (4 commits) |
+
+### Business Objective
+
+"One person. One identity. Many merchants." Extends the existing PH2-001A `Customer`
+record (same row — no parallel identity, no member-record migration) into an
+authenticatable account: sign in with mobile phone OR email, via OTP OR password —
+the customer chooses. New `customer` session guard leaves merchant auth completely
+untouched; guest checkout remains possible. `OtpService` (bcrypt-hashed 6-digit codes,
+5-min expiry, 5-attempt kill, single-use, supersession, resend cooldown + hourly cap)
+delivers via a `SmsProvider` seam (LogSmsProvider only — no production SMS, no fake
+sending) or synchronous email. E.164 phone normalization for TH + MM via config.
+Account-existence never leaks on login-side paths. Profile self-service (names,
+birthday, language) and settings (password add/change, email/phone change with
+mandatory OTP re-verification to the NEW destination — the destination IS the pending
+value, no pending columns). `IdentityProvider` contract reserved for Apple/Google/LINE
+later (architecture only). Customer UI: login, register, verify, forgot/reset,
+profile, settings — Bootstrap 5, OneMember branding, EN + native TH. 45 new tests
+(899 total green); SecurityEventSubscriber fixed to handle Customer logins.
+
+---
+
+## Previous Sprint (WEBSITE-001)
 
 | Field | Value |
 |---|---|

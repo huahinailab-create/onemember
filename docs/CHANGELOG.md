@@ -1,3 +1,46 @@
+## 2026-07-15 — CUSTOMER-001A: OneMember Identity Foundation
+
+Customer identity foundation — the beginning of the future OneMember
+Wallet. Branch `customer-001a-identity-foundation` (off main `20084eb`;
+awaiting CTO review, not merged, not pushed). "One person. One identity.
+Many merchants." Merchant authentication is completely untouched; guest
+checkout remains possible. DECISION-100; ADR-016.
+
+- Identity — the existing PH2-001A `customers` row becomes the account
+  (no parallel identity, no member-record migration). Additive fields:
+  first/last/nickname/display names, country, timezone, nullable
+  password, remember token, email/phone verified timestamps, last
+  login, status. Two documented schema relaxations: `phone` nullable
+  (email-only accounts) and `email` unique (now a login identifier;
+  production must pre-check duplicates)
+- Authentication — new `customer` session guard + provider; sign in
+  with mobile phone OR email via OTP OR password (customer chooses,
+  single form, no-JS formaction branch). Passwords optional at
+  registration; OTP-only accounts can add one later
+- OTP — `OtpService`: bcrypt-hashed 6-digit codes, 5-minute expiry,
+  5-attempt kill, single-use, supersession, 60s resend cooldown +
+  5/hour per destination. Delivery via `SmsProvider` contract
+  (LogSmsProvider only — no production SMS integration, no fake
+  sending) or synchronous email mailable
+- Security — named rate limiters (login lockout, OTP request/verify,
+  registration), account-existence never leaked on login-side paths,
+  session regeneration, `Password::defaults()` (12+ mixed), suspended
+  status gate, E.164 normalization (TH +66, MM +95, config-driven).
+  SecurityEventSubscriber fixed to identify Customer logins (was
+  merchant-User-only and crashed on phone-only customers)
+- Profile & settings — names/birthday/language self-service; password
+  add/change; email/phone change applies ONLY after OTP verification
+  sent to the NEW destination (the destination IS the pending value —
+  no pending columns)
+- Future seams — `IdentityProvider` contract for Apple/Google/LINE/
+  Facebook later (architecture only, zero implementations, no
+  customer_identities table until the first real provider)
+- UI — customer layout + 8 Blade views (login, register, verify,
+  forgot, reset, profile, settings, confirm), Bootstrap 5, OneMember
+  branding, EN + native TH (~100 keys each)
+- Tests — 45 new (7 unit phone normalization, 38 feature auth/account);
+  899 total green, 2370 assertions; production build clean
+
 ## 2026-07-10 — WEBSITE-001: Public Website Master Blueprint
 
 Marketing/UX-writing documentation sprint (final documentation
