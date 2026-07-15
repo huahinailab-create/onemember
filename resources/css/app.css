@@ -2600,3 +2600,96 @@ body.om-sidebar-open {
     color: #8a90a5;
     margin-top: 0.25rem;
 }
+
+/* ── CUSTOMER-001A: customer identity pages ─────────────────────────────── */
+
+.customer-body {
+    background: linear-gradient(160deg, #1A2E5A 0%, #0F1C3A 100%);
+    min-height: 100vh;
+    font-family: 'Figtree', system-ui, -apple-system, sans-serif;
+}
+
+.customer-shell {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 1.25rem 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.customer-header {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.25rem 1.25rem;
+}
+
+.customer-wordmark {
+    font-family: Arial, sans-serif;
+    font-weight: 700;
+    font-size: 1.375rem;
+}
+
+.customer-wordmark-member {
+    color: #ffffff;
+}
+
+.customer-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 1.75rem 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.customer-h1 {
+    font-size: 1.375rem;
+    font-weight: 800;
+    color: var(--om-ink);
+    margin-bottom: 0.25rem;
+}
+
+.customer-h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--om-navy);
+    margin-bottom: 0.75rem;
+}
+
+.customer-otp-input {
+    letter-spacing: 0.5em;
+    font-weight: 700;
+}
+
+.customer-identity-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    background: var(--om-cloud);
+    border: 1px solid rgba(26, 46, 90, 0.08);
+    border-radius: 12px;
+    padding: 0.875rem 1rem;
+}
+
+.customer-omid {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-weight: 700;
+    color: var(--om-pink);
+    letter-spacing: 0.05em;
+}
+
+.customer-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.25rem;
+    padding: 0 0.25rem;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.customer-footer-brand {
+    font-family: Arial, sans-serif;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.75);
+}

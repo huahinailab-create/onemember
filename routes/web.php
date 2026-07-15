@@ -116,6 +116,54 @@ Route::domain(config('domains.app'))->group(function () {
     Route::get('/member/{publicUuid}/card',   [CustomerPortalController::class, 'card'])->name('portal.card');
     Route::get('/member/{publicUuid}/qr.svg', [CustomerPortalController::class, 'qrSvg'])->name('portal.qr');
 
+    // ── CUSTOMER-001A — customer identity (OneMember account) ─────────────
+    // Separate `customer` guard; merchant auth (/login, /register on the
+    // `web` guard) is untouched. Guest checkout/portal/join stay public —
+    // signing in is optional and additive.
+    Route::prefix('account')->name('customer.')->group(function () {
+        Route::middleware('guest:customer')->group(function () {
+            Route::get('/login',     [\App\Http\Controllers\Customer\AuthController::class, 'showLogin'])->name('login');
+            Route::post('/login/password', [\App\Http\Controllers\Customer\AuthController::class, 'loginWithPassword'])
+                ->middleware('throttle:customer-login')->name('login.password');
+            Route::post('/login/otp',      [\App\Http\Controllers\Customer\AuthController::class, 'requestLoginOtp'])
+                ->middleware('throttle:customer-otp-request')->name('login.otp');
+
+            Route::get('/register',  [\App\Http\Controllers\Customer\RegisterController::class, 'show'])->name('register');
+            Route::post('/register', [\App\Http\Controllers\Customer\RegisterController::class, 'store'])
+                ->middleware('throttle:customer-register')->name('register.store');
+
+            Route::get('/verify',         [\App\Http\Controllers\Customer\AuthController::class, 'showOtpForm'])->name('otp.form');
+            Route::post('/verify',        [\App\Http\Controllers\Customer\AuthController::class, 'verifyOtp'])
+                ->middleware('throttle:customer-otp-verify')->name('otp.verify');
+            Route::post('/verify/resend', [\App\Http\Controllers\Customer\AuthController::class, 'resendOtp'])
+                ->middleware('throttle:customer-otp-request')->name('otp.resend');
+
+            Route::get('/forgot-password',  [\App\Http\Controllers\Customer\PasswordResetController::class, 'request'])->name('password.request');
+            Route::post('/forgot-password', [\App\Http\Controllers\Customer\PasswordResetController::class, 'send'])
+                ->middleware('throttle:customer-otp-request')->name('password.email');
+            Route::get('/reset-password',   [\App\Http\Controllers\Customer\PasswordResetController::class, 'showReset'])->name('password.reset');
+            Route::post('/reset-password',  [\App\Http\Controllers\Customer\PasswordResetController::class, 'update'])
+                ->middleware('throttle:customer-otp-verify')->name('password.update');
+        });
+
+        Route::middleware('auth:customer')->group(function () {
+            Route::get('/',         [\App\Http\Controllers\Customer\ProfileController::class, 'show'])->name('profile');
+            Route::put('/profile',  [\App\Http\Controllers\Customer\ProfileController::class, 'update'])->name('profile.update');
+
+            Route::get('/settings',           [\App\Http\Controllers\Customer\AccountController::class, 'settings'])->name('settings');
+            Route::put('/settings/password',  [\App\Http\Controllers\Customer\AccountController::class, 'updatePassword'])->name('password.change');
+            Route::post('/settings/email',    [\App\Http\Controllers\Customer\AccountController::class, 'requestEmailChange'])
+                ->middleware('throttle:customer-otp-request')->name('email.change');
+            Route::post('/settings/phone',    [\App\Http\Controllers\Customer\AccountController::class, 'requestPhoneChange'])
+                ->middleware('throttle:customer-otp-request')->name('phone.change');
+            Route::get('/settings/confirm',   [\App\Http\Controllers\Customer\AccountController::class, 'showConfirmChange'])->name('change.confirm');
+            Route::post('/settings/confirm',  [\App\Http\Controllers\Customer\AccountController::class, 'confirmChange'])
+                ->middleware('throttle:customer-otp-verify')->name('change.apply');
+
+            Route::post('/logout', [\App\Http\Controllers\Customer\AuthController::class, 'logout'])->name('logout');
+        });
+    });
+
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->middleware(['auth', 'verified'])

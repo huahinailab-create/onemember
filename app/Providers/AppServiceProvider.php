@@ -62,6 +62,24 @@ class AppServiceProvider extends ServiceProvider
             return \Illuminate\Cache\RateLimiting\Limit::perMinute(60)->by($key);
         });
 
+        // CUSTOMER-001A — customer-auth throttles. Password lockout keys on
+        // identifier+IP (config-tunable); OTP request/verify and register
+        // key on IP — per-destination send limits live inside OtpService.
+        \Illuminate\Support\Facades\RateLimiter::for('customer-login', function (\Illuminate\Http\Request $request) {
+            $key = mb_strtolower((string) $request->input('identifier')) . '|' . $request->ip();
+
+            return \Illuminate\Cache\RateLimiting\Limit::perMinutes(
+                (int) ceil(config('customer_identity.login.decay_seconds') / 60),
+                config('customer_identity.login.max_attempts'),
+            )->by($key);
+        });
+        \Illuminate\Support\Facades\RateLimiter::for('customer-otp-request', fn (\Illuminate\Http\Request $r) =>
+            \Illuminate\Cache\RateLimiting\Limit::perMinute(5)->by($r->ip()));
+        \Illuminate\Support\Facades\RateLimiter::for('customer-otp-verify', fn (\Illuminate\Http\Request $r) =>
+            \Illuminate\Cache\RateLimiting\Limit::perMinute(10)->by($r->ip()));
+        \Illuminate\Support\Facades\RateLimiter::for('customer-register', fn (\Illuminate\Http\Request $r) =>
+            \Illuminate\Cache\RateLimiting\Limit::perMinute(5)->by($r->ip()));
+
         // Share absolute app-domain URL with all corporate views so CTAs
         // link to app.onemember.co without relying on route() which would
         // generate a domain-constrained URL pointing to the wrong domain.
