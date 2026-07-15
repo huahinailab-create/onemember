@@ -14,6 +14,7 @@
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="apple-touch-icon" href="/icons/icon-192.png">
 
+    <link rel="icon" type="image/png" href="/favicon.png">
     <title>{{ $title ?? config('app.name') }}</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">

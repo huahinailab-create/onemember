@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
     <meta name="theme-color" content="#1A2E5A">
+    <link rel="icon" type="image/png" href="/favicon.png">
     <title>@yield('title', __('customer.page_title')) – OneMember</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
