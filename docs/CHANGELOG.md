@@ -1,3 +1,42 @@
+## 2026-07-16 — CUSTOMER-001C: OneMember Wallet MVP
+
+The customer's home inside OneMember — a long-term relationship hub,
+not a points viewer. Branch `customer-001c-wallet-mvp`, stacked on
+CUSTOMER-001B (001A/B/C reviewed together; not merged, not pushed).
+DECISION-102; ADR-018.
+
+- Architecture — WalletService read model aggregating ONLY over the
+  customer's own consented CustomerMemberLinks: memberships, summary,
+  rewards by merchant, chronological activity, order history.
+  Cross-customer/merchant leakage impossible by construction; future
+  features (gift cards, subscriptions, appointments, membership
+  cards, notifications, AI recommendations) are new aggregate methods
+  + nav items — no redesign
+- Home — "Welcome back, {first name}", merchants joined, rewards
+  available, memberships + activity previews, quick links, six
+  honestly-labelled Coming Soon tiles (no fake functionality)
+- My Places — merchant cards (logo/initials, member since, last
+  visit, status) each with its OWN balance labelled points or stamps
+  per the merchant's programme; balances never combined (tested)
+- Membership detail (read-only) — balance hero, membership info,
+  campaign, rewards with a visibly disabled Redeem (counter
+  redemption explained), 10 recent transactions, merchant contact,
+  storefront link when Commerce is installed
+- My Rewards — grouped by merchant; real statuses only (Available /
+  Coming soon — the domain has no reward expiry, none invented)
+- Activity — joins, earn/redeem/adjust/expire/birthday, orders;
+  newest first
+- My Orders — items, total, status, delivery-address snapshot used,
+  Order-again link; orders placed signed-in now carry customer_id
+  (guest orders stay NULL and untouched)
+- Preferences — customers.preferences JSON: communication channel +
+  marketing consent; notifications placeholder; extensible without
+  further migration
+- UX — scrollable pill nav (44px targets, aria-current), wider wallet
+  shell, login/OTP/reset land on the wallet, reduced-motion support,
+  empty states everywhere, EN + native TH (~110 keys each)
+- Tests — 18 new; 949 total green, 2525 assertions; build clean
+
 ## 2026-07-15 — CUSTOMER-001B: Customer Saved Addresses & Checkout Foundation
 
 The customer's permanent address book — one customer, many merchants,

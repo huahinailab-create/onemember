@@ -5,7 +5,7 @@
 | **Document Owner** | ChatGPT CTO |
 | **Version** | Live |
 | **OMOS Version** | 1.1 |
-| **Status** | ⏳ Awaiting CTO Review — CUSTOMER-001B (reviewed together with CUSTOMER-001A) |
+| **Status** | ⏳ Awaiting CTO Review — CUSTOMER-001C (001A/B/C stack reviewed together) |
 | **Last Updated** | 2026-07-15 |
 
 | **Related Documents** | [EXECUTE.md](./EXECUTE.md), [Product-State.md](./Product-State.md), [Sprints/README.md](./Sprints/README.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md) |
@@ -13,6 +13,42 @@
 ---
 
 ## Current Sprint
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | CUSTOMER-001C |
+| **Title** | OneMember Wallet MVP |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Code — the customer's home in the ecosystem: read-only relationship hub over memberships, rewards, activity, orders; preferences. No payments/redemption/GPS/notifications per charter. |
+| **Classification** | Type B — CTO Review (new customer surface, 2 additive columns); DECISION-102; [ADR-018](./12-ADR/ADR-018-OneMember-Wallet-MVP.md) |
+| **Sprint File** | Spec provided directly by Product Owner (this board records scope) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-15 |
+| **Actual Completion** | 2026-07-16 |
+| **Branch** | `customer-001c-wallet-mvp` (stacked on customer-001b-saved-addresses; NOT merged, NOT pushed) |
+| **Final Commit** | see git log: CUSTOMER-001C (4 commits) |
+
+### Business Objective
+
+"My relationships with local businesses live here." The wallet is a read model
+(WalletService) aggregating only over the customer's own consented links:
+home with welcome + stats + previews + quick links, My Places (per-merchant
+balance labelled points or stamps, never combined), read-only membership
+detail (campaign, transactions, contact, storefront link), My Rewards with
+honest statuses (Available / Coming soon) and a visibly disabled Redeem,
+Activity (joins, transactions, orders — newest first), My Orders (items,
+total, status, address snapshot used, Order-again). Orders placed signed-in
+gain customer_id (genuine history); preferences JSON stores communication
+channel + marketing consent. Six Coming Soon tiles reserve gift cards,
+subscriptions, appointments, bookings, membership cards, digital wallet.
+Login/reset land on the wallet. EN + native TH throughout. 18 new tests
+(949 total green); build clean.
+
+---
+
+## Previous Sprint (CUSTOMER-001B)
 
 | Field | Value |
 |---|---|

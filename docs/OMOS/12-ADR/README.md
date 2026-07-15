@@ -170,3 +170,4 @@ Reference the context, constraints, and principles that drove the decision.]
 | [ADR-015](./ADR-015-Store-Identity-and-Public-URL.md) | Store Identity & Public URL Foundation | Approved | 2026-07-08 |
 | [ADR-016](./ADR-016-Customer-Identity-Foundation.md) | Customer Identity Foundation (auth, OTP, profile) | Approved | 2026-07-15 |
 | [ADR-017](./ADR-017-Customer-Address-Book.md) | Customer Address Book & Checkout Address Foundation | Approved | 2026-07-15 |
+| [ADR-018](./ADR-018-OneMember-Wallet-MVP.md) | OneMember Wallet MVP (relationship hub, read model) | Approved | 2026-07-15 |
