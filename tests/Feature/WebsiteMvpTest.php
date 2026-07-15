@@ -308,4 +308,84 @@ class WebsiteMvpTest extends TestCase
         $this->assertTrue(Route::has('storefront.show'));
         $this->assertTrue(Route::has('join.show'));
     }
+
+    // ── WEBSITE-002A polish sprint regressions ────────────────────────────
+
+    public function test_sitemap_xml_exists_and_lists_the_public_pages(): void
+    {
+        // robots.txt has advertised this URL since RELEASE-1B; it 404'd
+        // until the polish sprint added the route.
+        $response = $this->get($this->url('/sitemap.xml'));
+
+        $response->assertOk();
+        $response->assertHeader('Content-Type', 'application/xml');
+
+        $xml = simplexml_load_string($response->getContent());
+        $this->assertNotFalse($xml, 'sitemap.xml is not valid XML');
+        $this->assertGreaterThanOrEqual(15, count($xml->url));
+
+        $locs = array_map(fn ($u) => (string) $u->loc, iterator_to_array($xml->url, false));
+        foreach (self::PAGES as $route) {
+            $this->assertContains(route($route), $locs, "sitemap missing {$route}");
+        }
+    }
+
+    public function test_og_image_is_a_png_that_actually_exists(): void
+    {
+        // LINE/Facebook/Twitter do not render SVG og:images — shares were
+        // previewing blank until the PNG replaced the SVG reference.
+        $response = $this->withSession(['locale' => 'en'])->get(route('corporate.home', absolute: true));
+
+        $response->assertOk();
+        $response->assertSee('images/og-default.png', false);
+        $response->assertDontSee('og-default.svg', false);
+        $this->assertFileExists(public_path('images/og-default.png'));
+        $this->assertSame(IMAGETYPE_PNG, exif_imagetype(public_path('images/og-default.png')));
+    }
+
+    public function test_corporate_pages_load_the_slim_js_bundle_not_the_merchant_app(): void
+    {
+        $response = $this->withSession(['locale' => 'en'])->get(route('corporate.home', absolute: true));
+
+        $response->assertOk();
+        $html = $response->getContent();
+        $this->assertStringContainsString('corporate-', $html, 'slim corporate.js bundle not referenced');
+        // Alpine/Cropper live only in the merchant app bundle; marketing
+        // pages must not ship or preload them.
+        $this->assertStringNotContainsString('product-image-', $html, 'Cropper chunk leaked onto a marketing page');
+    }
+
+    public function test_skip_link_and_main_landmark_are_present(): void
+    {
+        $response = $this->withSession(['locale' => 'en'])->get(route('corporate.home', absolute: true));
+
+        $response->assertOk();
+        $response->assertSee('href="#corp-main"', false);
+        $response->assertSee('<main id="corp-main">', false);
+    }
+
+    public function test_hero_mockup_is_decorative_and_carries_no_marketing_statistics(): void
+    {
+        $response = $this->withSession(['locale' => 'en'])->get(route('corporate.home', absolute: true));
+
+        $response->assertOk();
+        // The illustration is aria-hidden and must not contain the old
+        // fabricated-looking figures (1,247 members / 89% retention).
+        $response->assertSee('class="hero-mockup" aria-hidden="true"', false);
+        $response->assertDontSeeText('1,247');
+        $response->assertDontSeeText('89%');
+        $response->assertDontSeeText('Retention Rate');
+    }
+
+    public function test_primary_cta_reads_start_free_per_blueprint(): void
+    {
+        $en = $this->withSession(['locale' => 'en'])->get(route('corporate.home', absolute: true));
+        $en->assertOk();
+        $en->assertSeeText('Start Free');
+        $en->assertDontSeeText('Start Free Trial');
+
+        $th = $this->withSession(['locale' => 'th'])->get(route('corporate.home', absolute: true));
+        $th->assertOk();
+        $th->assertSee('เริ่มใช้ฟรี', false);
+    }
 }
