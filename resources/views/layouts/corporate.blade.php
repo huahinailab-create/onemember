@@ -12,27 +12,48 @@
     <title>@yield('title', __('corporate.home_meta_title'))</title>
     <meta name="description" content="@yield('description', __('corporate.home_meta_desc'))">
 
-    {{-- Open Graph --}}
+    {{-- Open Graph — PNG image: LINE/Facebook/Twitter do not render SVG og:images --}}
     <meta property="og:type" content="website">
     <meta property="og:title" content="@yield('og_title', __('corporate.home_meta_title'))">
     <meta property="og:description" content="@yield('og_description', __('corporate.home_meta_desc'))">
-    <meta property="og:image" content="@yield('og_image', asset('images/og-default.svg'))">
+    <meta property="og:image" content="@yield('og_image', asset('images/og-default.png'))">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:site_name" content="OneMember">
+    <meta property="og:locale" content="{{ app()->getLocale() === 'th' ? 'th_TH' : 'en_US' }}">
 
     {{-- Twitter Card --}}
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="@yield('og_title', 'OneMember')">
+    <meta name="twitter:title" content="@yield('og_title', __('corporate.home_meta_title'))">
     <meta name="twitter:description" content="@yield('og_description', __('corporate.home_meta_desc'))">
+    <meta name="twitter:image" content="@yield('og_image', asset('images/og-default.png'))">
 
     {{-- Canonical --}}
     <link rel="canonical" href="{{ url()->current() }}">
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- Organization structured data — sitewide, truthful only (no ratings/reviews).
+         Key built via concat: the literal string "@context" in Blade source
+         is mis-parsed as the framework's @context directive otherwise. --}}
+    <script type="application/ld+json">
+    {!! json_encode([
+        ('@' . 'context') => 'https://schema.org',
+        ('@' . 'type') => 'Organization',
+        'name' => 'OneMember',
+        'url' => config('domains.corporate') ? 'https://' . config('domains.corporate') : url('/'),
+        'logo' => asset('images/og-default.png'),
+        'description' => __('corporate.home_meta_desc'),
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    </script>
+
+    {{-- WEBSITE-002A polish: corporate.js is Bootstrap-only (no Alpine, no
+         Cropper chunk) — the marketing site needs none of the merchant app JS --}}
+    @vite(['resources/css/app.css', 'resources/js/corporate.js'])
 </head>
 <body class="corp-body">
+
+{{-- Skip link — first focusable element for keyboard/screen-reader users --}}
+<a href="#corp-main" class="visually-hidden-focusable corp-skip-link">{{ __('corporate.skip_to_content') }}</a>
 
 {{-- Corporate Navigation --}}
 <nav class="navbar navbar-expand-lg corp-nav sticky-top" id="corpNav">
@@ -40,7 +61,7 @@
         <a class="navbar-brand corp-logo" href="{{ route('corporate.home') }}">
             <span style="color:#FF1585;font-weight:700;">one</span><span style="color:#1A2E5A;font-weight:700;">member</span>
         </a>
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#corpNavMenu" aria-controls="corpNavMenu" aria-expanded="false">
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#corpNavMenu" aria-controls="corpNavMenu" aria-expanded="false" aria-label="{{ __('corporate.nav_toggle_menu') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="corpNavMenu">
@@ -74,13 +95,19 @@
                     <a class="nav-link {{ request()->is('contact') ? 'active' : '' }}" href="{{ route('corporate.contact') }}">{{ __('corporate.nav_contact') }}</a>
                 </li>
             </ul>
-            <div class="d-flex gap-2 align-items-center">
+            <div class="d-flex gap-2 align-items-center flex-wrap">
                 <x-language-switcher />
+                @if (config('services.line.oa_url'))
+                    <a href="{{ config('services.line.oa_url') }}" target="_blank" rel="noopener"
+                       class="btn btn-sm btn-outline-navy">
+                        <i class="bi bi-chat-dots-fill ms-0 me-1" aria-hidden="true"></i>{{ __('corporate.nav_line') }}
+                    </a>
+                @endif
                 @auth
                     <a href="{{ $appUrl }}/dashboard" class="btn btn-sm btn-pink">{{ __('corporate.nav_go_dashboard') }} <i class="bi bi-arrow-right ms-1"></i></a>
                 @else
                     <a href="{{ $appUrl }}/login" class="btn btn-sm btn-outline-navy">{{ __('corporate.nav_sign_in') }}</a>
-                    <a href="{{ route('corporate.demo') }}" class="btn btn-sm btn-pink">{{ __('corporate.nav_book_demo') }}</a>
+                    <a href="{{ $appUrl }}/register" class="btn btn-sm btn-pink">{{ __('corporate.cta_start_trial') }}</a>
                 @endauth
             </div>
         </div>
@@ -88,7 +115,9 @@
 </nav>
 
 {{-- Page Content --}}
-@yield('content')
+<main id="corp-main">
+    @yield('content')
+</main>
 
 {{-- Corporate Footer --}}
 <footer class="corp-footer mt-0">
@@ -99,9 +128,15 @@
                     <span style="color:#FF1585;font-weight:700;font-size:1.5rem;">one</span><span style="color:#ffffff;font-weight:700;font-size:1.5rem;">member</span>
                 </div>
                 <p class="text-muted-light small mb-3">{{ __('corporate.footer_tagline') }}</p>
-                <p class="small text-muted-light">
+                <p class="small text-muted-light mb-1">
                     <i class="bi bi-envelope me-1"></i> <a href="mailto:hello@onemember.co" class="footer-link">hello@onemember.co</a>
                 </p>
+                @if (config('services.line.oa_url'))
+                    <p class="small text-muted-light mb-0">
+                        <i class="bi bi-chat-dots-fill me-1" aria-hidden="true"></i>
+                        <a href="{{ config('services.line.oa_url') }}" target="_blank" rel="noopener" class="footer-link">{{ __('corporate.contact_line_cta') }}</a>
+                    </p>
+                @endif
             </div>
             <div class="col-lg-2 col-md-3 col-6">
                 <h6 class="footer-heading">{{ __('corporate.footer_product') }}</h6>
@@ -125,9 +160,9 @@
                 <h6 class="footer-heading">{{ __('corporate.footer_support') }}</h6>
                 <ul class="list-unstyled footer-links">
                     <li><a href="{{ route('corporate.faq') }}">{{ __('corporate.footer_faq') }}</a></li>
+                    <li><a href="{{ route('corporate.resources') }}">{{ __('corporate.footer_knowledge_center') }}</a></li>
                     <li><a href="{{ route('corporate.contact') }}">{{ __('corporate.nav_contact') }}</a></li>
                     <li><a href="{{ route('corporate.demo') }}">{{ __('corporate.nav_book_demo') }}</a></li>
-                    <li><a href="{{ route('corporate.resources') }}">{{ __('corporate.nav_resources') }}</a></li>
                 </ul>
             </div>
             <div class="col-lg-2 col-md-3 col-6">

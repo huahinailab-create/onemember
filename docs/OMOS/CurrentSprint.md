@@ -5,8 +5,8 @@
 | **Document Owner** | ChatGPT CTO |
 | **Version** | Live |
 | **OMOS Version** | 1.1 |
-| **Status** | 🔄 In Progress — MERCHANT-READY-001 / MR-001 |
-| **Last Updated** | 2026-07-09 |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Last Updated** | 2026-07-14 |
 
 | **Related Documents** | [EXECUTE.md](./EXECUTE.md), [Product-State.md](./Product-State.md), [Sprints/README.md](./Sprints/README.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md) |
 
@@ -16,22 +16,42 @@
 
 | Field | Value |
 |---|---|
-| **Sprint ID** | WEBSITE-001 |
-| **Title** | OneMember Public Website Master Blueprint |
-| **Status** | ⏳ Awaiting CTO Review |
-| **Sprint Type** | Marketing/UX-writing documentation ONLY (no implementation) — final documentation assignment before pilot merchant acquisition |
-| **Classification** | Type A — docs |
-| **Sprint File** | [Website/](./Website/) — 13 documents (01-Website-Strategy … 13-Launch-Checklist) |
+| **Sprint ID** | WEBSITE-002A (+ approved polish pass) |
+| **Title** | Public Marketing Website MVP + World-Class Polish |
+| **Status** | ⏳ Awaiting CTO Review (MVP approved 2026-07-14; polish pass complete 2026-07-15) |
+| **Sprint Type** | Implementation + senior-UX polish — performance, accessibility, SEO, trust, content, and code quality on the existing pages (no new pages, no redesign) |
+| **Classification** | Type B — CTO Review (public-facing content/positioning change, new npm-free JSON-LD, one new config key, one new public route: /sitemap.xml) |
+| **Sprint File** | Built on [Website/](./Website/) (13-document blueprint); branch `website-002a-public-site` |
 | **Owner** | Product Owner |
-| **Developer** | Claude Fable 5 (Creative Director / UX Writer / SEO Strategist role) |
+| **Developer** | Claude Fable 5 |
 | **Reviewer** | ChatGPT CTO |
-| **Started** | 2026-07-10 |
-| **Actual Completion** | 2026-07-10 |
-| **Final Commit** | see git log: WEBSITE-001 (merchant-ready-001-mr-001) |
+| **Started** | 2026-07-14 |
+| **Actual Completion** | 2026-07-15 |
+| **Final Commit** | see git log on `website-002a-public-site` — not merged to main |
 
 ### Business Objective
 
-Complete public-website blueprint whose single objective is converting visitors into merchants. Thirteen documents: strategy (merchant-growth positioning — never "just another loyalty system" — voice/tone, Thai-first writing rules), site map (shallow, phone-first, Start Free everywhere), section-by-section home page with copy, full outcome-voiced feature pages, 10 industry landing pages with campaign recipes and story placeholders, value-story pricing page (amounts stay DECISION-014), About/founder-philosophy page, 100 grouped FAQs, six-door contact design (LINE-first), Thai-first SEO strategy with keyword clusters and internal-linking engine, legal-page inventory (gated on DR-33), the 7-stage conversion funnel welded to the built product journey (website's real conversion = Launch Ready, not signup), and a gated launch checklist including the promise-keeping test (every site claim provably true in-product within 10 minutes).
+Implements the approved WEBSITE-001 blueprint against the **existing** onemember.co corporate site (`CorporateController` + `resources/views/corporate/*` + `layouts/corporate.blade.php`) rather than building a parallel site — that infrastructure (routes, SEO meta scaffold, i18n via `lang/{en,th}/corporate.php`) already existed and was close to blueprint intent. Repositioned Home/Features/Industries/Pricing/About/FAQ/Contact/Resources (Knowledge Center entry) from generic "loyalty platform" language to the approved "Relationships Matter — your regulars, coming back more often" merchant-growth framing. **Found and fixed a real content-safety defect in already-live code**: the Home page unconditionally rendered three fabricated testimonials (fake shop names/quotes/stats) and an inconsistent "2 min setup" claim — both violate the blueprint's explicit "no fake testimonials/statistics" rule; testimonials now ship hidden until `corporate.home_testimonials` has real entries. Industries page rebuilt with the exact 10 blueprint segments (was 8, several mismatched). FAQ expanded to 34 curated questions across 9 categories with `FAQPage` structured data. Contact restructured to LINE-first six-doors design with an honest 2-business-hour promise (previous copy promised "1 business day" from a form with no backend — now a client-side `mailto:` handler with truthful copy). Pricing already correctly showed `TBA`/`Custom` placeholders (DECISION-014 unresolved) — extended with Enterprise `(planned)` labels for unshipped white-label/multi-branch features. New `App\Services\StoreIdentity`-adjacent config: `services.line.oa_url` (env `LINE_OA_URL`, currently unset — no LINE ID exists yet, never invented) gates every LINE CTA sitewide. Fixed a real Laravel/Blade bug found during verification: the literal string `'@context'` in inline PHP is mis-parsed as the framework's `@context` directive, corrupting JSON-LD — worked around via string concatenation. Fixed a real Bootstrap `.row` negative-margin horizontal-overflow bug at 375px (pre-existing, not introduced this sprint) via `overflow-x:hidden` on `.corp-body`. New `WebsiteMvpTest` (26 tests) plus 3 existing tests updated to match the new (intentional) copy. 878 → 880 tests green (2 net new files, some pre-existing tests' hardcoded-copy assertions updated). Not merged to `main` — awaiting CTO review per assignment.
+
+**Polish pass (2026-07-15, same branch)** — approved follow-up: make the site feel world-class without adding pages or redesigning. **Performance:** new Bootstrap-only `resources/js/corporate.js` Vite entry — marketing pages no longer load Alpine or preload the 42 KB Cropper chunk (~54 KB gz → ~24 KB gz JS per page view, −55%; Alpine no longer boots at all on marketing pages). **SEO:** real 1200×630 PNG og-image generated (GD) replacing the SVG that LINE/Facebook/Twitter render as blank; `twitter:image` + `og:locale` added; `/sitemap.xml` route + controller added — `robots.txt` had advertised that URL since RELEASE-1B and it 404'd for crawlers the whole time. **Accessibility:** skip-to-content link (first tab stop), `<main id="corp-main">` landmark (page content previously sat directly in `<body>`), FAQ accordion headers demoted h2→h3 on Home/Pricing (heading hierarchy), `prefers-reduced-motion` support for all corporate transitions, 44 px touch targets for small nav/FAQ-category buttons below 992 px. **Trust (§8):** hero dashboard mockup no longer shows figures that read as marketing statistics ("1,247 members / 89 % Retention Rate" → a small shop's day view: 128 members / 12 visits today) and is `aria-hidden` as decorative. **Content:** primary CTA now reads "Start Free" per blueprint (was "Start Free Trial"), mismatched hero stat pairing fixed ("PDPA-ready / No card needed" → "PDPA-ready / Thai privacy law"). **Code quality:** 22 duplicated `style="color:#FF1585"` inline styles replaced with the design-system `text-pink` utility. +6 regression tests (sitemap validity, PNG og-image, slim-bundle/no-Cropper-leak, skip link + landmark, mockup carries no statistics, CTA naming). 880 → 886 tests green; build clean; verified in-browser at 375/390/414/768/1024/1440 in both languages including nav toggle, dropdown, and accordion behaviour on the slim bundle.
+
+---
+
+## Previous Sprint (WEBSITE-001)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | WEBSITE-001 |
+| **Title** | OneMember Public Website Master Blueprint |
+| **Status** | ✅ Approved — implemented by WEBSITE-002A |
+| **Sprint Type** | Marketing/UX-writing documentation ONLY |
+| **Classification** | Type A — docs |
+| **Sprint File** | [Website/](./Website/) — 13 documents |
+| **Final Commit** | `d665fce` (`merchant-ready-001-mr-001`) |
+
+### Business Objective
+
+Complete public-website blueprint whose single objective is converting visitors into merchants. Thirteen documents: strategy, site map, home page copy, feature pages, 10 industry landing pages, pricing page, About page, 100 grouped FAQs, six-door contact design, SEO strategy, legal-page inventory, conversion funnel, and launch checklist.
 
 ---
 

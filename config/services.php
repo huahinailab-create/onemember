@@ -35,4 +35,13 @@ return [
         ],
     ],
 
+    // WEBSITE-002A — LINE Official Account deep link, the primary contact
+    // channel per docs/OMOS/Website/09-Contact.md. No LINE ID exists yet
+    // (never invented — see DECISION-099 / CurrentSprint deferred items);
+    // null until a real OA is provisioned, at which point the corporate
+    // site's LINE buttons activate automatically with no code change.
+    'line' => [
+        'oa_url' => env('LINE_OA_URL'),
+    ],
+
 ];

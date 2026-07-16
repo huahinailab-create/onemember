@@ -1,3 +1,65 @@
+## 2026-07-15 — WEBSITE-002A Polish: World-Class Pass (branch, not merged)
+
+Approved follow-up on `website-002a-public-site`: performance, accessibility, SEO, trust, content, and code-quality polish on the existing 8 pages. No new pages, no redesign.
+
+**Performance**
+- New Bootstrap-only `resources/js/corporate.js` Vite entry for all marketing pages: **~54 KB gz → ~24 KB gz JS per page view (−55%)**. Alpine no longer boots and the 42 KB Cropper chunk is no longer preloaded on pages that can never use them.
+
+**SEO (two real defects fixed)**
+- `og:image` pointed at an SVG — LINE/Facebook/Twitter render SVG share images as **blank**; replaced with a generated 1200×630 PNG (GD, on-brand navy/pink wordmark + tagline). Added `twitter:image` and `og:locale`.
+- `robots.txt` has advertised `Sitemap: https://onemember.co/sitemap.xml` since RELEASE-1B — **the URL 404'd for crawlers the whole time**. Added the route + `CorporateController::sitemap()` generating valid XML from the same named routes the site links to.
+
+**Accessibility**
+- Skip-to-content link (first tab stop, styled on focus) + `<main id="corp-main">` landmark — page content previously sat directly in `<body>` with no main landmark.
+- FAQ accordion headers demoted h2→h3 on Home and Pricing (heading hierarchy).
+- `prefers-reduced-motion` now disables all corporate transitions/animations.
+- 44 px minimum touch targets for small nav/FAQ-category buttons below 992 px (WCAG 2.5.8).
+
+**Trust (§8)**
+- Hero dashboard mockup no longer displays figures that read as marketing statistics ("1,247 Active Members / 89% Retention Rate" → a small shop's day view: 128 members / 12 visits today) and is `aria-hidden` as the decorative illustration it is.
+
+**Content**
+- Primary CTA now reads **"Start Free"** sitewide per the blueprint (was "Start Free Trial"); Thai เริ่มใช้ฟรี.
+- Fixed mismatched hero stat pairing ("PDPA-ready" value under a "No card needed" label → "Thai privacy law").
+- Terminology audit: no banned voice words (leverage/cutting-edge/AI-powered/synergy), "programme" used consistently (21×, zero "program"), meta titles all follow "Page — OneMember".
+
+**Code quality**
+- 22 duplicated `style="color:#FF1585"` inline styles replaced with the design-system `text-pink` utility across all corporate views.
+
+**Tests:** +6 regressions (sitemap XML validity + page coverage, PNG og-image exists and is referenced, slim bundle loads / Cropper chunk never leaks onto marketing pages, skip link + landmark, mockup carries no statistic-like figures, CTA naming both locales). **880 → 886 green.** Build clean. Verified in-browser at 375/390/414/768/1024/1440 in EN and TH, including nav toggle, dropdowns, and accordions running on the slim bundle.
+
+**Known limitations:** hreflang pairs still not emitted (locale is session-based, not URL-based — needs the `/th/` URL scheme from the SEO blueprint, a future sprint); Lighthouse not run in-sandbox (no Chrome audit tooling) — LCP/CLS reasoning is structural (text-first hero, no webfonts on corporate pages, fixed-size mockup, no images above the fold).
+
+## 2026-07-14 — WEBSITE-002A: Public Marketing Website MVP (branch, not merged)
+
+Implements the approved WEBSITE-001 blueprint against the **existing** onemember.co corporate site rather than building a parallel one. On branch `website-002a-public-site`, awaiting CTO review — not merged to `main`.
+
+**Shipped** — repositioned to "Relationships Matter" merchant-growth framing (never "just loyalty software"):
+- **Home** — hero, problem ("the quiet Tuesday"), solution, industries teaser, features, pricing teaser, FAQ teaser, final CTA all rewritten to the approved voice.
+- **Features** — 8 outcome-first cards (Members, Campaigns, Rewards, Commerce, Storefront, Launch Kit, Insights, Knowledge Center) replacing settings-list language.
+- **Industries** — rebuilt to the exact 10 blueprint segments (Coffee Shops, Restaurants, Hair Salons, Nail Salons, Massage & Spa, Hotels, Retail, Fashion, Pet Shops, Beauty Clinics), each with hook + campaign recipe.
+- **Pricing** — Free/Starter/Professional/Enterprise; Starter/Professional correctly show `TBA` (DECISION-014 unresolved, never a fabricated number), Enterprise shows `Custom`/"Talk to us", unshipped features (white-label, multi-branch, corporate controls) now labeled `(planned)`.
+- **About** — founding story, mission, 4 founder credos, Thailand + Myanmar (dateless, partner-led) replacing an invented Vietnam/Malaysia/Philippines timeline that was never in any approved doc.
+- **FAQ** — 34 curated questions across 9 categories (of the approved 100), sticky category nav, accessible accordion (`aria-expanded`), `FAQPage` structured data.
+- **Contact** — LINE-first six doors (Sales/Support/Partnerships/Media/Investors), honest "usually within 2 business hours" promise, client-side `mailto:` form (was promising "1 business day" from a form with no backend).
+- **Resources** — Knowledge Center entry point (teaser card → sign in; full in-app manual not exposed publicly this sprint).
+- Sitewide: `Organization` JSON-LD, per-page canonical/OG/Twitter meta, mobile-nav `aria-label`, `services.line.oa_url` config gates every LINE CTA (unset — no LINE ID exists, none invented).
+
+**Found and fixed in already-live code** (not introduced this sprint):
+- Home page unconditionally rendered 3 fabricated testimonials (fake shop names/quotes/a "40% more often" stat) — violates WEBSITE-001's explicit "no fake quotes, ever." Now gated behind an `is_array()` check on `corporate.home_testimonials`; ships hidden until real Founding Merchant quotes exist.
+- Hero claimed "2 min" setup, inconsistent with the approved "10 minutes" proof spine.
+- A literal `'@context'` string inside inline Blade PHP is mis-parsed as Laravel's `@context` directive (Laravel 11+ `Context` facade), silently corrupting JSON-LD into invalid HTML — worked around via string concatenation.
+- Bootstrap `.row` negative-gutter margins caused real horizontal overflow at 375px — fixed with `overflow-x:hidden` on `.corp-body`.
+
+**Tests:** new `WebsiteMvpTest` (26 tests: all 8 pages 200 for guests in both locales, no dead corporate.* links, no unapproved prices, FAQ/SEO/a11y checks, authenticated app routes unaffected). 3 pre-existing tests updated to match intentionally-changed copy. 878 → 880 tests green. Build clean.
+
+**Deferred / missing before public launch** (see DECISION-099):
+- `LINE_OA_URL` not yet provisioned — every LINE CTA is currently invisible until configured.
+- Legal pages (`/privacy`, `/terms`, `/pdpa`, `/security`) exist from an earlier sprint but per WEBSITE-001 "ship only after legal review (DR-33)" — content not touched or re-reviewed this sprint.
+- No 90-second demo video, no press kit, no native-Thai-writer copy-edit pass (Thai content here is fluent but not professionally reviewed) — all explicitly gated 🟠/🔴 in the blueprint's own Launch Checklist (§13), not blockers for this MVP implementation sprint.
+- Remaining 66 of the 100 approved FAQ questions not published (by design — MVP scope).
+- Real Founding Merchant testimonials, pilot logos, and demo video remain placeholders until pilot data exists.
+
 ## 2026-07-10 — WEBSITE-001: Public Website Master Blueprint
 
 Marketing/UX-writing documentation sprint (final documentation

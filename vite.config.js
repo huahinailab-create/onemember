@@ -9,6 +9,8 @@ export default defineConfig({
                 'resources/js/app.js',
                 // OMEGA-001A: loaded only on the Commerce product form
                 'resources/js/product-image.js',
+                // WEBSITE-002A: slim bundle for the public marketing site
+                'resources/js/corporate.js',
             ],
             refresh: true,
         }),
