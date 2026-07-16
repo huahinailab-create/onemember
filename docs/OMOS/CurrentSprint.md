@@ -5,14 +5,215 @@
 | **Document Owner** | ChatGPT CTO |
 | **Version** | Live |
 | **OMOS Version** | 1.1 |
-| **Status** | 🔄 In Progress — MERCHANT-READY-001 / MR-001 |
-| **Last Updated** | 2026-07-09 |
+| **Status** | ⏳ Awaiting CTO Review — INTEGRATION-001 unified beta release candidate |
+| **Last Updated** | 2026-07-16 |
 
 | **Related Documents** | [EXECUTE.md](./EXECUTE.md), [Product-State.md](./Product-State.md), [Sprints/README.md](./Sprints/README.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md) |
 
 ---
 
 ## Current Sprint
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | INTEGRATION-001 |
+| **Title** | Unified Beta Release Candidate |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Integration + regression validation — no features, no redesign, no refactoring |
+| **Sprint File** | [Sprints/INTEGRATION-001-Unified-Beta-RC.md](./Sprints/INTEGRATION-001-Unified-Beta-RC.md) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-16 |
+| **Actual Completion** | 2026-07-16 |
+| **Branch** | `integration-001-beta-rc` (from main `20084eb`; NOT merged, NOT pushed, NOT deployed) |
+| **Final Commit** | see git log: INTEGRATION-001 (2 merge commits + tests + docs) |
+
+### Business Objective
+
+One release candidate proving all approved work operates together:
+WEBSITE-002A + polish (`website-002a-public-site` @ fc5b4b9) merged, then the
+CUSTOMER-001A/B/C + RELEASE-001 stack (`release-001-beta-readiness` @ ca2313d)
+merged. Conflicts (CSS append overlap, four governance docs, generated build
+assets) resolved as unions — nothing discarded, build assets regenerated from
+source. 991 tests green (2,762 assertions) including 10 new cross-system
+integration tests (guard isolation both directions, bundle separation,
+storefront→checkout→wallet seam, asset survival, Thai). Browser-smoke clean at
+375/768/1440 in EN+TH across guest/customer/merchant journeys. Release
+blockers unchanged and documented: email-first OTP decision, production
+duplicate-email pre-check, self-join gap, order→points gap, infrastructure
+checklist, DECISION-014/DR-33.
+
+---
+
+## Previous Sprint (RELEASE-001)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | RELEASE-001 |
+| **Title** | OneMember Beta Readiness Audit |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Type A — release audit: safe low-risk fixes only; behaviour/architecture findings documented, not implemented |
+| **Sprint File** | Spec provided directly by Product Owner; findings in the sprint return report |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 (senior release engineer role) |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-16 |
+| **Actual Completion** | 2026-07-16 |
+| **Branch** | `release-001-beta-readiness` (stacked on customer-001c-wallet-mvp; NOT merged, NOT pushed) |
+| **Final Commit** | see git log: RELEASE-001 |
+
+### Business Objective
+
+Full cross-platform production-readiness review before first public beta:
+website, merchant portal, customer identity/addresses/wallet, storefront,
+ordering, auth, localization, responsive, accessibility, performance,
+security, configuration, documentation. Safe fixes applied (OG PNG, missing
+PWA icons, empty favicon, off-brand manifest colors, robots /account,
+branded EN/TH error pages, env docs). Release blockers and journey gaps
+documented for CTO decision — notably: branch integration (customer stack +
+WEBSITE-002A both unmerged), no production SMS provider (phone OTP), no
+customer self-join from storefront, and orders not awarding points.
+
+---
+
+## Previous Sprint (CUSTOMER-001C)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | CUSTOMER-001C |
+| **Title** | OneMember Wallet MVP |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Code — the customer's home in the ecosystem: read-only relationship hub over memberships, rewards, activity, orders; preferences. No payments/redemption/GPS/notifications per charter. |
+| **Classification** | Type B — CTO Review (new customer surface, 2 additive columns); DECISION-102; [ADR-018](./12-ADR/ADR-018-OneMember-Wallet-MVP.md) |
+| **Sprint File** | Spec provided directly by Product Owner (this board records scope) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-15 |
+| **Actual Completion** | 2026-07-16 |
+| **Branch** | `customer-001c-wallet-mvp` (stacked on customer-001b-saved-addresses; NOT merged, NOT pushed) |
+| **Final Commit** | see git log: CUSTOMER-001C (4 commits) |
+
+### Business Objective
+
+"My relationships with local businesses live here." The wallet is a read model
+(WalletService) aggregating only over the customer's own consented links:
+home with welcome + stats + previews + quick links, My Places (per-merchant
+balance labelled points or stamps, never combined), read-only membership
+detail (campaign, transactions, contact, storefront link), My Rewards with
+honest statuses (Available / Coming soon) and a visibly disabled Redeem,
+Activity (joins, transactions, orders — newest first), My Orders (items,
+total, status, address snapshot used, Order-again). Orders placed signed-in
+gain customer_id (genuine history); preferences JSON stores communication
+channel + marketing consent. Six Coming Soon tiles reserve gift cards,
+subscriptions, appointments, bookings, membership cards, digital wallet.
+Login/reset land on the wallet. EN + native TH throughout. 18 new tests
+(949 total green); build clean.
+
+---
+
+## Previous Sprint (CUSTOMER-001B)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | CUSTOMER-001B |
+| **Title** | Customer Saved Addresses & Checkout Foundation |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Code — permanent customer address book + checkout address selection; merchant privacy by construction. Not a delivery form: durable infrastructure for delivery/shipping/appointments/hotel/Wallet. |
+| **Classification** | Type B — CTO Review (new schema, new customer surface, checkout change); DECISION-101; [ADR-017](./12-ADR/ADR-017-Customer-Address-Book.md) |
+| **Sprint File** | Spec provided directly by Product Owner (this board records scope) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-15 |
+| **Actual Completion** | 2026-07-15 |
+| **Branch** | `customer-001b-saved-addresses` (stacked on `customer-001a-identity-foundation` per CTO instruction; NOT merged, NOT pushed) |
+| **Final Commit** | see git log: CUSTOMER-001B (5 commits) |
+
+### Business Objective
+
+One customer, many merchants, one address book. Customers save unlimited labelled
+addresses (one default, enforced); the schema stores administrative areas
+generically (admin_area_1…4) with each country's field names, required fields and
+postcode rules in config — Thailand and Myanmar shipped, a new country is one
+config entry. AddressBookService owns the lifecycle: first address auto-default,
+delete/archive promotes the next active address, duplicate, search, archive,
+E.164 phone normalization, trimming. Checkout: signed-in customers pick "Deliver
+to" from their book or add a new country-aware address (optional save-to-book);
+guests keep the exact free-text path they had. Merchant privacy by construction:
+orders store only a plain-text snapshot of the chosen address (no FK, no orders
+schema change) — merchants can never see the book, and later edits never rewrite
+a received order. Ownership enforced everywhere (foreign addresses 404 / fail
+validation without confirming existence). No GPS, maps, routing, pricing, or
+wallet UI per charter. 32 new tests (931 total green); build clean.
+
+---
+
+## Previous Sprint (CUSTOMER-001A)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | CUSTOMER-001A |
+| **Title** | OneMember Identity Foundation (Customer Authentication) |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Code — customer identity foundation (auth, OTP, profile); the beginning of the future OneMember Wallet. Merchant authentication untouched. |
+| **Classification** | Type B — CTO Review (new guard, new schema fields, new public auth surface); DECISION-100; [ADR-016](./12-ADR/ADR-016-Customer-Identity-Foundation.md) |
+| **Sprint File** | Spec provided directly by Product Owner (this board records scope) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-15 |
+| **Actual Completion** | 2026-07-15 |
+| **Branch** | `customer-001a-identity-foundation` (off main `20084eb`; NOT merged, NOT pushed) |
+| **Final Commit** | see git log: CUSTOMER-001A (4 commits) |
+
+### Business Objective
+
+"One person. One identity. Many merchants." Extends the existing PH2-001A `Customer`
+record (same row — no parallel identity, no member-record migration) into an
+authenticatable account: sign in with mobile phone OR email, via OTP OR password —
+the customer chooses. New `customer` session guard leaves merchant auth completely
+untouched; guest checkout remains possible. `OtpService` (bcrypt-hashed 6-digit codes,
+5-min expiry, 5-attempt kill, single-use, supersession, resend cooldown + hourly cap)
+delivers via a `SmsProvider` seam (LogSmsProvider only — no production SMS, no fake
+sending) or synchronous email. E.164 phone normalization for TH + MM via config.
+Account-existence never leaks on login-side paths. Profile self-service (names,
+birthday, language) and settings (password add/change, email/phone change with
+mandatory OTP re-verification to the NEW destination — the destination IS the pending
+value, no pending columns). `IdentityProvider` contract reserved for Apple/Google/LINE
+later (architecture only). Customer UI: login, register, verify, forgot/reset,
+profile, settings — Bootstrap 5, OneMember branding, EN + native TH. 45 new tests
+(899 total green); SecurityEventSubscriber fixed to handle Customer logins.
+
+---
+
+## Previous Sprint (WEBSITE-002A + polish)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | WEBSITE-002A (+ approved polish pass) |
+| **Title** | Public Marketing Website MVP + World-Class Polish |
+| **Status** | ⏳ Awaiting CTO Review (MVP approved 2026-07-14; polish pass complete 2026-07-15) |
+| **Sprint Type** | Implementation + senior-UX polish — performance, accessibility, SEO, trust, content, and code quality on the existing pages (no new pages, no redesign) |
+| **Classification** | Type B — CTO Review (public-facing content/positioning change, new npm-free JSON-LD, one new config key, one new public route: /sitemap.xml) |
+| **Sprint File** | Built on [Website/](./Website/) (13-document blueprint); branch `website-002a-public-site` |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-14 |
+| **Actual Completion** | 2026-07-15 |
+| **Final Commit** | see git log on `website-002a-public-site` — not merged to main |
+
+### Business Objective
+
+Implements the approved WEBSITE-001 blueprint against the **existing** onemember.co corporate site (`CorporateController` + `resources/views/corporate/*` + `layouts/corporate.blade.php`) rather than building a parallel site — that infrastructure (routes, SEO meta scaffold, i18n via `lang/{en,th}/corporate.php`) already existed and was close to blueprint intent. Repositioned Home/Features/Industries/Pricing/About/FAQ/Contact/Resources (Knowledge Center entry) from generic "loyalty platform" language to the approved "Relationships Matter — your regulars, coming back more often" merchant-growth framing. **Found and fixed a real content-safety defect in already-live code**: the Home page unconditionally rendered three fabricated testimonials (fake shop names/quotes/stats) and an inconsistent "2 min setup" claim — both violate the blueprint's explicit "no fake testimonials/statistics" rule; testimonials now ship hidden until `corporate.home_testimonials` has real entries. Industries page rebuilt with the exact 10 blueprint segments (was 8, several mismatched). FAQ expanded to 34 curated questions across 9 categories with `FAQPage` structured data. Contact restructured to LINE-first six-doors design with an honest 2-business-hour promise (previous copy promised "1 business day" from a form with no backend — now a client-side `mailto:` handler with truthful copy). Pricing already correctly showed `TBA`/`Custom` placeholders (DECISION-014 unresolved) — extended with Enterprise `(planned)` labels for unshipped white-label/multi-branch features. New `App\Services\StoreIdentity`-adjacent config: `services.line.oa_url` (env `LINE_OA_URL`, currently unset — no LINE ID exists yet, never invented) gates every LINE CTA sitewide. Fixed a real Laravel/Blade bug found during verification: the literal string `'@context'` in inline PHP is mis-parsed as the framework's `@context` directive, corrupting JSON-LD — worked around via string concatenation. Fixed a real Bootstrap `.row` negative-margin horizontal-overflow bug at 375px (pre-existing, not introduced this sprint) via `overflow-x:hidden` on `.corp-body`. New `WebsiteMvpTest` (26 tests) plus 3 existing tests updated to match the new (intentional) copy. 878 → 880 tests green (2 net new files, some pre-existing tests' hardcoded-copy assertions updated). Not merged to `main` — awaiting CTO review per assignment.
+
+**Polish pass (2026-07-15, same branch)** — approved follow-up: make the site feel world-class without adding pages or redesigning. **Performance:** new Bootstrap-only `resources/js/corporate.js` Vite entry — marketing pages no longer load Alpine or preload the 42 KB Cropper chunk (~54 KB gz → ~24 KB gz JS per page view, −55%; Alpine no longer boots at all on marketing pages). **SEO:** real 1200×630 PNG og-image generated (GD) replacing the SVG that LINE/Facebook/Twitter render as blank; `twitter:image` + `og:locale` added; `/sitemap.xml` route + controller added — `robots.txt` had advertised that URL since RELEASE-1B and it 404'd for crawlers the whole time. **Accessibility:** skip-to-content link (first tab stop), `<main id="corp-main">` landmark (page content previously sat directly in `<body>`), FAQ accordion headers demoted h2→h3 on Home/Pricing (heading hierarchy), `prefers-reduced-motion` support for all corporate transitions, 44 px touch targets for small nav/FAQ-category buttons below 992 px. **Trust (§8):** hero dashboard mockup no longer shows figures that read as marketing statistics ("1,247 members / 89 % Retention Rate" → a small shop's day view: 128 members / 12 visits today) and is `aria-hidden` as decorative. **Content:** primary CTA now reads "Start Free" per blueprint (was "Start Free Trial"), mismatched hero stat pairing fixed ("PDPA-ready / No card needed" → "PDPA-ready / Thai privacy law"). **Code quality:** 22 duplicated `style="color:#FF1585"` inline styles replaced with the design-system `text-pink` utility. +6 regression tests (sitemap validity, PNG og-image, slim-bundle/no-Cropper-leak, skip link + landmark, mockup carries no statistics, CTA naming). 880 → 886 tests green; build clean; verified in-browser at 375/390/414/768/1024/1440 in both languages including nav toggle, dropdown, and accordion behaviour on the slim bundle.
+
+---
+
+## Previous Sprint (WEBSITE-001)
 
 | Field | Value |
 |---|---|

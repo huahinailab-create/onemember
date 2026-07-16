@@ -7,7 +7,7 @@
 
 <section class="corp-page-hero">
     <div class="container">
-        <span class="section-eyebrow" style="color:#FF1585;">{{ __('corporate.pricing_eyebrow') }}</span>
+        <span class="section-eyebrow text-pink">{{ __('corporate.pricing_eyebrow') }}</span>
         <h1>{{ __('corporate.pricing_h1') }}</h1>
         <p>{{ __('corporate.pricing_sub') }}</p>
     </div>
@@ -17,7 +17,7 @@
     <div class="container">
         <div class="text-center mb-5">
             <div class="d-inline-flex align-items-center gap-2 bg-light rounded-pill px-3 py-2">
-                <i class="bi bi-gift-fill text-pink" style="color:#FF1585;"></i>
+                <i class="bi bi-gift-fill text-pink"></i>
                 <span class="small fw-semibold">{!! __('corporate.pricing_trial_note') !!}</span>
             </div>
         </div>
@@ -105,11 +105,12 @@
         <div class="accordion corp-faq" id="pricingFaq">
             @foreach(trans('corporate.pricing_faq_items') as $i => $qa)
             <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button {{ $i > 0 ? 'collapsed' : '' }}" type="button" data-bs-toggle="collapse" data-bs-target="#pFaq{{ $i }}">
+                <h3 class="accordion-header">
+                    <button class="accordion-button {{ $i > 0 ? 'collapsed' : '' }}" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#pFaq{{ $i }}" aria-expanded="{{ $i === 0 ? 'true' : 'false' }}" aria-controls="pFaq{{ $i }}">
                         {{ $qa[0] }}
                     </button>
-                </h2>
+                </h3>
                 <div id="pFaq{{ $i }}" class="accordion-collapse collapse {{ $i === 0 ? 'show' : '' }}" data-bs-parent="#pricingFaq">
                     <div class="accordion-body">{{ $qa[1] }}</div>
                 </div>

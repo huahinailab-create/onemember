@@ -1,3 +1,233 @@
+## 2026-07-16 — INTEGRATION-001: Unified Beta Release Candidate
+
+Integration sprint on `integration-001-beta-rc` (from main `20084eb`):
+merged `website-002a-public-site` @ fc5b4b9 (WEBSITE-002A + polish),
+then `release-001-beta-readiness` @ ca2313d (CUSTOMER-001A/B/C +
+RELEASE-001). No features, no redesign.
+
+- Conflicts resolved as unions (CSS append overlap — one swallowed
+  closing brace restored; decision log 099+100–102 ordered; changelog
+  interleaved; sprint board rebuilt; product state unified); generated
+  Vite assets rebuilt from source, never hand-edited
+- No application-code conflicts — the branch lines touch disjoint code
+- 10 new cross-system integration tests (guard isolation both
+  directions via real HTTP, slim corporate bundle vs app bundle,
+  storefront → saved-address checkout → wallet order history, asset
+  survival, branded 404, Thai on website + wallet)
+- 991 tests green (2,762 assertions); build clean; route/view/lang/
+  migration integrity verified; browser smoke clean at 375/768/1440
+  in EN+TH for guest, customer, and merchant journeys
+- Release blockers documented, unchanged: email-first OTP decision,
+  production duplicate-email pre-check, customer self-join gap,
+  order→points gap, infrastructure checklist, DECISION-014/DR-33.
+  Not merged to main, not pushed, not deployed
+
+## 2026-07-16 — RELEASE-001: Beta Readiness Audit
+
+Cross-platform release audit on `release-001-beta-readiness` (stacked
+on the CUSTOMER-001 stack). Safe fixes only; everything else documented
+in the sprint report for CTO decision.
+
+- og:image switched to PNG (SVG og:images render blank on LINE/FB);
+  brand OG art PNG added with width/height meta
+- /icons/icon-192.png + icon-512.png created (manifest and
+  apple-touch-icon pointed at missing files); 0-byte favicon.ico
+  replaced by a real /favicon.png linked from every layout
+- manifest.webmanifest corrected to brand colors (#1A2E5A / #F0F0F4)
+- robots.txt disallows /account
+- Branded, localized (EN/TH), self-contained 403/404/419/500/503
+  error pages
+- .env.example documents CUSTOMER_SMS_PROVIDER and the
+  no-production-SMS constraint
+- Audit found: EN/TH lang parity 100%, no debug leftovers, no
+  unguarded models, DevTools hard-gated off in production, CSP +
+  security headers in place, honest pricing (฿0 + TBA), all corporate
+  pages 200, sitemap OK. 949 tests green; build clean
+
+## 2026-07-16 — CUSTOMER-001C: OneMember Wallet MVP
+
+The customer's home inside OneMember — a long-term relationship hub,
+not a points viewer. Branch `customer-001c-wallet-mvp`, stacked on
+CUSTOMER-001B (001A/B/C reviewed together; not merged, not pushed).
+DECISION-102; ADR-018.
+
+- Architecture — WalletService read model aggregating ONLY over the
+  customer's own consented CustomerMemberLinks: memberships, summary,
+  rewards by merchant, chronological activity, order history.
+  Cross-customer/merchant leakage impossible by construction; future
+  features (gift cards, subscriptions, appointments, membership
+  cards, notifications, AI recommendations) are new aggregate methods
+  + nav items — no redesign
+- Home — "Welcome back, {first name}", merchants joined, rewards
+  available, memberships + activity previews, quick links, six
+  honestly-labelled Coming Soon tiles (no fake functionality)
+- My Places — merchant cards (logo/initials, member since, last
+  visit, status) each with its OWN balance labelled points or stamps
+  per the merchant's programme; balances never combined (tested)
+- Membership detail (read-only) — balance hero, membership info,
+  campaign, rewards with a visibly disabled Redeem (counter
+  redemption explained), 10 recent transactions, merchant contact,
+  storefront link when Commerce is installed
+- My Rewards — grouped by merchant; real statuses only (Available /
+  Coming soon — the domain has no reward expiry, none invented)
+- Activity — joins, earn/redeem/adjust/expire/birthday, orders;
+  newest first
+- My Orders — items, total, status, delivery-address snapshot used,
+  Order-again link; orders placed signed-in now carry customer_id
+  (guest orders stay NULL and untouched)
+- Preferences — customers.preferences JSON: communication channel +
+  marketing consent; notifications placeholder; extensible without
+  further migration
+- UX — scrollable pill nav (44px targets, aria-current), wider wallet
+  shell, login/OTP/reset land on the wallet, reduced-motion support,
+  empty states everywhere, EN + native TH (~110 keys each)
+- Tests — 18 new; 949 total green, 2525 assertions; build clean
+
+## 2026-07-15 — CUSTOMER-001B: Customer Saved Addresses & Checkout Foundation
+
+The customer's permanent address book — one customer, many merchants,
+one address book. Branch `customer-001b-saved-addresses`, stacked on
+CUSTOMER-001A per CTO instruction (both reviewed together; not merged,
+not pushed). DECISION-101; ADR-017. Not a delivery form: the same
+architecture serves food delivery, retail shipping, service
+appointments, hotel delivery, and future Wallet capabilities.
+
+- Address book — unlimited labelled addresses (suggested labels +
+  custom), recipient + contact phone (E.164-normalized), exactly one
+  default among active addresses; create/edit/rename, delete (soft),
+  archive/restore, duplicate, search, set default. Deleting or
+  archiving the default promotes the most recently used active address
+- Country model — administrative areas stored generically
+  (admin_area_1 largest → admin_area_4 smallest); per-country field
+  names, required fields and postcode patterns in
+  config/customer_address.php (TH: province/district/subdistrict;
+  MM: state-region/district/township/ward-village). A new country is
+  one config entry — no migration, no code change. Lat/lng columns
+  nullable, never required (reserved for future GPS work)
+- Checkout — signed-in customers see "Deliver to" with their active
+  addresses (default first) or "Add new address" (full country-aware
+  form + optional save-to-book); guests keep the existing free-text
+  address field untouched; works without JavaScript
+- Merchant privacy by construction — orders store only a plain-text
+  snapshot of the chosen address in the existing orders.address column
+  (no FK, no uuid, no orders schema change): merchants can never
+  traverse into the book; later book edits never rewrite a received
+  order; chosen addresses must be the signed-in customer's own and
+  active (foreign addresses 404 / fail validation without confirming
+  existence)
+- Security — all 10 book routes behind the customer guard; merchant
+  web sessions and guests redirected; sanity cap on book size;
+  country-specific validation with length caps
+- Tests — 32 new (18 address book, 14 checkout incl. guest-unchanged
+  and privacy-boundary proofs); FakeSmsProvider extracted to
+  tests/Support so CUSTOMER-001A files pass standalone. 931 total
+  green, 2465 assertions; build clean
+
+## 2026-07-15 — CUSTOMER-001A: OneMember Identity Foundation
+
+Customer identity foundation — the beginning of the future OneMember
+Wallet. Branch `customer-001a-identity-foundation` (off main `20084eb`;
+awaiting CTO review, not merged, not pushed). "One person. One identity.
+Many merchants." Merchant authentication is completely untouched; guest
+checkout remains possible. DECISION-100; ADR-016.
+
+- Identity — the existing PH2-001A `customers` row becomes the account
+  (no parallel identity, no member-record migration). Additive fields:
+  first/last/nickname/display names, country, timezone, nullable
+  password, remember token, email/phone verified timestamps, last
+  login, status. Two documented schema relaxations: `phone` nullable
+  (email-only accounts) and `email` unique (now a login identifier;
+  production must pre-check duplicates)
+- Authentication — new `customer` session guard + provider; sign in
+  with mobile phone OR email via OTP OR password (customer chooses,
+  single form, no-JS formaction branch). Passwords optional at
+  registration; OTP-only accounts can add one later
+- OTP — `OtpService`: bcrypt-hashed 6-digit codes, 5-minute expiry,
+  5-attempt kill, single-use, supersession, 60s resend cooldown +
+  5/hour per destination. Delivery via `SmsProvider` contract
+  (LogSmsProvider only — no production SMS integration, no fake
+  sending) or synchronous email mailable
+- Security — named rate limiters (login lockout, OTP request/verify,
+  registration), account-existence never leaked on login-side paths,
+  session regeneration, `Password::defaults()` (12+ mixed), suspended
+  status gate, E.164 normalization (TH +66, MM +95, config-driven).
+  SecurityEventSubscriber fixed to identify Customer logins (was
+  merchant-User-only and crashed on phone-only customers)
+- Profile & settings — names/birthday/language self-service; password
+  add/change; email/phone change applies ONLY after OTP verification
+  sent to the NEW destination (the destination IS the pending value —
+  no pending columns)
+- Future seams — `IdentityProvider` contract for Apple/Google/LINE/
+  Facebook later (architecture only, zero implementations, no
+  customer_identities table until the first real provider)
+- UI — customer layout + 8 Blade views (login, register, verify,
+  forgot, reset, profile, settings, confirm), Bootstrap 5, OneMember
+  branding, EN + native TH (~100 keys each)
+- Tests — 45 new (7 unit phone normalization, 38 feature auth/account);
+  899 total green, 2370 assertions; production build clean
+
+## 2026-07-15 — WEBSITE-002A Polish: World-Class Pass (branch, not merged)
+
+Approved follow-up on `website-002a-public-site`: performance, accessibility, SEO, trust, content, and code-quality polish on the existing 8 pages. No new pages, no redesign.
+
+**Performance**
+- New Bootstrap-only `resources/js/corporate.js` Vite entry for all marketing pages: **~54 KB gz → ~24 KB gz JS per page view (−55%)**. Alpine no longer boots and the 42 KB Cropper chunk is no longer preloaded on pages that can never use them.
+
+**SEO (two real defects fixed)**
+- `og:image` pointed at an SVG — LINE/Facebook/Twitter render SVG share images as **blank**; replaced with a generated 1200×630 PNG (GD, on-brand navy/pink wordmark + tagline). Added `twitter:image` and `og:locale`.
+- `robots.txt` has advertised `Sitemap: https://onemember.co/sitemap.xml` since RELEASE-1B — **the URL 404'd for crawlers the whole time**. Added the route + `CorporateController::sitemap()` generating valid XML from the same named routes the site links to.
+
+**Accessibility**
+- Skip-to-content link (first tab stop, styled on focus) + `<main id="corp-main">` landmark — page content previously sat directly in `<body>` with no main landmark.
+- FAQ accordion headers demoted h2→h3 on Home and Pricing (heading hierarchy).
+- `prefers-reduced-motion` now disables all corporate transitions/animations.
+- 44 px minimum touch targets for small nav/FAQ-category buttons below 992 px (WCAG 2.5.8).
+
+**Trust (§8)**
+- Hero dashboard mockup no longer displays figures that read as marketing statistics ("1,247 Active Members / 89% Retention Rate" → a small shop's day view: 128 members / 12 visits today) and is `aria-hidden` as the decorative illustration it is.
+
+**Content**
+- Primary CTA now reads **"Start Free"** sitewide per the blueprint (was "Start Free Trial"); Thai เริ่มใช้ฟรี.
+- Fixed mismatched hero stat pairing ("PDPA-ready" value under a "No card needed" label → "Thai privacy law").
+- Terminology audit: no banned voice words (leverage/cutting-edge/AI-powered/synergy), "programme" used consistently (21×, zero "program"), meta titles all follow "Page — OneMember".
+
+**Code quality**
+- 22 duplicated `style="color:#FF1585"` inline styles replaced with the design-system `text-pink` utility across all corporate views.
+
+**Tests:** +6 regressions (sitemap XML validity + page coverage, PNG og-image exists and is referenced, slim bundle loads / Cropper chunk never leaks onto marketing pages, skip link + landmark, mockup carries no statistic-like figures, CTA naming both locales). **880 → 886 green.** Build clean. Verified in-browser at 375/390/414/768/1024/1440 in EN and TH, including nav toggle, dropdowns, and accordions running on the slim bundle.
+
+**Known limitations:** hreflang pairs still not emitted (locale is session-based, not URL-based — needs the `/th/` URL scheme from the SEO blueprint, a future sprint); Lighthouse not run in-sandbox (no Chrome audit tooling) — LCP/CLS reasoning is structural (text-first hero, no webfonts on corporate pages, fixed-size mockup, no images above the fold).
+
+## 2026-07-14 — WEBSITE-002A: Public Marketing Website MVP (branch, not merged)
+
+Implements the approved WEBSITE-001 blueprint against the **existing** onemember.co corporate site rather than building a parallel one. On branch `website-002a-public-site`, awaiting CTO review — not merged to `main`.
+
+**Shipped** — repositioned to "Relationships Matter" merchant-growth framing (never "just loyalty software"):
+- **Home** — hero, problem ("the quiet Tuesday"), solution, industries teaser, features, pricing teaser, FAQ teaser, final CTA all rewritten to the approved voice.
+- **Features** — 8 outcome-first cards (Members, Campaigns, Rewards, Commerce, Storefront, Launch Kit, Insights, Knowledge Center) replacing settings-list language.
+- **Industries** — rebuilt to the exact 10 blueprint segments (Coffee Shops, Restaurants, Hair Salons, Nail Salons, Massage & Spa, Hotels, Retail, Fashion, Pet Shops, Beauty Clinics), each with hook + campaign recipe.
+- **Pricing** — Free/Starter/Professional/Enterprise; Starter/Professional correctly show `TBA` (DECISION-014 unresolved, never a fabricated number), Enterprise shows `Custom`/"Talk to us", unshipped features (white-label, multi-branch, corporate controls) now labeled `(planned)`.
+- **About** — founding story, mission, 4 founder credos, Thailand + Myanmar (dateless, partner-led) replacing an invented Vietnam/Malaysia/Philippines timeline that was never in any approved doc.
+- **FAQ** — 34 curated questions across 9 categories (of the approved 100), sticky category nav, accessible accordion (`aria-expanded`), `FAQPage` structured data.
+- **Contact** — LINE-first six doors (Sales/Support/Partnerships/Media/Investors), honest "usually within 2 business hours" promise, client-side `mailto:` form (was promising "1 business day" from a form with no backend).
+- **Resources** — Knowledge Center entry point (teaser card → sign in; full in-app manual not exposed publicly this sprint).
+- Sitewide: `Organization` JSON-LD, per-page canonical/OG/Twitter meta, mobile-nav `aria-label`, `services.line.oa_url` config gates every LINE CTA (unset — no LINE ID exists, none invented).
+
+**Found and fixed in already-live code** (not introduced this sprint):
+- Home page unconditionally rendered 3 fabricated testimonials (fake shop names/quotes/a "40% more often" stat) — violates WEBSITE-001's explicit "no fake quotes, ever." Now gated behind an `is_array()` check on `corporate.home_testimonials`; ships hidden until real Founding Merchant quotes exist.
+- Hero claimed "2 min" setup, inconsistent with the approved "10 minutes" proof spine.
+- A literal `'@context'` string inside inline Blade PHP is mis-parsed as Laravel's `@context` directive (Laravel 11+ `Context` facade), silently corrupting JSON-LD into invalid HTML — worked around via string concatenation.
+- Bootstrap `.row` negative-gutter margins caused real horizontal overflow at 375px — fixed with `overflow-x:hidden` on `.corp-body`.
+
+**Tests:** new `WebsiteMvpTest` (26 tests: all 8 pages 200 for guests in both locales, no dead corporate.* links, no unapproved prices, FAQ/SEO/a11y checks, authenticated app routes unaffected). 3 pre-existing tests updated to match intentionally-changed copy. 878 → 880 tests green. Build clean.
+
+**Deferred / missing before public launch** (see DECISION-099):
+- `LINE_OA_URL` not yet provisioned — every LINE CTA is currently invisible until configured.
+- Legal pages (`/privacy`, `/terms`, `/pdpa`, `/security`) exist from an earlier sprint but per WEBSITE-001 "ship only after legal review (DR-33)" — content not touched or re-reviewed this sprint.
+- No 90-second demo video, no press kit, no native-Thai-writer copy-edit pass (Thai content here is fluent but not professionally reviewed) — all explicitly gated 🟠/🔴 in the blueprint's own Launch Checklist (§13), not blockers for this MVP implementation sprint.
+- Remaining 66 of the 100 approved FAQ questions not published (by design — MVP scope).
+- Real Founding Merchant testimonials, pilot logos, and demo video remain placeholders until pilot data exists.
+
 ## 2026-07-10 — WEBSITE-001: Public Website Master Blueprint
 
 Marketing/UX-writing documentation sprint (final documentation

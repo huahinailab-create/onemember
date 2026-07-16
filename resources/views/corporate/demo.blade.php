@@ -7,7 +7,7 @@
 
 <section class="corp-page-hero">
     <div class="container">
-        <span class="section-eyebrow" style="color:#FF1585;">{{ __('corporate.demo_eyebrow') }}</span>
+        <span class="section-eyebrow text-pink">{{ __('corporate.demo_eyebrow') }}</span>
         <h1>{{ __('corporate.demo_h1') }}</h1>
         <p>{{ __('corporate.demo_sub') }}</p>
     </div>
@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="mt-4 p-3 rounded-3" style="background:rgba(255,21,133,0.06);border:1px solid rgba(255,21,133,0.15);">
-                    <div class="fw-semibold small mb-1" style="color:#FF1585;">{{ __('corporate.demo_or_trial') }}</div>
+                    <div class="fw-semibold small mb-1 text-pink">{{ __('corporate.demo_or_trial') }}</div>
                     <p class="text-muted small mb-2">{{ __('corporate.demo_prefer_trial_body') }}</p>
                     <a href="{{ $appUrl }}/register" class="btn btn-sm btn-pink">{{ __('corporate.cta_start_trial') }} <i class="bi bi-arrow-right ms-1"></i></a>
                 </div>

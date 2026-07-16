@@ -3,34 +3,60 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 
 /**
- * The global OneMember Identity (PH2-001A, ADR-010).
+ * The global OneMember Identity (PH2-001A, ADR-010; authenticatable since
+ * CUSTOMER-001A, ADR-016).
  *
- * One verified mobile phone number = one Customer, forever. OneMember is the
- * custodian of this record — the customer controls it; merchants connect to
- * it only through consented CustomerMemberLinks. Never expose the numeric id;
- * use public_uuid (URLs) and onemember_id (human-readable, on the card).
+ * One person = one Customer, able to join many merchants while merchant
+ * data stays isolated behind consented CustomerMemberLinks. This is NOT
+ * merchant authentication (App\Models\User) — customers sign in on their
+ * own `customer` guard with a phone number OR email, via OTP or password.
+ * Never expose the numeric id; use public_uuid (URLs) and onemember_id
+ * (human-readable, on the card).
  */
-class Customer extends Model
+class Customer extends Authenticatable
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes;
+
+    public const STATUS_ACTIVE    = 'active';
+    public const STATUS_SUSPENDED = 'suspended';
 
     protected $fillable = [
         'name',
+        'first_name',
+        'last_name',
+        'nickname',
+        'display_name',
         'phone',
         'email',
+        'password',
         'birthday',
         'postal_code',
         'locale',
+        'country',
+        'timezone',
+        'status',
+        'preferences',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
     ];
 
     protected $casts = [
-        'birthday' => 'date',
+        'birthday'          => 'date',
+        'password'          => 'hashed',
+        'email_verified_at' => 'datetime',
+        'phone_verified_at' => 'datetime',
+        'last_login_at'     => 'datetime',
+        'preferences'       => 'array',
     ];
 
     protected static function booted(): void
@@ -41,6 +67,14 @@ class Customer extends Model
             }
             if (empty($customer->onemember_id)) {
                 $customer->onemember_id = self::generateOneMemberId();
+            }
+        });
+
+        // Keep the canonical `name` (PH2-001A card name) populated when the
+        // structured name is set and no explicit full name was given.
+        static::saving(function (Customer $customer) {
+            if (empty($customer->name) && ($customer->first_name || $customer->last_name)) {
+                $customer->name = trim($customer->first_name . ' ' . $customer->last_name);
             }
         });
     }
@@ -85,6 +119,63 @@ class Customer extends Model
         return $this->hasMany(Consent::class);
     }
 
+    public function otps(): HasMany
+    {
+        return $this->hasMany(CustomerOtp::class);
+    }
+
+    /** Orders placed while signed in (CUSTOMER-001C wallet order history). */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /** A customer preference with default (CUSTOMER-001C wallet settings). */
+    public function preference(string $key, mixed $default = null): mixed
+    {
+        return data_get($this->preferences, $key, $default);
+    }
+
+    /** The customer's permanent address book (CUSTOMER-001B). */
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(CustomerAddress::class);
+    }
+
+    public function defaultAddress(): ?CustomerAddress
+    {
+        return $this->addresses()->active()->where('is_default', true)->first();
+    }
+
+    /** What the customer is called across OneMember surfaces. */
+    public function displayName(): string
+    {
+        return $this->display_name
+            ?: ($this->nickname
+            ?: ($this->first_name
+            ?: (string) $this->name));
+    }
+
+    public function isActive(): bool
+    {
+        return $this->status === self::STATUS_ACTIVE;
+    }
+
+    public function hasPassword(): bool
+    {
+        return $this->password !== null;
+    }
+
+    public function hasVerifiedEmail(): bool
+    {
+        return $this->email_verified_at !== null;
+    }
+
+    public function hasVerifiedPhone(): bool
+    {
+        return $this->phone_verified_at !== null;
+    }
+
     /** Masked phone for consent screens: 081-xxx-5678 style. */
     public function maskedPhone(): string
     {
@@ -94,5 +185,17 @@ class Customer extends Model
         }
 
         return substr($digits, 0, 3) . '-xxx-' . substr($digits, -4);
+    }
+
+    /** Masked email for OTP screens: c•••@example.com style. */
+    public function maskedEmail(): string
+    {
+        if (! $this->email || ! str_contains($this->email, '@')) {
+            return '•••';
+        }
+
+        [$local, $domain] = explode('@', $this->email, 2);
+
+        return mb_substr($local, 0, 1) . '•••@' . $domain;
     }
 }

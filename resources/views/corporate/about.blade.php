@@ -7,7 +7,7 @@
 
 <section class="corp-page-hero">
     <div class="container">
-        <span class="section-eyebrow" style="color:#FF1585;">{{ __('corporate.about_eyebrow') }}</span>
+        <span class="section-eyebrow text-pink">{{ __('corporate.about_eyebrow') }}</span>
         <h1>{{ __('corporate.about_h1') }}</h1>
         <p>{{ __('corporate.about_sub') }}</p>
     </div>
@@ -59,7 +59,7 @@
 {{-- ASEAN Expansion --}}
 <section class="corp-section corp-section-navy">
     <div class="container text-center">
-        <span class="section-eyebrow" style="color:#FF1585;">{{ __('corporate.about_asean_eyebrow') }}</span>
+        <span class="section-eyebrow text-pink">{{ __('corporate.about_asean_eyebrow') }}</span>
         <h2 class="section-heading section-heading-light">{{ __('corporate.about_asean_h2') }}</h2>
         <p class="section-sub section-sub-light mx-auto mb-5">{{ __('corporate.about_asean_sub') }}</p>
         <div class="row g-4 justify-content-center">

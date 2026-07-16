@@ -23,7 +23,7 @@ class CorporateLocalizationTest extends TestCase
 
         $response->assertOk();
         // footer_tagline is a distinctive Thai string present on every page
-        $response->assertSee('แพลตฟอร์มสะสมแต้มสำหรับ SME ไทย', false);
+        $response->assertSee('ความสัมพันธ์คือหัวใจ — ลูกค้าประจำของคุณ กลับมาบ่อยขึ้น', false);
     }
 
     public function test_corporate_home_html_lang_attribute_is_thai_by_default(): void
@@ -90,7 +90,7 @@ class CorporateLocalizationTest extends TestCase
             ->get('http://onemember.co/');
 
         $response->assertOk();
-        $response->assertSee('Loyalty platform for Thai SMEs.', false);
+        $response->assertSee('Relationships matter — your regulars, coming back more often.', false);
     }
 
     // ── 4. Switching back to Thai ─────────────────────────────────────────────
@@ -111,7 +111,7 @@ class CorporateLocalizationTest extends TestCase
             ->get('http://onemember.co/');
 
         $response->assertOk();
-        $response->assertSee('แพลตฟอร์มสะสมแต้มสำหรับ SME ไทย', false);
+        $response->assertSee('ความสัมพันธ์คือหัวใจ — ลูกค้าประจำของคุณ กลับมาบ่อยขึ้น', false);
     }
 
     // ── 5. Corporate pages use translations ───────────────────────────────────

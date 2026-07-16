@@ -21,14 +21,27 @@ class SecurityEventSubscriber
 {
     public function __construct(private readonly SecurityLogger $logger) {}
 
+    /**
+     * CUSTOMER-001A: auth events now fire for two models — merchant User
+     * and Customer. Customers may have no email (phone-only accounts), so
+     * the log identifier falls back phone -> key; only merchant Users have
+     * a merchant to attribute.
+     */
+    private function identify(mixed $user): array
+    {
+        $identifier = $user->email
+            ?? $user->phone
+            ?? (class_basename($user) . ':' . $user->getKey());
+
+        $merchantId = $user instanceof \App\Models\User ? $user->merchant?->id : null;
+
+        return [$identifier, $merchantId];
+    }
+
     public function handleLogin(Login $event): void
     {
-        $user = $event->user;
-        $this->logger->loginSucceeded(
-            $user->id,
-            $user->email,
-            $user->merchant?->id
-        );
+        [$identifier, $merchantId] = $this->identify($event->user);
+        $this->logger->loginSucceeded($event->user->id, $identifier, $merchantId);
     }
 
     public function handleFailed(Failed $event): void
@@ -39,7 +52,8 @@ class SecurityEventSubscriber
     public function handleLogout(Logout $event): void
     {
         if ($user = $event->user) {
-            $this->logger->logout($user->id, $user->email, $user->merchant?->id);
+            [$identifier, $merchantId] = $this->identify($user);
+            $this->logger->logout($user->id, $identifier, $merchantId);
         }
     }
 
@@ -50,20 +64,23 @@ class SecurityEventSubscriber
 
     public function handlePasswordReset(PasswordReset $event): void
     {
-        $user = $event->user;
-        $this->logger->passwordResetCompleted($user->id, $user->email, $user->merchant?->id);
+        [$identifier, $merchantId] = $this->identify($event->user);
+        $this->logger->passwordResetCompleted($event->user->id, $identifier, $merchantId);
     }
 
     public function handleVerified(Verified $event): void
     {
-        $user = $event->user;
-        $this->logger->emailVerified($user->id, $user->email, $user->merchant?->id);
+        [$identifier, $merchantId] = $this->identify($event->user);
+        $this->logger->emailVerified($event->user->id, $identifier, $merchantId);
     }
 
     public function handleRegistered(Registered $event): void
     {
-        $user = $event->user;
-        $this->logger->merchantRegistered($user->id, $user->email);
+        // merchantRegistered stays merchant-only; customer registration has
+        // its own flow and does not dispatch Registered.
+        if ($event->user instanceof \App\Models\User) {
+            $this->logger->merchantRegistered($event->user->id, $event->user->email);
+        }
     }
 
     public function subscribe(Dispatcher $events): void

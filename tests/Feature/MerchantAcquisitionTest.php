@@ -50,8 +50,12 @@ class MerchantAcquisitionTest extends TestCase
 
     public function test_landing_page_shows_trial_badge(): void
     {
+        // WEBSITE-002A: hero trust strip leads with the Free-plan promise
+        // ("free up to 100 members forever") per the approved blueprint's
+        // proof spine — the 30-day Professional trial is still real and
+        // still shown, on the Pricing page.
         $response = $this->withSession(['locale' => 'en'])->get($this->corporateHome());
-        $response->assertSee('30-Day Free Trial', false);
+        $response->assertSee('Free up to 100 members', false);
     }
 
     public function test_landing_page_shows_no_credit_card_text(): void

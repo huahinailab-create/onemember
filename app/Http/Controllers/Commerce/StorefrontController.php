@@ -59,6 +59,14 @@ class StorefrontController extends Controller
 
         $commerce = $merchant->settings['commerce'] ?? [];
 
-        return view('storefront.show', compact('merchant', 'products', 'campaign', 'rewards', 'commerce'));
+        // CUSTOMER-001B — a signed-in customer checks out from their address
+        // book (active addresses only, default first). Guests see the plain
+        // address field; nothing about the book reaches the merchant.
+        $customer          = $request->user('customer');
+        $customerAddresses = $customer
+            ? $customer->addresses()->active()->orderByDesc('is_default')->orderByDesc('updated_at')->get()
+            : collect();
+
+        return view('storefront.show', compact('merchant', 'products', 'campaign', 'rewards', 'commerce', 'customer', 'customerAddresses'));
     }
 }

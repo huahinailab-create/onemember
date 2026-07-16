@@ -7,7 +7,7 @@
 
 <section class="corp-page-hero">
     <div class="container">
-        <span class="section-eyebrow" style="color:#FF1585;">{{ __('corporate.industries_eyebrow') }}</span>
+        <span class="section-eyebrow text-pink">{{ __('corporate.industries_eyebrow') }}</span>
         <h1>{{ __('corporate.industries_h1') }}</h1>
         <p>{{ __('corporate.industries_sub') }}</p>
     </div>
@@ -25,7 +25,7 @@
                     <ul class="list-unstyled" style="position:relative;z-index:1;">
                         @foreach($ind[3] as $point)
                         <li class="d-flex align-items-center gap-2 mb-1" style="font-size:0.8rem;color:rgba(255,255,255,0.8);">
-                            <i class="bi bi-check2" style="color:#FF1585;"></i> {{ $point }}
+                            <i class="bi bi-check2 text-pink"></i> {{ $point }}
                         </li>
                         @endforeach
                     </ul>

@@ -76,6 +76,10 @@ Route::domain(config('domains.corporate'))->group(function () {
     Route::get('/terms',       [CorporateController::class, 'terms'])->name('corporate.terms');
     Route::get('/pdpa',        [CorporateController::class, 'pdpa'])->name('corporate.pdpa');
 
+    // WEBSITE-002A polish: robots.txt has advertised this URL since the
+    // corporate site shipped — it 404'd until now.
+    Route::get('/sitemap.xml', [CorporateController::class, 'sitemap'])->name('corporate.sitemap');
+
     Route::get('/welcome', fn () => view('welcome'));
 });
 
@@ -115,6 +119,76 @@ Route::domain(config('domains.app'))->group(function () {
     Route::get('/member/{publicUuid}',        [CustomerPortalController::class, 'show'])->name('portal.show');
     Route::get('/member/{publicUuid}/card',   [CustomerPortalController::class, 'card'])->name('portal.card');
     Route::get('/member/{publicUuid}/qr.svg', [CustomerPortalController::class, 'qrSvg'])->name('portal.qr');
+
+    // ── CUSTOMER-001A — customer identity (OneMember account) ─────────────
+    // Separate `customer` guard; merchant auth (/login, /register on the
+    // `web` guard) is untouched. Guest checkout/portal/join stay public —
+    // signing in is optional and additive.
+    Route::prefix('account')->name('customer.')->group(function () {
+        Route::middleware('guest:customer')->group(function () {
+            Route::get('/login',     [\App\Http\Controllers\Customer\AuthController::class, 'showLogin'])->name('login');
+            Route::post('/login/password', [\App\Http\Controllers\Customer\AuthController::class, 'loginWithPassword'])
+                ->middleware('throttle:customer-login')->name('login.password');
+            Route::post('/login/otp',      [\App\Http\Controllers\Customer\AuthController::class, 'requestLoginOtp'])
+                ->middleware('throttle:customer-otp-request')->name('login.otp');
+
+            Route::get('/register',  [\App\Http\Controllers\Customer\RegisterController::class, 'show'])->name('register');
+            Route::post('/register', [\App\Http\Controllers\Customer\RegisterController::class, 'store'])
+                ->middleware('throttle:customer-register')->name('register.store');
+
+            Route::get('/verify',         [\App\Http\Controllers\Customer\AuthController::class, 'showOtpForm'])->name('otp.form');
+            Route::post('/verify',        [\App\Http\Controllers\Customer\AuthController::class, 'verifyOtp'])
+                ->middleware('throttle:customer-otp-verify')->name('otp.verify');
+            Route::post('/verify/resend', [\App\Http\Controllers\Customer\AuthController::class, 'resendOtp'])
+                ->middleware('throttle:customer-otp-request')->name('otp.resend');
+
+            Route::get('/forgot-password',  [\App\Http\Controllers\Customer\PasswordResetController::class, 'request'])->name('password.request');
+            Route::post('/forgot-password', [\App\Http\Controllers\Customer\PasswordResetController::class, 'send'])
+                ->middleware('throttle:customer-otp-request')->name('password.email');
+            Route::get('/reset-password',   [\App\Http\Controllers\Customer\PasswordResetController::class, 'showReset'])->name('password.reset');
+            Route::post('/reset-password',  [\App\Http\Controllers\Customer\PasswordResetController::class, 'update'])
+                ->middleware('throttle:customer-otp-verify')->name('password.update');
+        });
+
+        Route::middleware('auth:customer')->group(function () {
+            // CUSTOMER-001C — OneMember Wallet (read-only MVP)
+            Route::get('/wallet',                    [\App\Http\Controllers\Customer\WalletController::class, 'home'])->name('wallet');
+            Route::get('/wallet/memberships',        [\App\Http\Controllers\Customer\WalletController::class, 'memberships'])->name('wallet.memberships');
+            Route::get('/wallet/memberships/{uuid}', [\App\Http\Controllers\Customer\WalletController::class, 'membership'])->name('wallet.membership');
+            Route::get('/wallet/rewards',            [\App\Http\Controllers\Customer\WalletController::class, 'rewards'])->name('wallet.rewards');
+            Route::get('/wallet/activity',           [\App\Http\Controllers\Customer\WalletController::class, 'activity'])->name('wallet.activity');
+            Route::get('/wallet/orders',             [\App\Http\Controllers\Customer\WalletController::class, 'orders'])->name('wallet.orders');
+            Route::put('/settings/preferences',      [\App\Http\Controllers\Customer\AccountController::class, 'updatePreferences'])->name('preferences.update');
+
+            Route::get('/',         [\App\Http\Controllers\Customer\ProfileController::class, 'show'])->name('profile');
+            Route::put('/profile',  [\App\Http\Controllers\Customer\ProfileController::class, 'update'])->name('profile.update');
+
+            Route::get('/settings',           [\App\Http\Controllers\Customer\AccountController::class, 'settings'])->name('settings');
+            Route::put('/settings/password',  [\App\Http\Controllers\Customer\AccountController::class, 'updatePassword'])->name('password.change');
+            Route::post('/settings/email',    [\App\Http\Controllers\Customer\AccountController::class, 'requestEmailChange'])
+                ->middleware('throttle:customer-otp-request')->name('email.change');
+            Route::post('/settings/phone',    [\App\Http\Controllers\Customer\AccountController::class, 'requestPhoneChange'])
+                ->middleware('throttle:customer-otp-request')->name('phone.change');
+            Route::get('/settings/confirm',   [\App\Http\Controllers\Customer\AccountController::class, 'showConfirmChange'])->name('change.confirm');
+            Route::post('/settings/confirm',  [\App\Http\Controllers\Customer\AccountController::class, 'confirmChange'])
+                ->middleware('throttle:customer-otp-verify')->name('change.apply');
+
+            // CUSTOMER-001B — permanent address book (customer-owned;
+            // merchants have no route into any of these).
+            Route::get('/addresses',                    [\App\Http\Controllers\Customer\AddressController::class, 'index'])->name('addresses.index');
+            Route::get('/addresses/new',                [\App\Http\Controllers\Customer\AddressController::class, 'create'])->name('addresses.create');
+            Route::post('/addresses',                   [\App\Http\Controllers\Customer\AddressController::class, 'store'])->name('addresses.store');
+            Route::get('/addresses/{address}/edit',     [\App\Http\Controllers\Customer\AddressController::class, 'edit'])->name('addresses.edit');
+            Route::put('/addresses/{address}',          [\App\Http\Controllers\Customer\AddressController::class, 'update'])->name('addresses.update');
+            Route::delete('/addresses/{address}',       [\App\Http\Controllers\Customer\AddressController::class, 'destroy'])->name('addresses.destroy');
+            Route::post('/addresses/{address}/archive', [\App\Http\Controllers\Customer\AddressController::class, 'archive'])->name('addresses.archive');
+            Route::post('/addresses/{address}/restore', [\App\Http\Controllers\Customer\AddressController::class, 'restore'])->name('addresses.restore');
+            Route::post('/addresses/{address}/default', [\App\Http\Controllers\Customer\AddressController::class, 'setDefault'])->name('addresses.default');
+            Route::post('/addresses/{address}/duplicate', [\App\Http\Controllers\Customer\AddressController::class, 'duplicate'])->name('addresses.duplicate');
+
+            Route::post('/logout', [\App\Http\Controllers\Customer\AuthController::class, 'logout'])->name('logout');
+        });
+    });
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])

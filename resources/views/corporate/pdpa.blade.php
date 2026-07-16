@@ -7,7 +7,7 @@
 
 <section class="corp-page-hero">
     <div class="container">
-        <span class="section-eyebrow" style="color:#FF1585;">{{ __('corporate.pdpa_eyebrow') }}</span>
+        <span class="section-eyebrow text-pink">{{ __('corporate.pdpa_eyebrow') }}</span>
         <h1>{{ __('corporate.pdpa_h1') }}</h1>
         <p>{{ __('corporate.pdpa_last_updated') }} {{ date('d F Y') }}</p>
     </div>
