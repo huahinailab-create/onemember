@@ -5,7 +5,7 @@
 | **Document Owner** | ChatGPT CTO |
 | **Version** | Live |
 | **OMOS Version** | 1.1 |
-| **Status** | ⏳ Awaiting CTO Review — RELEASE-001 beta readiness audit (on top of the CUSTOMER-001 stack) |
+| **Status** | ⏳ Awaiting CTO Review — INTEGRATION-001 unified beta release candidate |
 | **Last Updated** | 2026-07-16 |
 
 | **Related Documents** | [EXECUTE.md](./EXECUTE.md), [Product-State.md](./Product-State.md), [Sprints/README.md](./Sprints/README.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md) |
@@ -13,6 +13,40 @@
 ---
 
 ## Current Sprint
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | INTEGRATION-001 |
+| **Title** | Unified Beta Release Candidate |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Integration + regression validation — no features, no redesign, no refactoring |
+| **Sprint File** | [Sprints/INTEGRATION-001-Unified-Beta-RC.md](./Sprints/INTEGRATION-001-Unified-Beta-RC.md) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-16 |
+| **Actual Completion** | 2026-07-16 |
+| **Branch** | `integration-001-beta-rc` (from main `20084eb`; NOT merged, NOT pushed, NOT deployed) |
+| **Final Commit** | see git log: INTEGRATION-001 (2 merge commits + tests + docs) |
+
+### Business Objective
+
+One release candidate proving all approved work operates together:
+WEBSITE-002A + polish (`website-002a-public-site` @ fc5b4b9) merged, then the
+CUSTOMER-001A/B/C + RELEASE-001 stack (`release-001-beta-readiness` @ ca2313d)
+merged. Conflicts (CSS append overlap, four governance docs, generated build
+assets) resolved as unions — nothing discarded, build assets regenerated from
+source. 991 tests green (2,762 assertions) including 10 new cross-system
+integration tests (guard isolation both directions, bundle separation,
+storefront→checkout→wallet seam, asset survival, Thai). Browser-smoke clean at
+375/768/1440 in EN+TH across guest/customer/merchant journeys. Release
+blockers unchanged and documented: email-first OTP decision, production
+duplicate-email pre-check, self-join gap, order→points gap, infrastructure
+checklist, DECISION-014/DR-33.
+
+---
+
+## Previous Sprint (RELEASE-001)
 
 | Field | Value |
 |---|---|

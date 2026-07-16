@@ -1,3 +1,27 @@
+## 2026-07-16 — INTEGRATION-001: Unified Beta Release Candidate
+
+Integration sprint on `integration-001-beta-rc` (from main `20084eb`):
+merged `website-002a-public-site` @ fc5b4b9 (WEBSITE-002A + polish),
+then `release-001-beta-readiness` @ ca2313d (CUSTOMER-001A/B/C +
+RELEASE-001). No features, no redesign.
+
+- Conflicts resolved as unions (CSS append overlap — one swallowed
+  closing brace restored; decision log 099+100–102 ordered; changelog
+  interleaved; sprint board rebuilt; product state unified); generated
+  Vite assets rebuilt from source, never hand-edited
+- No application-code conflicts — the branch lines touch disjoint code
+- 10 new cross-system integration tests (guard isolation both
+  directions via real HTTP, slim corporate bundle vs app bundle,
+  storefront → saved-address checkout → wallet order history, asset
+  survival, branded 404, Thai on website + wallet)
+- 991 tests green (2,762 assertions); build clean; route/view/lang/
+  migration integrity verified; browser smoke clean at 375/768/1440
+  in EN+TH for guest, customer, and merchant journeys
+- Release blockers documented, unchanged: email-first OTP decision,
+  production duplicate-email pre-check, customer self-join gap,
+  order→points gap, infrastructure checklist, DECISION-014/DR-33.
+  Not merged to main, not pushed, not deployed
+
 ## 2026-07-16 — RELEASE-001: Beta Readiness Audit
 
 Cross-platform release audit on `release-001-beta-readiness` (stacked
