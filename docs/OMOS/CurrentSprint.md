@@ -5,14 +5,156 @@
 | **Document Owner** | ChatGPT CTO |
 | **Version** | Live |
 | **OMOS Version** | 1.1 |
-| **Status** | ⏳ Awaiting CTO Review |
-| **Last Updated** | 2026-07-14 |
+| **Status** | ⏳ Awaiting CTO Review — RELEASE-001 beta readiness audit (on top of the CUSTOMER-001 stack) |
+| **Last Updated** | 2026-07-16 |
 
 | **Related Documents** | [EXECUTE.md](./EXECUTE.md), [Product-State.md](./Product-State.md), [Sprints/README.md](./Sprints/README.md), [Sprint-Lifecycle.md](./Sprint-Lifecycle.md) |
 
 ---
 
 ## Current Sprint
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | RELEASE-001 |
+| **Title** | OneMember Beta Readiness Audit |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Type A — release audit: safe low-risk fixes only; behaviour/architecture findings documented, not implemented |
+| **Sprint File** | Spec provided directly by Product Owner; findings in the sprint return report |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 (senior release engineer role) |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-16 |
+| **Actual Completion** | 2026-07-16 |
+| **Branch** | `release-001-beta-readiness` (stacked on customer-001c-wallet-mvp; NOT merged, NOT pushed) |
+| **Final Commit** | see git log: RELEASE-001 |
+
+### Business Objective
+
+Full cross-platform production-readiness review before first public beta:
+website, merchant portal, customer identity/addresses/wallet, storefront,
+ordering, auth, localization, responsive, accessibility, performance,
+security, configuration, documentation. Safe fixes applied (OG PNG, missing
+PWA icons, empty favicon, off-brand manifest colors, robots /account,
+branded EN/TH error pages, env docs). Release blockers and journey gaps
+documented for CTO decision — notably: branch integration (customer stack +
+WEBSITE-002A both unmerged), no production SMS provider (phone OTP), no
+customer self-join from storefront, and orders not awarding points.
+
+---
+
+## Previous Sprint (CUSTOMER-001C)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | CUSTOMER-001C |
+| **Title** | OneMember Wallet MVP |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Code — the customer's home in the ecosystem: read-only relationship hub over memberships, rewards, activity, orders; preferences. No payments/redemption/GPS/notifications per charter. |
+| **Classification** | Type B — CTO Review (new customer surface, 2 additive columns); DECISION-102; [ADR-018](./12-ADR/ADR-018-OneMember-Wallet-MVP.md) |
+| **Sprint File** | Spec provided directly by Product Owner (this board records scope) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-15 |
+| **Actual Completion** | 2026-07-16 |
+| **Branch** | `customer-001c-wallet-mvp` (stacked on customer-001b-saved-addresses; NOT merged, NOT pushed) |
+| **Final Commit** | see git log: CUSTOMER-001C (4 commits) |
+
+### Business Objective
+
+"My relationships with local businesses live here." The wallet is a read model
+(WalletService) aggregating only over the customer's own consented links:
+home with welcome + stats + previews + quick links, My Places (per-merchant
+balance labelled points or stamps, never combined), read-only membership
+detail (campaign, transactions, contact, storefront link), My Rewards with
+honest statuses (Available / Coming soon) and a visibly disabled Redeem,
+Activity (joins, transactions, orders — newest first), My Orders (items,
+total, status, address snapshot used, Order-again). Orders placed signed-in
+gain customer_id (genuine history); preferences JSON stores communication
+channel + marketing consent. Six Coming Soon tiles reserve gift cards,
+subscriptions, appointments, bookings, membership cards, digital wallet.
+Login/reset land on the wallet. EN + native TH throughout. 18 new tests
+(949 total green); build clean.
+
+---
+
+## Previous Sprint (CUSTOMER-001B)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | CUSTOMER-001B |
+| **Title** | Customer Saved Addresses & Checkout Foundation |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Code — permanent customer address book + checkout address selection; merchant privacy by construction. Not a delivery form: durable infrastructure for delivery/shipping/appointments/hotel/Wallet. |
+| **Classification** | Type B — CTO Review (new schema, new customer surface, checkout change); DECISION-101; [ADR-017](./12-ADR/ADR-017-Customer-Address-Book.md) |
+| **Sprint File** | Spec provided directly by Product Owner (this board records scope) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-15 |
+| **Actual Completion** | 2026-07-15 |
+| **Branch** | `customer-001b-saved-addresses` (stacked on `customer-001a-identity-foundation` per CTO instruction; NOT merged, NOT pushed) |
+| **Final Commit** | see git log: CUSTOMER-001B (5 commits) |
+
+### Business Objective
+
+One customer, many merchants, one address book. Customers save unlimited labelled
+addresses (one default, enforced); the schema stores administrative areas
+generically (admin_area_1…4) with each country's field names, required fields and
+postcode rules in config — Thailand and Myanmar shipped, a new country is one
+config entry. AddressBookService owns the lifecycle: first address auto-default,
+delete/archive promotes the next active address, duplicate, search, archive,
+E.164 phone normalization, trimming. Checkout: signed-in customers pick "Deliver
+to" from their book or add a new country-aware address (optional save-to-book);
+guests keep the exact free-text path they had. Merchant privacy by construction:
+orders store only a plain-text snapshot of the chosen address (no FK, no orders
+schema change) — merchants can never see the book, and later edits never rewrite
+a received order. Ownership enforced everywhere (foreign addresses 404 / fail
+validation without confirming existence). No GPS, maps, routing, pricing, or
+wallet UI per charter. 32 new tests (931 total green); build clean.
+
+---
+
+## Previous Sprint (CUSTOMER-001A)
+
+| Field | Value |
+|---|---|
+| **Sprint ID** | CUSTOMER-001A |
+| **Title** | OneMember Identity Foundation (Customer Authentication) |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Code — customer identity foundation (auth, OTP, profile); the beginning of the future OneMember Wallet. Merchant authentication untouched. |
+| **Classification** | Type B — CTO Review (new guard, new schema fields, new public auth surface); DECISION-100; [ADR-016](./12-ADR/ADR-016-Customer-Identity-Foundation.md) |
+| **Sprint File** | Spec provided directly by Product Owner (this board records scope) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-15 |
+| **Actual Completion** | 2026-07-15 |
+| **Branch** | `customer-001a-identity-foundation` (off main `20084eb`; NOT merged, NOT pushed) |
+| **Final Commit** | see git log: CUSTOMER-001A (4 commits) |
+
+### Business Objective
+
+"One person. One identity. Many merchants." Extends the existing PH2-001A `Customer`
+record (same row — no parallel identity, no member-record migration) into an
+authenticatable account: sign in with mobile phone OR email, via OTP OR password —
+the customer chooses. New `customer` session guard leaves merchant auth completely
+untouched; guest checkout remains possible. `OtpService` (bcrypt-hashed 6-digit codes,
+5-min expiry, 5-attempt kill, single-use, supersession, resend cooldown + hourly cap)
+delivers via a `SmsProvider` seam (LogSmsProvider only — no production SMS, no fake
+sending) or synchronous email. E.164 phone normalization for TH + MM via config.
+Account-existence never leaks on login-side paths. Profile self-service (names,
+birthday, language) and settings (password add/change, email/phone change with
+mandatory OTP re-verification to the NEW destination — the destination IS the pending
+value, no pending columns). `IdentityProvider` contract reserved for Apple/Google/LINE
+later (architecture only). Customer UI: login, register, verify, forgot/reset,
+profile, settings — Bootstrap 5, OneMember branding, EN + native TH. 45 new tests
+(899 total green); SecurityEventSubscriber fixed to handle Customer logins.
+
+---
+
+## Previous Sprint (WEBSITE-002A + polish)
 
 | Field | Value |
 |---|---|
@@ -43,15 +185,20 @@ Implements the approved WEBSITE-001 blueprint against the **existing** onemember
 |---|---|
 | **Sprint ID** | WEBSITE-001 |
 | **Title** | OneMember Public Website Master Blueprint |
-| **Status** | ✅ Approved — implemented by WEBSITE-002A |
-| **Sprint Type** | Marketing/UX-writing documentation ONLY |
+| **Status** | ⏳ Awaiting CTO Review |
+| **Sprint Type** | Marketing/UX-writing documentation ONLY (no implementation) — final documentation assignment before pilot merchant acquisition |
 | **Classification** | Type A — docs |
-| **Sprint File** | [Website/](./Website/) — 13 documents |
-| **Final Commit** | `d665fce` (`merchant-ready-001-mr-001`) |
+| **Sprint File** | [Website/](./Website/) — 13 documents (01-Website-Strategy … 13-Launch-Checklist) |
+| **Owner** | Product Owner |
+| **Developer** | Claude Fable 5 (Creative Director / UX Writer / SEO Strategist role) |
+| **Reviewer** | ChatGPT CTO |
+| **Started** | 2026-07-10 |
+| **Actual Completion** | 2026-07-10 |
+| **Final Commit** | see git log: WEBSITE-001 (merchant-ready-001-mr-001) |
 
 ### Business Objective
 
-Complete public-website blueprint whose single objective is converting visitors into merchants. Thirteen documents: strategy, site map, home page copy, feature pages, 10 industry landing pages, pricing page, About page, 100 grouped FAQs, six-door contact design, SEO strategy, legal-page inventory, conversion funnel, and launch checklist.
+Complete public-website blueprint whose single objective is converting visitors into merchants. Thirteen documents: strategy (merchant-growth positioning — never "just another loyalty system" — voice/tone, Thai-first writing rules), site map (shallow, phone-first, Start Free everywhere), section-by-section home page with copy, full outcome-voiced feature pages, 10 industry landing pages with campaign recipes and story placeholders, value-story pricing page (amounts stay DECISION-014), About/founder-philosophy page, 100 grouped FAQs, six-door contact design (LINE-first), Thai-first SEO strategy with keyword clusters and internal-linking engine, legal-page inventory (gated on DR-33), the 7-stage conversion funnel welded to the built product journey (website's real conversion = Launch Ready, not signup), and a gated launch checklist including the promise-keeping test (every site claim provably true in-product within 10 minutes).
 
 ---
 

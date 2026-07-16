@@ -30,6 +30,21 @@ return Application::configure(basePath: dirname(__DIR__))
             'api.key'       => \App\Http\Middleware\AuthenticateApiKey::class,
         ]);
 
+        // CUSTOMER-001A — unauthenticated customers go to the customer
+        // login, never the merchant login (separate guard, separate world);
+        // an already-signed-in customer hitting a guest page goes to their
+        // profile, not the merchant dashboard.
+        $middleware->redirectGuestsTo(function (Request $request) {
+            return $request->routeIs('customer.*')
+                ? route('customer.login')
+                : route('login');
+        });
+        $middleware->redirectUsersTo(function (Request $request) {
+            return $request->routeIs('customer.*')
+                ? route('customer.wallet')
+                : route('dashboard');
+        });
+
         // Stripe webhooks carry their own signature verification; CSRF would reject them
         $middleware->validateCsrfTokens(except: [
             'stripe/webhook',

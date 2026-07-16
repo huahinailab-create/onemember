@@ -1,3 +1,147 @@
+## 2026-07-16 — RELEASE-001: Beta Readiness Audit
+
+Cross-platform release audit on `release-001-beta-readiness` (stacked
+on the CUSTOMER-001 stack). Safe fixes only; everything else documented
+in the sprint report for CTO decision.
+
+- og:image switched to PNG (SVG og:images render blank on LINE/FB);
+  brand OG art PNG added with width/height meta
+- /icons/icon-192.png + icon-512.png created (manifest and
+  apple-touch-icon pointed at missing files); 0-byte favicon.ico
+  replaced by a real /favicon.png linked from every layout
+- manifest.webmanifest corrected to brand colors (#1A2E5A / #F0F0F4)
+- robots.txt disallows /account
+- Branded, localized (EN/TH), self-contained 403/404/419/500/503
+  error pages
+- .env.example documents CUSTOMER_SMS_PROVIDER and the
+  no-production-SMS constraint
+- Audit found: EN/TH lang parity 100%, no debug leftovers, no
+  unguarded models, DevTools hard-gated off in production, CSP +
+  security headers in place, honest pricing (฿0 + TBA), all corporate
+  pages 200, sitemap OK. 949 tests green; build clean
+
+## 2026-07-16 — CUSTOMER-001C: OneMember Wallet MVP
+
+The customer's home inside OneMember — a long-term relationship hub,
+not a points viewer. Branch `customer-001c-wallet-mvp`, stacked on
+CUSTOMER-001B (001A/B/C reviewed together; not merged, not pushed).
+DECISION-102; ADR-018.
+
+- Architecture — WalletService read model aggregating ONLY over the
+  customer's own consented CustomerMemberLinks: memberships, summary,
+  rewards by merchant, chronological activity, order history.
+  Cross-customer/merchant leakage impossible by construction; future
+  features (gift cards, subscriptions, appointments, membership
+  cards, notifications, AI recommendations) are new aggregate methods
+  + nav items — no redesign
+- Home — "Welcome back, {first name}", merchants joined, rewards
+  available, memberships + activity previews, quick links, six
+  honestly-labelled Coming Soon tiles (no fake functionality)
+- My Places — merchant cards (logo/initials, member since, last
+  visit, status) each with its OWN balance labelled points or stamps
+  per the merchant's programme; balances never combined (tested)
+- Membership detail (read-only) — balance hero, membership info,
+  campaign, rewards with a visibly disabled Redeem (counter
+  redemption explained), 10 recent transactions, merchant contact,
+  storefront link when Commerce is installed
+- My Rewards — grouped by merchant; real statuses only (Available /
+  Coming soon — the domain has no reward expiry, none invented)
+- Activity — joins, earn/redeem/adjust/expire/birthday, orders;
+  newest first
+- My Orders — items, total, status, delivery-address snapshot used,
+  Order-again link; orders placed signed-in now carry customer_id
+  (guest orders stay NULL and untouched)
+- Preferences — customers.preferences JSON: communication channel +
+  marketing consent; notifications placeholder; extensible without
+  further migration
+- UX — scrollable pill nav (44px targets, aria-current), wider wallet
+  shell, login/OTP/reset land on the wallet, reduced-motion support,
+  empty states everywhere, EN + native TH (~110 keys each)
+- Tests — 18 new; 949 total green, 2525 assertions; build clean
+
+## 2026-07-15 — CUSTOMER-001B: Customer Saved Addresses & Checkout Foundation
+
+The customer's permanent address book — one customer, many merchants,
+one address book. Branch `customer-001b-saved-addresses`, stacked on
+CUSTOMER-001A per CTO instruction (both reviewed together; not merged,
+not pushed). DECISION-101; ADR-017. Not a delivery form: the same
+architecture serves food delivery, retail shipping, service
+appointments, hotel delivery, and future Wallet capabilities.
+
+- Address book — unlimited labelled addresses (suggested labels +
+  custom), recipient + contact phone (E.164-normalized), exactly one
+  default among active addresses; create/edit/rename, delete (soft),
+  archive/restore, duplicate, search, set default. Deleting or
+  archiving the default promotes the most recently used active address
+- Country model — administrative areas stored generically
+  (admin_area_1 largest → admin_area_4 smallest); per-country field
+  names, required fields and postcode patterns in
+  config/customer_address.php (TH: province/district/subdistrict;
+  MM: state-region/district/township/ward-village). A new country is
+  one config entry — no migration, no code change. Lat/lng columns
+  nullable, never required (reserved for future GPS work)
+- Checkout — signed-in customers see "Deliver to" with their active
+  addresses (default first) or "Add new address" (full country-aware
+  form + optional save-to-book); guests keep the existing free-text
+  address field untouched; works without JavaScript
+- Merchant privacy by construction — orders store only a plain-text
+  snapshot of the chosen address in the existing orders.address column
+  (no FK, no uuid, no orders schema change): merchants can never
+  traverse into the book; later book edits never rewrite a received
+  order; chosen addresses must be the signed-in customer's own and
+  active (foreign addresses 404 / fail validation without confirming
+  existence)
+- Security — all 10 book routes behind the customer guard; merchant
+  web sessions and guests redirected; sanity cap on book size;
+  country-specific validation with length caps
+- Tests — 32 new (18 address book, 14 checkout incl. guest-unchanged
+  and privacy-boundary proofs); FakeSmsProvider extracted to
+  tests/Support so CUSTOMER-001A files pass standalone. 931 total
+  green, 2465 assertions; build clean
+
+## 2026-07-15 — CUSTOMER-001A: OneMember Identity Foundation
+
+Customer identity foundation — the beginning of the future OneMember
+Wallet. Branch `customer-001a-identity-foundation` (off main `20084eb`;
+awaiting CTO review, not merged, not pushed). "One person. One identity.
+Many merchants." Merchant authentication is completely untouched; guest
+checkout remains possible. DECISION-100; ADR-016.
+
+- Identity — the existing PH2-001A `customers` row becomes the account
+  (no parallel identity, no member-record migration). Additive fields:
+  first/last/nickname/display names, country, timezone, nullable
+  password, remember token, email/phone verified timestamps, last
+  login, status. Two documented schema relaxations: `phone` nullable
+  (email-only accounts) and `email` unique (now a login identifier;
+  production must pre-check duplicates)
+- Authentication — new `customer` session guard + provider; sign in
+  with mobile phone OR email via OTP OR password (customer chooses,
+  single form, no-JS formaction branch). Passwords optional at
+  registration; OTP-only accounts can add one later
+- OTP — `OtpService`: bcrypt-hashed 6-digit codes, 5-minute expiry,
+  5-attempt kill, single-use, supersession, 60s resend cooldown +
+  5/hour per destination. Delivery via `SmsProvider` contract
+  (LogSmsProvider only — no production SMS integration, no fake
+  sending) or synchronous email mailable
+- Security — named rate limiters (login lockout, OTP request/verify,
+  registration), account-existence never leaked on login-side paths,
+  session regeneration, `Password::defaults()` (12+ mixed), suspended
+  status gate, E.164 normalization (TH +66, MM +95, config-driven).
+  SecurityEventSubscriber fixed to identify Customer logins (was
+  merchant-User-only and crashed on phone-only customers)
+- Profile & settings — names/birthday/language self-service; password
+  add/change; email/phone change applies ONLY after OTP verification
+  sent to the NEW destination (the destination IS the pending value —
+  no pending columns)
+- Future seams — `IdentityProvider` contract for Apple/Google/LINE/
+  Facebook later (architecture only, zero implementations, no
+  customer_identities table until the first real provider)
+- UI — customer layout + 8 Blade views (login, register, verify,
+  forgot, reset, profile, settings, confirm), Bootstrap 5, OneMember
+  branding, EN + native TH (~100 keys each)
+- Tests — 45 new (7 unit phone normalization, 38 feature auth/account);
+  899 total green, 2370 assertions; production build clean
+
 ## 2026-07-15 — WEBSITE-002A Polish: World-Class Pass (branch, not merged)
 
 Approved follow-up on `website-002a-public-site`: performance, accessibility, SEO, trust, content, and code-quality polish on the existing 8 pages. No new pages, no redesign.

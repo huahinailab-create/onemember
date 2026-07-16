@@ -12,5 +12,6 @@ Disallow: /subscription
 Disallow: /data
 Disallow: /dev
 Disallow: /member/
+Disallow: /account
 
 Sitemap: https://onemember.co/sitemap.xml

@@ -6,6 +6,7 @@
     <meta name="robots" content="noindex, nofollow">
     <meta name="theme-color" content="{{ $branding->primaryColor() }}">
 
+    <link rel="icon" type="image/png" href="/favicon.png">
     <title>{{ $title ?? __('portal.page_title') }}</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">

@@ -25,6 +25,7 @@ class Order extends Model
     protected $fillable = [
         'merchant_id',
         'member_id',
+        'customer_id',
         'customer_name',
         'customer_phone',
         'fulfillment_type',
@@ -58,6 +59,12 @@ class Order extends Model
     public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    /** Wallet owner when the order was placed signed-in (CUSTOMER-001C). */
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
     }
 
     public function canTransitionTo(string $status): bool

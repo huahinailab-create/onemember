@@ -2657,3 +2657,292 @@ body.om-sidebar-open {
 .corp-section.pb-0 + .corp-section {
     padding-top: 2.5rem;
 }
+
+/* ── CUSTOMER-001A: customer identity pages ─────────────────────────────── */
+
+.customer-body {
+    background: linear-gradient(160deg, #1A2E5A 0%, #0F1C3A 100%);
+    min-height: 100vh;
+    font-family: 'Figtree', system-ui, -apple-system, sans-serif;
+}
+
+.customer-shell {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 1.25rem 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.customer-header {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.25rem 1.25rem;
+}
+
+.customer-wordmark {
+    font-family: Arial, sans-serif;
+    font-weight: 700;
+    font-size: 1.375rem;
+}
+
+.customer-wordmark-member {
+    color: #ffffff;
+}
+
+.customer-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 1.75rem 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.customer-h1 {
+    font-size: 1.375rem;
+    font-weight: 800;
+    color: var(--om-ink);
+    margin-bottom: 0.25rem;
+}
+
+.customer-h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--om-navy);
+    margin-bottom: 0.75rem;
+}
+
+.customer-otp-input {
+    letter-spacing: 0.5em;
+    font-weight: 700;
+}
+
+.customer-identity-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    background: var(--om-cloud);
+    border: 1px solid rgba(26, 46, 90, 0.08);
+    border-radius: 12px;
+    padding: 0.875rem 1rem;
+}
+
+.customer-omid {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-weight: 700;
+    color: var(--om-pink);
+    letter-spacing: 0.05em;
+}
+
+.customer-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.25rem;
+    padding: 0 0.25rem;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.customer-footer-brand {
+    font-family: Arial, sans-serif;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* CUSTOMER-001B — address book cards */
+.customer-address-card {
+    border: 1px solid #e3e6ef;
+    border-radius: 0.75rem;
+    padding: 0.9rem 1rem;
+    margin-bottom: 0.75rem;
+    background: #fff;
+}
+.customer-address-card .btn-sm {
+    min-height: 38px; /* large touch targets on mobile */
+}
+.customer-address-archived {
+    opacity: 0.65;
+    background: #f6f7fa;
+}
+
+/* CUSTOMER-001B — checkout address selector */
+.storefront-address-option {
+    padding: 0.35rem 0.4rem 0.35rem 1.9rem;
+    border-radius: 0.5rem;
+}
+.storefront-address-option:has(.form-check-input:checked) {
+    background: rgba(26, 46, 90, 0.06);
+}
+.storefront-address-option .form-check-input {
+    width: 1.15rem;
+    height: 1.15rem; /* touch target */
+}
+.storefront-new-address summary {
+    cursor: pointer;
+}
+
+/* CUSTOMER-001C — OneMember Wallet */
+.customer-shell-wide {
+    max-width: 760px;
+}
+.customer-wallet-nav {
+    display: flex;
+    gap: 0.4rem;
+    overflow-x: auto;
+    padding: 0 0 0.75rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+.customer-wallet-nav::-webkit-scrollbar { display: none; }
+.customer-wallet-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.9rem;
+    min-height: 44px;
+    border-radius: 999px;
+    white-space: nowrap;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.12);
+    text-decoration: none;
+    transition: background 0.15s ease;
+}
+.customer-wallet-nav-link:hover,
+.customer-wallet-nav-link:focus-visible {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.22);
+}
+.customer-wallet-nav-link.active {
+    color: #1A2E5A;
+    background: #fff;
+}
+.customer-wallet-stat {
+    border: 1px solid #e3e6ef;
+    border-radius: 0.9rem;
+    padding: 1rem;
+    text-align: center;
+    background: #fff;
+}
+.customer-wallet-stat-hero {
+    background: linear-gradient(135deg, #1A2E5A, #2a4580);
+    border: 0;
+    color: #fff;
+}
+.customer-wallet-stat-hero .customer-wallet-stat-label { color: rgba(255,255,255,0.8); }
+.customer-wallet-stat-value {
+    font-size: 1.7rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+.customer-wallet-stat-label {
+    font-size: 0.78rem;
+    color: #6c757d;
+}
+.customer-membership-card {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem;
+    margin-bottom: 0.6rem;
+    border: 1px solid #e3e6ef;
+    border-radius: 0.9rem;
+    background: #fff;
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.customer-membership-card:hover,
+.customer-membership-card:focus-visible {
+    color: inherit;
+    border-color: #FF1585;
+    box-shadow: 0 2px 10px rgba(26, 46, 90, 0.08);
+}
+.customer-membership-logo {
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+    border-radius: 0.7rem;
+    background: #F0F0F4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #1A2E5A;
+    overflow: hidden;
+}
+.customer-membership-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.customer-membership-logo-lg {
+    flex-basis: 64px;
+    width: 64px;
+    height: 64px;
+}
+.customer-membership-body { flex: 1 1 auto; min-width: 0; }
+.customer-membership-points { font-size: 0.85rem; margin-top: 0.15rem; }
+.customer-membership-points-value { font-weight: 700; color: #1A2E5A; }
+.customer-membership-chevron { color: #adb5bd; }
+.customer-wallet-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    min-height: 84px;
+    padding: 0.75rem 0.5rem;
+    border: 1px solid #e3e6ef;
+    border-radius: 0.9rem;
+    background: #fff;
+    color: #1A2E5A;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    transition: border-color 0.15s ease;
+}
+.customer-wallet-tile:hover,
+.customer-wallet-tile:focus-visible { border-color: #FF1585; color: #1A2E5A; }
+.customer-wallet-tile i { font-size: 1.25rem; }
+.customer-wallet-tile-soon { opacity: 0.65; }
+.customer-wallet-tile-soon:hover { border-color: #e3e6ef; }
+.customer-wallet-box {
+    border: 1px solid #e3e6ef;
+    border-radius: 0.9rem;
+    padding: 0.9rem 1rem;
+    background: #fff;
+}
+.customer-wallet-dl {
+    display: grid;
+    grid-template-columns: minmax(96px, auto) 1fr;
+    gap: 0.35rem 1rem;
+    font-size: 0.85rem;
+}
+.customer-wallet-dl dt { color: #6c757d; font-weight: 500; }
+.customer-wallet-dl dd { margin: 0; }
+.customer-activity-row,
+.customer-reward-row {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.6rem 0.2rem;
+    border-bottom: 1px solid #eef0f5;
+}
+.customer-activity-row:last-child,
+.customer-reward-row:last-child { border-bottom: 0; }
+.customer-wallet-empty {
+    text-align: center;
+    color: #6c757d;
+    padding: 1.5rem 1rem;
+}
+.customer-wallet-empty i { font-size: 1.8rem; }
+@media (prefers-reduced-motion: reduce) {
+    .customer-wallet-nav-link,
+    .customer-membership-card,
+    .customer-wallet-tile { transition: none; }
+}
